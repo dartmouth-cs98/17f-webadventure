@@ -22,14 +22,10 @@ At this stage, we plan to deploy via Chrome extension using Google Developer Too
 
 ## Authors
 
-Imanol Avendaño
-
-Stephanie Guo
-
-David Oh
-
-Alma Wang
-
-Barry Yang
+* Imanol Avendaño
+* Stephanie Guo
+* David Oh
+* Alma Wang
+* Barry Yang
 
 ## Acknowledgments
