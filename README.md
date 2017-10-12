@@ -8,8 +8,6 @@ For mockups of the page, please visit https://github.com/dartmouth-cs98/17f-weba
 
 ## Architecture
 
-TODO:  descriptions of code organization and tools and libraries used
-
 Front-end: We are using a chrome extension to inject javascript into a Wikipedia page or a pre-defined webpage. Other options include building a stand-alone web-app that loads in a picture or an i-frame, where we can also overlay the game mechanics onto. Currently, we are researching different methods of "injecting javascript" into the webpage for user interaction.
 
 To store our data models, we plan to use Amazon Web Services to store relevant user data and game locations. Our goal is to have a working MVP by the end of the term.
@@ -25,9 +23,13 @@ At this stage, we plan to deploy via Chrome extension using Google Developer Too
 ## Authors
 
 Imanol Avendaño
+
 Stephanie Guo
+
 David Oh
+
 Alma Wang
+
 Barry Yang
 
 ## Acknowledgments
