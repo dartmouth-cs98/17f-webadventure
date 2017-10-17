@@ -22,7 +22,7 @@ At this stage, we plan to deploy via Chrome extension using Google Developer Too
 
 We've added in Babel to compile JS. Before reloading as an extension, run the command:
 ```
-npm build
+npm run build
 ```
 Then add the unpacked extension to Chrome
 
