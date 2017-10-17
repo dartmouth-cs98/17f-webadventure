@@ -1,0 +1,24 @@
+{
+  "name": "17f-webadventure",
+  "version": "1.0.0",
+  "description": "Web Adventure Chrome Extension Game",
+  "main": "background.js",
+  "dependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.6.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dartmouth-cs98/17f-webadventure.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dartmouth-cs98/17f-webadventure/issues"
+  },
+  "homepage": "https://github.com/dartmouth-cs98/17f-webadventure#readme"
+}
