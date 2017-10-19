@@ -7,7 +7,8 @@
 	div.id = "fook";
 	//div.style.position = 'fixed';
 	div.style.top = 0;
-    div.style.position = "absolute";
+	div.style.zIndex = 10000;
+  div.style.position = "absolute";
 	div.style.right = 0;
 	div.textContent = 'Injected!';
 	document.body.appendChild(div);
@@ -17,22 +18,22 @@
     	console.log("l");
     	console.log(div.id);
     	div.style.backgroundColor = "lightblue";
-    	div.style.right = parseInt(div.style.right) + 5 + 'px';
+    	div.style.right = parseInt(div.style.right) + 20 + 'px';
     }
 
     function rightArrowPressed() {
     	console.log("r");
-    	div.style.right = parseInt(div.style.right) - 5 + 'px';
+    	div.style.right = parseInt(div.style.right) - 20 + 'px';
     }
 
     function upArrowPressed() {
     	console.log("u");
-    	div.style.top = parseInt(div.style.top) - 5 + 'px';
+    	div.style.top = parseInt(div.style.top) - 20 + 'px';
     }
 
     function downArrowPressed() {
     	console.log("d");
-    	div.style.top = parseInt(div.style.top) + 5 + 'px';
+    	div.style.top = parseInt(div.style.top) + 20 + 'px';
     }
 
     function moveSelection(evt) {
