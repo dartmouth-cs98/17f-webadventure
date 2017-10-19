@@ -1,16 +1,21 @@
 /* eslint no-undef: "off", no-unused-vars: "off" */
+import io from 'socket.io-client';
+
+const socketserver = 'http://localhost:9090';
 const URL = 'http://localhost:9090/api';
 
-// checks if location is in DB
-// Params: location object, playerId
-export function checkLocation(location, playerId) {
-  const xhr = new XMLHttpRequest();
-  xhr.open('POST', `${URL}/location`, true);
-  const body = {
-    location,
-    playerId,
-  };
-  xhr.send(body);
+export class GameData {
+  constructor() {
+    this.socket = io(socketserver);
+    this.socket.on('connect', () => { console.log('socket.io connected'); });
+    this.socket.on('disconnect', () => { console.log('socket.io disconnected'); });
+    this.socket.on('reconnect', () => { console.log('socket.io reconnected'); });
+    this.socket.on('error', (error) => { console.log(error); });
+  }
+
+  onPlayers(callback) {
+    this.socket.on('players', callback);
+  }
 }
 
 export function getHelloMessage() {
