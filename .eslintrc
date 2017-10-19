@@ -1,0 +1,24 @@
+{
+ "extends": "airbnb",
+ "plugins": [
+     "react",
+     "filenames",
+     "meteor",
+ ],
+ "rules": {
+     "import/no-unresolved": [0, { "commonjs": true }],
+     "no-underscore-dangle": "off",
+     "react/jsx-no-bind": [2, {
+         "ignoreRefs": false,
+         "allowArrowFunctions": false,
+         "allowBind": true,
+     }],
+     "camelcase": [2, { "properties": "always" }],
+     "filenames/filenames": [2, "^[A-Z][a-z]+(?:[A-Z][a-z]+)*$"],
+     "react/prefer-stateless-function": 0,
+     "no-undef": 2,
+     "prefer-arrow-callback": ["error", { "allowNamedFunctions": true }],
+     "no-else-return": 0,
+     "arrow-body-style": 0,
+   }
+}

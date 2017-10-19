@@ -10,15 +10,21 @@ For mockups of the page, please visit https://github.com/dartmouth-cs98/17f-weba
 
 We are using a chrome extension to inject javascript into a Wikipedia page or a pre-defined webpage. Other options include building a stand-alone web-app that loads in a picture or an i-frame, where we can also overlay the game mechanics onto. Currently, we are researching different methods of "injecting javascript" into the webpage for user interaction.
 
-To store our data models, we plan to use Amazon Web Services to store relevant user data and game locations. Our goal is to have a working MVP by the end of the term.
+On the backend we are using MongoDB and Mongoose to access the data. Visit https://github.com/dartmouth-cs98/webadventure-backend for the backend repo.
 
 ## Setup
 
-We are using vanilla Javascript and jquery right now to test javascript injection. We are considering options such as Node.js and Apache to build the game. This section will evolve as the game developers.
+We are using vanilla Javascript and jquery right now to test javascript injection. We are considering options such as Node.js to build the game. This section will evolve as the game developers.
 
 ## Deployment
 
-At this stage, we plan to deploy via Chrome extension using Google Developer Tools.
+At this stage, we plan to deploy via Chrome extension using Google Developer Tools (chrome://extensions).
+
+We've added in Babel to compile JS. Before reloading as an extension, run the command:
+```
+npm run build
+```
+Then add the unpacked extension to Chrome
 
 ## Authors
 
@@ -29,3 +35,4 @@ At this stage, we plan to deploy via Chrome extension using Google Developer Too
 * Barry Yang
 
 ## Acknowledgments
+Tim for being our shepherd and guiding light.
