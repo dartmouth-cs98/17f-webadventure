@@ -22,7 +22,7 @@
   },
   "scripts": {
     "test": "./node_modules/.bin/eslint src",
-    "build": "webpack webpack.config.js"
+    "build": "webpack webpack.config.js "
   },
   "repository": {
     "type": "git",
