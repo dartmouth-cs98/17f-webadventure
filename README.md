@@ -8,7 +8,7 @@ For mockups of the page, please visit https://github.com/dartmouth-cs98/17f-weba
 
 ## Architecture
 
-Front-end: We are using a chrome extension to inject javascript into a Wikipedia page or a pre-defined webpage. Other options include building a stand-alone web-app that loads in a picture or an i-frame, where we can also overlay the game mechanics onto. Currently, we are researching different methods of "injecting javascript" into the webpage for user interaction.
+We are using a chrome extension to inject javascript into a Wikipedia page or a pre-defined webpage. Other options include building a stand-alone web-app that loads in a picture or an i-frame, where we can also overlay the game mechanics onto. Currently, we are researching different methods of "injecting javascript" into the webpage for user interaction.
 
 On the backend we are using MongoDB and Mongoose to access the data. Visit https://github.com/dartmouth-cs98/webadventure-backend for the backend repo.
 
