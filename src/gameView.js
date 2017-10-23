@@ -30,14 +30,20 @@ class GameView {
   }
 
   getUp(sectionId, sentenceId, charId) {
-    const offsets = $(this.pageTree[sectionId][sentenceId][charId]).offset();
-    const section = this.pageTree[sectionId];
-    for (let i = sentenceId; i >= 0; i -= 1) {
-      const sentence = section[i];
-      for (let j = i === sentenceId ? charId : sentence.length - 1; j >= 0; j -= 1) {
-        const charOffsets = $(sentence[j]).offset();
-        if (charOffsets.top < offsets.top && charOffsets.left <= offsets.left) {
-          return [sectionId, i, j];
+    const selectedChar = $(this.pageTree[sectionId][sentenceId][charId]);
+    const offsets = selectedChar.offset();
+    const selectedMiddle = offsets.left + (selectedChar.width() / 2);
+    for (let i = sectionId; i >= 0; i -= 1) {
+      const section = this.pageTree[i];
+      for (let j = i === sectionId ? sentenceId : section[i].length - 1; j >= 0; j -= 1) {
+        const sentence = section[j];
+        for (let k = j === sentenceId ? charId : sentence.length - 1; k >= 0; k -= 1) {
+          const char = $(sentence[k]);
+          const charOffsets = char.offset();
+          if (charOffsets.top < offsets.top &&
+            GameView.isBounded(char, charOffsets, selectedMiddle)) {
+            return [i, j, k];
+          }
         }
       }
     }
@@ -61,14 +67,20 @@ class GameView {
 
 
   getDown(sectionId, sentenceId, charId) {
-    const offsets = $(this.pageTree[sectionId][sentenceId][charId]).offset();
-    const section = this.pageTree[sectionId];
-    for (let i = sentenceId; i < section.length; i += 1) {
-      const sentence = section[i];
-      for (let j = i === sentenceId ? charId : 0; j < sentence.length; j += 1) {
-        const charOffsets = $(sentence[j]).offset();
-        if (charOffsets.top > offsets.top && charOffsets.left >= offsets.left) {
-          return [sectionId, i, j];
+    const selectedChar = $(this.pageTree[sectionId][sentenceId][charId]);
+    const offsets = selectedChar.offset();
+    const selectedMiddle = offsets.left + (selectedChar.width() / 2);
+    for (let i = sectionId; i < this.pageTree.length; i += 1) {
+      const section = this.pageTree[i];
+      for (let j = i === sectionId ? sentenceId : 0; j < section.length; j += 1) {
+        const sentence = section[j];
+        for (let k = j === sentenceId ? charId : 0; k < sentence.length; k += 1) {
+          const char = $(sentence[k]);
+          const charOffsets = char.offset();
+          if (charOffsets.top > offsets.top
+            && GameView.isBounded(char, charOffsets, selectedMiddle)) {
+            return [i, j, k];
+          }
         }
       }
     }
@@ -88,6 +100,11 @@ class GameView {
       }
     }
     return null;
+  }
+
+  static isBounded(char, charOffsets, selectedMiddle) {
+    const rightEdge = charOffsets.left + char.width();
+    return charOffsets.left <= selectedMiddle && rightEdge >= selectedMiddle;
   }
 }
 
