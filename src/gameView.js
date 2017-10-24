@@ -35,7 +35,7 @@ class GameView {
     const selectedMiddle = offsets.left + (selectedChar.width() / 2);
     for (let i = sectionId; i >= 0; i -= 1) {
       const section = this.pageTree[i];
-      for (let j = i === sectionId ? sentenceId : section[i].length - 1; j >= 0; j -= 1) {
+      for (let j = i === sectionId ? sentenceId : section.length - 1; j >= 0; j -= 1) {
         const sentence = section[j];
         for (let k = j === sentenceId ? charId : sentence.length - 1; k >= 0; k -= 1) {
           const char = $(sentence[k]);
