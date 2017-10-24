@@ -1,0 +1,37 @@
+{
+  "name": "17f-webadventure",
+  "version": "1.0.0",
+  "description": "Web Adventure Chrome Extension Game",
+  "main": "background.js",
+  "dependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "jquery": "^3.2.1",
+    "socket.io-client": "^2.0.3"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "eslint": "^4.9.0",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-plugin-filenames": "^1.2.0",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-jsx-a11y": "^6.0.2",
+    "eslint-plugin-react": "^7.4.0",
+    "webpack": "^3.8.1"
+  },
+  "scripts": {
+    "test": "./node_modules/.bin/eslint src",
+    "build": "webpack webpack.config.js "
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dartmouth-cs98/17f-webadventure.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dartmouth-cs98/17f-webadventure/issues"
+  },
+  "homepage": "https://github.com/dartmouth-cs98/17f-webadventure#readme"
+}
