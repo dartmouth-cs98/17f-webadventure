@@ -12,8 +12,10 @@ class GameDriver {
     this.nextMove = RIGHT;
     this.gameView = new GameView();
     this.curLocation = [0, 0, 0];
+    this.moveInterval = null;
 
     this.startGame = this.startGame.bind(this);
+    this.stopMovement = this.stopMovement.bind(this);
     this.makeMove = this.makeMove.bind(this);
     this.moveSelection = this.moveSelection.bind(this);
   }
@@ -21,24 +23,26 @@ class GameDriver {
 
   startGame() {
     this.gameView.highlightChar(this.curLocation[0], this.curLocation[1], this.curLocation[2]);
-    setInterval(this.makeMove, 250);
+    this.moveInterval = setInterval(this.makeMove, 250);
+  }
+  endGame() {
+    this.stopMovement();
+    this.gameView.endGame();
+  }
+
+  stopMovement() {
+    clearInterval(this.moveInterval);
   }
 
   makeMove() {
     const loc = this.curLocation;
     const moves = this.gameView.getMoves(loc[0], loc[1], loc[2]);
-    if (moves[this.nextMove]) {
+    if (moves[this.nextMove] && this.gameView.isEmptyLoc(moves[this.nextMove])) {
       const nextLoc = moves[this.nextMove];
       this.gameView.highlightChar(nextLoc[0], nextLoc[1], nextLoc[2]);
       this.curLocation = nextLoc;
     } else {
-      console.log('badmove');
-      // moves.forEach((nextLoc) => {
-      //   if (nextLoc) {
-      //     this.gameView.highlightChar(nextLoc[0], nextLoc[1], nextLoc[2]);
-      //     this.curLocation = nextLoc;
-      //   }
-      // });
+      this.endGame();
     }
   }
 
