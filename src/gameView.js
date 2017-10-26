@@ -102,9 +102,21 @@ class GameView {
     return null;
   }
 
+  endGame() {
+    console.log(this.pageTree[0][0][0]);
+    console.log('Game Over');
+  }
+
   static isBounded(char, charOffsets, selectedMiddle) {
     const rightEdge = charOffsets.left + char.width();
     return charOffsets.left <= selectedMiddle && rightEdge >= selectedMiddle;
+  }
+
+  isEmptyLoc(loc) {
+    const char = $(this.pageTree[loc[0]][loc[1]][loc[2]]);
+    console.log(char.css('background-color'));
+    console.log(char.css('background-color') === 'rgba(0, 0, 0, 0)');
+    return (char.css('background-color') === 'rgba(0, 0, 0, 0)');
   }
 }
 
