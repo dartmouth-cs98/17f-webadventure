@@ -6,7 +6,6 @@ const RIGHT = 1;
 const DOWN = 2;
 const LEFT = 3;
 
-
 class GameDriver {
   constructor() {
     this.nextMove = RIGHT;
@@ -19,7 +18,6 @@ class GameDriver {
     this.makeMove = this.makeMove.bind(this);
     this.moveSelection = this.moveSelection.bind(this);
   }
-
 
   startGame() {
     this.gameView.highlightChar(this.curLocation[0], this.curLocation[1], this.curLocation[2]);
