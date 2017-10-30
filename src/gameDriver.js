@@ -1,5 +1,5 @@
 import GameView from './gameView';
-// import GameData from './gameData';
+import { GameData } from './gameData';
 
 const UP = 0;
 const RIGHT = 1;
@@ -12,6 +12,7 @@ class GameDriver {
     this.gameView = new GameView();
     this.curLocation = [0, 0, 0];
     this.moveInterval = null;
+    this.gameData = new GameData();
 
     this.startGame = this.startGame.bind(this);
     this.stopMovement = this.stopMovement.bind(this);
@@ -19,9 +20,13 @@ class GameDriver {
     this.moveSelection = this.moveSelection.bind(this);
   }
 
-  startGame() {
+  startGame(username = 'random', playerColor = { r: 100, g: 100, b: 100 }) {
     this.gameView.highlightChar(this.curLocation[0], this.curLocation[1], this.curLocation[2]);
     this.moveInterval = setInterval(this.makeMove, 250);
+    this.username = username;
+    this.gameData.createUser(username);
+    this.playerColor = playerColor;
+    this.curScore = 0;
   }
   endGame() {
     this.stopMovement();
@@ -39,6 +44,14 @@ class GameDriver {
       const nextLoc = moves[this.nextMove];
       this.gameView.highlightChar(nextLoc[0], nextLoc[1], nextLoc[2]);
       this.curLocation = nextLoc;
+      const updateLoc = {
+        url: 'www.wikipedia.com',
+        sectionID: nextLoc[0],
+        sentenceID: nextLoc[1],
+        character: nextLoc[2],
+      };
+      this.curScore = this.curScore + 1;
+      this.gameData.updateUser(this.username, this.curScore, this.playerColor, updateLoc);
     } else {
       this.endGame();
     }
