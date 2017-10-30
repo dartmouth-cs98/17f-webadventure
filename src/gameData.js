@@ -16,6 +16,19 @@ export class GameData {
   onPlayers(callback) {
     this.socket.on('players', callback);
   }
+
+  createUser(username) {
+    this.socket.emit('signup', username, (user) => {
+    });
+  }
+
+  updateUser(username, curScore, playerColor, location) {
+    const fields = { curScore, playerColor, location };
+    this.socket.emit(
+      'updatePlayer', username, fields,
+      (result) => { console.log(result); },
+    );
+  }
 }
 
 export function getHelloMessage() {
