@@ -26,6 +26,11 @@ npm run build
 ```
 Then add the unpacked extension to Chrome
 
+Run mongod and the [backend](https://github.com/dartmouth-cs98/webadventure-backend)
+Go on [localhost:9090](localhost:9090) and click on the extension
+
+Have fun!
+
 ## Authors
 
 * Imanol Avendaño
