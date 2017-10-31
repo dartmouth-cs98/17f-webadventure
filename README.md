@@ -17,7 +17,6 @@ On the backend we are using MongoDB and Mongoose to access the data. Visit https
 
 The frontend and backend communicate via web sockets (using Socket.io).
 
-
 ## Setup
 
 We are using vanilla Javascript and jquery right now to test javascript injection. We are considering options such as Node.js to build the game. This section will evolve as the game developers.
@@ -40,7 +39,7 @@ Have fun!
 ## Gameplay
 To move the snake make sure the Wikipedia page in focus (click on it if it's not) and move using the keys 'W', 'A', 'S', 'D'.
 
-The edges of the game are the top and bottom of any given section. Avoid going into an edge and the snake's trail. 
+The edges of the game are the top and bottom of any given section. Avoid going into an edge and the snake's trail.
 
 ## Authors
 
