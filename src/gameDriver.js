@@ -42,7 +42,8 @@ class GameDriver {
     const moves = this.gameView.getMoves(loc[0], loc[1], loc[2]);
     if (moves[this.nextMove] && this.gameView.isEmptyLoc(moves[this.nextMove])) {
       const nextLoc = moves[this.nextMove];
-      this.gameView.highlightChar(nextLoc[0], nextLoc[1], nextLoc[2]);
+      const colorString = `rgb(${this.playerColor.r}, ${this.playerColor.g}, ${this.playerColor.b})`;
+      this.gameView.highlightChar(nextLoc[0], nextLoc[1], nextLoc[2], colorString);
       this.curLocation = nextLoc;
       const updateLoc = {
         url: 'www.wikipedia.com',
