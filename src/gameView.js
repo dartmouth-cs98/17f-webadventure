@@ -8,25 +8,25 @@ class GameView {
   createTree() {
     const textElement = $('#mw-content-text').children()[0];
     const sections = $(textElement).children('p').map((x, item) => {
-      const sentenceToCharSpans = sentence => sentence.split(' ').map(word =>
+      const sentenceToWordSpans = sentence => sentence.split(' ').map(word =>
         `<span>${word} </span>`);
       const sentences = $(item).text().match(/[^.!?]+[.!?]*/g) ? $(item).text().match(/[^.!?]+[.!?]*/g) : [];
-      const charSpans = sentences.map(sentenceToCharSpans);
-      $(item).html(charSpans.map(sentence => `<span>${sentence.join('')}</span>`).join(''));
+      const wordSpans = sentences.map(sentenceToWordSpans);
+      $(item).html(wordSpans.map(sentence => `<span>${sentence.join('')}</span>`).join(''));
       return [$(item).children().map((index, child) => $(child).children())];
     });
     this.pageTree = sections;
   }
 
-  highlightChar(sectionId, sentenceId, charId, color = 'yellow') {
-    $(this.pageTree[sectionId][sentenceId][charId]).css('background-color', color);
+  highlightWord(sectionId, sentenceId, wordId, color = 'yellow') {
+    $(this.pageTree[sectionId][sentenceId][wordId]).css('background-color', color);
   }
 
-  getMoves(sectionId, sentenceId, charId) {
-    return [this.getUp(sectionId, sentenceId, charId),
-      this.getRight(sectionId, sentenceId, charId),
-      this.getDown(sectionId, sentenceId, charId),
-      this.getLeft(sectionId, sentenceId, charId)];
+  getMoves(sectionId, sentenceId, wordId) {
+    return [this.getUp(sectionId, sentenceId, wordId),
+      this.getRight(sectionId, sentenceId, wordId),
+      this.getDown(sectionId, sentenceId, wordId),
+      this.getLeft(sectionId, sentenceId, wordId)];
   }
 
   parseBackward(startLoc, condition) {
@@ -35,9 +35,9 @@ class GameView {
       for (let j = i === startLoc.sectionId ? startLoc.sentenceId : section.length - 1;
         j >= 0; j -= 1) {
         const sentence = section[j];
-        for (let k = j === startLoc.sentenceId ? startLoc.charId : sentence.length - 1;
+        for (let k = j === startLoc.sentenceId ? startLoc.wordId : sentence.length - 1;
           k >= 0; k -= 1) {
-          const loc = { sectionId: i, sentenceId: j, charId: k };
+          const loc = { sectionId: i, sentenceId: j, wordId: k };
           if (condition(loc)) { return [i, j, k]; }
         }
       }
@@ -50,8 +50,8 @@ class GameView {
       const section = this.pageTree[i];
       for (let j = i === startLoc.sectionId ? startLoc.sentenceId : 0; j < section.length; j += 1) {
         const sentence = section[j];
-        for (let k = j === startLoc.sentenceId ? startLoc.charId : 0; k < sentence.length; k += 1) {
-          const loc = { sectionId: i, sentenceId: j, charId: k };
+        for (let k = j === startLoc.sentenceId ? startLoc.wordId : 0; k < sentence.length; k += 1) {
+          const loc = { sectionId: i, sentenceId: j, wordId: k };
           if (condition(loc)) { return [i, j, k]; }
         }
       }
@@ -60,45 +60,45 @@ class GameView {
   }
 
 
-  getUp(sectionId, sentenceId, charId) {
-    const selectedChar = $(this.pageTree[sectionId][sentenceId][charId]);
-    const offsets = selectedChar.offset();
-    const selectedMiddle = offsets.left + (selectedChar.width() / 2);
-    const startLoc = { sectionId, sentenceId, charId };
+  getUp(sectionId, sentenceId, wordId) {
+    const selectedWord = $(this.pageTree[sectionId][sentenceId][wordId]);
+    const offsets = selectedWord.offset();
+    const selectedMiddle = offsets.left + (selectedWord.width() / 2);
+    const startLoc = { sectionId, sentenceId, wordId };
     const condition = (loc) => {
-      const char = $(this.pageTree[loc.sectionId][loc.sentenceId][loc.charId]);
-      const charOffsets = char.offset();
-      return charOffsets.top < offsets.top &&
-        GameView.isBounded(char, charOffsets, selectedMiddle);
+      const word = $(this.pageTree[loc.sectionId][loc.sentenceId][loc.wordId]);
+      const wordOffsets = word.offset();
+      return wordOffsets.top < offsets.top &&
+        GameView.isBounded(word, wordOffsets, selectedMiddle);
     };
     return this.parseBackward(startLoc, condition);
   }
 
-  getRight(sectionId, sentenceId, charId) {
-    const startLoc = { sectionId, sentenceId, charId };
+  getRight(sectionId, sentenceId, wordId) {
+    const startLoc = { sectionId, sentenceId, wordId };
     const condition = loc =>
-      !(sectionId === loc.sectionId && sentenceId === loc.sentenceId && charId === loc.charId);
+      !(sectionId === loc.sectionId && sentenceId === loc.sentenceId && wordId === loc.wordId);
     return this.parseForward(startLoc, condition);
   }
 
-  getDown(sectionId, sentenceId, charId) {
-    const selectedChar = $(this.pageTree[sectionId][sentenceId][charId]);
-    const offsets = selectedChar.offset();
-    const selectedMiddle = offsets.left + (selectedChar.width() / 2);
-    const startLoc = { sectionId, sentenceId, charId };
+  getDown(sectionId, sentenceId, wordId) {
+    const selectedWord = $(this.pageTree[sectionId][sentenceId][wordId]);
+    const offsets = selectedWord.offset();
+    const selectedMiddle = offsets.left + (selectedWord.width() / 2);
+    const startLoc = { sectionId, sentenceId, wordId };
     const condition = (loc) => {
-      const char = $(this.pageTree[loc.sectionId][loc.sentenceId][loc.charId]);
-      const charOffsets = char.offset();
-      return charOffsets.top > offsets.top &&
-        GameView.isBounded(char, charOffsets, selectedMiddle);
+      const word = $(this.pageTree[loc.sectionId][loc.sentenceId][loc.wordId]);
+      const wordOffsets = word.offset();
+      return wordOffsets.top > offsets.top &&
+        GameView.isBounded(word, wordOffsets, selectedMiddle);
     };
     return this.parseForward(startLoc, condition);
   }
 
-  getLeft(sectionId, sentenceId, charId) {
-    const startLoc = { sectionId, sentenceId, charId };
+  getLeft(sectionId, sentenceId, wordId) {
+    const startLoc = { sectionId, sentenceId, wordId };
     const condition = loc =>
-      !(sectionId === loc.sectionId && sentenceId === loc.sentenceId && charId === loc.charId);
+      !(sectionId === loc.sectionId && sentenceId === loc.sentenceId && wordId === loc.wordId);
     return this.parseBackward(startLoc, condition);
   }
 
@@ -107,14 +107,14 @@ class GameView {
     console.log('Game Over');
   }
 
-  static isBounded(char, charOffsets, selectedMiddle) {
-    const rightEdge = charOffsets.left + char.width();
-    return charOffsets.left <= selectedMiddle && rightEdge >= selectedMiddle;
+  static isBounded(word, wordOffsets, selectedMiddle) {
+    const rightEdge = wordOffsets.left + word.width();
+    return wordOffsets.left <= selectedMiddle && rightEdge >= selectedMiddle;
   }
 
   isEmptyLoc(loc) {
-    const char = $(this.pageTree[loc[0]][loc[1]][loc[2]]);
-    return (char.css('background-color') === 'rgba(0, 0, 0, 0)');
+    const word = $(this.pageTree[loc[0]][loc[1]][loc[2]]);
+    return (word.css('background-color') === 'rgba(0, 0, 0, 0)');
   }
 }
 
