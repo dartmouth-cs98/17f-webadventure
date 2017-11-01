@@ -4,7 +4,7 @@ import io from 'socket.io-client';
 const socketserver = 'http://localhost:9090';
 const URL = 'http://localhost:9090/api';
 
-export class GameData {
+export default class GameData {
   constructor() {
     this.socket = io(socketserver);
     this.socket.on('connect', () => { console.log('socket.io connected'); });
@@ -26,14 +26,7 @@ export class GameData {
     const fields = { curScore, playerColor, location };
     this.socket.emit(
       'updatePlayer', username, fields,
-      (result) => { console.log(result); },
+      (result) => { },
     );
   }
-}
-
-export function getHelloMessage() {
-  const xhr = new XMLHttpRequest();
-  xhr.open('GET', `${URL}/`, true);
-  xhr.onreadystatechange = () => { console.log(xhr.response); };
-  xhr.send();
 }
