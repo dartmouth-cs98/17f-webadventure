@@ -1,5 +1,6 @@
 /* eslint no-undef: "off" */
 import GameDriver from './gameDriver';
+import GameView from './gameView';
 
 console.log('hi');
 
@@ -17,7 +18,9 @@ console.log('hi');
 //   }
 // });
 
-const gameDriver = new GameDriver();
-
+const gameView = new GameView();
+const gameDriver = new GameDriver(gameView);
 window.addEventListener('keydown', gameDriver.moveSelection);
-gameDriver.startGame();
+GameView.startPopup((username, playerColor) => gameDriver.startGame(username, playerColor));
+
+// gameDriver.startGame();
