@@ -1,22 +1,23 @@
+/* eslint no-alert: "off", no-undef: "off" */
 import $ from 'jquery';
 
-const START_POPUP_DIV = `
-<div id="startPopup" style="
-    position: fixed;
-    left: 50vw;
-    top: 50vh;
-    background-color: white;
-    padding: 20px;
-    border: 1px solid lightgrey;
-    border-radius: 5px;
-    " >
-  <input name="username" placeholder="Username"/>
-  <input name="r" type="number" placeholder="Color R" />
-  <input name="g" type="number" placeholder="Color G" />
-  <input name="b" type="number" placeholder="Color B" />
-  <button>Start</button>
-</div>
-`;
+// const START_POPUP_DIV = `
+// <div id="startPopup" style="
+//     position: fixed;
+//     left: 50vw;
+//     top: 50vh;
+//     background-color: white;
+//     padding: 20px;
+//     border: 1px solid lightgrey;
+//     border-radius: 5px;
+//     " >
+//   <input name="username" placeholder="Username"/>
+//   <input name="r" type="number" placeholder="Color R" />
+//   <input name="g" type="number" placeholder="Color G" />
+//   <input name="b" type="number" placeholder="Color B" />
+//   <button>Start</button>
+// </div>
+// `;
 
 
 class GameView {
@@ -25,19 +26,25 @@ class GameView {
   }
 
   static startPopup(callback) {
-    $('body').append(START_POPUP_DIV);
-    const onClick = () => {
-      const inputs = $('#startPopup').children('input');
-      const username = $(inputs[0]).val();
-      const playerColor = {
-        r: $(inputs[1]).val(),
-        g: $(inputs[2]).val(),
-        b: $(inputs[3]).val(),
-      };
-      $('#startPopup').remove();
-      setTimeout(() => callback(username, playerColor), 100);
-    };
-    $('#startPopup').children('button').click(onClick);
+    const username = prompt('Enter a username');
+    const r = prompt('Enter R color value');
+    const g = prompt('Enter G color value');
+    const b = prompt('Enter B color value');
+    const playerColor = { r, g, b };
+    callback(username, playerColor);
+    // $('body').append(START_POPUP_DIV);
+    // const onClick = () => {
+    //   const inputs = $('#startPopup').children('input');
+    //   const username = $(inputs[0]).val();
+    //   const playerColor = {
+    //     r: $(inputs[1]).val(),
+    //     g: $(inputs[2]).val(),
+    //     b: $(inputs[3]).val(),
+    //   };
+    //   $('#startPopup').remove();
+    //   setTimeout(() => callback(username, playerColor), 100);
+    // };
+    // $('#startPopup').children('button').click(onClick);
   }
 
   createTree() {
