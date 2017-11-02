@@ -23,7 +23,7 @@ class GameDriver {
 
   startGame(username = 'random', playerColor = { r: 100, g: 100, b: 100 }) {
     this.username = username;
-    this.gameData.createUser(username);
+    this.gameData.createUser(username, playerColor);
     this.playerColor = playerColor;
     this.gameData.onPlayers(this.getPlayers);
     const colorString = `rgb(${playerColor.r}, ${playerColor.g}, ${playerColor.b})`;
@@ -35,6 +35,7 @@ class GameDriver {
   endGame() {
     this.stopMovement();
     this.gameView.endGame();
+    this.gameData.removeUserFromGame(this.username);
   }
 
   stopMovement() {
@@ -64,11 +65,12 @@ class GameDriver {
 
   getPlayers(players) {
     players.forEach((player) => {
-      console.log(player);
-      const loc = [player.curLocation.sectionID,
-        player.curLocation.sentenceID, player.curLocation.character];
-      const colorString = `rgb(${player.playerColor.r}, ${player.playerColor.g}, ${player.playerColor.b})`;
-      this.gameView.highlightWord(loc[0], loc[1], loc[2], colorString);
+      if (player.curLocation) {
+        const loc = [player.curLocation.sectionID,
+          player.curLocation.sentenceID, player.curLocation.character];
+        const colorString = `rgb(${player.playerColor.r}, ${player.playerColor.g}, ${player.playerColor.b})`;
+        this.gameView.highlightWord(loc[0], loc[1], loc[2], colorString);
+      }
     });
   }
 

@@ -17,16 +17,17 @@ export default class GameData {
     this.socket.on('players', callback);
   }
 
-  createUser(username) {
-    this.socket.emit('signup', username, (user) => {
+  createUser(username, playerColor) {
+    this.socket.emit('signup', username, playerColor, (user) => {
     });
   }
 
   updateUser(username, curScore, playerColor, location) {
     const fields = { curScore, playerColor, location };
-    this.socket.emit(
-      'updatePlayer', username, fields,
-      (result) => { },
-    );
+    this.socket.emit('updatePlayer', username, fields);
+  }
+
+  removeUserFromGame(username) {
+    this.socket.emit('gameOver', username);
   }
 }
