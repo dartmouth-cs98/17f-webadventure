@@ -34,8 +34,8 @@ class GameDriver {
   }
   endGame() {
     this.stopMovement();
-    this.gameView.endGame();
     this.gameData.removeUserFromGame(this.username);
+    GameView.endGamePopup();
   }
 
   stopMovement() {

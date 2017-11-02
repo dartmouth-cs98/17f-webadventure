@@ -20,6 +20,21 @@ import $ from 'jquery';
 // `;
 
 
+const END_POPUP_DIV =
+`<div style="
+    position: fixed;
+    text-align: center;
+    width: 200px;
+    font-size: 36px;
+    border: 1px solid lightgrey;
+    border-radius: 5px;
+    background-color: white;
+    left: 40vw;
+    top: 50vh;
+    box-shadow: 10px 10px 5px #888888;
+">GAME OVER
+</div>`;
+
 class GameView {
   constructor() {
     this.createTree();
@@ -45,6 +60,10 @@ class GameView {
     //   setTimeout(() => callback(username, playerColor), 100);
     // };
     // $('#startPopup').children('button').click(onClick);
+  }
+
+  static endGamePopup() {
+    $('body').append(END_POPUP_DIV);
   }
 
   createTree() {
@@ -142,11 +161,6 @@ class GameView {
     const condition = loc =>
       !(sectionId === loc.sectionId && sentenceId === loc.sentenceId && wordId === loc.wordId);
     return this.parseBackward(startLoc, condition);
-  }
-
-  endGame() {
-    console.log(this.pageTree[0][0][0]);
-    console.log('Game Over');
   }
 
   static isBounded(word, wordOffsets, selectedMiddle) {
