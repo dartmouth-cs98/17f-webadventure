@@ -1,8 +1,69 @@
+/* eslint no-alert: "off", no-undef: "off" */
 import $ from 'jquery';
+
+// const START_POPUP_DIV = `
+// <div id="startPopup" style="
+//     position: fixed;
+//     left: 50vw;
+//     top: 50vh;
+//     background-color: white;
+//     padding: 20px;
+//     border: 1px solid lightgrey;
+//     border-radius: 5px;
+//     " >
+//   <input name="username" placeholder="Username"/>
+//   <input name="r" type="number" placeholder="Color R" />
+//   <input name="g" type="number" placeholder="Color G" />
+//   <input name="b" type="number" placeholder="Color B" />
+//   <button>Start</button>
+// </div>
+// `;
+
+
+const END_POPUP_DIV =
+`<div style="
+    position: fixed;
+    text-align: center;
+    width: 200px;
+    font-size: 36px;
+    border: 1px solid lightgrey;
+    border-radius: 5px;
+    background-color: white;
+    left: 40vw;
+    top: 50vh;
+    box-shadow: 10px 10px 5px #888888;
+">GAME OVER
+</div>`;
 
 class GameView {
   constructor() {
     this.createTree();
+  }
+
+  static startPopup(callback) {
+    const username = prompt('Enter a username');
+    const r = prompt('Enter R color value');
+    const g = prompt('Enter G color value');
+    const b = prompt('Enter B color value');
+    const playerColor = { r, g, b };
+    callback(username, playerColor);
+    // $('body').append(START_POPUP_DIV);
+    // const onClick = () => {
+    //   const inputs = $('#startPopup').children('input');
+    //   const username = $(inputs[0]).val();
+    //   const playerColor = {
+    //     r: $(inputs[1]).val(),
+    //     g: $(inputs[2]).val(),
+    //     b: $(inputs[3]).val(),
+    //   };
+    //   $('#startPopup').remove();
+    //   setTimeout(() => callback(username, playerColor), 100);
+    // };
+    // $('#startPopup').children('button').click(onClick);
+  }
+
+  static endGamePopup() {
+    $('body').append(END_POPUP_DIV);
   }
 
   createTree() {
@@ -100,11 +161,6 @@ class GameView {
     const condition = loc =>
       !(sectionId === loc.sectionId && sentenceId === loc.sentenceId && wordId === loc.wordId);
     return this.parseBackward(startLoc, condition);
-  }
-
-  endGame() {
-    console.log(this.pageTree[0][0][0]);
-    console.log('Game Over');
   }
 
   static isBounded(word, wordOffsets, selectedMiddle) {
