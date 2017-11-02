@@ -5,6 +5,19 @@ class GameView {
     this.createTree();
   }
 
+  showPopup() {
+    console.log("in show popup");
+    var newDiv = document.createElement("div");
+    // var newContent = document.createTextNode("Hi there and greetings!"); 
+    // newDiv.appendChild(newContent); //add the text node to the newly created div. 
+    // newDiv.src = 'kitten.jpeg';
+    newDiv.innerHTML = '<img src="' + "kitten.jpeg" + '" />';
+    // add the newly created element and its content into the DOM 
+    // var currentDiv = document.getElementById("body"); 
+    document.body.appendChild(newDiv);
+    // document.body.insertBefore(newDiv, currentDiv);
+  }
+
   createTree() {
     const textElement = $('#mw-content-text').children()[0];
     const sections = $(textElement).children('p').map((x, item) => {
