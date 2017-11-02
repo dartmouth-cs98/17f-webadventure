@@ -7,12 +7,12 @@ const DOWN = 2;
 const LEFT = 3;
 
 class GameDriver {
-  constructor() {
+  constructor(gameView = new GameView()) {
     this.nextMove = RIGHT;
     this.curLocation = [0, 0, 0];
     this.moveInterval = null;
     this.gameData = new GameData();
-    this.gameView = new GameView();
+    this.gameView = gameView;
 
     this.startGame = this.startGame.bind(this);
     this.stopMovement = this.stopMovement.bind(this);
@@ -64,6 +64,7 @@ class GameDriver {
 
   getPlayers(players) {
     players.forEach((player) => {
+      console.log(player);
       const loc = [player.curLocation.sectionID,
         player.curLocation.sentenceID, player.curLocation.character];
       const colorString = `rgb(${player.playerColor.r}, ${player.playerColor.g}, ${player.playerColor.b})`;

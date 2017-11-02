@@ -18,8 +18,8 @@ console.log('hi');
 //   }
 // });
 
-const gameDriver = new GameDriver();
-// const gameView = new GameView();
+const gameView = new GameView();
+const gameDriver = new GameDriver(gameView);
 window.addEventListener('keydown', gameDriver.moveSelection);
 GameView.startPopup((username, playerColor) => gameDriver.startGame(username, playerColor));
 
