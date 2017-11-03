@@ -1,8 +1,7 @@
 /* eslint no-undef: "off", no-unused-vars: "off" */
 import io from 'socket.io-client';
 
-const socketserver = 'http://localhost:9090';
-const URL = 'http://localhost:9090/api';
+const socketserver = 'https://webadventure-api.herokuapp.com/';
 
 export default class GameData {
   constructor() {
