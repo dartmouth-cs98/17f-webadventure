@@ -1,7 +1,11 @@
 /* questions.js class */
 
-function badTrail(gameModel, playerId) {
+function badTrail() {
   return false;
+}
+
+function selectNoun() {
+  return 0;
 }
 
 /* generates a question, an answer, and a score */
@@ -29,9 +33,6 @@ function generateQAS(gameModel, trail) {
   return [question, answer, score];
 }
 
-function selectNoun() {
-  return 0;
-}
 
 class Questions {
   constructor(gameModel, playerId) {
@@ -40,7 +41,7 @@ class Questions {
     this.location = gameModel.getPlayer(playerId).getLoc();
     this.trail = gameModel.getPlayer(playerId).getTrail();
 
-    if (badTrail(gameModel, playerId)) {
+    if (badTrail()) {
       return false;
     }
 
