@@ -172,6 +172,23 @@ class GameView {
     const word = $(this.pageTree[loc[0]][loc[1]][loc[2]]);
     return (word.css('background-color') === 'rgba(0, 0, 0, 0)');
   }
+
+  randStart() {
+    // each paragraph is a section
+    let randSect = Math.floor(Math.random() * this.pageTree.length);
+    while (this.pageTree[randSect].length < 1) {
+      randSect = Math.floor(Math.random() * this.pageTree.length);
+    }
+
+    let randSentence = Math.floor(Math.random() * this.pageTree[randSect].length);
+    while (this.pageTree[randSect][randSentence].length < 1) {
+      randSentence = Math.floor(Math.random() * this.pageTree[randSect].length);
+    }
+
+    const randWord = Math.floor(Math.random() * this.pageTree[randSect][randSentence].length);
+
+    return [randSect, randSentence, randWord];
+  }
 }
 
 export default GameView;
