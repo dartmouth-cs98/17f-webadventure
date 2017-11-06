@@ -19,6 +19,9 @@ class GameDriver {
     this.stopMovement = this.stopMovement.bind(this);
     this.makeMove = this.makeMove.bind(this);
     this.moveSelection = this.moveSelection.bind(this);
+
+    console.log("lastmove is "+this.nextmove);
+    this.lastMove = this.nextmove;
   }
 
   startGame(username = 'random', playerColor = { r: 100, g: 100, b: 100 }) {
@@ -38,15 +41,11 @@ class GameDriver {
     clearInterval(this.moveInterval);
   }
 
+
+
   makeMove() {
     const loc = this.curLocation;
     const moves = this.gameView.getMoves(loc[0], loc[1], loc[2]);
-    if(this.nextMove == Q){
-      console.log("q detected!");
-      this.stopMovement();
-      this.gameView.showPopup();
-      return;
-    }
     if (moves[this.nextMove] && this.gameView.isEmptyLoc(moves[this.nextMove])) {
       const nextLoc = moves[this.nextMove];
       this.gameView.highlightChar(nextLoc[0], nextLoc[1], nextLoc[2]);
@@ -78,16 +77,30 @@ class GameDriver {
         break;
       case 83:
         this.nextMove = DOWN;
-        console.log("down 83 was pressed!");
         break;
       case 81:
         console.log("q was pressed!");
+        this.lastMove = this.nextMove;
         this.nextMove = Q;
+        console.log("nextMove is Q!");
+        this.stopMovement();
+        console.log("stopped movement!");
+      //   if(this.nextMove == Q){
+      // console.log("q detected!");
+      // this.stopMovement();
+        this.gameView.showPopup();
+      // return;
+      // }
+
+        // const startMovement = () => this.moveInterval = setInterval(this.makeMove, 250)
+        // console.log("started movement!");
         break;
-      case 82:
+      case 82: // r is pressed
         console.log("resume");
-        setInterval(this.makeMove, 250);
-        this.nextMove = RIGHT;
+        this.gameView.closePopup();
+        this.moveInterval = setInterval(this.makeMove, 250);
+        // setInterval(this.makeMove, 250);
+        this.nextMove = this.lastMove;
         break;
       default:
         this.nextMove = this.nextMove;
