@@ -178,12 +178,10 @@ class GameView {
     while (this.pageTree[randSect].length < 1) {
       randSect = Math.floor(Math.random() * this.pageTree.length);
     }
-
     let randSentence = Math.floor(Math.random() * this.pageTree[randSect].length);
     while (this.pageTree[randSect][randSentence].length < 1) {
       randSentence = Math.floor(Math.random() * this.pageTree[randSect].length);
     }
-    
     let randWord = Math.floor(Math.random() * this.pageTree[randSect][randSentence].length);
     while (this.isEmptyLoc([randSect, randSentence, randWord])) {
       randWord = Math.floor(Math.random() * this.pageTree[randSect][randSentence].length);
