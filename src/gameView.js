@@ -173,18 +173,24 @@ class GameView {
     return (word.css('background-color') === 'rgba(0, 0, 0, 0)');
   }
 
-  randStart() {
+  randomLoc() {
     let randSect = Math.floor(Math.random() * this.pageTree.length);
-    while (this.pageTree[randSect].length < 1) {
+    let count = 0;
+    while (this.pageTree[randSect].length < 1 && count < 100) {
       randSect = Math.floor(Math.random() * this.pageTree.length);
+      count += 1;
     }
     let randSentence = Math.floor(Math.random() * this.pageTree[randSect].length);
-    while (this.pageTree[randSect][randSentence].length < 1) {
+    count = 0;
+    while (this.pageTree[randSect][randSentence].length < 1 && count < 100) {
       randSentence = Math.floor(Math.random() * this.pageTree[randSect].length);
+      count += 1;
     }
     let randWord = Math.floor(Math.random() * this.pageTree[randSect][randSentence].length);
-    while (this.isEmptyLoc([randSect, randSentence, randWord])) {
+    count = 0;
+    while (this.isEmptyLoc([randSect, randSentence, randWord]) && count < 100) {
       randWord = Math.floor(Math.random() * this.pageTree[randSect][randSentence].length);
+      count += 1;
     }
     return [randSect, randSentence, randWord];
   }
