@@ -9,7 +9,6 @@ const LEFT = 3;
 class GameDriver {
   constructor(gameView = new GameView()) {
     this.nextMove = RIGHT;
-    this.curLocation = [0, 0, 0];
     this.moveInterval = null;
     this.gameData = new GameData();
     this.gameView = gameView;
@@ -25,6 +24,7 @@ class GameDriver {
     this.username = username;
     this.gameData.createUser(username, playerColor);
     this.playerColor = playerColor;
+    this.curLocation = this.gameView.randomLoc();
     this.gameData.onPlayers(this.getPlayers);
     const colorString = `rgb(${playerColor.r}, ${playerColor.g}, ${playerColor.b})`;
     this.gameView
