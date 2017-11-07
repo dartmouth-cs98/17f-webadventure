@@ -19,13 +19,14 @@ import $ from 'jquery';
 // </div>
 // `;
 
-const PLAYER_DIV =
-`<div id="%s"
+const PLAYER_DIV = id =>
+  `<div id="${id}"
   style="
     position: absolute;
   "
 >
-  <img src="assets/nyancat_big.gif" alt="nyan cat"/>
+  <img src="http://emojis.slackmojis.com/emojis/images/1450458551/184/nyancat_big.gif?1450458551"
+  alt="nyan cat"/>
 </div>`;
 
 const END_POPUP_DIV =
@@ -148,10 +149,10 @@ class GameView {
     if (playerDivId) {
       let playerDiv = $(`#${playerDivId}`);
       if (!playerDiv.length) {
-        $('body').append(PLAYER_DIV.format(playerDivId));
+        $('body').append(PLAYER_DIV(playerDivId));
         playerDiv = $(`#${playerDivId}`);
       }
-      playerDiv.css('bottom', $(span).offset().top);
+      playerDiv.css('top', $(span).offset().top);
       playerDiv.css('left', $(span).offset().left);
     }
   }
