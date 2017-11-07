@@ -21,7 +21,7 @@ import $ from 'jquery';
 
 
 const END_POPUP_DIV =
-`<div style="
+`<div id="webAdv-gameover" style="
     position: fixed;
     text-align: center;
     width: 200px;
@@ -75,7 +75,7 @@ const princetonOrange = {
     b: 33,
   },
 };
-const colors = [blueJeans, gargoyleGas, androidGreen, gargoyleGas, flame, princetonOrange];
+const colors = [blueJeans, gargoyleGas, androidGreen, flame, princetonOrange];
 
 class GameView {
   constructor() {
@@ -83,12 +83,14 @@ class GameView {
   }
 
   static startPopup(callback) {
+    const gameOver = $('#webAdv-gameover');
+    if (gameOver.length) { gameOver.remove(); }
     const username = prompt('Enter a username');
 
     const colorPrompt = colors.map((color, index) => ` ${color.name} (${index + 1})`).join();
     let playerColor = null;
     while (!playerColor) {
-      const response = parseInt(prompt(`Choose one of the colors by number (1-${colors.length + 1}): \n${colorPrompt}`), 10);
+      const response = parseInt(prompt(`Choose one of the colors by number (1-${colors.length}): \n${colorPrompt}`), 10);
 
       if (!response || response < 0 || response > colors.length) {
         alert('Invalid choice!');
