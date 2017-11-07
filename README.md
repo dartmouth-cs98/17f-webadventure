@@ -41,6 +41,14 @@ To move the snake make sure the Wikipedia page in focus (click on it if it's not
 
 The edges of the game are the top and bottom of any given section. Avoid going into an edge and the snake's trail.
 
+## Colors Supported
+Blue jeans: 91, 192, 235
+Gargoyle Gas: 253, 231, 76
+Android Green: 155, 197, 61
+Flame: 229, 89, 52
+Princeton Orange: 250, 121, 33
+(Found on [coolors.co](https://coolors.co/5bc0eb-fde74c-9bc53d-e55934-fa7921))
+
 ## Authors
 
 * Imanol "Idea Guy" Avendaño
