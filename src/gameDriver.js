@@ -1,5 +1,6 @@
 import GameView from './gameView';
 import GameData from './gameData';
+import Question from './question';
 
 const UP = 0;
 const RIGHT = 1;
@@ -108,7 +109,6 @@ class GameDriver {
         console.log("r was pressed");
         this.gameView.closePopup();
         this.moveInterval = setInterval(this.makeMove, 250);
-        // setInterval(this.makeMove, 250);
         this.nextMove = this.lastMove;
         break;
       default:
