@@ -25,7 +25,10 @@ const PLAYER_DIV = id =>
     position: absolute;
   "
 >
-  <img src="http://emojis.slackmojis.com/emojis/images/1450458551/184/nyancat_big.gif?1450458551"
+  <img style="
+  height: 50px;
+  "
+  src="http://emojis.slackmojis.com/emojis/images/1450458551/184/nyancat_big.gif?1450458551"
   alt="nyan cat"/>
 </div>`;
 
@@ -123,7 +126,8 @@ class GameView {
     // $('#startPopup').children('button').click(onClick);
   }
 
-  static endGamePopup() {
+  static endGame(playerDivId) {
+    $(`#${playerDivId}`).remove();
     $('body').append(END_POPUP_DIV);
   }
 
