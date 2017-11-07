@@ -19,9 +19,18 @@ import $ from 'jquery';
 // </div>
 // `;
 
+const PLAYER_DIV = id =>
+  `<div id="${id}"
+  style="
+    position: absolute;
+  "
+>
+  <img src="http://emojis.slackmojis.com/emojis/images/1450458551/184/nyancat_big.gif?1450458551"
+  alt="nyan cat"/>
+</div>`;
 
 const END_POPUP_DIV =
-`<div style="
+`<div id="webAdv-gameover" style="
     position: fixed;
     text-align: center;
     width: 200px;
@@ -34,6 +43,48 @@ const END_POPUP_DIV =
     box-shadow: 10px 10px 5px #888888;
 ">GAME OVER
 </div>`;
+
+const blueJeans = {
+  name: 'Blue Jeans',
+  color: {
+    r: 91,
+    g: 192,
+    b: 235,
+  },
+};
+const gargoyleGas = {
+  name: 'Gargoyle Gas',
+  color: {
+    r: 253,
+    g: 231,
+    b: 76,
+  },
+};
+const androidGreen = {
+  name: 'Android Green',
+  color: {
+    r: 155,
+    g: 197,
+    b: 61,
+  },
+};
+const flame = {
+  name: 'Flame',
+  color: {
+    r: 229,
+    g: 89,
+    b: 15,
+  },
+};
+const princetonOrange = {
+  name: 'Princeton Orange',
+  color: {
+    r: 240,
+    g: 121,
+    b: 33,
+  },
+};
+const colors = [blueJeans, gargoyleGas, androidGreen, flame, princetonOrange];
 
 class GameView {
   constructor() {
@@ -79,11 +130,21 @@ class GameView {
   }
 
   static startPopup(callback) {
+    const gameOver = $('#webAdv-gameover');
+    if (gameOver.length) { gameOver.remove(); }
     const username = prompt('Enter a username');
-    const r = prompt('Enter R color value');
-    const g = prompt('Enter G color value');
-    const b = prompt('Enter B color value');
-    const playerColor = { r, g, b };
+
+    const colorPrompt = colors.map((color, index) => ` ${color.name} (${index + 1})`).join();
+    let playerColor = null;
+    while (!playerColor) {
+      const response = parseInt(prompt(`Choose one of the colors by number (1-${colors.length}): \n${colorPrompt}`), 10);
+
+      if (!response || response < 0 || response > colors.length) {
+        alert('Invalid choice!');
+      } else {
+        playerColor = colors[response - 1].color;
+      }
+    }
     callback(username, playerColor);
     // $('body').append(START_POPUP_DIV);
     // const onClick = () => {
@@ -117,8 +178,41 @@ class GameView {
     this.pageTree = sections;
   }
 
-  highlightWord(sectionId, sentenceId, wordId, color = 'yellow') {
-    $(this.pageTree[sectionId][sentenceId][wordId]).css('background-color', color);
+  highlightWord(sectionId, sentenceId, wordId, color = 'yellow', scrollTo = false, playerDivId) {
+    const span = this.pageTree[sectionId][sentenceId][wordId];
+    $(span).css('background-color', color);
+    if (scrollTo && !GameView.isScrolledIntoView(span)) {
+      GameView.scrollIntoCenterView(span);
+    }
+    if (playerDivId) {
+      let playerDiv = $(`#${playerDivId}`);
+      if (!playerDiv.length) {
+        $('body').append(PLAYER_DIV(playerDivId));
+        playerDiv = $(`#${playerDivId}`);
+      }
+      playerDiv.css('top', $(span).offset().top);
+      playerDiv.css('left', $(span).offset().left);
+    }
+  }
+
+  static isScrolledIntoView(elem) {
+    const $elem = $(elem);
+    const $window = $(window);
+
+    const docViewTop = $window.scrollTop();
+    const docViewBottom = docViewTop + $window.height();
+
+    const elemTop = $elem.offset().top;
+    const elemBottom = elemTop + $elem.height();
+
+    return ((elemBottom <= docViewBottom) && (elemTop >= docViewTop));
+  }
+
+  static scrollIntoCenterView(elem) {
+    const top = $(elem).offset().top - ($(window).height() / 2);
+    $('html, body').animate({
+      scrollTop: top,
+    }, 700);
   }
 
   getMoves(sectionId, sentenceId, wordId) {
@@ -209,6 +303,28 @@ class GameView {
   isEmptyLoc(loc) {
     const word = $(this.pageTree[loc[0]][loc[1]][loc[2]]);
     return (word.css('background-color') === 'rgba(0, 0, 0, 0)');
+  }
+
+  randomLoc() {
+    let randSect = Math.floor(Math.random() * this.pageTree.length);
+    let count = 0;
+    while (this.pageTree[randSect].length < 1 && count < 100) {
+      randSect = Math.floor(Math.random() * this.pageTree.length);
+      count += 1;
+    }
+    let randSentence = Math.floor(Math.random() * this.pageTree[randSect].length);
+    count = 0;
+    while (this.pageTree[randSect][randSentence].length < 1 && count < 100) {
+      randSentence = Math.floor(Math.random() * this.pageTree[randSect].length);
+      count += 1;
+    }
+    let randWord = Math.floor(Math.random() * this.pageTree[randSect][randSentence].length);
+    count = 0;
+    while (this.isEmptyLoc([randSect, randSentence, randWord]) && count < 100) {
+      randWord = Math.floor(Math.random() * this.pageTree[randSect][randSentence].length);
+      count += 1;
+    }
+    return [randSect, randSentence, randWord];
   }
 }
 

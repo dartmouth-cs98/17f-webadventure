@@ -11,7 +11,6 @@ const Q = 100;
 class GameDriver {
   constructor(gameView = new GameView()) {
     this.nextMove = RIGHT;
-    this.curLocation = [0, 0, 0];
     this.moveInterval = null;
     this.gameData = new GameData();
     this.gameView = gameView;
@@ -30,10 +29,14 @@ class GameDriver {
     this.username = username;
     this.gameData.createUser(username, playerColor);
     this.playerColor = playerColor;
+    this.curLocation = this.gameView.randomLoc();
     this.gameData.onPlayers(this.getPlayers);
     const colorString = `rgb(${playerColor.r}, ${playerColor.g}, ${playerColor.b})`;
     this.gameView
-      .highlightWord(this.curLocation[0], this.curLocation[1], this.curLocation[2], colorString);
+      .highlightWord(
+        this.curLocation[0], this.curLocation[1], this.curLocation[2],
+        colorString, true,
+      );
     this.curScore = 0;
     this.moveInterval = setInterval(this.makeMove, 250);
   }
@@ -49,11 +52,29 @@ class GameDriver {
 
   makeMove() {
     const loc = this.curLocation;
-    const moves = this.gameView.getMoves(loc[0], loc[1], loc[2]);
-    if (moves[this.nextMove] && this.gameView.isEmptyLoc(moves[this.nextMove])) {
-      const nextLoc = moves[this.nextMove];
+    let move = null;
+    switch (this.nextMove) {
+      case UP:
+        move = this.gameView.getUp(loc[0], loc[1], loc[2]);
+        break;
+      case RIGHT:
+        move = this.gameView.getRight(loc[0], loc[1], loc[2]);
+        break;
+      case DOWN:
+        move = this.gameView.getDown(loc[0], loc[1], loc[2]);
+        break;
+      case LEFT:
+        move = this.gameView.getLeft(loc[0], loc[1], loc[2]);
+        break;
+      default: break;
+    }
+    if (move && this.gameView.isEmptyLoc(move)) {
+      const nextLoc = move;
       const colorString = `rgb(${this.playerColor.r}, ${this.playerColor.g}, ${this.playerColor.b})`;
-      this.gameView.highlightWord(nextLoc[0], nextLoc[1], nextLoc[2], colorString);
+      this.gameView.highlightWord(
+        nextLoc[0], nextLoc[1], nextLoc[2],
+        colorString, true, this.username.replace(/\s/, ''),
+      );
       this.curLocation = nextLoc;
       const updateLoc = {
         url: 'www.wikipedia.com',
