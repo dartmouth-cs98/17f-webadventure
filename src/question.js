@@ -1,5 +1,4 @@
-/* questions.js, npm install compromise required */
-const nlp = require('compromise');
+import nlp from 'compromise';
 
 /* chooses the candidate sentences from which questions are generated */
 function chooseCandidates(pageTree, trail) {

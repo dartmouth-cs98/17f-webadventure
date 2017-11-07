@@ -129,8 +129,32 @@ class GameView {
     this.pageTree = sections;
   }
 
-  highlightWord(sectionId, sentenceId, wordId, color = 'yellow') {
-    $(this.pageTree[sectionId][sentenceId][wordId]).css('background-color', color);
+  highlightWord(sectionId, sentenceId, wordId, color = 'yellow', scrollTo = false) {
+    const span = this.pageTree[sectionId][sentenceId][wordId];
+    $(span).css('background-color', color);
+    if (scrollTo && !GameView.isScrolledIntoView(span)) {
+      GameView.scrollIntoCenterView(span);
+    }
+  }
+
+  static isScrolledIntoView(elem) {
+    const $elem = $(elem);
+    const $window = $(window);
+
+    const docViewTop = $window.scrollTop();
+    const docViewBottom = docViewTop + $window.height();
+
+    const elemTop = $elem.offset().top;
+    const elemBottom = elemTop + $elem.height();
+
+    return ((elemBottom <= docViewBottom) && (elemTop >= docViewTop));
+  }
+
+  static scrollIntoCenterView(elem) {
+    const top = $(elem).offset().top - ($(window).height() / 2);
+    $('html, body').animate({
+      scrollTop: top,
+    }, 700);
   }
 
   getMoves(sectionId, sentenceId, wordId) {
