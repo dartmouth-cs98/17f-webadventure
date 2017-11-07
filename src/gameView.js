@@ -35,6 +35,48 @@ const END_POPUP_DIV =
 ">GAME OVER
 </div>`;
 
+const blueJeans = {
+  name: 'Blue Jeans',
+  color: {
+    r: 91,
+    g: 192,
+    b: 235,
+  },
+};
+const gargoyleGas = {
+  name: 'Gargoyle Gas',
+  color: {
+    r: 253,
+    g: 231,
+    b: 76,
+  },
+};
+const androidGreen = {
+  name: 'Android Green',
+  color: {
+    r: 155,
+    g: 197,
+    b: 61,
+  },
+};
+const flame = {
+  name: 'Flame',
+  color: {
+    r: 229,
+    g: 89,
+    b: 15,
+  },
+};
+const princetonOrange = {
+  name: 'Princeton Orange',
+  color: {
+    r: 240,
+    g: 121,
+    b: 33,
+  },
+};
+const colors = [blueJeans, gargoyleGas, androidGreen, gargoyleGas, flame, princetonOrange];
+
 class GameView {
   constructor() {
     this.createTree();
@@ -42,10 +84,18 @@ class GameView {
 
   static startPopup(callback) {
     const username = prompt('Enter a username');
-    const r = prompt('Enter R color value');
-    const g = prompt('Enter G color value');
-    const b = prompt('Enter B color value');
-    const playerColor = { r, g, b };
+
+    const colorPrompt = colors.map((color, index) => ` ${color.name} (${index + 1})`).join();
+    let playerColor = null;
+    while (!playerColor) {
+      const response = parseInt(prompt(`Choose one of the colors by number (1-${colors.length + 1}): \n${colorPrompt}`), 10);
+
+      if (!response || response < 0 || response > colors.length) {
+        alert('Invalid choice!');
+      } else {
+        playerColor = colors[response - 1].color;
+      }
+    }
     callback(username, playerColor);
     // $('body').append(START_POPUP_DIV);
     // const onClick = () => {
