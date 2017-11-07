@@ -19,6 +19,14 @@ import $ from 'jquery';
 // </div>
 // `;
 
+const PLAYER_DIV =
+`<div id="%s"
+  style="
+    position: absolute;
+  "
+>
+  <img src="assets/nyancat_big.gif" alt="nyan cat"/>
+</div>`;
 
 const END_POPUP_DIV =
 `<div style="
@@ -79,11 +87,20 @@ class GameView {
     this.pageTree = sections;
   }
 
-  highlightWord(sectionId, sentenceId, wordId, color = 'yellow', scrollTo = false) {
+  highlightWord(sectionId, sentenceId, wordId, color = 'yellow', scrollTo = false, playerDivId) {
     const span = this.pageTree[sectionId][sentenceId][wordId];
     $(span).css('background-color', color);
     if (scrollTo && !GameView.isScrolledIntoView(span)) {
       GameView.scrollIntoCenterView(span);
+    }
+    if (playerDivId) {
+      let playerDiv = $(`#${playerDivId}`);
+      if (!playerDiv.length) {
+        $('body').append(PLAYER_DIV.format(playerDivId));
+        playerDiv = $(`#${playerDivId}`);
+      }
+      playerDiv.css('bottom', $(span).offset().top);
+      playerDiv.css('left', $(span).offset().left);
     }
   }
 
