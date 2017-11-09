@@ -1,4 +1,4 @@
-/* eslint no-alert: "off", no-undef: "off" */
+/* eslint no-alert: "off", no-undef: "off", class-methods-use-this: "off" */
 import $ from 'jquery';
 
 // const START_POPUP_DIV = `
@@ -47,7 +47,7 @@ const END_POPUP_DIV =
 ">GAME OVER
 </div>`;
 
-const LEADERBOARD_DIV = 
+const LEADERBOARD_DIV =
 `<div id ="leaderboard" style="
     position: fixed;
     top: 0vh;
@@ -186,15 +186,13 @@ class GameView {
     }
   }
 
-  updateLeaderboard(players){
-    var sorted_players = players;
-    sorted_players.sort(function(a, b){
-      return b.curScore - a.curScore;
-    });
+  updateLeaderboard(players) {
+    const sortedPlayers = players;
+    sortedPlayers.sort((a, b) => b.curScore - a.curScore);
     for (let i = 1; i <= 10; i += 1) {
-      if (players[i-1] != undefined){
-        document.getElementById("top"+i.toString()).innerHTML =
-          players[i-1].username + ": " + players[i-1].curScore.toString();
+      if (players[i - 1] !== undefined) {
+        document.getElementById(`top${i.toString()}`).innerHTML =
+          `${players[i - 1].username}: ${players[i - 1].curScore.toString()}`;
       }
     }
   }

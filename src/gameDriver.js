@@ -34,7 +34,6 @@ class GameDriver {
       );
     this.curScore = 0;
     this.moveInterval = setInterval(this.makeMove, 250);
-
   }
   endGame() {
     this.stopMovement();
