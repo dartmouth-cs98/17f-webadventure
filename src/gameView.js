@@ -44,6 +44,30 @@ const END_POPUP_DIV =
 ">GAME OVER
 </div>`;
 
+const LEADERBOARD_DIV = 
+`<div id ="leaderboard" style="
+    position: fixed;
+    top: 0vh;
+    left: 0vw;
+    width: 175px;
+    height: 400px;
+    background-color: rgba(225, 225, 225, 1);
+"><p style="
+    text-align: center;
+">Leaderboard
+</p>
+<p id="top1"></p>
+<p id="top2"></p>
+<p id="top3"></p>
+<p id="top4"></p>
+<p id="top5"></p>
+<p id="top6"></p>
+<p id="top7"></p>
+<p id="top8"></p>
+<p id="top9"></p>
+<p id="top10"></p>
+</div>`;
+
 const blueJeans = {
   name: 'Blue Jeans',
   color: {
@@ -92,6 +116,7 @@ class GameView {
   }
 
   static startPopup(callback) {
+    $('body').append(LEADERBOARD_DIV);
     const gameOver = $('#webAdv-gameover');
     if (gameOver.length) { gameOver.remove(); }
     const username = prompt('Enter a username');
@@ -154,6 +179,19 @@ class GameView {
       }
       playerDiv.css('top', $(span).offset().top);
       playerDiv.css('left', $(span).offset().left);
+    }
+  }
+
+  updateLeaderboard(players){
+    var sorted_players = players;
+    sorted_players.sort(function(a, b){
+      return b.curScore - a.curScore;
+    });
+    for (let i = 1; i <= 10; i += 1) {
+      if (players[i-1] != undefined){
+        document.getElementById("top"+i.toString()).innerHTML =
+          players[i-1].username + ": " + players[i-1].curScore.toString();
+      }
     }
   }
 
