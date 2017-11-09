@@ -87,9 +87,8 @@ class GameView {
     this.createTree();
   }
 
-  showPopup() {
-    console.log('in show popup');
-    var overlay = document.createElement('div');
+  static showPopup() {
+    const overlay = document.createElement('div');
     overlay.setAttribute('id', 'overlay');
     overlay.style.position = 'absolute';
     overlay.style.background = 'grey';
@@ -100,7 +99,7 @@ class GameView {
     overlay.style.opacity = '0.5';
     document.body.appendChild(overlay);
 
-    var newDiv = document.createElement('div');
+    const newDiv = document.createElement('div');
     newDiv.setAttribute('id', 'divvy');
     // move to css eventually
     newDiv.style.position = 'fixed';
@@ -116,12 +115,11 @@ class GameView {
     document.body.appendChild(newDiv);
   }
 
-  closePopup() {
-    console.log('in close popup');
-    var popup = document.getElementById('divvy');
+  static closePopup() {
+    const popup = document.getElementById('divvy');
     popup.parentNode.removeChild(popup);
 
-    var overlay = document.getElementById('overlay');
+    const overlay = document.getElementById('overlay');
     overlay.parentNode.removeChild(overlay);
   }
 
