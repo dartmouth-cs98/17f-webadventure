@@ -39,7 +39,7 @@ class GameDriver {
   endGame() {
     this.stopMovement();
     this.gameData.removeUserFromGame(this.username);
-    GameView.endGamePopup();
+    GameView.endGame(this.username.replace(/\s/, ''));
   }
 
   stopMovement() {
