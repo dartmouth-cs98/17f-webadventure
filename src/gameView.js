@@ -19,6 +19,15 @@ import $ from 'jquery';
 // </div>
 // `;
 
+const RULES_INSTRUCTIONS = 
+`
+To move the snake make sure the Wikipedia page in focus (click on it if it's not) and move using the keys 'W', 'A', 'S', 'D'.
+
+The edges of the game are the top and bottom of any given section. Avoid going into an edge and the snake's trail.
+
+Your score is determined by how many words you have captured.
+`;
+
 const PLAYER_DIV = id =>
   `<div id="${id}"
   style="
@@ -122,6 +131,7 @@ class GameView {
     $('body').append(LEADERBOARD_DIV);
     const gameOver = $('#webAdv-gameover');
     if (gameOver.length) { gameOver.remove(); }
+    alert(RULES_INSTRUCTIONS);
     const username = prompt('Enter a username');
 
     const colorPrompt = colors.map((color, index) => ` ${color.name} (${index + 1})`).join();
