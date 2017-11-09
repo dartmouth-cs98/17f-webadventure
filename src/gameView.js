@@ -20,11 +20,7 @@ import $ from 'jquery';
 // `;
 
 const PLAYER_DIV = id =>
-  `<div id="${id}"
-  style="
-    position: absolute;
-  "
->
+  `"<div id="${id}"style="position: absolute;">
   <img src="http://emojis.slackmojis.com/emojis/images/1450458551/184/nyancat_big.gif?1450458551"
   alt="nyan cat"/>
 </div>`;
@@ -92,40 +88,40 @@ class GameView {
   }
 
   showPopup() {
-    console.log("in show popup");
-    var overlay = document.createElement("div");
-    overlay.setAttribute("id", "overlay");
-    overlay.style.position = "absolute";
-    overlay.style.background = "grey";
-    overlay.style.top = "0";
-    overlay.style.bottom = "0";
-    overlay.style.left = "0";
-    overlay.style.right = "0";
-    overlay.style.opacity = "0.5";
+    console.log('in show popup');
+    var overlay = document.createElement('div');
+    overlay.setAttribute('id', 'overlay');
+    overlay.style.position = 'absolute';
+    overlay.style.background = 'grey';
+    overlay.style.top = '0';
+    overlay.style.bottom = '0';
+    overlay.style.left = '0';
+    overlay.style.right = '0';
+    overlay.style.opacity = '0.5';
     document.body.appendChild(overlay);
 
-    var newDiv = document.createElement("div");
-    newDiv.setAttribute("id", "divvy");
+    var newDiv = document.createElement('div');
+    newDiv.setAttribute('id', 'divvy');
     // move to css eventually
-    newDiv.style.position = "fixed";
-    newDiv.style.height = "300px";
-    newDiv.style.width = "500px";
-    newDiv.style.top = "50%";
-    newDiv.style.left = "50%";
-    newDiv.style.backgroundColor = "white";
-    newDiv.style.margin = "-150px 0 0 -250px";
-    newDiv.style.borderRadius = "15px";
-    newDiv.style.boxShadow = "10px 10px 5px #888888";
+    newDiv.style.position = 'fixed';
+    newDiv.style.height = '300px';
+    newDiv.style.width = '500px';
+    newDiv.style.top = '50%';
+    newDiv.style.left = '50%';
+    newDiv.style.backgroundColor = 'white';
+    newDiv.style.margin = '-150px 0 0 -250px';
+    newDiv.style.borderRadius = '15px';
+    newDiv.style.boxShadow = '10px 10px 5px #888888';
 
     document.body.appendChild(newDiv);
   }
 
   closePopup() {
-    console.log("in close popup");
-    var popup = document.getElementById("divvy");
+    console.log('in close popup');
+    var popup = document.getElementById('divvy');
     popup.parentNode.removeChild(popup);
 
-    var overlay = document.getElementById("overlay");
+    var overlay = document.getElementById('overlay');
     overlay.parentNode.removeChild(overlay);
   }
 

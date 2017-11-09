@@ -20,7 +20,7 @@ class GameDriver {
     this.makeMove = this.makeMove.bind(this);
     this.moveSelection = this.moveSelection.bind(this);
 
-    console.log("lastmove is "+this.nextmove);
+    console.log('lastmove is '+this.nextmove);
     this.lastMove = this.nextmove;
     this.getPlayers = this.getPlayers.bind(this);
   }
@@ -116,18 +116,18 @@ class GameDriver {
         this.nextMove = DOWN;
         break;
       case 81:
-        console.log("q was pressed!");
+        // console.log("q was pressed!");
         this.lastMove = this.nextMove;
         this.nextMove = Q;
-        console.log("nextMove is Q!");
+        // console.log("nextMove is Q!");
         this.stopMovement();
-        console.log("stopped movement!");
+        // console.log("stopped movement!");
         this.gameView.showPopup();
         // const startMovement = () => this.moveInterval = setInterval(this.makeMove, 250)
         // console.log("started movement!");
         break;
       case 82:
-        console.log("r was pressed");
+        console.log('r was pressed');
         this.gameView.closePopup();
         this.moveInterval = setInterval(this.makeMove, 250);
         this.nextMove = this.lastMove;
