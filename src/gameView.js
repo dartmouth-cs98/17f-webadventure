@@ -171,15 +171,14 @@ class GameView {
     const gameOver = $('#webAdv-gameover');
     if (gameOver.length) { gameOver.remove(); }
     alert(RULES_INSTRUCTIONS);
-    var username = null;
+    let username = null;
     while (!username) {
-      username = prompt('Enter a username (using only alphanumeric characters)')
-      if (!username.match(/^[0-9a-z]+$/)){
-        alert('Invalid username!')
+      username = prompt('Enter a username (using only alphanumeric characters)');
+      if (!username.match(/^[0-9a-z]+$/)) {
+        alert('Invalid username!');
         username = null;
       }
     }
-    //const username = prompt('Enter a username');
 
     const colorPrompt = colors.map((color, index) => ` ${color.name} (${index + 1})`).join();
     let playerColor = null;
