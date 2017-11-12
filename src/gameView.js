@@ -27,8 +27,7 @@ function PLAYER_DIV(id) {
   return `<img id="${id}"style="position: absolute"src="${NYAN_CATS[1]}"alt="nyan cat"/>`;
 }
 
-const RULES_INSTRUCTIONS = 
-`
+const RULES_INSTRUCTIONS = `
 To move the snake make sure the Wikipedia page in focus (click on it if it's not) and move using the keys 'W', 'A', 'S', 'D'.
 
 The edges of the game are the top and bottom of any given section. Avoid going into an edge and the snake's trail.
