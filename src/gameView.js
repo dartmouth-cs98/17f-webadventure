@@ -19,11 +19,18 @@ import $ from 'jquery';
 // </div>
 // `;
 
-const PLAYER_DIV = id =>
-  `"<div id="${id}"style="position: absolute;">
-  <img src="http://emojis.slackmojis.com/emojis/images/1450458551/184/nyancat_big.gif?1450458551"
-  alt="nyan cat"/>
-</div>`;
+// left-facing at index 0, right-facing at index 1
+const NYAN_CATS = ['https://i.imgur.com/rZSkKF0.gif', 'https://i.imgur.com/YNcTBuU.gif'];
+
+function PLAYER_DIV(id) {
+  // initialize with right-facing avatar
+  const avatar = `<img id="${id}"style="position: absolute"src="${NYAN_CATS[1]}"alt="nyan cat"/>`;
+  return avatar;
+}
+// const PLAYER_DIV = id => `"<div id="${id}"style="position: absolute;">
+//   <img src="http://emojis.slackmojis.com/emojis/images/1450458551/184/nyancat_big.gif?1450458551"
+//   alt="nyan cat"/>
+// </div>`;
 
 const END_POPUP_DIV =
 `<div id="webAdv-gameover" style="
@@ -123,6 +130,7 @@ class GameView {
     overlay.parentNode.removeChild(overlay);
   }
 
+
   static startPopup(callback) {
     const gameOver = $('#webAdv-gameover');
     if (gameOver.length) { gameOver.remove(); }
@@ -179,6 +187,7 @@ class GameView {
       GameView.scrollIntoCenterView(span);
     }
     if (playerDivId) {
+      this.username = playerDivId;
       let playerDiv = $(`#${playerDivId}`);
       if (!playerDiv.length) {
         $('body').append(PLAYER_DIV(playerDivId));
@@ -207,6 +216,10 @@ class GameView {
     $('html, body').animate({
       scrollTop: top,
     }, 700);
+  }
+
+  static updateAvatar(direction) {
+    document.getElementById('alice').src = NYAN_CATS[direction];
   }
 
   getMoves(sectionId, sentenceId, wordId) {

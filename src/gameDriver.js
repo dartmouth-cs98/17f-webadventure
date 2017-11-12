@@ -103,9 +103,11 @@ class GameDriver {
     switch (evt.keyCode) {
       case 65:
         this.nextMove = LEFT;
+        GameView.updateAvatar(0);
         break;
       case 68:
         this.nextMove = RIGHT;
+        GameView.updateAvatar(1);
         break;
       case 87:
         this.nextMove = UP;
