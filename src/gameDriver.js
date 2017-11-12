@@ -1,3 +1,5 @@
+/* eslint no-unused-vars: 0 */
+
 import GameView from './gameView';
 import GameData from './gameData';
 
@@ -91,7 +93,7 @@ class GameDriver {
         const loc = [player.curLocation.sectionID,
           player.curLocation.sentenceID, player.curLocation.character];
         const colorString = `rgb(${player.playerColor.r}, ${player.playerColor.g}, ${player.playerColor.b})`;
-        this.gameView.highlightWord(loc[0], loc[1], loc[2], colorString);
+        // this.gameView.highlightWord(loc[0], loc[1], loc[2], colorString);
       }
     });
     // Danger zone
