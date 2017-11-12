@@ -35,20 +35,47 @@ The edges of the game are the top and bottom of any given section. Avoid going i
 Your score is determined by how many words you have captured.
 `;
 
-const END_POPUP_DIV =
-`<div id="webAdv-gameover" style="
-    position: fixed;
-    text-align: center;
-    width: 200px;
-    font-size: 36px;
-    border: 1px solid lightgrey;
-    border-radius: 5px;
-    background-color: white;
-    left: 40vw;
-    top: 50vh;
-    box-shadow: 10px 10px 5px #888888;
-">GAME OVER
-</div>`;
+let endPopupDiv = `
+<div> style="
+  position=absolute;
+  background=grey;
+  top=0;
+  bottom=0;
+  left=0;
+  right=0;
+  opacity=0.5;
+  "
+</div>
+<div style="
+  position: fixed;
+  text-align: center;
+  width: 300px;
+  font-size: 36px;
+  border: 1px solid lightgrey;
+  border-radius: 15px;
+  padding: 30px;
+  font-family: arial;
+  background-color: white;
+  left: 40vw;
+  top: 30vh;
+  box-shadow: 10px 10px 5px #888888;
+">GAME OVER!
+<div> --------- </div>`;
+
+// let END_POPUP_DIV =
+// `<div id="webAdv-gameover" style="
+//     position: fixed;
+//     text-align: center;
+//     width: 200px;
+//     font-size: 36px;
+//     border: 1px solid lightgrey;
+//     border-radius: 5px;
+//     background-color: white;
+//     left: 40vw;
+//     top: 50vh;
+//     box-shadow: 10px 10px 5px #888888;
+// ">GAME OVER
+// </div>`;
 
 const LEADERBOARD_DIV =
 `<div id ="leaderboard" style="
@@ -162,15 +189,15 @@ class GameView {
     const gameOver = $('#webAdv-gameover');
     if (gameOver.length) { gameOver.remove(); }
     alert(RULES_INSTRUCTIONS);
-    var username = null;
+    let username = null;
     while (!username) {
-      username = prompt('Enter a username (using only alphanumeric characters)')
-      if (!username.match(/^[0-9a-z]+$/)){
-        alert('Invalid username!')
+      username = prompt('Enter a username (using only alphanumeric characters)');
+      if (!username.match(/^[0-9a-z]+$/)) {
+        alert('Invalid username!');
         username = null;
       }
     }
-    //const username = prompt('Enter a username');
+    // const username = prompt('Enter a username');
 
     const colorPrompt = colors.map((color, index) => ` ${color.name} (${index + 1})`).join();
     let playerColor = null;
@@ -199,9 +226,18 @@ class GameView {
     // $('#startPopup').children('button').click(onClick);
   }
 
-  static endGame(playerDivId) {
+  static endGame(playerDivId, players) {
     $(`#${playerDivId}`).remove();
-    $('body').append(END_POPUP_DIV);
+    endPopupDiv += '<div>High Scores</div>';
+    players.every((player, index) => {
+      const playerText = `<div> ${player.username} : ${player.curScore}</div>`;
+      endPopupDiv += playerText;
+      if (index === 4) {
+        return false;
+      }
+      return true;
+    });
+    $('body').append(endPopupDiv);
   }
 
   createTree() {

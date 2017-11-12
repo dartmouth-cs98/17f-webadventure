@@ -2,13 +2,11 @@
 
 import GameView from './gameView';
 import GameData from './gameData';
-// import Question from './question';
 
 const UP = 0;
 const RIGHT = 1;
 const DOWN = 2;
 const LEFT = 3;
-const Q = 100;
 
 class GameDriver {
   constructor(gameView = new GameView()) {
@@ -21,8 +19,6 @@ class GameDriver {
     this.stopMovement = this.stopMovement.bind(this);
     this.makeMove = this.makeMove.bind(this);
     this.moveSelection = this.moveSelection.bind(this);
-
-    this.lastMove = this.nextmove;
     this.getPlayers = this.getPlayers.bind(this);
   }
 
@@ -44,7 +40,9 @@ class GameDriver {
   endGame() {
     this.stopMovement();
     this.gameData.removeUserFromGame(this.username);
-    GameView.endGame(this.username.replace(/\s/, ''));
+    this.gameData.onPlayers((players) => {
+      GameView.endGame(this.username.replace(/\s/, ''), players);
+    });
   }
 
   stopMovement() {
@@ -97,7 +95,7 @@ class GameDriver {
         const loc = [player.curLocation.sectionID,
           player.curLocation.sentenceID, player.curLocation.character];
         const colorString = `rgb(${player.playerColor.r}, ${player.playerColor.g}, ${player.playerColor.b})`;
-        // this.gameView.highlightWord(loc[0], loc[1], loc[2], colorString);
+        this.gameView.highlightWord(loc[0], loc[1], loc[2], colorString);
       }
     });
     // Danger zone
@@ -108,28 +106,15 @@ class GameDriver {
     switch (evt.keyCode) {
       case 65:
         this.nextMove = LEFT;
-        GameView.updateAvatar(this.username, 0);
         break;
       case 68:
         this.nextMove = RIGHT;
-        GameView.updateAvatar(this.username, 1);
         break;
       case 87:
         this.nextMove = UP;
         break;
       case 83:
         this.nextMove = DOWN;
-        break;
-      case 81:
-        this.lastMove = this.nextMove;
-        this.nextMove = Q;
-        this.stopMovement();
-        this.gameView.showPopup();
-        break;
-      case 82:
-        this.gameView.closePopup();
-        this.moveInterval = setInterval(this.makeMove, 250);
-        this.nextMove = this.lastMove;
         break;
       default:
         this.nextMove = this.nextMove;
