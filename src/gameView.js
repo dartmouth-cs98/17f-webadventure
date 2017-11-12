@@ -1,4 +1,4 @@
-/* eslint no-alert: "off", no-undef: "off" */
+/* eslint no-alert: "off", no-undef: "off", class-methods-use-this: "off" */
 import $ from 'jquery';
 
 // const START_POPUP_DIV = `
@@ -25,12 +25,16 @@ const NYAN_CATS = ['https://i.imgur.com/rZSkKF0.gif', 'https://i.imgur.com/YNcTB
 function PLAYER_DIV(id) {
   // initialize with right-facing avatar
   return `<img id="${id}"style="position: absolute"src="${NYAN_CATS[1]}"alt="nyan cat"/>`;
-  // return avatar;
 }
-// const PLAYER_DIV = id => `"<div id="${id}"style="position: absolute;">
-//   <img src="http://emojis.slackmojis.com/emojis/images/1450458551/184/nyancat_big.gif?1450458551"
-//   alt="nyan cat"/>
-// </div>`;
+
+const RULES_INSTRUCTIONS = 
+`
+To move the snake make sure the Wikipedia page in focus (click on it if it's not) and move using the keys 'W', 'A', 'S', 'D'.
+
+The edges of the game are the top and bottom of any given section. Avoid going into an edge and the snake's trail.
+
+Your score is determined by how many words you have captured.
+`;
 
 const END_POPUP_DIV =
 `<div id="webAdv-gameover" style="
@@ -45,6 +49,30 @@ const END_POPUP_DIV =
     top: 50vh;
     box-shadow: 10px 10px 5px #888888;
 ">GAME OVER
+</div>`;
+
+const LEADERBOARD_DIV =
+`<div id ="leaderboard" style="
+    position: fixed;
+    top: 0vh;
+    left: 0vw;
+    width: 175px;
+    height: 400px;
+    background-color: rgba(225, 225, 225, 1);
+"><p style="
+    text-align: center;
+">Leaderboard
+</p>
+<p id="top1"></p>
+<p id="top2"></p>
+<p id="top3"></p>
+<p id="top4"></p>
+<p id="top5"></p>
+<p id="top6"></p>
+<p id="top7"></p>
+<p id="top8"></p>
+<p id="top9"></p>
+<p id="top10"></p>
 </div>`;
 
 const blueJeans = {
@@ -131,8 +159,10 @@ class GameView {
   }
 
   static startPopup(callback) {
+    $('body').append(LEADERBOARD_DIV);
     const gameOver = $('#webAdv-gameover');
     if (gameOver.length) { gameOver.remove(); }
+    alert(RULES_INSTRUCTIONS);
     const username = prompt('Enter a username');
 
     const colorPrompt = colors.map((color, index) => ` ${color.name} (${index + 1})`).join();
@@ -162,7 +192,8 @@ class GameView {
     // $('#startPopup').children('button').click(onClick);
   }
 
-  static endGamePopup() {
+  static endGame(playerDivId) {
+    $(`#${playerDivId}`).remove();
     $('body').append(END_POPUP_DIV);
   }
 
@@ -194,6 +225,17 @@ class GameView {
       }
       playerDiv.css('top', $(span).offset().top);
       playerDiv.css('left', $(span).offset().left);
+    }
+  }
+
+  updateLeaderboard(players) {
+    const sortedPlayers = players;
+    sortedPlayers.sort((a, b) => b.curScore - a.curScore);
+    for (let i = 1; i <= 10; i += 1) {
+      if (players[i - 1] !== undefined) {
+        document.getElementById(`top${i.toString()}`).innerHTML =
+          `${players[i - 1].username}: ${players[i - 1].curScore.toString()}`;
+      }
     }
   }
 

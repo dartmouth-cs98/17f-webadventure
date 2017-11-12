@@ -42,7 +42,7 @@ class GameDriver {
   endGame() {
     this.stopMovement();
     this.gameData.removeUserFromGame(this.username);
-    GameView.endGamePopup();
+    GameView.endGame(this.username.replace(/\s/, ''));
   }
 
   stopMovement() {
@@ -89,6 +89,7 @@ class GameDriver {
   }
 
   getPlayers(players) {
+    this.gameView.updateLeaderboard(players);
     players.forEach((player) => {
       if (player.curLocation) {
         const loc = [player.curLocation.sectionID,
@@ -97,6 +98,8 @@ class GameDriver {
         this.gameView.highlightWord(loc[0], loc[1], loc[2], colorString);
       }
     });
+    // Danger zone
+    // Don't add code here
   }
 
   moveSelection(evt) {
