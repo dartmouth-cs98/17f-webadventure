@@ -126,7 +126,7 @@ class GameDriver {
           this.gameView.showPopup();
           this.endGame();
         }
-        this.nextMove = this.nextMovel
+        this.nextMove = this.nextMove;
         break;
       case 82:
         this.gameView.closePopup();

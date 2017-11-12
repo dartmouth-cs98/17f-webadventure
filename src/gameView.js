@@ -1,4 +1,5 @@
-/* eslint no-alert: "off", no-undef: "off", class-methods-use-this: "off" */
+/* eslint no-alert: "off", no-undef: "off", class-methods-use-this: "off", */
+/* eslint no-restricted-globals: "off" */
 import $ from 'jquery';
 
 // const START_POPUP_DIV = `
@@ -163,17 +164,14 @@ class GameView {
     if (confirm(RULES_INSTRUCTIONS) === false) {
       return;
     }
-    var username = null;
+    let username = null;
     while (!username) {
-      username = prompt('Enter a username (using only alphanumeric characters)')
-      if (!username.match(/^[0-9a-z]+$/)){
-        alert('Invalid username!')
+      username = prompt('Enter a username (using only alphanumeric characters)');
+      if (!username.match(/^[0-9a-z]+$/)) {
+        alert('Invalid username!');
         username = null;
       }
     }
-    
-    //const username = prompt('Enter a username');
-
     const colorPrompt = colors.map((color, index) => ` ${color.name} (${index + 1})`).join();
     let playerColor = null;
     while (!playerColor) {
