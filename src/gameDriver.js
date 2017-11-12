@@ -119,10 +119,14 @@ class GameDriver {
         this.nextMove = DOWN;
         break;
       case 81:
-        this.lastMove = this.nextMove;
-        this.nextMove = Q;
-        this.stopMovement();
-        this.gameView.showPopup();
+        if (evt.ctrlKey) {
+          this.lastMove = this.nextMove;
+          this.nextMove = Q;
+          this.stopMovement();
+          this.gameView.showPopup();
+          this.endGame();
+        }
+        this.nextMove = this.nextMovel
         break;
       case 82:
         this.gameView.closePopup();

@@ -158,10 +158,11 @@ class GameView {
   }
 
   static startPopup(callback) {
-    $('body').append(LEADERBOARD_DIV);
     const gameOver = $('#webAdv-gameover');
     if (gameOver.length) { gameOver.remove(); }
-    alert(RULES_INSTRUCTIONS);
+    if (confirm(RULES_INSTRUCTIONS) === false) {
+      return;
+    }
     var username = null;
     while (!username) {
       username = prompt('Enter a username (using only alphanumeric characters)')
@@ -170,6 +171,7 @@ class GameView {
         username = null;
       }
     }
+    
     //const username = prompt('Enter a username');
 
     const colorPrompt = colors.map((color, index) => ` ${color.name} (${index + 1})`).join();
@@ -183,6 +185,8 @@ class GameView {
         playerColor = colors[response - 1].color;
       }
     }
+
+    $('body').append(LEADERBOARD_DIV);
     callback(username, playerColor);
     // $('body').append(START_POPUP_DIV);
     // const onClick = () => {
