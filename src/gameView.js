@@ -24,8 +24,8 @@ const NYAN_CATS = ['https://i.imgur.com/rZSkKF0.gif', 'https://i.imgur.com/YNcTB
 
 function PLAYER_DIV(id) {
   // initialize with right-facing avatar
-  const avatar = `<img id="${id}"style="position: absolute"src="${NYAN_CATS[1]}"alt="nyan cat"/>`;
-  return avatar;
+  return `<img id="${id}"style="position: absolute"src="${NYAN_CATS[1]}"alt="nyan cat"/>`;
+  // return avatar;
 }
 // const PLAYER_DIV = id => `"<div id="${id}"style="position: absolute;">
 //   <img src="http://emojis.slackmojis.com/emojis/images/1450458551/184/nyancat_big.gif?1450458551"
@@ -130,7 +130,6 @@ class GameView {
     overlay.parentNode.removeChild(overlay);
   }
 
-
   static startPopup(callback) {
     const gameOver = $('#webAdv-gameover');
     if (gameOver.length) { gameOver.remove(); }
@@ -218,8 +217,8 @@ class GameView {
     }, 700);
   }
 
-  static updateAvatar(direction) {
-    document.getElementById('alice').src = NYAN_CATS[direction];
+  static updateAvatar(id, direction) {
+    document.getElementById(id).src = NYAN_CATS[direction];
   }
 
   getMoves(sectionId, sentenceId, wordId) {
