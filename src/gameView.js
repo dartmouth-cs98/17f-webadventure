@@ -35,7 +35,7 @@ The edges of the game are the top and bottom of any given section. Avoid going i
 Your score is determined by how many words you have captured.
 `;
 
-let endPopupDiv = `
+const END_POPUP_DIV = `
 <div> style="
   position=absolute;
   background=grey;
@@ -226,18 +226,26 @@ class GameView {
     // $('#startPopup').children('button').click(onClick);
   }
 
-  static endGame(playerDivId, players) {
-    $(`#${playerDivId}`).remove();
-    endPopupDiv += '<div>High Scores</div>';
+  static buildEndPopup(players) {
+    players.sort((a, b) => b.highScore - a.highScore);
+
+    let newEndPopupDiv = END_POPUP_DIV;
+    newEndPopupDiv += '<div>High Scores</div>';
     players.every((player, index) => {
-      const playerText = `<div> ${player.username} : ${player.curScore}</div>`;
-      endPopupDiv += playerText;
+      const playerText = `<div> ${player.username} : ${player.highScore}</div>`;
+      newEndPopupDiv += playerText;
       if (index === 4) {
         return false;
       }
       return true;
     });
-    $('body').append(endPopupDiv);
+    const NEW_END_POPUP = newEndPopupDiv;
+    return NEW_END_POPUP;
+  }
+
+  static endGame(playerDivId, players) {
+    $(`#${playerDivId}`).remove();
+    $('body').append(this.buildEndPopup(players));
   }
 
   createTree() {
@@ -271,16 +279,16 @@ class GameView {
     }
   }
 
-  updateLeaderboard(players) {
-    const sortedPlayers = players;
-    sortedPlayers.sort((a, b) => b.curScore - a.curScore);
-    for (let i = 1; i <= 10; i += 1) {
-      if (players[i - 1] !== undefined) {
-        document.getElementById(`top${i.toString()}`).innerHTML =
-          `${players[i - 1].username}: ${players[i - 1].curScore.toString()}`;
-      }
-    }
-  }
+  // updateLeaderboard(players) {
+  //   const sortedPlayers = players;
+  //   sortedPlayers.sort((a, b) => b.curScore - a.curScore);
+  //   for (let i = 1; i <= 10; i += 1) {
+  //     if (players[i - 1] !== undefined) {
+  //       document.getElementById(`top${i.toString()}`).innerHTML =
+  //         `${players[i - 1].username}: ${players[i - 1].curScore.toString()}`;
+  //     }
+  //   }
+  // }
 
   static isScrolledIntoView(elem) {
     const $elem = $(elem);
