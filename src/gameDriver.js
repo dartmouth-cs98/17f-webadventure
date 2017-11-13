@@ -93,13 +93,13 @@ class GameDriver {
   }
 
   getPlayers(players) {
-    this.gameView.updateLeaderboard(this.username, players);
+    this.gameView.updateLeaderboard(this.username, players, this.playerColor);
     players.forEach((player) => {
       if (player.curLocation) {
         const loc = [player.curLocation.sectionID,
           player.curLocation.sentenceID, player.curLocation.character];
         const colorString = `rgb(${player.playerColor.r}, ${player.playerColor.g}, ${player.playerColor.b})`;
-        this.gameView.highlightWord(loc[0], loc[1], loc[2], colorString);
+        // this.gameView.highlightWord(loc[0], loc[1], loc[2], colorString);
       }
     });
     // Danger zone

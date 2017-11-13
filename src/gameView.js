@@ -274,12 +274,29 @@ class GameView {
     }
   }
 
-  updateLeaderboard(id, players) {
+  updateLeaderboard(username, players, color) {
+    const colorString = `rgb(${color.r}, ${color.g}, ${color.b})`;
     players.sort((a, b) => b.curScore - a.curScore);
     for (let i = 1; i <= 10; i += 1) {
       if (players[i - 1] !== undefined) {
+        document.getElementById(`top${i.toString()}`).style.backgroundColor = `white`;
+        var cur_nyan = document.getElementById(`top_wahoo`);
+        if (cur_nyan) {
+          document.getElementById(`top${i.toString()}`).removeChild(cur_nyan);
+        }
+
+        if (players[i - 1].username == username) {
+          document.getElementById(`top${i.toString()}`).style.backgroundColor = `${colorString}`;
+          var top_userIcon = document.createElement('div');
+          top_userIcon.setAttribute('id', 'top_userIcon');
+
+          top_userIcon.innerHTML = `<img id="top_wahoo"style="position: absolute; height: 30px; width: 30px;
+                                          top: 0; right: 0px; src="${NYAN_CATS[1]}"alt="top_userIcon"/>`;
+
+          document.getElementById(`top${i.toString()}`).appendChild(top_userIcon);
+        }
         document.getElementById(`top${i.toString()}`).innerHTML =
-          `${players[i - 1].username}: ${players[i - 1].curScore.toString()}`;
+          `${i}. ${players[i - 1].username}: ${players[i - 1].curScore.toString()}`;
       }
     }
   }
