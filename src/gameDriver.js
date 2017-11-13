@@ -16,7 +16,7 @@ class GameDriver {
     this.gameData = new GameData();
     this.gameView = gameView;
 
-    this.startGame = this.startGame.bind(this);
+    // this.startGame = this.startGame.bind(this);
     this.stopMovement = this.stopMovement.bind(this);
     this.makeMove = this.makeMove.bind(this);
     this.moveSelection = this.moveSelection.bind(this);

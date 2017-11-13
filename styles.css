@@ -12,7 +12,7 @@
   text-align: center;
   font-family: impact;
   font-size: 25px;
-  background-color: #03A9F4;
+  background-color: rgba(3, 169, 244, 1);
   margin-right: 10px;
 }
 
@@ -26,7 +26,7 @@
   margin: -200px 0px 0px -180px;
   font-family: impact;
   font-size: 36px;
-  background-color: rgba(0, 0, 246, 0.9);
+  background-color: rgba(3, 169, 244, .90);
   left: 50%;
   top: 50%;
   color: white;
@@ -77,4 +77,19 @@
   border-radius: 15px;
   box-shadow: 10px 10px 5px #888888;
   text-align: center;
+}
+
+#pause {
+  font-family: impact;
+  font-size: 50px;
+  text-align: center;
+}
+
+#wahoo {
+  position: absolute;
+  height: 30px;
+  width: 30px;
+  top: 0;
+  right: 0px;
+  margin-top: 48px;
 }

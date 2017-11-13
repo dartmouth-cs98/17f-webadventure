@@ -200,12 +200,14 @@ class GameView {
 
   updateLeaderboard(id, players) {
     players.sort((a, b) => b.curScore - a.curScore);
-    for (let i = 1; i <= 10; i += 1) {
-      if (players[i - 1] !== undefined) {
-        document.getElementById(`top${i.toString()}`).innerHTML =
-          `${i}. ${players[i - 1].username}: ${players[i - 1].curScore.toString()}`;
+    players.every((player, index) => {
+      const playerText = `<div>${index + 1}. ${player.username} : ${player.curScore}</div>`;
+      document.getElementById(`top${index + 1}`).innerHTML = playerText;
+      if (index === 11) {
+        return false;
       }
-    }
+      return true;
+    });
   }
 
   updateUserScoreDisplay(id, score) {
@@ -222,9 +224,7 @@ class GameView {
     const userIcon = document.createElement('div');
     userIcon.setAttribute('id', 'userIcon');
 
-    userIcon.innerHTML = `<img id="wahoo"style="position: absolute; height: 30px; width: 30px;
-                                                top: 0; right: 0px; margin-top: 48px;"
-                                  src="${NYAN_CATS[1]}"alt="userIcon"/>`;
+    userIcon.innerHTML = `<img id="wahoo" src="${NYAN_CATS[1]}"alt="userIcon"/>`;
 
     document.getElementById('leaderboard').appendChild(userIcon);
   }
@@ -373,7 +373,7 @@ class GameView {
     const newDiv = document.createElement('div');
     newDiv.setAttribute('id', 'pauseModal');
 
-    const pauseSpan = '<span style="font-family:impact; font-size:50px;text-align:center;">GAME PAUSED</span>';
+    const pauseSpan = '<span id="pause">GAME PAUSED</span>';
     newDiv.innerHTML = pauseSpan;
 
     document.body.appendChild(newDiv);
