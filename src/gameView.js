@@ -190,7 +190,7 @@ class GameView {
         alert('Invalid username!');
         username = null;
       }
-      if (username.length > 8) {
+      else if (username.length > 8) {
         alert('Username must be at most 8 characters!');
         username = null;
       }
@@ -282,6 +282,7 @@ class GameView {
     const colorString = `rgb(${color.r}, ${color.g}, ${color.b})`;
     players.sort((a, b) => b.curScore - a.curScore);
     for (let i = 1; i <= 10; i += 1) {
+      document.getElementById(`top${i.toString()}`).innerHTML = "";
       if (players[i - 1] !== undefined && players[i - 1].curScore > 0) {
         document.getElementById(`top${i.toString()}`).style.backgroundColor = `white`;
 

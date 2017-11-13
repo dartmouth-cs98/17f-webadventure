@@ -93,6 +93,7 @@ class GameDriver {
   }
 
   getPlayers(players) {
+    console.log(players);
     this.gameView.updateLeaderboard(this.username, players, this.playerColor);
     players.forEach((player) => {
       if (player.curLocation) {
