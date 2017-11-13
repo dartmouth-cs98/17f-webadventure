@@ -26,7 +26,10 @@ const NYAN_CATS = ['https://i.imgur.com/rZSkKF0.gif', 'https://i.imgur.com/YNcTB
 
 function PLAYER_DIV(id) {
   // initialize with right-facing avatar
-  return `<img id="${id}"style="position: absolute"src="${NYAN_CATS[1]}"alt="nyan cat"/>`;
+  return `<div id="${id}" class="playerDiv" style="position: absolute">
+            <span class="playerName">${id}</span>
+            <img id="${id}-img" class="player-img" src="${NYAN_CATS[1]}"alt="nyan cat"/>
+          </div>`;
 }
 
 const RULES_INSTRUCTIONS = `
@@ -45,18 +48,21 @@ const END_POPUP_DIV = `
 
 const LEADERBOARD_DIV =
 `<div id ="leaderboard">
-<p id="currentPlayerView">Leaderboard</p>
-<div id="userStatRow"></div>
-<p id="top1"></p>
-<p id="top2"></p>
-<p id="top3"></p>
-<p id="top4"></p>
-<p id="top5"></p>
-<p id="top6"></p>
-<p id="top7"></p>
-<p id="top8"></p>
-<p id="top9"></p>
-<p id="top10"></p>
+  <div id="userStats">WEBADVENTURE
+    <div id="userStatRow"></div>
+  </div>
+  <p id="currentPlayerView">Leaderboard</p>
+  <div id="userStatRow"></div>
+  <p id="top1"></p>
+  <p id="top2"></p>
+  <p id="top3"></p>
+  <p id="top4"></p>
+  <p id="top5"></p>
+  <p id="top6"></p>
+  <p id="top7"></p>
+  <p id="top8"></p>
+  <p id="top9"></p>
+  <p id="top10"></p>
 </div>`;
 
 const blueJeans = {
@@ -106,42 +112,6 @@ class GameView {
     this.createTree();
   }
 
-  static showPopup() {
-    const overlay = document.createElement('div');
-    overlay.setAttribute('id', 'overlay');
-    overlay.style.position = 'absolute';
-    overlay.style.background = 'grey';
-    overlay.style.top = '0';
-    overlay.style.bottom = '0';
-    overlay.style.left = '0';
-    overlay.style.right = '0';
-    overlay.style.opacity = '0.5';
-    document.body.appendChild(overlay);
-
-    const newDiv = document.createElement('div');
-    newDiv.setAttribute('id', 'divvy');
-    // move to css eventually
-    newDiv.style.position = 'fixed';
-    newDiv.style.height = '300px';
-    newDiv.style.width = '500px';
-    newDiv.style.top = '50%';
-    newDiv.style.left = '50%';
-    newDiv.style.backgroundColor = 'white';
-    newDiv.style.margin = '-150px 0 0 -250px';
-    newDiv.style.borderRadius = '15px';
-    newDiv.style.boxShadow = '10px 10px 5px #888888';
-
-    document.body.appendChild(newDiv);
-  }
-
-  static closePopup() {
-    const popup = document.getElementById('divvy');
-    popup.parentNode.removeChild(popup);
-
-    const overlay = document.getElementById('overlay');
-    overlay.parentNode.removeChild(overlay);
-  }
-
   static startPopup(callback) {
     const gameOver = $('#webAdv-gameover');
     if (gameOver.length) { gameOver.remove(); }
@@ -173,19 +143,6 @@ class GameView {
     $('body').append(LEADERBOARD_DIV);
     this.updateUserDisplay(username, playerColor);
     callback(username, playerColor);
-    // $('body').append(START_POPUP_DIV);
-    // const onClick = () => {
-    //   const inputs = $('#startPopup').children('input');
-    //   const username = $(inputs[0]).val();
-    //   const playerColor = {
-    //     r: $(inputs[1]).val(),
-    //     g: $(inputs[2]).val(),
-    //     b: $(inputs[3]).val(),
-    //   };
-    //   $('#startPopup').remove();
-    //   setTimeout(() => callback(username, playerColor), 100);
-    // };
-    // $('#startPopup').children('button').click(onClick);
   }
 
   static buildEndPopup(players) {
@@ -246,7 +203,7 @@ class GameView {
     for (let i = 1; i <= 10; i += 1) {
       if (players[i - 1] !== undefined) {
         document.getElementById(`top${i.toString()}`).innerHTML =
-          `${players[i - 1].username}: ${players[i - 1].curScore.toString()}`;
+          `${i}. ${players[i - 1].username}: ${players[i - 1].curScore.toString()}`;
       }
     }
   }
@@ -293,7 +250,7 @@ class GameView {
   }
 
   static updateAvatar(id, direction) {
-    document.getElementById(id).src = NYAN_CATS[direction];
+    document.getElementById(`${id}-img`).src = NYAN_CATS[direction];
   }
 
   getMoves(sectionId, sentenceId, wordId) {
@@ -405,6 +362,30 @@ class GameView {
       count += 1;
     }
     return [randSect, randSentence, randWord];
+  }
+
+  showPopup() {
+    console.log('in show popup');
+    const overlay = document.createElement('div');
+    overlay.setAttribute('id', 'overlay');
+    document.body.appendChild(overlay);
+
+    const newDiv = document.createElement('div');
+    newDiv.setAttribute('id', 'pauseModal');
+
+    const pauseSpan = '<span style="font-family:impact; font-size:50px;text-align:center;">GAME PAUSED</span>';
+    newDiv.innerHTML = pauseSpan;
+
+    document.body.appendChild(newDiv);
+  }
+
+  closePopup() {
+    console.log('in close popup');
+    const popup = document.getElementById('pauseModal');
+    popup.parentNode.removeChild(popup);
+
+    const overlay = document.getElementById('overlay');
+    overlay.parentNode.removeChild(overlay);
   }
 }
 

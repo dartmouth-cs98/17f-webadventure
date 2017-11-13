@@ -7,6 +7,7 @@ const UP = 0;
 const RIGHT = 1;
 const DOWN = 2;
 const LEFT = 3;
+const P = 100;
 
 class GameDriver {
   constructor(gameView = new GameView()) {
@@ -121,13 +122,18 @@ class GameDriver {
       case 83:
         this.nextMove = DOWN;
         break;
-      case 81:
+      case 80: // Pause game with 'P'
+        this.lastMove = this.nextMove;
+        this.nextMove = P;
+        this.stopMovement();
+        this.gameView.showPopup();
+        break;
+      case 81: // 'Q' was pressed
         if (evt.ctrlKey) {
           this.endGame();
         }
-        this.nextMove = this.nextMove;
         break;
-      case 82:
+      case 82: // Resume game with 'R'
         this.gameView.closePopup();
         this.moveInterval = setInterval(this.makeMove, 250);
         this.nextMove = this.lastMove;
