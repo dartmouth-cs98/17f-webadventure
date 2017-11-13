@@ -123,8 +123,7 @@ class GameView {
       if (!username.match(/^[0-9a-z]+$/)) {
         alert('Invalid username!');
         username = null;
-      }
-      else if (username.length > 8) {
+      } else if (username.length > 8) {
         alert('Username must be at most 8 characters!');
         username = null;
       }
@@ -202,15 +201,15 @@ class GameView {
     players.sort((a, b) => b.curScore - a.curScore);
 
     players.forEach((player, index) => {
-      $(`#top${(index + 1).toString()}`).html("");      
+      $(`#top${(index + 1).toString()}`).html(``);
 
       if (player !== undefined && player.curScore > 0) {
         document.getElementById(`top${(index + 1).toString()}`).style.backgroundColor = `white`;
         const playerText = `<div>${index + 1}. ${player.username} : ${player.curScore}</div>`;
-        $(`#top${(index + 1).toString()}`).html(playerText); 
-          if (player.username == username) {
-            document.getElementById(`top${(index + 1).toString()}`).style.backgroundColor = `${colorString}`;
-          }
+        $(`#top${(index + 1).toString()}`).html(playerText);
+        if (player.username === username) {
+          document.getElementById(`top${(index + 1).toString()}`).style.backgroundColor = `${colorString}`;
+        }
       }
 
       if (index === 9) {
