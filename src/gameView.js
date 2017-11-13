@@ -275,8 +275,7 @@ class GameView {
   }
 
   updateLeaderboard(id, players) {
-    const sortedPlayers = players;
-    sortedPlayers.sort((a, b) => b.curScore - a.curScore);
+    players.sort((a, b) => b.curScore - a.curScore);
     for (let i = 1; i <= 10; i += 1) {
       if (players[i - 1] !== undefined) {
         document.getElementById(`top${i.toString()}`).innerHTML =
