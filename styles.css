@@ -1,0 +1,35 @@
+#leaderboard  {
+  position: fixed;
+  top: 0vh;
+  left: 0vw;
+  width: 160px;
+  height: 100%;
+  margin-left: 10px;
+  background-color: rgba(246, 246, 246, 1);
+}
+
+#currentPlayerView {
+  text-align: center;
+  font-family: impact;
+  font-size: 25px;
+  background-color: #03A9F4;
+  margin-right: 10px;
+}
+
+#endPopUp {
+  position: fixed;
+  text-align: center;
+  width: 300px;
+  font-size: 36px;
+  border: 1px solid lightgrey;
+  border-radius: 15px;
+  padding: 30px;
+  font-family: impact;
+  background-color: rgba(0, 0, 246, 0.9);
+  left: 40vw;
+  top: 25vh;
+}
+
+#userStatRow {
+  background-color: yellow;
+}

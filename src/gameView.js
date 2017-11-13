@@ -1,5 +1,6 @@
 /* eslint no-alert: "off", no-undef: "off", class-methods-use-this: "off" */
 import $ from 'jquery';
+import '../styles.css';
 
 // const START_POPUP_DIV = `
 // <div id="startPopup" style="
@@ -36,53 +37,13 @@ Your score is determined by how many words you have captured.
 `;
 
 const END_POPUP_DIV = `
-<div> style="
-  position=absolute;
-  background=grey;
-  top=0;
-  bottom=0;
-  left=0;
-  right=0;
-  opacity=0.5;
-  "
-</div>
-<div style="
-  position: fixed;
-  text-align: center;
-  width: 300px;
-  font-size: 36px;
-  border: 1px solid lightgrey;
-  border-radius: 15px;
-  padding: 30px;
-  font-family: arial;
-  background-color: white;
-  left: 40vw;
-  top: 30vh;
-  box-shadow: 10px 10px 5px #888888;
-">GAME OVER!
-<div> --------- </div>`;
+<div id="endPopUp">GAME OVER!
+<div>---------</div>`;
 
 const LEADERBOARD_DIV =
-`<div id ="leaderboard" style="
-    position: fixed;
-    top: 0vh;
-    left: 0vw;
-    width: 160px;
-    height: 100%;
-    margin-left: 10px;
-    background-color: rgba(246, 246, 246, 1);
-"><p style="
-    text-align: center;
-    font-family: impact;
-    font-size: 25px;
-    background-color: #03A9F4;
-    margin-right: 10px;
-">Leaderboard
-</p>
-<div id="userStatRow" style="
-    background-color: yellow;
-  ">
-</div>
+`<div id ="leaderboard">
+<p id="currentPlayerView">Leaderboard</p>
+<div id="userStatRow"></div>
 <p id="top1"></p>
 <p id="top2"></p>
 <p id="top3"></p>
