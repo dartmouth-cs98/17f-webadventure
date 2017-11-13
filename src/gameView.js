@@ -1,4 +1,5 @@
-/* eslint no-alert: "off", no-undef: "off", class-methods-use-this: "off" */
+/* eslint no-alert: "off", no-undef: "off", class-methods-use-this: "off", */
+/* eslint no-restricted-globals: "off" */
 import $ from 'jquery';
 
 // const START_POPUP_DIV = `
@@ -49,6 +50,8 @@ To move the snake make sure the Wikipedia page in focus (click on it if it's not
 The edges of the game are the top and bottom of any given section. Avoid going into an edge and the snake's trail.
 
 Your score is determined by how many words you have captured.
+
+To quit the game, enter ctrl+q.
 `;
 
 const END_POPUP_DIV = `
@@ -203,10 +206,12 @@ class GameView {
   }
 
   static startPopup(callback) {
-    $('body').append(LEADERBOARD_DIV);
     const gameOver = $('#webAdv-gameover');
     if (gameOver.length) { gameOver.remove(); }
-    alert(RULES_INSTRUCTIONS);
+    if (confirm(RULES_INSTRUCTIONS) === false) {
+      return;
+    }
+
     let username = null;
     while (!username) {
       username = prompt('Enter a username (using only alphanumeric characters)');
@@ -215,7 +220,6 @@ class GameView {
         username = null;
       }
     }
-    // const username = prompt('Enter a username');
 
     const colorPrompt = colors.map((color, index) => ` ${color.name} (${index + 1})`).join();
     let playerColor = null;
@@ -228,6 +232,7 @@ class GameView {
         playerColor = colors[response - 1].color;
       }
     }
+    $('body').append(LEADERBOARD_DIV);
     this.updateUserDisplay(username, playerColor);
     callback(username, playerColor);
     // $('body').append(START_POPUP_DIV);
@@ -462,6 +467,48 @@ class GameView {
       count += 1;
     }
     return [randSect, randSentence, randWord];
+  }
+
+  showPopup() {
+    console.log('in show popup');
+    const overlay = document.createElement('div');
+    overlay.setAttribute('id', 'overlay');
+    overlay.style.position = 'fixed';
+    overlay.style.background = 'grey';
+    overlay.style.top = '0';
+    overlay.style.bottom = '0';
+    overlay.style.left = '0';
+    overlay.style.right = '0';
+    overlay.style.opacity = '0.5';
+    document.body.appendChild(overlay);
+
+    const newDiv = document.createElement('div');
+    newDiv.setAttribute('id', 'divvy');
+    // move to css eventually
+    newDiv.style.position = 'fixed';
+    newDiv.style.height = '300px';
+    newDiv.style.width = '500px';
+    newDiv.style.top = '50%';
+    newDiv.style.left = '50%';
+    newDiv.style.backgroundColor = 'white';
+    newDiv.style.margin = '-150px 0 0 -250px';
+    newDiv.style.borderRadius = '15px';
+    newDiv.style.boxShadow = '10px 10px 5px #888888';
+    newDiv.style.textAlign = 'center';
+
+    const pauseSpan = '<span style="font-family:impact; font-size:50px;text-align:center;">GAME PAUSED</span>';
+    newDiv.innerHTML = pauseSpan;
+
+    document.body.appendChild(newDiv);
+  }
+
+  closePopup() {
+    console.log("in close popup");
+    var popup = document.getElementById("divvy");
+    popup.parentNode.removeChild(popup);
+
+    var overlay = document.getElementById("overlay");
+    overlay.parentNode.removeChild(overlay);
   }
 }
 

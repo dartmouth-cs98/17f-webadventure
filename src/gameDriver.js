@@ -124,13 +124,17 @@ class GameDriver {
       case 83:
         this.nextMove = DOWN;
         break;
-      case 80: // Pause game
+      case 80: // Pause game with 'P'
         this.lastMove = this.nextMove;
         this.nextMove = P;
         this.stopMovement();
         this.gameView.showPopup();
+      case 81: // 'Q' was pressed
+        if (evt.ctrlKey) {
+          this.endGame();
+        }
         break;
-      case 82: // Resume game
+      case 82: // Resume game with 'R'
         this.gameView.closePopup();
         this.moveInterval = setInterval(this.makeMove, 250);
         this.nextMove = this.lastMove;
