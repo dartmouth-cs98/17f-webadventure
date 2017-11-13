@@ -204,7 +204,7 @@ class GameView {
       $(`#top${(index + 1).toString()}`).html('');
 
       if (player !== undefined && player.curScore > 0) {
-        document.getElementById(`top${(index + 1).toString()}`).style.backgroundColor ='white';
+        document.getElementById(`top${(index + 1).toString()}`).style.backgroundColor = 'white';
         const playerText = `<div>${index + 1}. ${player.username} : ${player.curScore}</div>`;
         $(`#top${(index + 1).toString()}`).html(playerText);
         if (player.username === username) {
