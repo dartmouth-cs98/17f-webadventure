@@ -2,6 +2,7 @@
 import io from 'socket.io-client';
 
 const socketserver = 'https://webadventure-api.herokuapp.com/';
+// const socketserver = 'http://localhost:9090/';
 
 export default class GameData {
   constructor() {
@@ -14,6 +15,10 @@ export default class GameData {
 
   onPlayers(callback) {
     this.socket.on('players', callback);
+  }
+
+  getPlayers(callback) {
+    this.socket.emit('getPlayers', callback);
   }
 
   createUser(username, playerColor) {

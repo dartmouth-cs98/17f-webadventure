@@ -7,16 +7,17 @@ const UP = 0;
 const RIGHT = 1;
 const DOWN = 2;
 const LEFT = 3;
-const Q = 100;
+const P = 100;
 
 class GameDriver {
-  constructor(gameView = new GameView()) {
+  constructor(url = null, gameView = new GameView()) {
     this.nextMove = RIGHT;
     this.moveInterval = null;
     this.gameData = new GameData();
     this.gameView = gameView;
+    this.url = url;
 
-    this.startGame = this.startGame.bind(this);
+    // this.startGame = this.startGame.bind(this);
     this.stopMovement = this.stopMovement.bind(this);
     this.makeMove = this.makeMove.bind(this);
     this.moveSelection = this.moveSelection.bind(this);
@@ -43,7 +44,7 @@ class GameDriver {
   endGame() {
     this.stopMovement();
     this.gameData.removeUserFromGame(this.username);
-    this.gameData.onPlayers((players) => {
+    this.gameData.getPlayers((players) => {
       GameView.endGame(this.username.replace(/\s/, ''), players);
     });
   }
@@ -79,7 +80,7 @@ class GameDriver {
       );
       this.curLocation = nextLoc;
       const updateLoc = {
-        url: 'www.wikipedia.com',
+        url: this.url,
         sectionID: nextLoc[0],
         sentenceID: nextLoc[1],
         character: nextLoc[2],
@@ -93,7 +94,6 @@ class GameDriver {
   }
 
   getPlayers(players) {
-    console.log(players);
     this.gameView.updateLeaderboard(this.username, players, this.playerColor);
     players.forEach((player) => {
       if (player.curLocation) {
@@ -123,13 +123,18 @@ class GameDriver {
       case 83:
         this.nextMove = DOWN;
         break;
-      case 81:
+      case 80: // Pause game with 'P'
         this.lastMove = this.nextMove;
-        this.nextMove = Q;
+        this.nextMove = P;
         this.stopMovement();
         this.gameView.showPopup();
         break;
-      case 82:
+      case 81: // 'Q' was pressed
+        if (evt.ctrlKey) {
+          this.endGame();
+        }
+        break;
+      case 82: // Resume game with 'R'
         this.gameView.closePopup();
         this.moveInterval = setInterval(this.makeMove, 250);
         this.nextMove = this.lastMove;
