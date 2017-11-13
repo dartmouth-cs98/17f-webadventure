@@ -1,0 +1,81 @@
+#leaderboard  {
+  position: fixed;
+  top: 0vh;
+  left: 0vw;
+  width: 160px;
+  height: 100%;
+  margin-left: 10px;
+  background-color: rgba(246, 246, 246, 1);
+}
+
+#currentPlayerView {
+  text-align: center;
+  font-family: impact;
+  font-size: 25px;
+  background-color: #03A9F4;
+  margin-right: 10px;
+}
+
+#endPopUp {
+  position: fixed;
+  text-align: center;
+  width: 300px;
+  height: 400px;
+  font-size: 36px;
+  border: 1px solid lightgrey;
+  border-radius: 15px;
+  padding: 30px;
+  margin: -200px 0px 0px -180px;
+  font-family: impact;
+  background-color: rgba(0, 0, 246, 0.9);
+  left: 40vw;
+  top: 25vh;
+}
+
+#userStats {
+  background-color: grey;
+  height: 100px;
+  font-family: impact;
+  font-size: 25px;
+  margin-top: 10px;
+}
+
+.playerName {
+  position: absolute;
+  color: white;
+  background-color:#545454;
+  top: -24px;
+  padding: 0 12px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.player-img {
+  position: absolute;
+  height: 40px;
+  width: 40px;
+  top: -10px;
+}
+
+#overlay {
+  position: fixed;
+  background: grey;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  opacity: 0.5;
+}
+
+#pauseModal {
+  position: fixed;
+  height: 300px;
+  width: 500px;
+  top: 50%;
+  left: 50%;
+  background-color: white;
+  margin: -150px 0 0 -250px;
+  border-radius: 15px;
+  box-shadow: 10px 10px 5px #888888;
+  text-align: center;
+}

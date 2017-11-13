@@ -99,7 +99,7 @@ class GameDriver {
         const loc = [player.curLocation.sectionID,
           player.curLocation.sentenceID, player.curLocation.character];
         const colorString = `rgb(${player.playerColor.r}, ${player.playerColor.g}, ${player.playerColor.b})`;
-        this.gameView.highlightWord(loc[0], loc[1], loc[2], colorString);
+        // this.gameView.highlightWord(loc[0], loc[1], loc[2], colorString);
       }
     });
     // Danger zone
@@ -107,9 +107,7 @@ class GameDriver {
   }
 
   moveSelection(evt) {
-    console.log("keycode is "+evt.keyCode);
     switch (evt.keyCode) {
-      
       case 65:
         this.nextMove = LEFT;
         GameView.updateAvatar(this.username, 0);
@@ -129,6 +127,7 @@ class GameDriver {
         this.nextMove = P;
         this.stopMovement();
         this.gameView.showPopup();
+        break;
       case 81: // 'Q' was pressed
         if (evt.ctrlKey) {
           this.endGame();

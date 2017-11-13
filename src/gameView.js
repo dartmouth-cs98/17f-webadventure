@@ -1,6 +1,7 @@
 /* eslint no-alert: "off", no-undef: "off", class-methods-use-this: "off", */
 /* eslint no-restricted-globals: "off" */
 import $ from 'jquery';
+import '../styles.css';
 
 // const START_POPUP_DIV = `
 // <div id="startPopup" style="
@@ -25,23 +26,10 @@ const NYAN_CATS = ['https://i.imgur.com/rZSkKF0.gif', 'https://i.imgur.com/YNcTB
 
 function PLAYER_DIV(id) {
   // initialize with right-facing avatar
-  // return `<div>${id}<img id="${id}"style="position: absolute"src="${NYAN_CATS[1]}"alt="nyan cat"/></div>`;
-  return `<div id="${id}" style="position: absolute">
-    <span style="color:white;
-          position: absolute;
-          background-color:#545454;
-          top: -24px;
-          padding: 0 12px;
-          border-radius: 10px;
-          text-align: center;">${id}
-    </span>
-    <img id="${id}-img"src="${NYAN_CATS[1]}"alt="nyan cat"
-        style="top: -10px;
-        position: absolute;
-        height: 40px;
-        width: 40px;"/>
-    </div>`;
-
+  return `<div id="${id}" class="playerDiv" style="position: absolute">
+            <span class="playerName">${id}</span>
+            <img id="${id}-img" class="player-img" src="${NYAN_CATS[1]}"alt="nyan cat"/>
+          </div>`;
 }
 
 const RULES_INSTRUCTIONS = `
@@ -55,71 +43,28 @@ To quit the game, enter ctrl+q.
 `;
 
 const END_POPUP_DIV = `
-<div> style="
-  position=absolute;
-  background=grey;
-  top=0;
-  bottom=0;
-  left=0;
-  right=0;
-  opacity=0.5;
-  "
-</div>
-<div style="
-  position: fixed;
-  text-align: center;
-  width: 300px;
-  font-size: 36px;
-  border: 1px solid lightgrey;
-  border-radius: 15px;
-  padding: 30px;
-  font-family: arial;
-  background-color: white;
-  left: 40vw;
-  top: 30vh;
-  box-shadow: 10px 10px 5px #888888;
-">GAME OVER!
-<div> --------- </div>`;
+<div id="endPopUp">GAME OVER!
+<div>---------</div>`;
 
 const LEADERBOARD_DIV =
-`<div id ="leaderboard" style="
-    position: fixed;
-    top: 0vh;
-    left: 0vw;
-    width: 160px;
-    height: 100%;
-    margin-left: 10px;
-    background-color: rgba(246, 246, 246, 1);
-">
-<div id="userStats" style="
-    background-color=grey; height=100px;
-    font-family: impact;
-    font-size: 25px;
-    margin-top: 10px;
-">WEBADVENTURE
-  <div id="userStatRow" style="
-      background-color: yellow;">
+`<div id ="leaderboard">
+  <div id="userStats">WEBADVENTURE
+    <div id="userStatRow"></div>
   </div>
-</div>
 
-<p style="
-    text-align: center;
-    font-family: impact;
-    font-size: 25px;
-    background-color: #03A9F4;
-    margin-right: 10px;
-">Leaderboard
-</p>
-<p id="top1"></p>
-<p id="top2"></p>
-<p id="top3"></p>
-<p id="top4"></p>
-<p id="top5"></p>
-<p id="top6"></p>
-<p id="top7"></p>
-<p id="top8"></p>
-<p id="top9"></p>
-<p id="top10"></p>
+  <p id="currentPlayerView">Leaderboard</p>
+
+  <div id="userStatRow"></div>
+  <p id="top1"></p>
+  <p id="top2"></p>
+  <p id="top3"></p>
+  <p id="top4"></p>
+  <p id="top5"></p>
+  <p id="top6"></p>
+  <p id="top7"></p>
+  <p id="top8"></p>
+  <p id="top9"></p>
+  <p id="top10"></p>
 </div>`;
 
 const blueJeans = {
@@ -169,42 +114,6 @@ class GameView {
     this.createTree();
   }
 
-  static showPopup() {
-    const overlay = document.createElement('div');
-    overlay.setAttribute('id', 'overlay');
-    overlay.style.position = 'absolute';
-    overlay.style.background = 'grey';
-    overlay.style.top = '0';
-    overlay.style.bottom = '0';
-    overlay.style.left = '0';
-    overlay.style.right = '0';
-    overlay.style.opacity = '0.5';
-    document.body.appendChild(overlay);
-
-    const newDiv = document.createElement('div');
-    newDiv.setAttribute('id', 'divvy');
-    // move to css eventually
-    newDiv.style.position = 'fixed';
-    newDiv.style.height = '300px';
-    newDiv.style.width = '500px';
-    newDiv.style.top = '50%';
-    newDiv.style.left = '50%';
-    newDiv.style.backgroundColor = 'white';
-    newDiv.style.margin = '-150px 0 0 -250px';
-    newDiv.style.borderRadius = '15px';
-    newDiv.style.boxShadow = '10px 10px 5px #888888';
-
-    document.body.appendChild(newDiv);
-  }
-
-  static closePopup() {
-    const popup = document.getElementById('divvy');
-    popup.parentNode.removeChild(popup);
-
-    const overlay = document.getElementById('overlay');
-    overlay.parentNode.removeChild(overlay);
-  }
-
   static startPopup(callback) {
     const gameOver = $('#webAdv-gameover');
     if (gameOver.length) { gameOver.remove(); }
@@ -220,6 +129,7 @@ class GameView {
         username = null;
       }
     }
+    // const username = prompt('Enter a username');
 
     const colorPrompt = colors.map((color, index) => ` ${color.name} (${index + 1})`).join();
     let playerColor = null;
@@ -235,19 +145,6 @@ class GameView {
     $('body').append(LEADERBOARD_DIV);
     this.updateUserDisplay(username, playerColor);
     callback(username, playerColor);
-    // $('body').append(START_POPUP_DIV);
-    // const onClick = () => {
-    //   const inputs = $('#startPopup').children('input');
-    //   const username = $(inputs[0]).val();
-    //   const playerColor = {
-    //     r: $(inputs[1]).val(),
-    //     g: $(inputs[2]).val(),
-    //     b: $(inputs[3]).val(),
-    //   };
-    //   $('#startPopup').remove();
-    //   setTimeout(() => callback(username, playerColor), 100);
-    // };
-    // $('#startPopup').children('button').click(onClick);
   }
 
   static buildEndPopup(players) {
@@ -473,28 +370,10 @@ class GameView {
     console.log('in show popup');
     const overlay = document.createElement('div');
     overlay.setAttribute('id', 'overlay');
-    overlay.style.position = 'fixed';
-    overlay.style.background = 'grey';
-    overlay.style.top = '0';
-    overlay.style.bottom = '0';
-    overlay.style.left = '0';
-    overlay.style.right = '0';
-    overlay.style.opacity = '0.5';
     document.body.appendChild(overlay);
 
     const newDiv = document.createElement('div');
-    newDiv.setAttribute('id', 'divvy');
-    // move to css eventually
-    newDiv.style.position = 'fixed';
-    newDiv.style.height = '300px';
-    newDiv.style.width = '500px';
-    newDiv.style.top = '50%';
-    newDiv.style.left = '50%';
-    newDiv.style.backgroundColor = 'white';
-    newDiv.style.margin = '-150px 0 0 -250px';
-    newDiv.style.borderRadius = '15px';
-    newDiv.style.boxShadow = '10px 10px 5px #888888';
-    newDiv.style.textAlign = 'center';
+    newDiv.setAttribute('id', 'pauseModal');
 
     const pauseSpan = '<span style="font-family:impact; font-size:50px;text-align:center;">GAME PAUSED</span>';
     newDiv.innerHTML = pauseSpan;
@@ -503,11 +382,11 @@ class GameView {
   }
 
   closePopup() {
-    console.log("in close popup");
-    var popup = document.getElementById("divvy");
+    console.log('in close popup');
+    const popup = document.getElementById('pauseModal');
     popup.parentNode.removeChild(popup);
 
-    var overlay = document.getElementById("overlay");
+    const overlay = document.getElementById('overlay');
     overlay.parentNode.removeChild(overlay);
   }
 }
