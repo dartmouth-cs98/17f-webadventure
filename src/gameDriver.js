@@ -6,7 +6,6 @@ const UP = 0;
 const RIGHT = 1;
 const DOWN = 2;
 const LEFT = 3;
-const Q = 100;
 
 class GameDriver {
   constructor(gameView = new GameView()) {
@@ -95,7 +94,7 @@ class GameDriver {
         const loc = [player.curLocation.sectionID,
           player.curLocation.sentenceID, player.curLocation.character];
         const colorString = `rgb(${player.playerColor.r}, ${player.playerColor.g}, ${player.playerColor.b})`;
-        // this.gameView.highlightWord(loc[0], loc[1], loc[2], colorString);
+        this.gameView.highlightWord(loc[0], loc[1], loc[2], colorString);
       }
     });
     // Danger zone
