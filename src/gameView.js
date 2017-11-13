@@ -34,6 +34,8 @@ To move the snake make sure the Wikipedia page in focus (click on it if it's not
 The edges of the game are the top and bottom of any given section. Avoid going into an edge and the snake's trail.
 
 Your score is determined by how many words you have captured.
+
+To quit the game, enter ctrl+q.
 `;
 
 const END_POPUP_DIV =
