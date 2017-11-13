@@ -1,6 +1,7 @@
+/* eslint no-unused-vars: 0, class-methods-use-this: 0 */
+
 import GameView from './gameView';
 import GameData from './gameData';
-// import Question from './question';
 
 const UP = 0;
 const RIGHT = 1;
@@ -41,7 +42,9 @@ class GameDriver {
   endGame() {
     this.stopMovement();
     this.gameData.removeUserFromGame(this.username);
-    GameView.endGame(this.username.replace(/\s/, ''));
+    this.gameData.onPlayers((players) => {
+      GameView.endGame(this.username.replace(/\s/, ''), players);
+    });
   }
 
   stopMovement() {
@@ -81,6 +84,7 @@ class GameDriver {
         character: nextLoc[2],
       };
       this.curScore = this.curScore + 1;
+      this.gameView.updateUserScoreDisplay(this.username, this.curScore);
       this.gameData.updateUser(this.username, this.curScore, this.playerColor, updateLoc);
     } else {
       this.endGame();
@@ -88,7 +92,7 @@ class GameDriver {
   }
 
   getPlayers(players) {
-    this.gameView.updateLeaderboard(players);
+    this.gameView.updateLeaderboard(this.username, players);
     players.forEach((player) => {
       if (player.curLocation) {
         const loc = [player.curLocation.sectionID,
