@@ -85,6 +85,7 @@ class GameDriver {
         character: nextLoc[2],
       };
       this.curScore = this.curScore + 1;
+      this.gameView.updateUserScoreDisplay(this.username, this.curScore);
       this.gameData.updateUser(this.username, this.curScore, this.playerColor, updateLoc);
     } else {
       this.endGame();
@@ -92,7 +93,7 @@ class GameDriver {
   }
 
   getPlayers(players) {
-    this.gameView.updateLeaderboard(players);
+    this.gameView.updateLeaderboard(this.username, players);
     players.forEach((player) => {
       if (player.curLocation) {
         const loc = [player.curLocation.sectionID,

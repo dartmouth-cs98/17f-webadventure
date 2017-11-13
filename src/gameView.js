@@ -67,13 +67,22 @@ const LEADERBOARD_DIV =
     position: fixed;
     top: 0vh;
     left: 0vw;
-    width: 175px;
-    height: 400px;
-    background-color: rgba(225, 225, 225, 1);
+    width: 160px;
+    height: 100%;
+    margin-left: 10px;
+    background-color: rgba(246, 246, 246, 1);
 "><p style="
     text-align: center;
+    font-family: impact;
+    font-size: 25px;
+    background-color: #03A9F4;
+    margin-right: 10px;
 ">Leaderboard
 </p>
+<div id="userStatRow" style="
+    background-color: yellow;
+  ">
+</div>
 <p id="top1"></p>
 <p id="top2"></p>
 <p id="top3"></p>
@@ -195,6 +204,7 @@ class GameView {
         playerColor = colors[response - 1].color;
       }
     }
+    this.updateUserDisplay(username, playerColor);
     callback(username, playerColor);
     // $('body').append(START_POPUP_DIV);
     // const onClick = () => {
@@ -264,7 +274,7 @@ class GameView {
     }
   }
 
-  updateLeaderboard(players) {
+  updateLeaderboard(id, players) {
     const sortedPlayers = players;
     sortedPlayers.sort((a, b) => b.curScore - a.curScore);
     for (let i = 1; i <= 10; i += 1) {
@@ -273,6 +283,27 @@ class GameView {
           `${players[i - 1].username}: ${players[i - 1].curScore.toString()}`;
       }
     }
+  }
+
+  updateUserScoreDisplay(id, score) {
+    document.getElementById('userStatRow').innerHTML =
+          `${id}: ${score.toString()}`;
+  }
+
+  // called once to initialize color of user in leaderboard display
+  static updateUserDisplay(id, color) {
+    const colorString = `rgb(${color.r}, ${color.g}, ${color.b})`;
+    const userStatRow = document.getElementById('userStatRow');
+    userStatRow.innerHTML = `${id}: 0`;
+    userStatRow.style.backgroundColor = `${colorString}`;
+    const userIcon = document.createElement('div');
+    userIcon.setAttribute('id', 'userIcon');
+
+    userIcon.innerHTML = `<img id="wahoo"style="position: absolute; height: 30px; width: 30px;
+                                                top: 0; right: 0px; margin-top: 48px;"
+                                  src="${NYAN_CATS[1]}"alt="userIcon"/>`;
+
+    document.getElementById('leaderboard').appendChild(userIcon);
   }
 
   static isScrolledIntoView(elem) {
@@ -335,7 +366,6 @@ class GameView {
     }
     return null;
   }
-
 
   getUp(sectionId, sentenceId, wordId) {
     const selectedWord = $(this.pageTree[sectionId][sentenceId][wordId]);
