@@ -24,7 +24,23 @@ const NYAN_CATS = ['https://i.imgur.com/rZSkKF0.gif', 'https://i.imgur.com/YNcTB
 
 function PLAYER_DIV(id) {
   // initialize with right-facing avatar
-  return `<img id="${id}"style="position: absolute"src="${NYAN_CATS[1]}"alt="nyan cat"/>`;
+  // return `<div>${id}<img id="${id}"style="position: absolute"src="${NYAN_CATS[1]}"alt="nyan cat"/></div>`;
+  return `<div id="${id}" style="position: absolute">
+    <span style="color:white;
+          position: absolute;
+          background-color:#545454;
+          top: -24px;
+          padding: 0 12px;
+          border-radius: 10px;
+          text-align: center;">${id}
+    </span>
+    <img id="${id}-img"src="${NYAN_CATS[1]}"alt="nyan cat"
+        style="top: -10px;
+        position: absolute;
+        height: 40px;
+        width: 40px;"/>
+    </div>`;
+
 }
 
 const RULES_INSTRUCTIONS = `
@@ -71,7 +87,19 @@ const LEADERBOARD_DIV =
     height: 100%;
     margin-left: 10px;
     background-color: rgba(246, 246, 246, 1);
-"><p style="
+">
+<div id="userStats" style="
+    background-color=grey; height=100px;
+    font-family: impact;
+    font-size: 25px;
+    margin-top: 10px;
+">WEBADVENTURE
+  <div id="userStatRow" style="
+      background-color: yellow;">
+  </div>
+</div>
+
+<p style="
     text-align: center;
     font-family: impact;
     font-size: 25px;
@@ -79,10 +107,6 @@ const LEADERBOARD_DIV =
     margin-right: 10px;
 ">Leaderboard
 </p>
-<div id="userStatRow" style="
-    background-color: yellow;
-  ">
-</div>
 <p id="top1"></p>
 <p id="top2"></p>
 <p id="top3"></p>
@@ -279,7 +303,7 @@ class GameView {
     for (let i = 1; i <= 10; i += 1) {
       if (players[i - 1] !== undefined) {
         document.getElementById(`top${i.toString()}`).innerHTML =
-          `${players[i - 1].username}: ${players[i - 1].curScore.toString()}`;
+          `${i}. ${players[i - 1].username}: ${players[i - 1].curScore.toString()}`;
       }
     }
   }
@@ -326,7 +350,7 @@ class GameView {
   }
 
   static updateAvatar(id, direction) {
-    document.getElementById(id).src = NYAN_CATS[direction];
+    document.getElementById(`${id}-img`).src = NYAN_CATS[direction];
   }
 
   getMoves(sectionId, sentenceId, wordId) {

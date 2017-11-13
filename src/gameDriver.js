@@ -7,7 +7,7 @@ const UP = 0;
 const RIGHT = 1;
 const DOWN = 2;
 const LEFT = 3;
-const Q = 100;
+const P = 100;
 
 class GameDriver {
   constructor(gameView = new GameView()) {
@@ -107,7 +107,9 @@ class GameDriver {
   }
 
   moveSelection(evt) {
+    console.log("keycode is "+evt.keyCode);
     switch (evt.keyCode) {
+      
       case 65:
         this.nextMove = LEFT;
         GameView.updateAvatar(this.username, 0);
@@ -122,13 +124,13 @@ class GameDriver {
       case 83:
         this.nextMove = DOWN;
         break;
-      case 81:
+      case 80: // Pause game
         this.lastMove = this.nextMove;
-        this.nextMove = Q;
+        this.nextMove = P;
         this.stopMovement();
         this.gameView.showPopup();
         break;
-      case 82:
+      case 82: // Resume game
         this.gameView.closePopup();
         this.moveInterval = setInterval(this.makeMove, 250);
         this.nextMove = this.lastMove;
