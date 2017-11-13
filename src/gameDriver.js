@@ -10,11 +10,12 @@ const LEFT = 3;
 const P = 100;
 
 class GameDriver {
-  constructor(gameView = new GameView()) {
+  constructor(url = null, gameView = new GameView()) {
     this.nextMove = RIGHT;
     this.moveInterval = null;
     this.gameData = new GameData();
     this.gameView = gameView;
+    this.url = url;
 
     this.startGame = this.startGame.bind(this);
     this.stopMovement = this.stopMovement.bind(this);
@@ -43,7 +44,7 @@ class GameDriver {
   endGame() {
     this.stopMovement();
     this.gameData.removeUserFromGame(this.username);
-    this.gameData.onPlayers((players) => {
+    this.gameData.getPlayers((players) => {
       GameView.endGame(this.username.replace(/\s/, ''), players);
     });
   }
@@ -79,7 +80,7 @@ class GameDriver {
       );
       this.curLocation = nextLoc;
       const updateLoc = {
-        url: 'www.wikipedia.com',
+        url: this.url,
         sectionID: nextLoc[0],
         sentenceID: nextLoc[1],
         character: nextLoc[2],
@@ -94,16 +95,15 @@ class GameDriver {
 
   getPlayers(players) {
     this.gameView.updateLeaderboard(this.username, players);
-    players.forEach((player) => {
-      if (player.curLocation) {
-        const loc = [player.curLocation.sectionID,
-          player.curLocation.sentenceID, player.curLocation.character];
-        const colorString = `rgb(${player.playerColor.r}, ${player.playerColor.g}, ${player.playerColor.b})`;
-        // this.gameView.highlightWord(loc[0], loc[1], loc[2], colorString);
-      }
-    });
-    // Danger zone
-    // Don't add code here
+    players.filter(player => player.curLocation && player.curLocation.url === this.url)
+      .forEach((player) => {
+        if (player.curLocation) {
+          const loc = [player.curLocation.sectionID,
+            player.curLocation.sentenceID, player.curLocation.character];
+          const colorString = `rgb(${player.playerColor.r}, ${player.playerColor.g}, ${player.playerColor.b})`;
+          this.gameView.highlightWord(loc[0], loc[1], loc[2], colorString);
+        }
+      });
   }
 
   moveSelection(evt) {

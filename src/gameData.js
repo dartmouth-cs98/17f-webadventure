@@ -16,6 +16,10 @@ export default class GameData {
     this.socket.on('players', callback);
   }
 
+  getPlayers(callback) {
+    this.socket.emit('getPlayers', callback);
+  }
+
   createUser(username, playerColor) {
     this.socket.emit('signup', username, playerColor, (user) => {
     });

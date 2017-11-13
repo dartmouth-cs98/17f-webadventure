@@ -113,12 +113,10 @@ class GameView {
   }
 
   static startPopup(callback) {
-    const gameOver = $('#webAdv-gameover');
-    if (gameOver.length) { gameOver.remove(); }
+    $('#endPopUp').remove();
     if (confirm(RULES_INSTRUCTIONS) === false) {
       return;
     }
-
     let username = null;
     while (!username) {
       username = prompt('Enter a username (using only alphanumeric characters)');
@@ -127,20 +125,17 @@ class GameView {
         username = null;
       }
     }
-    // const username = prompt('Enter a username');
-
     const colorPrompt = colors.map((color, index) => ` ${color.name} (${index + 1})`).join();
     let playerColor = null;
     while (!playerColor) {
       const response = parseInt(prompt(`Choose one of the colors by number (1-${colors.length}): \n${colorPrompt}`), 10);
-
       if (!response || response < 0 || response > colors.length) {
         alert('Invalid choice!');
       } else {
         playerColor = colors[response - 1].color;
       }
     }
-    $('body').append(LEADERBOARD_DIV);
+    if ($('#leaderboard').length === 0) { $('body').append(LEADERBOARD_DIV); }
     this.updateUserDisplay(username, playerColor);
     callback(username, playerColor);
   }
@@ -164,7 +159,7 @@ class GameView {
 
   static endGame(playerDivId, players) {
     $(`#${playerDivId}`).remove();
-    $('body').append(this.buildEndPopup(players));
+    if ($('#endPopUp').length === 0) { $('body').append(this.buildEndPopup(players)); }
   }
 
   createTree() {
@@ -202,8 +197,7 @@ class GameView {
     players.sort((a, b) => b.curScore - a.curScore);
     for (let i = 1; i <= 10; i += 1) {
       if (players[i - 1] !== undefined) {
-        document.getElementById(`top${i.toString()}`).innerHTML =
-          `${i}. ${players[i - 1].username}: ${players[i - 1].curScore.toString()}`;
+        $(`#top${i.toString()}`).html(`${i}. ${players[i - 1].username}: ${players[i - 1].curScore.toString()}`);
       }
     }
   }
@@ -250,7 +244,7 @@ class GameView {
   }
 
   static updateAvatar(id, direction) {
-    document.getElementById(`${id}-img`).src = NYAN_CATS[direction];
+    $(`#${id}-img`).attr('src', NYAN_CATS[direction]);
   }
 
   getMoves(sectionId, sentenceId, wordId) {
@@ -298,7 +292,7 @@ class GameView {
     const condition = (loc) => {
       const word = $(this.pageTree[loc.sectionId][loc.sentenceId][loc.wordId]);
       const wordOffsets = word.offset();
-      return wordOffsets.top < offsets.top &&
+      return wordOffsets && wordOffsets.top < offsets.top &&
         GameView.isBounded(word, wordOffsets, selectedMiddle);
     };
     return this.parseBackward(startLoc, condition);
