@@ -1,4 +1,5 @@
-/* eslint no-alert: "off", no-undef: "off", class-methods-use-this: "off" */
+/* eslint no-alert: "off", no-undef: "off", class-methods-use-this: "off", */
+/* eslint no-restricted-globals: "off" */
 import $ from 'jquery';
 
 // const START_POPUP_DIV = `
@@ -33,6 +34,8 @@ To move the snake make sure the Wikipedia page in focus (click on it if it's not
 The edges of the game are the top and bottom of any given section. Avoid going into an edge and the snake's trail.
 
 Your score is determined by how many words you have captured.
+
+To quit the game, enter ctrl+q.
 `;
 
 const END_POPUP_DIV = `
@@ -179,10 +182,12 @@ class GameView {
   }
 
   static startPopup(callback) {
-    $('body').append(LEADERBOARD_DIV);
     const gameOver = $('#webAdv-gameover');
     if (gameOver.length) { gameOver.remove(); }
-    alert(RULES_INSTRUCTIONS);
+    if (confirm(RULES_INSTRUCTIONS) === false) {
+      return;
+    }
+
     let username = null;
     while (!username) {
       username = prompt('Enter a username (using only alphanumeric characters)');
@@ -191,7 +196,6 @@ class GameView {
         username = null;
       }
     }
-    // const username = prompt('Enter a username');
 
     const colorPrompt = colors.map((color, index) => ` ${color.name} (${index + 1})`).join();
     let playerColor = null;
@@ -204,6 +208,7 @@ class GameView {
         playerColor = colors[response - 1].color;
       }
     }
+    $('body').append(LEADERBOARD_DIV);
     this.updateUserDisplay(username, playerColor);
     callback(username, playerColor);
     // $('body').append(START_POPUP_DIV);
