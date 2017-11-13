@@ -38,33 +38,54 @@ Your score is determined by how many words you have captured.
 To quit the game, enter ctrl+q.
 `;
 
-const END_POPUP_DIV =
-`<div id="webAdv-gameover" style="
-    position: fixed;
-    text-align: center;
-    width: 200px;
-    font-size: 36px;
-    border: 1px solid lightgrey;
-    border-radius: 5px;
-    background-color: white;
-    left: 40vw;
-    top: 50vh;
-    box-shadow: 10px 10px 5px #888888;
-">GAME OVER
-</div>`;
+const END_POPUP_DIV = `
+<div> style="
+  position=absolute;
+  background=grey;
+  top=0;
+  bottom=0;
+  left=0;
+  right=0;
+  opacity=0.5;
+  "
+</div>
+<div style="
+  position: fixed;
+  text-align: center;
+  width: 300px;
+  font-size: 36px;
+  border: 1px solid lightgrey;
+  border-radius: 15px;
+  padding: 30px;
+  font-family: arial;
+  background-color: white;
+  left: 40vw;
+  top: 30vh;
+  box-shadow: 10px 10px 5px #888888;
+">GAME OVER!
+<div> --------- </div>`;
 
 const LEADERBOARD_DIV =
 `<div id ="leaderboard" style="
     position: fixed;
     top: 0vh;
     left: 0vw;
-    width: 175px;
-    height: 400px;
-    background-color: rgba(225, 225, 225, 1);
+    width: 160px;
+    height: 100%;
+    margin-left: 10px;
+    background-color: rgba(246, 246, 246, 1);
 "><p style="
     text-align: center;
+    font-family: impact;
+    font-size: 25px;
+    background-color: #03A9F4;
+    margin-right: 10px;
 ">Leaderboard
 </p>
+<div id="userStatRow" style="
+    background-color: yellow;
+  ">
+</div>
 <p id="top1"></p>
 <p id="top2"></p>
 <p id="top3"></p>
@@ -166,6 +187,7 @@ class GameView {
     if (confirm(RULES_INSTRUCTIONS) === false) {
       return;
     }
+
     let username = null;
     while (!username) {
       username = prompt('Enter a username (using only alphanumeric characters)');
@@ -174,6 +196,7 @@ class GameView {
         username = null;
       }
     }
+
     const colorPrompt = colors.map((color, index) => ` ${color.name} (${index + 1})`).join();
     let playerColor = null;
     while (!playerColor) {
@@ -185,8 +208,8 @@ class GameView {
         playerColor = colors[response - 1].color;
       }
     }
-
     $('body').append(LEADERBOARD_DIV);
+    this.updateUserDisplay(username, playerColor);
     callback(username, playerColor);
     // $('body').append(START_POPUP_DIV);
     // const onClick = () => {
@@ -203,9 +226,26 @@ class GameView {
     // $('#startPopup').children('button').click(onClick);
   }
 
-  static endGame(playerDivId) {
+  static buildEndPopup(players) {
+    players.sort((a, b) => b.highScore - a.highScore);
+
+    let newEndPopupDiv = END_POPUP_DIV;
+    newEndPopupDiv += '<div>High Scores</div>';
+    players.every((player, index) => {
+      const playerText = `<div> ${player.username} : ${player.highScore}</div>`;
+      newEndPopupDiv += playerText;
+      if (index === 4) {
+        return false;
+      }
+      return true;
+    });
+    const NEW_END_POPUP = newEndPopupDiv;
+    return NEW_END_POPUP;
+  }
+
+  static endGame(playerDivId, players) {
     $(`#${playerDivId}`).remove();
-    $('body').append(END_POPUP_DIV);
+    $('body').append(this.buildEndPopup(players));
   }
 
   createTree() {
@@ -239,15 +279,35 @@ class GameView {
     }
   }
 
-  updateLeaderboard(players) {
-    const sortedPlayers = players;
-    sortedPlayers.sort((a, b) => b.curScore - a.curScore);
+  updateLeaderboard(id, players) {
+    players.sort((a, b) => b.curScore - a.curScore);
     for (let i = 1; i <= 10; i += 1) {
       if (players[i - 1] !== undefined) {
         document.getElementById(`top${i.toString()}`).innerHTML =
           `${players[i - 1].username}: ${players[i - 1].curScore.toString()}`;
       }
     }
+  }
+
+  updateUserScoreDisplay(id, score) {
+    document.getElementById('userStatRow').innerHTML =
+          `${id}: ${score.toString()}`;
+  }
+
+  // called once to initialize color of user in leaderboard display
+  static updateUserDisplay(id, color) {
+    const colorString = `rgb(${color.r}, ${color.g}, ${color.b})`;
+    const userStatRow = document.getElementById('userStatRow');
+    userStatRow.innerHTML = `${id}: 0`;
+    userStatRow.style.backgroundColor = `${colorString}`;
+    const userIcon = document.createElement('div');
+    userIcon.setAttribute('id', 'userIcon');
+
+    userIcon.innerHTML = `<img id="wahoo"style="position: absolute; height: 30px; width: 30px;
+                                                top: 0; right: 0px; margin-top: 48px;"
+                                  src="${NYAN_CATS[1]}"alt="userIcon"/>`;
+
+    document.getElementById('leaderboard').appendChild(userIcon);
   }
 
   static isScrolledIntoView(elem) {
@@ -310,7 +370,6 @@ class GameView {
     }
     return null;
   }
-
 
   getUp(sectionId, sentenceId, wordId) {
     const selectedWord = $(this.pageTree[sectionId][sentenceId][wordId]);
