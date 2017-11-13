@@ -1,4 +1,4 @@
-/* eslint no-unused-vars: 0 */
+/* eslint no-unused-vars: 0, class-methods-use-this: 0 */
 
 import GameView from './gameView';
 import GameData from './gameData';
@@ -92,7 +92,7 @@ class GameDriver {
   }
 
   getPlayers(players) {
-    // this.gameView.updateLeaderboard(players);
+    this.gameView.updateLeaderboard(players);
     players.forEach((player) => {
       if (player.curLocation) {
         const loc = [player.curLocation.sectionID,

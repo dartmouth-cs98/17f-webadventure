@@ -62,21 +62,6 @@ const END_POPUP_DIV = `
 ">GAME OVER!
 <div> --------- </div>`;
 
-// let END_POPUP_DIV =
-// `<div id="webAdv-gameover" style="
-//     position: fixed;
-//     text-align: center;
-//     width: 200px;
-//     font-size: 36px;
-//     border: 1px solid lightgrey;
-//     border-radius: 5px;
-//     background-color: white;
-//     left: 40vw;
-//     top: 50vh;
-//     box-shadow: 10px 10px 5px #888888;
-// ">GAME OVER
-// </div>`;
-
 const LEADERBOARD_DIV =
 `<div id ="leaderboard" style="
     position: fixed;
@@ -279,16 +264,16 @@ class GameView {
     }
   }
 
-  // updateLeaderboard(players) {
-  //   const sortedPlayers = players;
-  //   sortedPlayers.sort((a, b) => b.curScore - a.curScore);
-  //   for (let i = 1; i <= 10; i += 1) {
-  //     if (players[i - 1] !== undefined) {
-  //       document.getElementById(`top${i.toString()}`).innerHTML =
-  //         `${players[i - 1].username}: ${players[i - 1].curScore.toString()}`;
-  //     }
-  //   }
-  // }
+  updateLeaderboard(players) {
+    const sortedPlayers = players;
+    sortedPlayers.sort((a, b) => b.curScore - a.curScore);
+    for (let i = 1; i <= 10; i += 1) {
+      if (players[i - 1] !== undefined) {
+        document.getElementById(`top${i.toString()}`).innerHTML =
+          `${players[i - 1].username}: ${players[i - 1].curScore.toString()}`;
+      }
+    }
+  }
 
   static isScrolledIntoView(elem) {
     const $elem = $(elem);
