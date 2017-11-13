@@ -51,9 +51,7 @@ const LEADERBOARD_DIV =
   <div id="userStats">WEBADVENTURE
     <div id="userStatRow"></div>
   </div>
-
   <p id="currentPlayerView">Leaderboard</p>
-
   <div id="userStatRow"></div>
   <p id="top1"></p>
   <p id="top2"></p>
