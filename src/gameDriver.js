@@ -7,7 +7,6 @@ const UP = 0;
 const RIGHT = 1;
 const DOWN = 2;
 const LEFT = 3;
-const Q = 100;
 
 class GameDriver {
   constructor(gameView = new GameView()) {
@@ -123,10 +122,10 @@ class GameDriver {
         this.nextMove = DOWN;
         break;
       case 81:
-        this.lastMove = this.nextMove;
-        this.nextMove = Q;
-        this.stopMovement();
-        this.gameView.showPopup();
+        if (evt.ctrlKey) {
+          this.endGame();
+        }
+        this.nextMove = this.nextMove;
         break;
       case 82:
         this.gameView.closePopup();
