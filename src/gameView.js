@@ -123,6 +123,9 @@ class GameView {
       if (!username.match(/^[0-9a-z]+$/)) {
         alert('Invalid username!');
         username = null;
+      } else if (username.length > 8) {
+        alert('Username must be at most 8 characters!');
+        username = null;
       }
     }
     const colorPrompt = colors.map((color, index) => ` ${color.name} (${index + 1})`).join();
@@ -193,12 +196,23 @@ class GameView {
     }
   }
 
-  updateLeaderboard(id, players) {
+  updateLeaderboard(username, players, color) {
+    const colorString = `rgb(${color.r}, ${color.g}, ${color.b})`;
     players.sort((a, b) => b.curScore - a.curScore);
+
     players.forEach((player, index) => {
-      const playerText = `<div>${index + 1}. ${player.username} : ${player.curScore}</div>`;
-      $(`#top${index.toString()}`).html(playerText);
-      if (index === 11) {
+      $(`#top${(index + 1).toString()}`).html('');
+
+      if (player !== undefined && player.curScore > 0) {
+        document.getElementById(`top${(index + 1).toString()}`).style.backgroundColor = 'white';
+        const playerText = `<div>${index + 1}. ${player.username} : ${player.curScore}</div>`;
+        $(`#top${(index + 1).toString()}`).html(playerText);
+        if (player.username === username) {
+          document.getElementById(`top${(index + 1).toString()}`).style.backgroundColor = `${colorString}`;
+        }
+      }
+
+      if (index === 9) {
         return false;
       }
       return true;
