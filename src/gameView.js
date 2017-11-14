@@ -165,7 +165,7 @@ class GameView {
   createTree() {
     const textElement = $('#mw-content-text').children()[0];
     const sections = $(textElement).children('p').map((x, item) => {
-      const sentenceToWordSpans = sentence => sentence.split(' ').map(word =>
+      const sentenceToWordSpans = sentence => sentence.split(' ').filter(word => word && word !== '').map(word =>
         `<span>${word} </span>`);
       const sentences = $(item).text().match(/[^.!?]+[.!?]*/g) ? $(item).text().match(/[^.!?]+[.!?]*/g) : [];
       const wordSpans = sentences.map(sentenceToWordSpans);
