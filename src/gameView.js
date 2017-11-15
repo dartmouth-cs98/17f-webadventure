@@ -179,20 +179,23 @@ class GameView {
   }
 
   highlightWord(sectionId, sentenceId, wordId, color = 'yellow', scrollTo = false, playerDivId) {
-    const span = this.pageTree[sectionId][sentenceId][wordId];
-    $(span).css('background-color', color);
-    if (scrollTo && !GameView.isScrolledIntoView(span)) {
-      GameView.scrollIntoCenterView(span);
-    }
-    if (playerDivId) {
-      this.username = playerDivId;
-      let playerDiv = $(`#${playerDivId}`);
-      if (!playerDiv.length) {
-        $('body').append(PLAYER_DIV(playerDivId));
-        playerDiv = $(`#${playerDivId}`);
+    if (this.pageTree && this.pageTree[sectionId] && this.pageTree[sectionId][sentenceId]
+      && this.pageTree[sectionId][sentenceId][wordId]) {
+      const span = this.pageTree[sectionId][sentenceId][wordId];
+      $(span).css('background-color', color);
+      if (scrollTo && !GameView.isScrolledIntoView(span)) {
+        GameView.scrollIntoCenterView(span);
       }
-      playerDiv.css('top', $(span).offset().top);
-      playerDiv.css('left', $(span).offset().left);
+      if (playerDivId) {
+        this.username = playerDivId;
+        let playerDiv = $(`#${playerDivId}`);
+        if (!playerDiv.length) {
+          $('body').append(PLAYER_DIV(playerDivId));
+          playerDiv = $(`#${playerDivId}`);
+        }
+        playerDiv.css('top', $(span).offset().top);
+        playerDiv.css('left', $(span).offset().left);
+      }
     }
   }
 
