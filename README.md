@@ -63,10 +63,37 @@ Flame: 229, 89, 52
 Princeton Orange: 250, 121, 33
 (Found on [coolors.co](https://coolors.co/5bc0eb-fde74c-9bc53d-e55934-fa7921))
 
-## Feedback after November 14 Demo
+## Summary of Term 1
 
-Please see Google Doc to directly view responses:
+### November 14 Demo Feedback
+
+Please see Google Doc to directly view responses submitted from November 14 Demo:
 https://docs.google.com/spreadsheets/d/1WIavWqiqqkvedVlsRr5hxJsht_0UQjWsiwfunbVE8TY/edit?usp=sharing
+
+### What worked and didn't work
+
+The game went through an evolution this term in terms of ideas, but eventually we got the concept down to an innovative way to browse a Wikipedia webpage. By the end of the term, we definitely reached a great minimum viable product. The game navigates smoothly with a single player and all critical functions work well in singleplayer mode, such as navigation through a page and interaction with backend.
+
+We had a lot of ideas for features during this term, include question modules, obstacles, hyperlink navigation, but we developed a good scaffold that we can expand upon this term. We noticed that the game wasn't very fun to a lot of users at the demo when they were playing by themselves, but we also noticed that users really enjoyed the multiplayer aspect (when someone played against someone else at the demo). Unfortunately, the game is fairly buggy when there are a great deal of users at the same time. This is an issue we hope to resolve in the future.
+
+The game also needs to be more intuitive to players. That was another big flaw we recognized during the pre-demo bug hunt, and attempted to fix. Some users still didn't feel like the game was intuitive, despite adding a rules section prior to running the game.
+
+### User testing plan
+
+We hope to deploy the chrome extension early next term and solicit feedback from users who directly use the Chrome extension. This would be after critical fixes are implemented. We will also use time early next term to read over the feedback from the demo and implement relevant changes as well.
+
+### Summary and Next Term Ideas
+
+We created a great minimum viable produt this term and will expand upon that for next term. We are not too worried about playability as we realized this game really shined during multiplayer aspects. Next term, we hope to clean up the bugs we noticed from the demo and implement features that we listed as issues in this repository.
+
+Because we reached the MVP, next term will be focused on fixing bugs, adding features, bolstering user experience. Some ideas include:
+
+- Question module
+- Nice animations (upon death and rendering of other players)
+- Smoothing multiplayer functionality
+- Clarifying instructions and incorporating HCD elements into the game
+- Graceful exit (and proper updating to the server upon unexpected exit)
+- Website with statistics of the game, a link to download the chrome extension (home page website)
 
 ## Authors
 
