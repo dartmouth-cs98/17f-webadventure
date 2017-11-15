@@ -1,17 +1,19 @@
 # WebAdventure
 
-We plan to develop an extensible program for overlaying and interacting with Wikipedia via a game format. “Players” will interact with webpages in a novel way that could be used by clients for data collection.
+WebAdventure is a Chrome Extension that provides a unique and fun way of interacting with Wikipedia via a game format. Players interact with webpages in a multiplayer snake game that combines reading content with the competitive multiplayer snake game.
 
-We intend to adapt the game paper.io that interacts with a webpage (we choose Wikipedia.com for this iteration). Players would fight for "control" of a webpage via taking up area, like in paper.io. We plan to control the environment by limiting the number of hyperlinks and setting a low-depth, such that a limited number of pages within a tree can be explored. After the game ends, the user's name and score would be recorded.
+We developed the game by adapting the popular game of Snake and [paper.io](http://www.best.io/paper-io) so that it takes place on the text of a webpage (we choose Wikipedia.com for this iteration). Players fight for control of a webpage by taking up area with the limitation they cannot exceed the boundaries of the content and cannot run into any snake trail (their own or any opponents'). They  As the game runs the player's stats (score, area collected) are displayed to other users.
 
 For mockups of the page, please visit https://github.com/dartmouth-cs98/17f-webadventure/wiki and click on the link titled "Link to Figma"
 
 Example of Game:
-![Snake in Action](WebAdventure.png)
+![Snake in Action](assets/Gameplay.png)
+
+![Gameover](assets/Gameover.png)
 
 ## Architecture
 
-We are using a chrome extension to inject javascript into a Wikipedia page or a pre-defined webpage. The extension code is compiled and built using Babel and Webpack.
+Our Chrome Extension currently injects Javascript into a Wikipedia page and using JQuery to parse and modify the page. The extension code is compiled and built using Babel and Webpack.
 
 On the backend we are using MongoDB and Mongoose to access the data. Visit https://github.com/dartmouth-cs98/webadventure-backend for the backend repo.
 
@@ -19,20 +21,32 @@ The frontend and backend communicate via web sockets (using Socket.io).
 
 ## Setup
 
-We are using vanilla Javascript and jquery right now to test javascript injection. We are considering options such as Node.js to build the game. This section will evolve as the game developers.
+We are using vanilla Javascript, JQuery, HTML and CSS right now to inject the game onto the Wikipedia page.
+
+After pulling the repo run:
+```
+npm install
+npm run build
+```
+
+Then load the unpacked extension onto the [Chrome Extensions](chrome:\\extensions) settings page.
+
+Run the game by clicking on the extension icon and the game will provide instructions.
+
+By default the game uses the deployed backend. To use a locally deployed backend change the socketserver variable in gameData.js
 
 ## Deployment
 
 At this stage, we plan to deploy via Chrome extension using Google Developer Tools (chrome://extensions).
 
-We've added in Babel to compile JS. Before reloading as an extension, run the command:
+Before reloading as an extension, run the command:
 ```
+npm install
 npm run build
 ```
-Then add the unpacked extension to Chrome
+Then add the unpacked extension to Chrome.
 
-Run mongod and the [backend](https://github.com/dartmouth-cs98/webadventure-backend)
-Go on [localhost:9090](localhost:9090) (currently we load a mock wikipedia page for dev purposes) and click on the extension
+Click on the extension.
 
 Have fun!
 
@@ -41,7 +55,7 @@ To move the snake make sure the Wikipedia page in focus (click on it if it's not
 
 The edges of the game are the top and bottom of any given section. Avoid going into an edge and the snake's trail.
 
-## Colors Supported
+## Snake Colors Supported
 Blue jeans: 91, 192, 235
 Gargoyle Gas: 253, 231, 76
 Android Green: 155, 197, 61
