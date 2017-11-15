@@ -63,6 +63,11 @@ Flame: 229, 89, 52
 Princeton Orange: 250, 121, 33
 (Found on [coolors.co](https://coolors.co/5bc0eb-fde74c-9bc53d-e55934-fa7921))
 
+## Feedback after November 14 Demo
+
+Please see Google Doc to directly view responses:
+https://docs.google.com/spreadsheets/d/1WIavWqiqqkvedVlsRr5hxJsht_0UQjWsiwfunbVE8TY/edit?usp=sharing
+
 ## Authors
 
 * Imanol "Idea Guy" Avendaño
