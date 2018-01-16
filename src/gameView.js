@@ -3,24 +3,6 @@
 import $ from 'jquery';
 import '../styles.css';
 
-// const START_POPUP_DIV = `
-// <div id="startPopup" style="
-//     position: fixed;
-//     left: 50vw;
-//     top: 50vh;
-//     background-color: white;
-//     padding: 20px;
-//     border: 1px solid lightgrey;
-//     border-radius: 5px;
-//     " >
-//   <input name="username" placeholder="Username"/>
-//   <input name="r" type="number" placeholder="Color R" />
-//   <input name="g" type="number" placeholder="Color G" />
-//   <input name="b" type="number" placeholder="Color B" />
-//   <button>Start</button>
-// </div>
-// `;
-
 // left-facing at index 0, right-facing at index 1
 const NYAN_CATS = ['https://i.imgur.com/rZSkKF0.gif', 'https://i.imgur.com/YNcTBuU.gif'];
 
@@ -178,11 +160,10 @@ class GameView {
     this.pageTree = sections;
   }
 
-  highlightWord(sectionId, sentenceId, wordId, color = 'yellow', scrollTo = false, playerDivId) {
+  movePlayer(sectionId, sentenceId, wordId, scrollTo = false, playerDivId) {
     if (this.pageTree && this.pageTree[sectionId] && this.pageTree[sectionId][sentenceId]
       && this.pageTree[sectionId][sentenceId][wordId]) {
       const span = this.pageTree[sectionId][sentenceId][wordId];
-      $(span).css('background-color', color);
       if (scrollTo && !GameView.isScrolledIntoView(span)) {
         GameView.scrollIntoCenterView(span);
       }

@@ -34,10 +34,7 @@ class GameDriver {
     this.gameData.onPlayers(this.getPlayers);
     const colorString = `rgb(${playerColor.r}, ${playerColor.g}, ${playerColor.b})`;
     this.gameView
-      .highlightWord(
-        this.curLocation[0], this.curLocation[1], this.curLocation[2],
-        colorString, true,
-      );
+      .movePlayer(this.curLocation[0], this.curLocation[1], this.curLocation[2], true);
     this.curScore = 0;
     this.moveInterval = setInterval(this.makeMove, 250);
   }
@@ -74,9 +71,9 @@ class GameDriver {
     if (move && this.gameView.isEmptyLoc(move)) {
       const nextLoc = move;
       const colorString = `rgb(${this.playerColor.r}, ${this.playerColor.g}, ${this.playerColor.b})`;
-      this.gameView.highlightWord(
+      this.gameView.movePlayer(
         nextLoc[0], nextLoc[1], nextLoc[2],
-        colorString, true, this.username.replace(/\s/, ''),
+        true, this.username.replace(/\s/, ''),
       );
       this.curLocation = nextLoc;
       const updateLoc = {
@@ -100,7 +97,7 @@ class GameDriver {
         const loc = [player.curLocation.sectionID,
           player.curLocation.sentenceID, player.curLocation.character];
         const colorString = `rgb(${player.playerColor.r}, ${player.playerColor.g}, ${player.playerColor.b})`;
-        this.gameView.highlightWord(loc[0], loc[1], loc[2], colorString);
+        this.gameView.movePlayer(loc[0], loc[1], loc[2]);
       }
     });
   }
