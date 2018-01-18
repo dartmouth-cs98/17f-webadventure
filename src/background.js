@@ -8,7 +8,9 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo) => {
   }
 
   if (changeInfo.status === 'complete') {
-    alert(url1);
+    chrome.tabs.sendMessage(tabId, { url: 'getURL' }, function(doc) {
+    	console.log(doc);
+    });
   }
 });
 
