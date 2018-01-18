@@ -1,3 +1,10 @@
+#wa_main {
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: blue;
+}
+
 #leaderboard  {
   position: fixed;
   top: 0vh;
@@ -6,6 +13,10 @@
   height: 100%;
   margin-left: 10px;
   background-color: rgba(246, 246, 246, 1);
+}
+
+.leaderboard-item {
+  
 }
 
 #currentPlayerView {
