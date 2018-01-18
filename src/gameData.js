@@ -1,4 +1,3 @@
-/* eslint no-undef: "off", no-unused-vars: "off" */
 import io from 'socket.io-client';
 
 const socketserver = 'https://webadventure-api.herokuapp.com/';
@@ -22,7 +21,7 @@ export default class GameData {
   }
 
   createUser(username, playerColor) {
-    this.socket.emit('signup', username, playerColor, (user) => {
+    this.socket.emit('signup', username, playerColor, () => {
     });
   }
 
