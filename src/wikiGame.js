@@ -1,11 +1,10 @@
-/* eslint no-unused-vars: 0 */
 
 import Player from './player';
 
-const UP = 0;
-const RIGHT = 1;
-const DOWN = 2;
-const LEFT = 3;
+// const UP = 0;
+// const RIGHT = 1;
+// const DOWN = 2;
+// const LEFT = 3;
 
 class WikiGame {
   constructor(curPlayer = new Player('curPlayer', { x: 100, y: 100 }, true)) {
