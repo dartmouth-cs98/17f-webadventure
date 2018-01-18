@@ -105,8 +105,19 @@ class GameDriver {
     });
   }
 
+  redirectURL() {
+    alert("redirectURL");
+    var myNewUrl = "https://en.wikipedia.org/wiki/Cerebrum";
+
+    chrome.runtime.sendMessage(myNewUrl, function(response) {
+      console.log(response);
+    });
+  }
+
   moveSelection(evt) {
     switch (evt.keyCode) {
+      // console.log("key was pressed!");
+      // console.log(evt.keyCode);
       case 65:
         this.nextMove = LEFT;
         GameView.updateAvatar(this.username, 0);
@@ -136,6 +147,9 @@ class GameDriver {
         this.gameView.closePopup();
         this.moveInterval = setInterval(this.makeMove, 250);
         this.nextMove = this.lastMove;
+        break;
+      case 13: // jump through link with ENTER key
+        this.redirectURL();
         break;
       default:
         this.nextMove = this.nextMove;

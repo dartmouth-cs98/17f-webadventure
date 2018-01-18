@@ -7,6 +7,7 @@ const socketserver = 'https://webadventure-api.herokuapp.com/';
 export default class GameData {
   constructor() {
     this.socket = io(socketserver);
+    console.log("hey in gamedata!");
     this.socket.on('connect', () => { console.log('socket.io connected'); });
     this.socket.on('disconnect', () => { console.log('socket.io disconnected'); });
     this.socket.on('reconnect', () => { console.log('socket.io reconnected'); });
