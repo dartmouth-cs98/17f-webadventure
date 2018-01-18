@@ -37,7 +37,7 @@ class Leaderboard extends Component {
           WEBADVENTURE
           <div id="userStatRow">
             {this.state.curPlayer.index + 1}. {this.state.curPlayer.username} :
-             {this.state.curPlayer.curScore}
+            {this.state.curPlayer.curScore}
           </div>
         </div>
         <p id="currentPlayerView">Leaderboard</p>
