@@ -1,4 +1,4 @@
-/* eslint no-unused-vars: 0, class-methods-use-this: 0 */
+/* eslint no-unused-vars: 0 */
 
 import Player from './player';
 

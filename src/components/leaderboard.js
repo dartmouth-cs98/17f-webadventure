@@ -9,6 +9,7 @@ class Leaderboard extends Component {
         username: 'Alma',
         curScore: 100000,
         index: 0,
+        avatar: 'https://i.imgur.com/YNcTBuU.gif',
       },
       games: {
         players: [{ username: 'Alma', curScore: 123123 }, { username: 'Barry', curScore: 11 }],
@@ -43,6 +44,7 @@ class Leaderboard extends Component {
         <div id="userStatRow" >
           {this.renderRankings()}
         </div>
+        <img id="wahoo" src={this.state.curPlayer.avatar} alt="userIcon" />
       </div>
     );
   }

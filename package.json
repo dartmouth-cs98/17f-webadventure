@@ -31,8 +31,9 @@
     "webpack": "^3.8.1"
   },
   "scripts": {
+    "start": "webpack webpack.config.js --watch",
     "test": "./node_modules/.bin/eslint src",
-    "build": "webpack webpack.config.js --watch"
+    "build": "webpack webpack.config.js"
   },
   "repository": {
     "type": "git",

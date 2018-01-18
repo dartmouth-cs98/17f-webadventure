@@ -9,6 +9,7 @@ class Player {
     this.facingRight = true;
     this.position = { x: -1, y: -1 };
     this.isCurPlayer = isCurPlayer;
+    this.avatar = NYAN_CATS;
     $('body').append(`<div id="${this.id}" class="playerDiv" style="position: absolute">
               <span class="playerName">${this.id}</span>
               <img class="player-img" src="${NYAN_CATS[1]}" alt="nyan cat"/>
@@ -50,6 +51,10 @@ class Player {
 
   getPosition() {
     return this.position;
+  }
+
+  getAvatarRight() {
+    return this.avatar[1];
   }
 
   isOnLink() {

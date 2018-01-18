@@ -5,6 +5,7 @@
  ],
 "globals": {
   "window": true,
+  "chrome": true,
 },
  "rules": {
      "import/no-unresolved": [0, { "commonjs": true }],
