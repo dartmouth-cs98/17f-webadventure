@@ -106,18 +106,14 @@ class GameDriver {
   }
 
   redirectURL() {
-    alert("redirectURL");
-    var myNewUrl = "https://en.wikipedia.org/wiki/Cerebrum";
-
-    chrome.runtime.sendMessage(myNewUrl, function(response) {
-      console.log(response);
+    const myNewUrl = 'https://en.wikipedia.org/wiki/Cerebrum';
+    chrome.runtime.sendMessage(myNewUrl, (response) => {
+      // console.log(response);
     });
   }
 
   moveSelection(evt) {
     switch (evt.keyCode) {
-      // console.log("key was pressed!");
-      // console.log(evt.keyCode);
       case 65:
         this.nextMove = LEFT;
         GameView.updateAvatar(this.username, 0);

@@ -2,7 +2,6 @@
 import GameDriver from './gameDriver';
 import GameView from './gameView';
 
-console.log('inject.js!!!');
 const url = window.location.href;
 const gameView = new GameView();
 const gameDriver = new GameDriver(url, gameView);
