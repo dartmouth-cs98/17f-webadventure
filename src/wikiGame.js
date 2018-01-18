@@ -53,12 +53,12 @@ class WikiGame {
   openLink() {
     const link = this.curPlayer.isOnLink();
     if (link !== null) {
-      window.open(`https://en.wikipedia.org${link}`, '_self');
-      
-      // const myNewUrl = 'https://en.wikipedia.org/wiki/Cerebrum';
-      // chrome.runtime.sendMessage(myNewUrl, (response) => {
-      // console.log(response);
-    // });
+      // window.open(`https://en.wikipedia.org${link}`, '_self');
+
+      const redirectLink = `https://en.wikipedia.org${link}`;
+      chrome.runtime.sendMessage(redirectLink, (response) => {
+        console.log(response);
+      });
     }
   }
 
