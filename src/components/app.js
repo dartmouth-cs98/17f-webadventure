@@ -1,8 +1,10 @@
 import React from 'react';
 
+import Leaderboard from './leaderboard';
+
 const App = () => (
   <div>
-        hi
+    <Leaderboard />
   </div>
 );
 

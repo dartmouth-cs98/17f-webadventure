@@ -1,7 +1,6 @@
 /* eslint no-alert: "off", no-undef: "off", class-methods-use-this: "off", */
 /* eslint no-restricted-globals: "off" */
 import $ from 'jquery';
-import '../styles.css';
 
 // left-facing at index 0, right-facing at index 1
 const NYAN_CATS = ['https://i.imgur.com/rZSkKF0.gif', 'https://i.imgur.com/YNcTBuU.gif'];
@@ -27,25 +26,6 @@ To quit the game, enter ctrl+q.
 const END_POPUP_DIV = `
 <div id="endPopUp">GAME OVER!
 <div>---------</div>`;
-
-const LEADERBOARD_DIV =
-`<div id ="leaderboard">
-  <div id="userStats">WEBADVENTURE
-    <div id="userStatRow"></div>
-  </div>
-  <p id="currentPlayerView">Leaderboard</p>
-  <div id="userStatRow"></div>
-  <p id="top1"></p>
-  <p id="top2"></p>
-  <p id="top3"></p>
-  <p id="top4"></p>
-  <p id="top5"></p>
-  <p id="top6"></p>
-  <p id="top7"></p>
-  <p id="top8"></p>
-  <p id="top9"></p>
-  <p id="top10"></p>
-</div>`;
 
 const blueJeans = {
   name: 'Blue Jeans',
