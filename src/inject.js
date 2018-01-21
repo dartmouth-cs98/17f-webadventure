@@ -6,8 +6,8 @@ import $ from 'jquery';
 import WikiGame from './wikiGame';
 import App from './components/app';
 
-$('body').append('<div id=wa_main />');
+$('body').append('<div id=wa-main />');
 
 const wikiGame = new WikiGame();
 console.log(wikiGame);
-ReactDOM.render(<App />, document.getElementById('wa_main'));
+ReactDOM.render(<App />, document.getElementById('wa-main'));

@@ -1,4 +1,5 @@
 
+import $ from 'jquery';
 import Player from './player';
 
 // const UP = 0;
@@ -7,7 +8,7 @@ import Player from './player';
 // const LEFT = 3;
 
 class WikiGame {
-  constructor(curPlayer = new Player('curPlayer', { x: 100, y: 100 }, true)) {
+  constructor(curPlayer = new Player('curPlayer', { left: 100, top: 100 }, true)) {
     this.curPlayer = curPlayer;
     this.players = [];
     this.keysPressed = {
@@ -20,6 +21,13 @@ class WikiGame {
         down: false,
       },
     };
+
+
+    const toc = $('#toc').detach();
+    $(toc).attr('id', 'wa-toc');
+    $('body').append(toc);
+    const curPosition = this.curPlayer.getPosition();
+    this.curPlayer.insertPlayer(curPosition.x, curPosition.y);
 
     this.updateGame = this.updateGame.bind(this);
     this.onKeyDown = this.onKeyDown.bind(this);
@@ -51,8 +59,9 @@ class WikiGame {
   }
 
   openLink() {
-    const link = this.curPlayer.isOnLink();
+    const link = this.curPlayer.getLink();
     if (link !== null) {
+      // if matches #, jump to that point in page
       window.open(`https://en.wikipedia.org${link}`, '_self');
     }
   }
