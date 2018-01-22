@@ -42,19 +42,23 @@ class WikiGame {
   renderGame() {
     $('body').append('<div id=wa-main />');
     ReactDOM.render(<App />, document.getElementById('wa-main'));
+    this.setupToc();
     const curPosition = this.curPlayer.getPosition();
     this.curPlayer.insertPlayer(curPosition.x, curPosition.y);
-    this.setupToc();
   }
 
   setupToc() {
     const toc = $('#toc').detach();
     $(toc).attr('id', 'wa-toc');
     $('body').append(toc);
-    $(toc).children('a').map((i, link) => {
-      return link;
+    $(toc).find('a').each((i, link) => {
+      $(link).click(() => {
+        const id = $(link).attr('href');
+        const { left, top } = $(document.getElementById(id.substring(1))).offset();
+        // Issue with jquery on id's with special characters; i.e. (, ), -
+        this.curPlayer.movePlayer(left, top);
+      });
     });
-    console.log(this.curPlayer);
   }
 
   updateGame() {
