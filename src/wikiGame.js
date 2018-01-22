@@ -1,5 +1,11 @@
-
+import React from 'react';
+import ReactDOM from 'react-dom';
+import $ from 'jquery';
 import Player from './player';
+
+
+import App from './components/app';
+
 
 // const UP = 0;
 // const RIGHT = 1;
@@ -7,7 +13,7 @@ import Player from './player';
 // const LEFT = 3;
 
 class WikiGame {
-  constructor(curPlayer = new Player('curPlayer', { x: 100, y: 100 }, true)) {
+  constructor(curPlayer = new Player('curPlayer', { left: 100, top: 100 }, true)) {
     this.curPlayer = curPlayer;
     this.players = [];
     this.keysPressed = {
@@ -21,13 +27,34 @@ class WikiGame {
       },
     };
 
+    this.renderGame = this.renderGame.bind(this);
+    this.setupToc = this.setupToc.bind(this);
     this.updateGame = this.updateGame.bind(this);
     this.onKeyDown = this.onKeyDown.bind(this);
     this.onKeyUp = this.onKeyUp.bind(this);
 
+    this.renderGame();
     window.addEventListener('keydown', this.onKeyDown);
     window.addEventListener('keyup', this.onKeyUp);
     this.updateInterval = window.setInterval(this.updateGame, 10);
+  }
+
+  renderGame() {
+    $('body').append('<div id=wa-main />');
+    ReactDOM.render(<App />, document.getElementById('wa-main'));
+    const curPosition = this.curPlayer.getPosition();
+    this.curPlayer.insertPlayer(curPosition.x, curPosition.y);
+    this.setupToc();
+  }
+
+  setupToc() {
+    const toc = $('#toc').detach();
+    $(toc).attr('id', 'wa-toc');
+    $('body').append(toc);
+    $(toc).children('a').map((i, link) => {
+      return link;
+    });
+    console.log(this.curPlayer);
   }
 
   updateGame() {
@@ -51,7 +78,7 @@ class WikiGame {
   }
 
   openLink() {
-    const link = this.curPlayer.isOnLink();
+    const link = this.curPlayer.getLink();
     if (link !== null) {
       window.open(`https://en.wikipedia.org${link}`, '_self');
     }
