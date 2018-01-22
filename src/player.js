@@ -3,40 +3,93 @@ import $ from 'jquery';
 const NYAN_CATS = ['https://i.imgur.com/rZSkKF0.gif', 'https://i.imgur.com/YNcTBuU.gif'];
 
 class Player {
-  constructor(username, position = { x: 0, y: 0 }, isCurPlayer = false) {
+  constructor(username, position = { left: 0, top: 0 }, isCurPlayer = false) {
     this.username = username;
     this.id = username.replace(' ', '');
     this.facingRight = true;
-    this.position = { x: -1, y: -1 };
+    this.position = position;
+    this.size = { height: 40, width: 40 };
     this.isCurPlayer = isCurPlayer;
     this.avatar = NYAN_CATS;
+    this.link = null;
+
+    this.insertPlayer = this.insertPlayer.bind(this);
+    this.getLinks = this.getLinks.bind(this);
+    this.movePlayer = this.movePlayer.bind(this);
+    this.updateDirRight = this.updateDirRight.bind(this);
+    this.getPosition = this.getPosition.bind(this);
+    this.getAvatarRight = this.getAvatarRight.bind(this);
+    this.getLink = this.getLink.bind(this);
+    this.updateOnLink = this.updateOnLink.bind(this);
+  }
+
+  getLinks() {
+    this.links = [];
+    $('a').each((i, link) => {
+      if (!$(link).attr('href') || $(link).attr('href').includes('#')) {
+        return;
+      }
+      const { top, left } = $(link).offset();
+      const width = $(link).width();
+      const height = $(link).height();
+      const vertSection = Math.floor((top + height) / 100);
+      const linksList = this.links[vertSection] ? this.links[vertSection] : [];
+      linksList.push({
+        top, left, width, height, link,
+      });
+      this.links[vertSection] = linksList;
+    });
+  }
+
+  insertPlayer(x, y) {
+    this.getLinks();
     $('body').append(`<div id="${this.id}" class="playerDiv" style="position: absolute">
               <span class="playerName">${this.id}</span>
               <img class="player-img" src="${NYAN_CATS[1]}" alt="nyan cat"/>
             </div>`);
-
-    this.movePlayer = this.movePlayer.bind(this);
-    this.updateDirRight = this.updateDirRight.bind(this);
-    this.getPosition = this.getPosition.bind(this);
-    this.isOnLink = this.isOnLink.bind(this);
-
-    this.movePlayer(position.x, position.y);
+    this.movePlayer(x, y);
   }
 
-  movePlayer(x, y) {
-    if (x < 0 || y < 0) { return; }
-    this.position = { x, y };
-    const newLoc = {
-      left: x,
-      top: y,
-    };
-    $(`#${this.id}`).css(newLoc);
+  movePlayer(left, top) {
+    if (left < 0 || top < 0) { return; }
+    this.position = { left, top };
+    $(`#${this.id}`).css(this.position);
 
     if (this.isCurPlayer) {
       if (!Player.isScrolledIntoView(`#${this.id}`)) {
         Player.scrollIntoCenterView(`#${this.id}`);
       }
+      this.updateOnLink();
     }
+  }
+
+  updateOnLink() {
+    const leftEnd = this.position.left;
+    const rightEnd = this.position.left + this.size.width;
+    const topEnd = this.position.top;
+    const bottomEnd = this.position.top + this.size.height;
+    const linksList = this.links[Math.floor(topEnd / 100)] ?
+      this.links[Math.floor(topEnd / 100)] : [];
+    if (Math.floor(topEnd / 100) !== Math.floor(bottomEnd / 100)) {
+      linksList.concat(this.links[Math.floor(bottomEnd / 100)]);
+    }
+    const overlap = linksList.filter((linkItem) => {
+      const xOverlap = (leftEnd > linkItem.left && leftEnd < linkItem.left + linkItem.width) ||
+        (rightEnd > linkItem.left && rightEnd < linkItem.left + linkItem.width) ||
+        (leftEnd < linkItem.left && rightEnd > linkItem.left + linkItem.width);
+      const yOverlap = (topEnd > linkItem.top && topEnd < linkItem.top + linkItem.width) ||
+        (bottomEnd > linkItem.top && bottomEnd < linkItem.top + linkItem.width) ||
+        (topEnd < linkItem.top && bottomEnd > linkItem.top + linkItem.width);
+      return xOverlap && yOverlap;
+    });
+    const link = overlap.length !== 0 ? overlap[0].link : null;
+    if (link) {
+      $(link).css('color', 'pink');
+    }
+    if (this.link && this.link !== link) {
+      $(this.link).css('color', '#0645ad');
+    }
+    this.link = link;
   }
 
   updateDirRight(isRight) {
@@ -50,23 +103,17 @@ class Player {
   }
 
   getPosition() {
-    return this.position;
+    return { x: this.position.left, y: this.position.top };
   }
 
   getAvatarRight() {
     return this.avatar[1];
   }
 
-  isOnLink() {
-    const curLink = $('a').filter((i, link) => {
-      const { top, left } = $(link).offset();
-      const width = $(link).width();
-      const height = $(link).height();
-      return (this.position.x > left && this.position.x < left + width
-      && this.position.y > top && this.position.y < top + height);
-    });
-    return curLink.length !== 0 ? $(curLink[0]).attr('href') : null;
+  getLink() {
+    return this.link ? $(this.link).attr('href') : null;
   }
+
 
   static isScrolledIntoView(elem) {
     const $elem = $(elem);
