@@ -27,6 +27,8 @@ class WikiGame {
       },
     };
 
+    // this.asdfsf = {new info};
+
     this.renderGame = this.renderGame.bind(this);
     this.setupToc = this.setupToc.bind(this);
     this.updateGame = this.updateGame.bind(this);
@@ -34,6 +36,16 @@ class WikiGame {
     this.onKeyUp = this.onKeyUp.bind(this);
 
     this.renderGame();
+
+    chrome.runtime.onMessage.addListener(
+      function(request, sender, sendResponse) {
+        console.log(sender.tab ?
+                    "from a content script:" + sender.tab.url :
+                    "from the extension");
+        if (request.greeting == "hello")
+          sendResponse({farewell: "goodbye"});
+    });
+
     window.addEventListener('keydown', this.onKeyDown);
     window.addEventListener('keyup', this.onKeyUp);
     this.updateInterval = window.setInterval(this.updateGame, 10);
@@ -41,7 +53,7 @@ class WikiGame {
 
   renderGame() {
     $('body').append('<div id=wa-main />');
-    ReactDOM.render(<App />, document.getElementById('wa-main'));
+    ReactDOM.render(<App/>, document.getElementById('wa-main'));
     this.setupToc();
     const curPosition = this.curPlayer.getPosition();
     this.curPlayer.insertPlayer(curPosition.x, curPosition.y);
@@ -87,7 +99,24 @@ class WikiGame {
       // window.open(`https://en.wikipedia.org${link}`, '_self');
 
       const redirectLink = `https://en.wikipedia.org${link}`;
-      chrome.runtime.sendMessage(redirectLink, (response) => {
+
+      let leaderboard = {
+        time: 1234,
+        username:"2002 Toyota Corolla",
+        url: redirectLink,
+        players: [
+          player1: [
+            username: "player1",
+            score: 1,
+          ],
+          player2: [
+            username: "player2",
+            score: 2,
+          ]
+        ]
+      };
+
+      chrome.runtime.sendMessage(leaderboard, (response) => {
         console.log(response);
       });
     }
