@@ -16,6 +16,10 @@
   background-color: rgba(246, 246, 246, 1);
 }
 
+.leaderboard-curPlayer {
+  background-color: rgba(3, 169, 244, 1);
+}
+
 
 #currentPlayerView {
   text-align: center;
@@ -75,6 +79,7 @@
   font-family: impact;
   font-size: 25px;
   margin-top: 10px;
+  text-align: center;
 }
 
 #overlay {
