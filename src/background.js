@@ -2,8 +2,6 @@
 
 let updatePage = false;
 
-// chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
-
 chrome.tabs.onUpdated.addListener((tabId, changeInfo) => {
   if (changeInfo.status === 'complete' && updatePage) {
     updatePage = false;
