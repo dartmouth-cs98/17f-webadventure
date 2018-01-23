@@ -84,7 +84,12 @@ class WikiGame {
   openLink() {
     const link = this.curPlayer.getLink();
     if (link !== null) {
-      window.open(`https://en.wikipedia.org${link}`, '_self');
+      // window.open(`https://en.wikipedia.org${link}`, '_self');
+
+      const redirectLink = `https://en.wikipedia.org${link}`;
+      chrome.runtime.sendMessage(redirectLink, (response) => {
+        console.log(response);
+      });
     }
   }
 
