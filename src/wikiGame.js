@@ -26,8 +26,17 @@ class WikiGame {
         down: false,
       },
     };
-
-    // this.asdfsf = {new info};
+    this.leaderboard = {
+      time: 1234,
+      curPlayer: {
+        name: 'Alma',
+        avatarRight: this.curPlayer.getAvatarRight(),
+      },
+      players: [
+        { name: 'Barry', numClicks: 10 },
+        { name: 'Alma', numClicks: 5 },
+      ],
+    };
 
     this.renderGame = this.renderGame.bind(this);
     this.setupToc = this.setupToc.bind(this);
@@ -53,7 +62,8 @@ class WikiGame {
 
   renderGame() {
     $('body').append('<div id=wa-main />');
-    ReactDOM.render(<App/>, document.getElementById('wa-main'));
+
+    ReactDOM.render(<App leaderboard={this.leaderboard} />, document.getElementById('wa-main'));
     this.setupToc();
     const curPosition = this.curPlayer.getPosition();
     this.curPlayer.insertPlayer(curPosition.x, curPosition.y);
@@ -89,8 +99,7 @@ class WikiGame {
     }
     this.curPlayer.movePlayer(newLoc.x, newLoc.y);
 
-    // update locations of other players
-    //
+    /// update locations of other players
   }
 
   openLink() {
@@ -100,23 +109,9 @@ class WikiGame {
 
       const redirectLink = `https://en.wikipedia.org${link}`;
 
-      let leaderboard = {
-        time: 1234,
-        username:"2002 Toyota Corolla",
-        url: redirectLink,
-        players: [
-          player1: [
-            username: "player1",
-            score: 1,
-          ],
-          player2: [
-            username: "player2",
-            score: 2,
-          ]
-        ]
-      };
+      this.leaderboard.url = redirectLink;
 
-      chrome.runtime.sendMessage(leaderboard, (response) => {
+      chrome.runtime.sendMessage(this.leaderboard, (response) => {
         console.log(response);
       });
     }

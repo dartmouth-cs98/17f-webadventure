@@ -4,47 +4,54 @@ import React, { Component } from 'react';
 class Leaderboard extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      curPlayer: {
-        username: 'Alma',
-        curScore: 100000,
-        index: 0,
-        avatar: 'https://i.imgur.com/YNcTBuU.gif',
-      },
-      games: {
-        players: [{ username: 'Alma', curScore: 123123 }, { username: 'Barry', curScore: 11 }],
-      },
-    };
     this.renderRankings = this.renderRankings.bind(this);
   }
 
   renderRankings() {
-    const top10 = this.state.games.players
-      .sort((a, b) => b.curScore - a.curScore)
+    const top10 = this.props.players
+      .sort((a, b) => b.numClicks - a.numClicks)
       .slice(0, 10)
-      .map((player, index) =>
-        (
+      .map((player, index) => {
+        if (player.name === this.props.curPlayer.name) {
+          return (
+            <div className="leaderboard-item leaderboard-curPlayer">
+              {index + 1}. {player.name} : {player.numClicks}
+            </div>);
+        }
+        return (
           <div className="leaderboard-item">
-            {index + 1}. {player.username} : {player.curScore}
-          </div>));
+            {index + 1}. {player.name} : {player.numClicks}
+          </div>);
+      });
     return top10;
   }
 
   render() {
+    if (this.props.curPlayer) {
+      return (
+        <div id="leaderboard">
+          <div id="userStats">
+          WEBADVENTURE
+          <div id="userStatRow">
+            {this.props.curPlayer.name}
+          </div>
+          </div>
+          <p id="currentPlayerView">Leaderboard</p>
+          <div id="userStatRow" >
+            {this.renderRankings()}
+          </div>
+          <img id="wahoo" src={this.props.curPlayer.avatarRight} alt="userIcon" />
+        </div>
+      );
+    }
     return (
       <div id="leaderboard">
         <div id="userStats">
-          WEBADVENTURE
-          <div id="userStatRow">
-            {this.state.curPlayer.index + 1}. {this.state.curPlayer.username} :
-            {this.state.curPlayer.curScore}
-          </div>
+        WEBADVENTURE
+        <div id="userStatRow" />
         </div>
         <p id="currentPlayerView">Leaderboard</p>
-        <div id="userStatRow" >
-          {this.renderRankings()}
-        </div>
-        <img id="wahoo" src={this.state.curPlayer.avatar} alt="userIcon" />
+        <div id="userStatRow" />
       </div>
     );
   }

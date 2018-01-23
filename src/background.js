@@ -9,6 +9,7 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo) => {
     chrome.tabs.executeScript(tabId, {
       file: 'dist/bundle.js',
     });
+
     // send current game info to redirected tab
     chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
       chrome.tabs.sendMessage(tabs[0].id, leaderboard, function(response) {

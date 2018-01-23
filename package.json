@@ -32,7 +32,7 @@
   },
   "scripts": {
     "start": "webpack webpack.config.js --watch",
-    "test": "./node_modules/.bin/eslint src",
+    "test": "./node_modules/.bin/eslint src; npm run build",
     "build": "webpack webpack.config.js"
   },
   "repository": {
