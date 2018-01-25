@@ -6,6 +6,7 @@
 "globals": {
   "window": true,
   "chrome": true,
+  "document": true,
 },
  "rules": {
      "import/no-unresolved": [0, { "commonjs": true }],
@@ -16,6 +17,7 @@
          "allowArrowFunctions": false,
          "allowBind": true,
      }],
+     "react/prop-types": 0,
      "react/jsx-filename-extension": 0,
      "camelcase": [2, { "properties": "always" }],
      "react/prefer-stateless-function": 0,

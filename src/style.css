@@ -1,4 +1,4 @@
-#wa_main {
+#wa-main {
   position: fixed;
   top: 0;
   left: 0;
@@ -12,18 +12,20 @@
   background-color: rgba(246, 246, 246, 1);}
 
 #leaderboard  {
+  font-size: 15px;
+  width: 11em;
+  padding-left: 10px;
   position: fixed;
   top: 0vh;
   left: 0vw;
-  width: 160px;
   height: 100%;
-  margin-left: 10px;
   background-color: rgba(246, 246, 246, 1);
 }
 
-.leaderboard-item {
-  
+.leaderboard-curPlayer {
+  background-color: rgba(3, 169, 244, 1);
 }
+
 
 #currentPlayerView {
   text-align: center;
@@ -31,6 +33,36 @@
   font-size: 25px;
   background-color: rgba(3, 169, 244, 1);
   margin-right: 10px;
+}
+
+
+#wa-toc {
+  width: calc(11em - 16px);
+  font-size: 16px;
+  position: fixed;
+  top: 50vh;
+  left: 0;
+}
+
+#wa-toc > ul {
+  height: calc(50vh - 30.3px);
+  overflow-y: scroll;
+  font-size: 11px;
+}
+
+.playerName {
+  position: absolute;
+  color: white;
+  background-color:#545454;
+  top: -24px;
+  padding: 0 12px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.player-img {
+  height: 40px;
+  width: 40px;
 }
 
 #endPopUp {
@@ -53,23 +85,7 @@
   font-family: impact;
   font-size: 25px;
   margin-top: 10px;
-}
-
-.playerName {
-  position: absolute;
-  color: white;
-  background-color:#545454;
-  top: -24px;
-  padding: 0 12px;
-  border-radius: 10px;
   text-align: center;
-}
-
-.player-img {
-  position: absolute;
-  height: 40px;
-  width: 40px;
-  top: -10px;
 }
 
 #overlay {
@@ -80,25 +96,6 @@
   left: 0;
   right: 0;
   opacity: 0.5;
-}
-
-#pauseModal {
-  position: fixed;
-  height: 300px;
-  width: 500px;
-  top: 50%;
-  left: 50%;
-  background-color: white;
-  margin: -150px 0 0 -250px;
-  border-radius: 15px;
-  box-shadow: 10px 10px 5px #888888;
-  text-align: center;
-}
-
-#pause {
-  font-family: impact;
-  font-size: 50px;
-  text-align: center;
 }
 
 #wahoo {
