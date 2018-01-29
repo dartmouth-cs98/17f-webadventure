@@ -32,9 +32,9 @@ class Leaderboard extends Component {
         <div id="leaderboard">
           <div id="userStats">
           WEBADVENTURE
-          <div id="userStatRow">
-            {this.props.curPlayer.name}
-          </div>
+            <div id="userStatRow">
+              {this.props.curPlayer.name}
+            </div>
           </div>
           <p id="currentPlayerView">Leaderboard</p>
           <div id="userStatRow" >
@@ -48,7 +48,7 @@ class Leaderboard extends Component {
       <div id="leaderboard">
         <div id="userStats">
         WEBADVENTURE
-        <div id="userStatRow" />
+          <div id="userStatRow" />
         </div>
         <p id="currentPlayerView">Leaderboard</p>
         <div id="userStatRow" />
