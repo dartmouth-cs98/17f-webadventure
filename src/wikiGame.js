@@ -45,15 +45,9 @@ class WikiGame {
 
     this.renderGame();
 
-    chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-        console.log('message received!!!!!!');
-        
-        this.leaderboard.players = request.players;
-        console.log('printing new leaderboard scores');
-        console.log(request.players[0]);
-        console.log(this.leaderboard);
-
-        ReactDOM.render(<App leaderboard={this.leaderboard} />, document.getElementById('wa-main'));
+    chrome.runtime.onMessage.addListener((request) => {
+      this.leaderboard.players = request.players;
+      ReactDOM.render(<App leaderboard={this.leaderboard} />, document.getElementById('wa-main'));
     });
 
     window.addEventListener('keydown', this.onKeyDown);
@@ -100,7 +94,7 @@ class WikiGame {
     }
     this.curPlayer.movePlayer(newLoc.x, newLoc.y);
 
-    /// update locations of other players
+    // update locations of other players
   }
 
   openLink() {
@@ -111,14 +105,12 @@ class WikiGame {
       this.leaderboard.url = redirectLink;
 
       // get current player from players in this.leaderboard
-      var currrPlayer = $.grep(this.leaderboard.players, (player) => {
-        return player.name == this.leaderboard.curPlayer.name;
+      const curPlayerObj = $.grep(this.leaderboard.players, (player) => {
+        return player.name === this.leaderboard.curPlayer.name;
       });
-      currrPlayer[0].numClicks++;
+      curPlayerObj[0].numClicks += 1;
 
-      chrome.runtime.sendMessage(this.leaderboard, (response) => {
-        console.log(response);
-      });
+      chrome.runtime.sendMessage(this.leaderboard);
     }
   }
 

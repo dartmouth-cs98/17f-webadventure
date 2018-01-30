@@ -10,15 +10,12 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo) => {
       file: 'dist/bundle.js',
     });
 
-    console.log('printing new leaderboard scores');
-    console.log(leaderboard.players[0]);
+    // console.log('printing new leaderboard scores');
+    // console.log(leaderboard.players[0]);
 
     // send current game info to redirected tab
-    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-      chrome.tabs.sendMessage(tabs[0].id, leaderboard, function(response) {
-        console.log("in query sendmessage of background.js");
-        // console.log(response.farewell);
-      });
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      chrome.tabs.sendMessage(tabs[0].id, leaderboard);
     });
   }
 });
