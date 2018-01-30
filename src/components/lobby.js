@@ -12,8 +12,8 @@ class Lobby extends Component {
       joinKey: '',
       time: {},
       seconds: 15,
-      start: false,
-      players:[],
+      // start: false,
+      players: [],
     };
     this.timer = 0;
     this.gameData = new GameData();
@@ -29,7 +29,7 @@ class Lobby extends Component {
   }
 
   componentDidMount() {
-    const timeLeftVar = {s: this.state.seconds};
+    const timeLeftVar = { s: this.state.seconds };
     this.setState({ time: timeLeftVar });
   }
 
@@ -46,8 +46,6 @@ class Lobby extends Component {
   }
 
   startTimer() {
-    console.log('foo');
-    console.log(this.checkNumPlayers);
     if (this.checkNumPlayers()) {
       clearInterval(this.timer);
       this.setState({
@@ -62,7 +60,7 @@ class Lobby extends Component {
     const secs = this.state.seconds - 1;
     this.setState({
       time: {
-        s: secs
+        s: secs,
       },
       seconds: secs,
     });
@@ -79,21 +77,17 @@ class Lobby extends Component {
   }
 
   checkNumPlayers() {
-    const req_num = 5;
-    console.log("foo");
-    if (this.state.players.length < req_num) {
-      console.log(this.state.players);
+    const reqNum = 5;
+    if (this.state.players.length < reqNum) {
       return false;
     }
-    else {
-      return true;
-    }
+    return true;
   }
 
   addPlayer() {
     this.setState({
       players: ['a', 'b', 'c', 'd', 'e', 'f'],
-    })
+    });
   }
 
   renderLobby() {
