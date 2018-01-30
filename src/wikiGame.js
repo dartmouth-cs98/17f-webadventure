@@ -3,9 +3,7 @@ import ReactDOM from 'react-dom';
 import $ from 'jquery';
 import Player from './player';
 
-
 import App from './components/app';
-
 
 // const UP = 0;
 // const RIGHT = 1;
@@ -15,6 +13,7 @@ import App from './components/app';
 class WikiGame {
   constructor(curPlayer = new Player('curPlayer', { left: 100, top: 100 }, true)) {
     this.curPlayer = curPlayer;
+    this.playerID = 1;
     this.players = [];
     this.keysPressed = {
       x: {
@@ -33,8 +32,8 @@ class WikiGame {
         avatarRight: this.curPlayer.getAvatarRight(),
       },
       players: [
-        { name: 'Barry', numClicks: 10 },
-        { name: 'Alma', numClicks: 5 },
+        { name: 'Barry', numClicks: 0 },
+        { name: 'Alma', numClicks: 0 },
       ],
     };
 
@@ -46,13 +45,15 @@ class WikiGame {
 
     this.renderGame();
 
-    chrome.runtime.onMessage.addListener(
-      function(request, sender, sendResponse) {
-        console.log(sender.tab ?
-                    "from a content script:" + sender.tab.url :
-                    "from the extension");
-        if (request.greeting == "hello")
-          sendResponse({farewell: "goodbye"});
+    chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+        console.log('message received!!!!!!');
+        
+        this.leaderboard.players = request.players;
+        console.log('printing new leaderboard scores');
+        console.log(request.players[0]);
+        console.log(this.leaderboard);
+
+        ReactDOM.render(<App leaderboard={this.leaderboard} />, document.getElementById('wa-main'));
     });
 
     window.addEventListener('keydown', this.onKeyDown);
@@ -106,10 +107,14 @@ class WikiGame {
     const link = this.curPlayer.getLink();
     if (link !== null) {
       // window.open(`https://en.wikipedia.org${link}`, '_self');
-
       const redirectLink = `https://en.wikipedia.org${link}`;
-
       this.leaderboard.url = redirectLink;
+
+      // get current player from players in this.leaderboard
+      var currrPlayer = $.grep(this.leaderboard.players, (player) => {
+        return player.name == this.leaderboard.curPlayer.name;
+      });
+      currrPlayer[0].numClicks++;
 
       chrome.runtime.sendMessage(this.leaderboard, (response) => {
         console.log(response);
@@ -126,9 +131,6 @@ class WikiGame {
       case 76: // click link with L
         this.openLink();
         break;
-      case 80: // Pause game with 'P'
-        console.log('pause game, pause pop up?');
-        break;
       default:
         break;
     }
@@ -140,9 +142,6 @@ class WikiGame {
       case 68: this.keysPressed.x.right = false; break;
       case 87: this.keysPressed.y.up = false; break;
       case 83: this.keysPressed.y.down = false; break;
-      case 80: // Pause game with 'P'
-        console.log('pause game, pause pop up?');
-        break;
       default:
         break;
     }
