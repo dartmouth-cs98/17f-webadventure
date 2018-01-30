@@ -12,6 +12,8 @@ class Lobby extends Component {
       joinKey: '',
       time: {},
       seconds: 15,
+      start: false,
+      players:[],
     };
     this.timer = 0;
     this.gameData = new GameData();
@@ -22,10 +24,12 @@ class Lobby extends Component {
     this.onInputKey = this.onInputKey.bind(this);
     this.startTimer = this.startTimer.bind(this);
     this.countDown = this.countDown.bind(this);
+    this.checkNumPlayers = this.checkNumPlayers.bind(this);
+    this.addPlayer = this.addPlayer.bind(this);
   }
 
   componentDidMount() {
-    const timeLeftVar = this.secondsToTime(this.state.seconds);
+    const timeLeftVar = {s: this.state.seconds};
     this.setState({ time: timeLeftVar });
   }
 
@@ -41,26 +45,25 @@ class Lobby extends Component {
     });
   }
 
-  secondsToTime(secs) {
-    const obj = {
-      s: secs,
-    };
-    return obj;
-  }
-
   startTimer() {
-    clearInterval(this.timer);
-    this.setState({
-      seconds: 15,
-    });
-    this.timer = setInterval(this.countDown, 1000);
+    console.log('foo');
+    console.log(this.checkNumPlayers);
+    if (this.checkNumPlayers()) {
+      clearInterval(this.timer);
+      this.setState({
+        seconds: 15,
+      });
+      this.timer = setInterval(this.countDown, 1000);
+    }
   }
 
   countDown() {
     // Remove one second, set state so a re-render happens.
     const secs = this.state.seconds - 1;
     this.setState({
-      time: this.secondsToTime(secs),
+      time: {
+        s: secs
+      },
       seconds: secs,
     });
 
@@ -75,6 +78,23 @@ class Lobby extends Component {
     }
   }
 
+  checkNumPlayers() {
+    const req_num = 5;
+    console.log("foo");
+    if (this.state.players.length < req_num) {
+      console.log(this.state.players);
+      return false;
+    }
+    else {
+      return true;
+    }
+  }
+
+  addPlayer() {
+    this.setState({
+      players: ['a', 'b', 'c', 'd', 'e', 'f'],
+    })
+  }
 
   renderLobby() {
     this.players = this.gameData.getPlayers();
@@ -93,7 +113,7 @@ class Lobby extends Component {
 
         <div id="JoinPrivate">
           <input placeholder="Private Game Key" value={this.state.joinKey} onChange={this.onInputKey} />
-          <button className="join">
+          <button className="join" onClick={this.addPlayer}>
             Join Private Game
           </button>
         </div>
