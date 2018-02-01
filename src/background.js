@@ -1,6 +1,7 @@
 /* eslint no-undef: "off" */
 
 let updatePage = false;
+let leaderboard;
 
 chrome.tabs.onUpdated.addListener((tabId, changeInfo) => {
   if (changeInfo.status === 'complete' && updatePage) {
@@ -8,12 +9,23 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo) => {
     chrome.tabs.executeScript(tabId, {
       file: 'dist/bundle.js',
     });
+
+    // console.log('printing new leaderboard scores');
+    // console.log(leaderboard.players[0]);
+
+    // send current game info to redirected tab
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      chrome.tabs.sendMessage(tabs[0].id, leaderboard);
+    });
   }
 });
 
 chrome.runtime.onMessage.addListener((request, sender) => {
+  // save current game info in curGame
+  leaderboard = request;
+
   // redirect to new url
-  chrome.tabs.update(sender.tab.id, { url: request });
+  chrome.tabs.update(sender.tab.id, { url: request.url });
   updatePage = true;
 });
 
