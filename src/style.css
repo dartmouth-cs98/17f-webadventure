@@ -5,6 +5,16 @@
   background: blue;
 }
 
+#Lobby {
+  position: fixed;
+  margin-left: 30vw;
+  background-color: rgba(246, 246, 246, 1);
+  width: 11em;
+  padding-left: 10px;
+  position: fixed;
+  top: 0vh;
+  left: 0vw;}
+
 #leaderboard  {
   font-size: 15px;
   width: 11em;

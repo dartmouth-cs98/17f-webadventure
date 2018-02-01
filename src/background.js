@@ -31,6 +31,6 @@ chrome.runtime.onMessage.addListener((request, sender) => {
 
 chrome.browserAction.onClicked.addListener((tab) => {
   chrome.tabs.executeScript(tab.ib, {
-    file: 'dist/bundle.js',
+    file: 'dist/injectLobby.bundle.js',
   });
 });
