@@ -11,7 +11,7 @@ class Lobby extends Component {
       hostKey: '',
       joinKey: '',
       time: {},
-      seconds: 15,
+      seconds: '',
       // start: false,
       players: [],
     };
@@ -40,8 +40,9 @@ class Lobby extends Component {
   }
 
   generateKey() {
+    const key = Math.random().toString(36).substring(2, 9);
     this.setState({
-      hostKey: 'foo',
+      hostKey: key,
     });
   }
 
@@ -49,7 +50,7 @@ class Lobby extends Component {
     if (this.checkNumPlayers()) {
       clearInterval(this.timer);
       this.setState({
-        seconds: 15,
+        seconds: 16,
       });
       this.timer = setInterval(this.countDown, 1000);
     }
