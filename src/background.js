@@ -1,5 +1,3 @@
-/* eslint no-undef: "off" */
-
 let updatePage = false;
 let leaderboard;
 
