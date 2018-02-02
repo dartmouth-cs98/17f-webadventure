@@ -1,4 +1,3 @@
-/* eslint max-len: "off" */
 /* eslint linebreak-style: ["error", "windows"] */
 
 import React, { Component } from 'react';
@@ -29,8 +28,6 @@ class Lobby extends Component {
   }
 
   componentDidMount() {
-    const timeLeftVar = { s: this.state.seconds };
-    this.setState({ time: timeLeftVar });
   }
 
   onInputKey(event) {
@@ -107,7 +104,11 @@ class Lobby extends Component {
         </div>
 
         <div id="JoinPrivate">
-          <input placeholder="Private Game Key" value={this.state.joinKey} onChange={this.onInputKey} />
+          <input
+            placeholder="Private Game Key"
+            value={this.state.joinKey}
+            onChange={this.onInputKey}
+          />
           <button className="join" onClick={this.addPlayer}>
             Join Private Game
           </button>

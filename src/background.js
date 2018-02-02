@@ -5,7 +5,7 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo) => {
   if (changeInfo.status === 'complete' && updatePage) {
     updatePage = false;
     chrome.tabs.executeScript(tabId, {
-      file: 'dist/bundle.js',
+      file: 'dist/inject.bundle.js',
     });
 
     // console.log('printing new leaderboard scores');
