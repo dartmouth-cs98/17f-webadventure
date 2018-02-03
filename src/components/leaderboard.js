@@ -30,17 +30,15 @@ class Leaderboard extends Component {
     if (this.props.curPlayer) {
       return (
         <div id="leaderboard">
-          <div id="userStats">
-          WEBADVENTURE
-          <div id="userStatRow">
-            {this.props.curPlayer.name}
-          </div>
+          <div id="userStats">WEBADVENTURE</div>
+          <div id="curUserRow">
+            <div>
+              <img id="wahoo" src={this.props.curPlayer.avatarRight} alt="userIcon" />
+            </div>
+            <div className="curPlayerName">{this.props.curPlayer.name}</div>
           </div>
           <p id="currentPlayerView">Leaderboard</p>
-          <div id="userStatRow" >
-            {this.renderRankings()}
-          </div>
-          <img id="wahoo" src={this.props.curPlayer.avatarRight} alt="userIcon" />
+          <div id="userStatRow" >{this.renderRankings()}</div>
         </div>
       );
     }

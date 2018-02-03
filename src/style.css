@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Dhurjati');
+
 #wa-main {
   position: fixed;
   top: 0;
@@ -25,7 +27,7 @@
   text-align: center;
   font-family: impact;
   font-size: 25px;
-  background-color: rgba(3, 169, 244, 1);
+  /* background-color: rgba(3,d 169, 244, 1); */
   margin-right: 10px;
 }
 
@@ -75,11 +77,20 @@
 }
 
 #userStats {
-  height: 100px;
+  /* height: 100px; */
   font-family: impact;
   font-size: 25px;
-  margin-top: 10px;
+  /* margin-top: 10px; */
   text-align: center;
+
+  animation-name: rainbow;
+  animation-duration: 3s;
+  animation-timing-function: ease-out;
+  animation-delay: 0;
+  animation-direction: alternate;
+  animation-iteration-count: infinite;
+  animation-fill-mode: none;
+  animation-play-state: running;
 }
 
 #overlay {
@@ -92,11 +103,65 @@
   opacity: 0.5;
 }
 
+#curUserRow {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.curPlayerName {
+  /* font-family: 'Dhurjati', sans-serif; */
+  font-family: Courier;
+  margin-left: 20px;
+
+  animation:
+    nudge 5s linear infinite alternate;
+}
+
 #wahoo {
-  position: absolute;
+  /* position: absolute; */
   height: 30px;
   width: 30px;
-  top: 0;
-  right: 0px;
-  margin-top: 48px;
+  /* top: 0; */
+  /* right: 0px; */
+  /* margin-top: 48px; */
+}
+
+@keyframes rainbow {
+
+  0% {
+    /* transform: scale(.3); */
+    color: red;
+    /* border-radius: 100%; */
+  }
+  20% {
+    color: orange;
+  }
+  40% {
+    color: gold;
+  }
+  60% {
+    color: green;
+  }
+  80% {
+    color: blue;
+  }
+  100% {
+    /* transform: scale(1.5); */
+    color: purple;
+  }
+}
+
+@keyframes nudge {
+  0%, 100% {
+    transform: translate(0, 0);
+  }
+
+  50% {
+    transform: translate(20px, 0);
+  }
+
+  80% {
+    transform: translate(-20px, 0);
+  }
 }

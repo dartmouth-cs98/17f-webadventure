@@ -9,18 +9,6 @@ function PLAYER_DIV(id) {
           </div>`;
 }
 
-// const RULES_INSTRUCTIONS = `
-// To move the snake make sure the Wikipedia page in focus
-// (click on it if it's not) and move using the keys 'W', 'A', 'S', 'D'.
-//
-// The edges of the game are the top and bottom of any given section.
-// Avoid going into an edge and the snake's trail.
-//
-// Your score is determined by how many words you have captured.
-//
-// To quit the game, enter ctrl+q.
-// `;
-
 const END_POPUP_DIV = `
 <div id="endPopUp">GAME OVER!
 <div>---------</div>`;
@@ -72,38 +60,6 @@ class GameView {
     this.createTree();
     console.log(colors);
   }
-
-  // static startPopup(callback) {
-  //   $('#endPopUp').remove();
-  // if (confirm(RULES_INSTRUCTIONS) === false) {
-  //   return;
-  // }
-  // let username = null;
-  // while (!username) {
-  //   username = prompt('Enter a username (using only alphanumeric characters)');
-  //   if (!username.match(/^[0-9a-z]+$/)) {
-  //     alert('Invalid username!');
-  //     username = null;
-  //   } else if (username.length > 8) {
-  //     alert('Username must be at most 8 characters!');
-  //     username = null;
-  //   }
-  // }
-  // const colorPrompt = colors.map((color, index) => ` ${color.name} (${index + 1})`).join();
-  // let playerColor = null;
-  // while (!playerColor) {
-  //   const response = parseInt(prompt(`Choose one of the colors by number
-  // (1-${colors.length}): \n${colorPrompt}`), 10);
-  //   if (!response || response < 0 || response > colors.length) {
-  //     alert('Invalid choice!');
-  //   } else {
-  //     playerColor = colors[response - 1].color;
-  //   }
-  // // }
-  // if ($('#leaderboard').length === 0) { $('body').append(LEADERBOARD_DIV); }
-  // this.updateUserDisplay(username, playerColor);
-  // callback(username, playerColor);
-  // }
 
   static buildEndPopup(players) {
     players.sort((a, b) => b.highScore - a.highScore);
@@ -159,35 +115,6 @@ class GameView {
       }
     }
   }
-
-  // updateLeaderboard(username, players, color) {
-  //   const colorString = `rgb(${color.r}, ${color.g}, ${color.b})`;
-  //   players.sort((a, b) => b.curScore - a.curScore);
-  //
-  //   players.forEach((player, index) => {
-  //     $(`#top${(index + 1).toString()}`).html('');
-  //
-  //     if (player !== undefined && player.curScore > 0) {
-  //       document.getElementById(`top${(index + 1).toString()}`).style.backgroundColor = 'white';
-  //       const playerText = `<div>${index + 1}. ${player.username} : ${player.curScore}</div>`;
-  //       $(`#top${(index + 1).toString()}`).html(playerText);
-  //       if (player.username === username) {
-  //         document.getElementById(`top${(index + 1).toString()}`)
-  // .style.backgroundColor = `${colorString}`;
-  //       }
-  //     }
-  //
-  //     if (index === 9) {
-  //       return false;
-  //     }
-  //     return true;
-  //   });
-  // }
-
-  // updateUserScoreDisplay(id, score) {
-  //   document.getElementById('userStatRow').innerHTML =
-  //         `${id}: ${score.toString()}`;
-  // }
 
   // called once to initialize color of user in leaderboard display
   static updateUserDisplay(id, color) {
@@ -337,30 +264,6 @@ class GameView {
     }
     return [randSect, randSentence, randWord];
   }
-
-  // showPopup() {
-  //   console.log('in show popup');
-  //   const overlay = document.createElement('div');
-  //   overlay.setAttribute('id', 'overlay');
-  //   document.body.appendChild(overlay);
-  //
-  //   const newDiv = document.createElement('div');
-  //   newDiv.setAttribute('id', 'pauseModal');
-  //
-  //   const pauseSpan = '<span id="pause">GAME PAUSED</span>';
-  //   newDiv.innerHTML = pauseSpan;
-  //
-  //   document.body.appendChild(newDiv);
-  // }
-  //
-  // closePopup() {
-  //   console.log('in close popup');
-  //   const popup = document.getElementById('pauseModal');
-  //   popup.parentNode.removeChild(popup);
-  //
-  //   const overlay = document.getElementById('overlay');
-  //   overlay.parentNode.removeChild(overlay);
-  // }
 }
 
 export default GameView;
