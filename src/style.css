@@ -7,14 +7,25 @@
   background: blue;
 }
 
-#leaderboard  {
-  font-size: 15px;
+#wa-container {
   width: 11em;
-  /* padding-left: 10px; */
-  position: fixed;
   top: 0vh;
   left: 0vw;
   height: 100%;
+  position: fixed;
+}
+
+#wiki-logo {
+  width: inherit;
+}
+
+#leaderboard  {
+  font-size: 15px;
+  width: inherit;
+  /* padding-left: 10px; */
+  /* position: fixed; */
+   height: 100%; 
+  position: absolute;
   background-color: rgba(246, 246, 246, 1);
 }
 
@@ -52,14 +63,14 @@
 }
 
 
-#currentPlayerView {
+/*#currentPlayerView {
   text-align: center;
   font-family: impact;
   font-size: 20px;
-  /* background-color: rgba(3,d 169, 244, 1); */
+  background-color: rgba(3,d 169, 244, 1);
   margin-right: 10px;
 }
-
+*/
 
 #wa-toc {
   width: calc(11em - 16px);
@@ -108,7 +119,7 @@
 #userStats {
   /* height: 100px; */
   font-family: impact;
-  font-size: 20px;
+  font-size: 23px;
   /* margin-top: 10px; */
   text-align: center;
 
