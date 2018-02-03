@@ -47,7 +47,7 @@ class Leaderboard extends Component {
               </div>
               <div className="curPlayerName">{this.props.curPlayer.name}</div>
             </div>
-            <div id="userStatRow" >{this.renderRankings()}</div>
+            <div id="userStatRow">{this.renderRankings()}</div>
           </div>
         </div>
       );
