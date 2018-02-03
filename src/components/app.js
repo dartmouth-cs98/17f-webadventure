@@ -1,7 +1,6 @@
 import React from 'react';
-
 import Leaderboard from './leaderboard';
-// import './assets/css/fonts.css';
+import '../style.css';
 
 const App = (props) => {
   console.log(props);

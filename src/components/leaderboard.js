@@ -15,12 +15,20 @@ class Leaderboard extends Component {
         if (player.name === this.props.curPlayer.name) {
           return (
             <div className="leaderboard-item leaderboard-curPlayer">
-              {index + 1}. {player.name} : {player.numClicks}
+              <div className="leaderboard-item-left">
+                <div className="leaderboard-rank">{index + 1}</div>
+                <div>{player.name}</div>
+              </div>
+              <div className="leaderboard-item-right">{player.numClicks}</div>
             </div>);
         }
         return (
           <div className="leaderboard-item">
-            {index + 1}. {player.name} : {player.numClicks}
+            <div className="leaderboard-item-left">
+              <div className="leaderboard-rank">{index + 1}</div>
+              <div>{player.name}</div>
+            </div>
+            <div className="leaderboard-item-right">{player.numClicks}</div>
           </div>);
       });
     return top10;

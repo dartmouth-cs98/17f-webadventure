@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Dhurjati');
+@import url('https://fonts.googleapis.com/css?family=Lobster|Orbitron:700');
 
 #wa-main {
   position: fixed;
@@ -10,7 +10,7 @@
 #leaderboard  {
   font-size: 15px;
   width: 11em;
-  padding-left: 10px;
+  /* padding-left: 10px; */
   position: fixed;
   top: 0vh;
   left: 0vw;
@@ -18,15 +18,44 @@
   background-color: rgba(246, 246, 246, 1);
 }
 
+.leaderboard-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  line-height: 30px;
+  /* font-family: 'Dhurjati', sans-serif; */
+  font-family: 'Orbitron', sans-serif;
+  font-size: 15px;
+}
+
+.leaderboard-item-left {
+  display: flex;
+  justify-content: flex-start;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.leaderboard-item-right {
+  margin-left: 5px;
+  margin-right: 10px;
+}
+
 .leaderboard-curPlayer {
+  line-height: 30px;
   background-color: rgba(3, 169, 244, 1);
+}
+
+.leaderboard-rank {
+  margin-left: 5px;
+  margin-right: 5px;
+  min-width: 15px;
 }
 
 
 #currentPlayerView {
   text-align: center;
   font-family: impact;
-  font-size: 25px;
+  font-size: 20px;
   /* background-color: rgba(3,d 169, 244, 1); */
   margin-right: 10px;
 }
@@ -79,7 +108,7 @@
 #userStats {
   /* height: 100px; */
   font-family: impact;
-  font-size: 25px;
+  font-size: 20px;
   /* margin-top: 10px; */
   text-align: center;
 
@@ -105,17 +134,18 @@
 
 #curUserRow {
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
 }
 
 .curPlayerName {
   /* font-family: 'Dhurjati', sans-serif; */
-  font-family: Courier;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 15px;
   margin-left: 20px;
 
-  animation:
-    nudge 5s linear infinite alternate;
+  /* animation:
+    nudge 5s linear infinite alternate; */
 }
 
 #wahoo {
