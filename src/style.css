@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Lobster|Orbitron:700');
+@import url('https://fonts.googleapis.com/css?family=Orbitron:900');
 
 #wa-main {
   position: fixed;
@@ -23,7 +23,6 @@
   justify-content: space-between;
   align-items: center;
   line-height: 30px;
-  /* font-family: 'Dhurjati', sans-serif; */
   font-family: 'Orbitron', sans-serif;
   font-size: 15px;
 }
@@ -41,8 +40,19 @@
 }
 
 .leaderboard-curPlayer {
-  line-height: 30px;
-  background-color: rgba(3, 169, 244, 1);
+  /* line-height: 30px; */
+  /* background-color: rgba(3, 169, 244, 1); */
+  color: white;
+  text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black;
+  background: linear-gradient(124deg, #ff2400, #e81d1d, #e8b71d, #e3e81d, #1de840, #1ddde8, #2b1de8, #dd00f3, #dd00f3);
+  background-size: 1800% 1800%;
+
+  animation-name: rainbowgradient;
+  animation-duration: 18s;
+  animation-timing-function: ease-out;
+  animation-delay: 0;
+  animation-iteration-count: infinite;
+  animation-play-state: running;
 }
 
 .leaderboard-rank {
@@ -54,7 +64,9 @@
 
 #currentPlayerView {
   text-align: center;
+  /* font-family: 'Orbitron', sans-serif; */
   font-family: impact;
+  font-weight: 900;
   font-size: 20px;
   /* background-color: rgba(3,d 169, 244, 1); */
   margin-right: 10px;
@@ -90,7 +102,7 @@
   width: 40px;
 }
 
-#endPopUp {
+/* #endPopUp {
   position: fixed;
   text-align: center;
   width: 300px;
@@ -103,12 +115,12 @@
   background-color: rgba(3, 169, 244, .90);
   left: 50%;
   top: 50%;
-}
+} */
 
 #userStats {
   /* height: 100px; */
   font-family: impact;
-  font-size: 20px;
+  font-size: 21px;
   /* margin-top: 10px; */
   text-align: center;
 
@@ -136,6 +148,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-bottom: 5px;
 }
 
 .curPlayerName {
@@ -177,7 +190,6 @@
     color: blue;
   }
   100% {
-    /* transform: scale(1.5); */
     color: purple;
   }
 }
@@ -194,4 +206,16 @@
   80% {
     transform: translate(-20px, 0);
   }
+}
+
+@keyframes rainbowgradient {
+    0% {
+      background-position: 0% 82%
+    }
+    50% {
+      background-position: 100% 19%
+    }
+    100% {
+      background-position:0% 82%
+    }
 }

@@ -45,7 +45,7 @@ class Leaderboard extends Component {
             </div>
             <div className="curPlayerName">{this.props.curPlayer.name}</div>
           </div>
-          <p id="currentPlayerView">Leaderboard</p>
+          {/* <p id="currentPlayerView">Leaderboard</p> */}
           <div id="userStatRow" >{this.renderRankings()}</div>
         </div>
       );
