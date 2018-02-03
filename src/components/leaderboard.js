@@ -38,7 +38,7 @@ class Leaderboard extends Component {
     if (this.props.curPlayer) {
       return (
         <div id="wa-container">
-          <img id='wiki-logo' src='https://i.imgur.com/hQbOKPS.png'/>
+          <img id="wiki-logo" src="https://i.imgur.com/hQbOKPS.png" alt="wiki logo" />
           <div id="leaderboard">
             <div id="userStats">WEBADVENTURE</div>
             <div id="curUserRow">
