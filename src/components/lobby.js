@@ -1,7 +1,5 @@
 /* eslint linebreak-style: ["error", "windows"] */
-
 import React, { Component } from 'react';
-import GameData from './../gameData';
 
 class Lobby extends Component {
   constructor(props) {
@@ -15,7 +13,6 @@ class Lobby extends Component {
       players: [],
     };
     this.timer = 0;
-    this.gameData = new GameData();
     this.players = this.gameData.getPlayers();
     // this.getPlayers = this.getPlayers.bind(this);
     this.renderLobby = this.renderLobby.bind(this);
