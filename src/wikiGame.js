@@ -5,11 +5,6 @@ import Player from './player';
 
 import App from './components/app';
 
-// const UP = 0;
-// const RIGHT = 1;
-// const DOWN = 2;
-// const LEFT = 3;
-
 class WikiGame {
   constructor(curPlayer = new Player('curPlayer', { left: 100, top: 100 }, true)) {
     this.curPlayer = curPlayer;
@@ -32,8 +27,8 @@ class WikiGame {
         avatarRight: this.curPlayer.getAvatarRight(),
       },
       players: [
-        { name: 'Barry', numClicks: 0 },
-        { name: 'Alma', numClicks: 0 },
+        { name: 'Barry', numClicks: 5 },
+        { name: 'Alma', numClicks: 1 },
       ],
     };
 
@@ -93,14 +88,11 @@ class WikiGame {
       newLoc.y += 5;
     }
     this.curPlayer.movePlayer(newLoc.x, newLoc.y);
-
-    // update locations of other players
   }
 
   openLink() {
     const link = this.curPlayer.getLink();
     if (link !== null) {
-      // window.open(`https://en.wikipedia.org${link}`, '_self');
       const redirectLink = `https://en.wikipedia.org${link}`;
       this.leaderboard.url = redirectLink;
 

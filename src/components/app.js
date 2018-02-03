@@ -5,7 +5,6 @@ import Lobby from './lobby';
 
 
 const App = (props) => {
-  console.log(props);
   return (
     <div>
       <Leaderboard
