@@ -96,11 +96,16 @@ class WikiGame {
     const link = this.curPlayer.getLink();
     if (link !== null) {
       // window.open(`https://en.wikipedia.org${link}`, '_self');
-
       const redirectLink = `https://en.wikipedia.org${link}`;
-      chrome.runtime.sendMessage(redirectLink, (response) => {
-        console.log(response);
+      this.leaderboard.url = redirectLink;
+
+      // get current player from players in this.leaderboard
+      const curPlayerObj = $.grep(this.leaderboard.players, (player) => {
+        return player.name === this.leaderboard.curPlayer.name;
       });
+      curPlayerObj[0].numClicks += 1;
+
+      chrome.runtime.sendMessage(this.leaderboard);
     }
   }
 
