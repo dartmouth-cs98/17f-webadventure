@@ -92,7 +92,7 @@ class Lobby extends Component {
   render() {
     return (
       <div id="lobby">
-        <div id="lobby-title">WebAdventure</div>
+        <div id="lobby-title">WEBADVENTURE</div>
         <div id="public">
           <button className="publicGame" onClick={this.startTimer}>
             Join Public Game
