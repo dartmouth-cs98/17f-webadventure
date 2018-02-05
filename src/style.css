@@ -19,14 +19,50 @@
   width: inherit;
 }
 
+#lobby-title {
+  font-family: impact;
+  font-size: 25px;
+
+  animation-name: rainbow;
+  animation-duration: 3s;
+  animation-timing-function: ease-out;
+  animation-delay: 0;
+  animation-direction: alternate;
+  animation-iteration-count: infinite;
+  animation-fill-mode: none;
+  animation-play-state: running;
+}
+
+#lobby {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: fixed;
+  width: 20em;
+  top: 10vw;
+  left: 38vw;
+  background-color: rgba(246, 246, 246, .95);
+  padding: 10px;
+  border: 1px solid black;
+  border-radius: 10px;
+}
+
 #leaderboard  {
   font-size: 15px;
   width: inherit;
   /* padding-left: 10px; */
   /* position: fixed; */
-   height: 100%; 
+
+  height: 100%;
   position: absolute;
   background-color: rgba(246, 246, 246, 1);
+}
+
+.leaderboard-item-left {
+  display: flex;
+  justify-content: flex-start;
+  margin-left: 5px;
+  margin-right: 5px;
 }
 
 .leaderboard-item {
@@ -36,13 +72,6 @@
   line-height: 30px;
   font-family: 'Orbitron', sans-serif;
   font-size: 15px;
-}
-
-.leaderboard-item-left {
-  display: flex;
-  justify-content: flex-start;
-  margin-left: 5px;
-  margin-right: 5px;
 }
 
 .leaderboard-item-right {
@@ -58,7 +87,8 @@
   background: linear-gradient(124deg, #ff2400, #e81d1d, #e8b71d, #e3e81d, #1de840, #1ddde8, #2b1de8, #dd00f3, #dd00f3);
   background-size: 1800% 1800%;
 
-  animation-name: rainbowgradient;
+  /*animation-name: rainbowgradient;*/
+  animation-name: rainbow-gradient;
   animation-duration: 18s;
   animation-timing-function: ease-out;
   animation-delay: 0;
@@ -117,10 +147,8 @@
 } */
 
 #userStats {
-  /* height: 100px; */
   font-family: impact;
   font-size: 23px;
-  /* margin-top: 10px; */
   text-align: center;
 
   animation-name: rainbow;
@@ -161,20 +189,28 @@
 }
 
 #wahoo {
-  /* position: absolute; */
   height: 30px;
   width: 30px;
-  /* top: 0; */
-  /* right: 0px; */
-  /* margin-top: 48px; */
+
+  font-family: 'Orbitron', sans-serif;
+  font-size: 15px;
+  margin-left: 20px;
+}
+
+#join-private{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+div.panel-alert:empty {
+    display: none;
 }
 
 @keyframes rainbow {
 
   0% {
-    /* transform: scale(.3); */
     color: red;
-    /* border-radius: 100%; */
   }
   20% {
     color: orange;
@@ -207,7 +243,7 @@
   }
 }
 
-@keyframes rainbowgradient {
+@keyframes rainbow-gradient {
     0% {
       background-position: 0% 82%
     }
