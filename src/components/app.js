@@ -1,5 +1,5 @@
 import React from 'react';
-
+import '../style.css';
 import Leaderboard from './leaderboard';
 import Lobby from './lobby';
 

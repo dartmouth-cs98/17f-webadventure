@@ -91,16 +91,15 @@ class Lobby extends Component {
 
   render() {
     return (
-      <div id="Lobby">
-        Hello World
-        <div id="Public">
+      <div id="lobby">
+        <div id="lobby-title">WebAdventure</div>
+        <div id="public">
           <button className="publicGame" onClick={this.startTimer}>
             Join Public Game
           </button>
           {this.state.time.s}
         </div>
-
-        <div id="JoinPrivate">
+        <div id="join-private">
           <input
             placeholder="Private Game Key"
             value={this.state.joinKey}
@@ -110,12 +109,12 @@ class Lobby extends Component {
             Join Private Game
           </button>
         </div>
-        <div id="HostPrivate">
+        <div id="host-private">
           <button onClick={this.generateKey}>
             Host Private Game
           </button>
-          <h1>{this.state.hostKey}</h1>
         </div>
+        <div>{this.state.hostKey}</div>
       </div>
     );
   }
