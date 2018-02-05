@@ -3,12 +3,12 @@ import ReactDOM from 'react-dom';
 import $ from 'jquery';
 import Player from './player';
 
+
 import App from './components/app';
 
 class WikiGame {
   constructor(curPlayer = new Player('curPlayer', { left: 100, top: 100 }, true)) {
     this.curPlayer = curPlayer;
-    this.playerID = 1;
     this.players = [];
     this.keysPressed = {
       x: {
@@ -27,8 +27,11 @@ class WikiGame {
         avatarRight: this.curPlayer.getAvatarRight(),
       },
       players: [
-        { name: 'Barry', numClicks: 5 },
-        { name: 'Alma', numClicks: 1 },
+        { name: 'Barry', numClicks: 40 },
+        { name: 'Alma', numClicks: 45 },
+        { name: 'David', numClicks: 60 },
+        { name: 'Imanol', numClicks: 70 },
+        { name: 'Tim', numClicks: 2 },
       ],
     };
 
@@ -39,12 +42,6 @@ class WikiGame {
     this.onKeyUp = this.onKeyUp.bind(this);
 
     this.renderGame();
-
-    chrome.runtime.onMessage.addListener((request) => {
-      this.leaderboard.players = request.players;
-      ReactDOM.render(<App leaderboard={this.leaderboard} />, document.getElementById('wa-main'));
-    });
-
     window.addEventListener('keydown', this.onKeyDown);
     window.addEventListener('keyup', this.onKeyUp);
     this.updateInterval = window.setInterval(this.updateGame, 10);
@@ -52,7 +49,6 @@ class WikiGame {
 
   renderGame() {
     $('body').append('<div id=wa-main />');
-
     ReactDOM.render(<App leaderboard={this.leaderboard} />, document.getElementById('wa-main'));
     this.setupToc();
     const curPosition = this.curPlayer.getPosition();
@@ -88,6 +84,9 @@ class WikiGame {
       newLoc.y += 5;
     }
     this.curPlayer.movePlayer(newLoc.x, newLoc.y);
+
+    // update locations of other players
+    //
   }
 
   openLink() {
@@ -115,6 +114,9 @@ class WikiGame {
       case 76: // click link with L
         this.openLink();
         break;
+      case 80: // Pause game with 'P'
+        console.log('pause game, pause pop up?');
+        break;
       default:
         break;
     }
@@ -126,6 +128,9 @@ class WikiGame {
       case 68: this.keysPressed.x.right = false; break;
       case 87: this.keysPressed.y.up = false; break;
       case 83: this.keysPressed.y.down = false; break;
+      case 80: // Pause game with 'P'
+        console.log('pause game, pause pop up?');
+        break;
       default:
         break;
     }
