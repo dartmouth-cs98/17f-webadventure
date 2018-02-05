@@ -15,12 +15,20 @@ class Leaderboard extends Component {
         if (player.name === this.props.curPlayer.name) {
           return (
             <div className="leaderboard-item leaderboard-curPlayer">
-              {index + 1}. {player.name} : {player.numClicks}
+              <div className="leaderboard-item-left">
+                <div className="leaderboard-rank">{index + 1}</div>
+                <div>{player.name}</div>
+              </div>
+              <div className="leaderboard-item-right">{player.numClicks}</div>
             </div>);
         }
         return (
           <div className="leaderboard-item">
-            {index + 1}. {player.name} : {player.numClicks}
+            <div className="leaderboard-item-left">
+              <div className="leaderboard-rank">{index + 1}</div>
+              <div>{player.name}</div>
+            </div>
+            <div className="leaderboard-item-right">{player.numClicks}</div>
           </div>);
       });
     return top10;
@@ -29,25 +37,25 @@ class Leaderboard extends Component {
   render() {
     if (this.props.curPlayer) {
       return (
-        <div id="leaderboard">
-          <div id="userStats">
-          WEBADVENTURE
-            <div id="userStatRow">
-              {this.props.curPlayer.name}
+        <div id="wa-container">
+          <img id="wiki-logo" src="https://i.imgur.com/hQbOKPS.png" alt="wiki logo" />
+          <div id="leaderboard">
+            <div id="userStats">WEBADVENTURE</div>
+            <div id="curUserRow">
+              <div>
+                <img id="wahoo" src={this.props.curPlayer.avatarRight} alt="userIcon" />
+              </div>
+              <div className="curPlayerName">{this.props.curPlayer.name}</div>
             </div>
+            <div id="userStatRow">{this.renderRankings()}</div>
           </div>
-          <p id="currentPlayerView">Leaderboard</p>
-          <div id="userStatRow" >
-            {this.renderRankings()}
-          </div>
-          <img id="wahoo" src={this.props.curPlayer.avatarRight} alt="userIcon" />
         </div>
       );
     }
     return (
       <div id="leaderboard">
         <div id="userStats">
-        WEBADVENTURE
+          WEBADVENTURE
           <div id="userStatRow" />
         </div>
         <p id="currentPlayerView">Leaderboard</p>
