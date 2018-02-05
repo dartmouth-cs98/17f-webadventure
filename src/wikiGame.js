@@ -115,7 +115,7 @@ class WikiGame {
         this.openLink();
         break;
       case 80: // Pause game with 'P'
-        console.log('pause game, pause pop up?');
+        // console.log('pause game, pause pop up?');
         break;
       default:
         break;
@@ -129,7 +129,7 @@ class WikiGame {
       case 87: this.keysPressed.y.up = false; break;
       case 83: this.keysPressed.y.down = false; break;
       case 80: // Pause game with 'P'
-        console.log('pause game, pause pop up?');
+        // console.log('pause game, pause pop up?');
         break;
       default:
         break;
