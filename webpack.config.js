@@ -1,9 +1,12 @@
 const path = require('path');
 
 module.exports = {
-  entry: './src/inject.js',
+  entry: {
+    inject: './src/inject.js',
+    injectLobby: './src/injectLobby.js',
+  },
   output: {
-    filename: 'bundle.js',
+    filename: '[name].bundle.js',
     path: path.resolve(__dirname, 'dist'),
   },
   module: {

@@ -6,12 +6,6 @@ import Player from './player';
 
 import App from './components/app';
 
-
-// const UP = 0;
-// const RIGHT = 1;
-// const DOWN = 2;
-// const LEFT = 3;
-
 class WikiGame {
   constructor(curPlayer = new Player('curPlayer', { left: 100, top: 100 }, true)) {
     this.curPlayer = curPlayer;
@@ -98,12 +92,16 @@ class WikiGame {
   openLink() {
     const link = this.curPlayer.getLink();
     if (link !== null) {
-      // window.open(`https://en.wikipedia.org${link}`, '_self');
-
       const redirectLink = `https://en.wikipedia.org${link}`;
-      chrome.runtime.sendMessage(redirectLink, (response) => {
-        console.log(response);
+      this.leaderboard.url = redirectLink;
+
+      // get current player from players in this.leaderboard
+      const curPlayerObj = $.grep(this.leaderboard.players, (player) => {
+        return player.name === this.leaderboard.curPlayer.name;
       });
+      curPlayerObj[0].numClicks += 1;
+
+      chrome.runtime.sendMessage(this.leaderboard);
     }
   }
 

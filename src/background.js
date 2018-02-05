@@ -1,5 +1,3 @@
-/* eslint no-undef: "off" */
-
 let updatePage = false;
 let leaderboard;
 
@@ -7,7 +5,7 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo) => {
   if (changeInfo.status === 'complete' && updatePage) {
     updatePage = false;
     chrome.tabs.executeScript(tabId, {
-      file: 'dist/bundle.js',
+      file: 'dist/inject.bundle.js',
     });
 
     // console.log('printing new leaderboard scores');
@@ -31,6 +29,6 @@ chrome.runtime.onMessage.addListener((request, sender) => {
 
 chrome.browserAction.onClicked.addListener((tab) => {
   chrome.tabs.executeScript(tab.ib, {
-    file: 'dist/bundle.js',
+    file: 'dist/injectLobby.bundle.js',
   });
 });
