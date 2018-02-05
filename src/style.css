@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Orbitron:400,900');
+
 #wa-main {
   position: fixed;
   top: 0;
@@ -5,15 +7,43 @@
   background: blue;
 }
 
-#Lobby {
-  position: fixed;
+#lobby-title {
+  /* font-family: 'Orbitron', sans-serif; */
+  font-family: impact;
+  font-size: 25px;
+
+  animation-name: rainbow;
+  animation-duration: 3s;
+  animation-timing-function: ease-out;
+  animation-delay: 0;
+  animation-direction: alternate;
+  animation-iteration-count: infinite;
+  animation-fill-mode: none;
+  animation-play-state: running;
+}
+
+#lobby {
+  /* position: fixed;
   margin-left: 30vw;
   background-color: rgba(246, 246, 246, 1);
   width: 11em;
   padding-left: 10px;
-  position: fixed;
   top: 0vh;
-  left: 0vw;}
+  left: 0vw; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: fixed;
+  width: 20em;
+  top: 10vw;
+  left: 38vw;
+  background-color: rgba(246, 246, 246, .95);
+  padding: 10px;
+  border: 1px solid black;
+  border-radius: 10px;
+
+  /* background-color: blue; */
+}
 
 #leaderboard  {
   font-size: 15px;
@@ -109,4 +139,38 @@
   top: 0;
   right: 0px;
   margin-top: 48px;
+}
+
+#join-private{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+div.panel-alert:empty {
+    display: none;
+}
+
+@keyframes rainbow {
+
+  0% {
+    /* transform: scale(.3); */
+    color: red;
+    /* border-radius: 100%; */
+  }
+  20% {
+    color: orange;
+  }
+  40% {
+    color: gold;
+  }
+  60% {
+    color: green;
+  }
+  80% {
+    color: blue;
+  }
+  100% {
+    color: purple;
+  }
 }
