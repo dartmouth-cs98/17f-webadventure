@@ -35,6 +35,9 @@ class WikiGame {
       players: [
         { name: 'Barry', numClicks: 40 },
         { name: 'Alma', numClicks: 45 },
+        { name: 'David', numClicks: 60 },
+        { name: 'Imanol', numClicks: 70 },
+        { name: 'Tim', numClicks: 2 },
       ],
     };
 
