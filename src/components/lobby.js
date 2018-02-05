@@ -13,8 +13,7 @@ class Lobby extends Component {
       players: [],
     };
     this.timer = 0;
-    this.players = this.gameData.getPlayers();
-    // this.getPlayers = this.getPlayers.bind(this);
+    this.players = [];
     this.renderLobby = this.renderLobby.bind(this);
     this.generateKey = this.generateKey.bind(this);
     this.onInputKey = this.onInputKey.bind(this);
