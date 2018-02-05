@@ -13,9 +13,9 @@ class Lobby extends Component {
       players: [],
     };
     this.timer = 0;
-    this.players = this.gameData.getPlayers();
+    // this.players = this.gameData.getPlayers();
     // this.getPlayers = this.getPlayers.bind(this);
-    this.renderLobby = this.renderLobby.bind(this);
+    // this.renderLobby = this.renderLobby.bind(this);
     this.generateKey = this.generateKey.bind(this);
     this.onInputKey = this.onInputKey.bind(this);
     this.startTimer = this.startTimer.bind(this);
@@ -85,9 +85,9 @@ class Lobby extends Component {
     });
   }
 
-  renderLobby() {
+  /* renderLobby() {
     this.players = this.gameData.getPlayers();
-  }
+  } */
 
   render() {
     return (
