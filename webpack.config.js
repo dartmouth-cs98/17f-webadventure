@@ -2,7 +2,7 @@ const path = require('path');
 
 module.exports = {
   entry: {
-    inject: './src/inject.js',
+    // inject: './src/inject.js',
     injectLobby: './src/injectLobby.js',
   },
   output: {

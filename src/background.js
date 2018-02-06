@@ -5,7 +5,8 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo) => {
   if (changeInfo.status === 'complete' && updatePage) {
     updatePage = false;
     chrome.tabs.executeScript(tabId, {
-      file: 'dist/inject.bundle.js',
+      file: 'dist/injectLobby.bundle.js',
+      // file: 'dist/inject.bundle.js',
     });
 
     // console.log('printing new leaderboard scores');
@@ -29,7 +30,7 @@ chrome.runtime.onMessage.addListener((request, sender) => {
 
 chrome.browserAction.onClicked.addListener((tab) => {
   chrome.tabs.executeScript(tab.ib, {
-    // file: 'dist/injectLobby.bundle.js',
-    file: 'dist/inject.bundle.js',
+    file: 'dist/injectLobby.bundle.js',
+    // file: 'dist/inject.bundle.js',
   });
 });
