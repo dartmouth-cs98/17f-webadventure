@@ -51,6 +51,13 @@
   background-color: rgba(246, 246, 246, 1);
 }
 
+#lobby-game-view {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 #wiki-logo {
   width: inherit;
 }
