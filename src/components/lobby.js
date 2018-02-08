@@ -1,6 +1,7 @@
 /* eslint linebreak-style: ["error", "windows"] */
 import React, { Component } from 'react';
 import LobbyGameView from './lobbyGameView';
+import LobbyGamesView from './lobbyGamesView';
 
 class Lobby extends Component {
   constructor(props) {
@@ -15,7 +16,10 @@ class Lobby extends Component {
     return (
       <div id="lobby">
         <div id="lobby-title">WEBADVENTURE</div>
-        <LobbyGameView />
+        <div id="lobby-columns">
+          <LobbyGamesView />
+          <LobbyGameView />
+        </div>
       </div>
     );
   }
