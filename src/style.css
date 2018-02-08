@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Orbitron:400,900');
+@import url('https://fonts.googleapis.com/css?family=Orbitron:900');
 
 #wa-main {
   position: fixed;
@@ -7,8 +7,15 @@
   background: blue;
 }
 
+#wa-container {
+  width: 11em;
+  top: 0vh;
+  left: 0vw;
+  height: 100%;
+  position: fixed;
+}
+
 #lobby-title {
-  /* font-family: 'Orbitron', sans-serif; */
   font-family: impact;
   font-size: 25px;
 
@@ -38,23 +45,14 @@
 
 #leaderboard  {
   font-size: 15px;
-  width: 11em;
-  top: 0vh;
-  left: 0vw;
-  height: 100%;
-  position: fixed;
-}
-
-#wiki-logo {
-  width: inherit;
-}
-
-#leaderboard  {
-  font-size: 15px;
   width: inherit;
   height: 100%;
   position: absolute;
   background-color: rgba(246, 246, 246, 1);
+}
+
+#wiki-logo {
+  width: inherit;
 }
 
 .leaderboard-item {
@@ -84,7 +82,7 @@
   background: linear-gradient(124deg, #ff2400, #e81d1d, #e8b71d, #e3e81d, #1de840, #1ddde8, #2b1de8, #dd00f3, #dd00f3);
   background-size: 1800% 1800%;
 
-  animation-name: rainbowgradient;
+  animation-name: rainbow-gradient;
   animation-duration: 18s;
   animation-timing-function: ease-out;
   animation-delay: 0;
@@ -180,13 +178,10 @@ div.panel-alert:empty {
     display: none;
 }
 
-
 @keyframes rainbow {
 
   0% {
-    /* transform: scale(.3); */
     color: red;
-    /* border-radius: 100%; */
   }
   20% {
     color: orange;
@@ -219,7 +214,7 @@ div.panel-alert:empty {
   }
 }
 
-@keyframes rainbowgradient {
+@keyframes rainbow-gradient {
     0% {
       background-position: 0% 82%
     }
@@ -229,28 +224,4 @@ div.panel-alert:empty {
     100% {
       background-position:0% 82%
     }
-}
-
-@keyframes rainbow {
-
-  0% {
-    /* transform: scale(.3); */
-    color: red;
-    /* border-radius: 100%; */
-  }
-  20% {
-    color: orange;
-  }
-  40% {
-    color: gold;
-  }
-  60% {
-    color: green;
-  }
-  80% {
-    color: blue;
-  }
-  100% {
-    color: purple;
-  }
 }
