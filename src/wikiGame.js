@@ -55,6 +55,11 @@ class WikiGame {
     this.curPlayer.insertPlayer(curPosition.x, curPosition.y);
   }
 
+  updateLeaderboard(leaderboard) {
+    this.leaderboard = leaderboard;
+    ReactDOM.render(<App leaderboard={this.leaderboard} />, document.getElementById('wa-main'));
+  }
+
   setupToc() {
     const toc = $('#toc').detach();
     $(toc).attr('id', 'wa-toc');
@@ -84,9 +89,6 @@ class WikiGame {
       newLoc.y += 5;
     }
     this.curPlayer.movePlayer(newLoc.x, newLoc.y);
-
-    // update locations of other players
-    //
   }
 
   openLink() {

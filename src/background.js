@@ -1,5 +1,4 @@
-let updatePage = false;
-let leaderboard;
+import GameSocket from './sockets/gameSocket';
 
 chrome.browserAction.onClicked.addListener((tab) => {
   chrome.tabs.executeScript(tab.ib, {
@@ -7,24 +6,46 @@ chrome.browserAction.onClicked.addListener((tab) => {
   });
 });
 
-chrome.tabs.onUpdated.addListener((tabId, changeInfo) => {
-  if (changeInfo.status === 'complete' && updatePage) {
-    updatePage = false;
-    chrome.tabs.executeScript(tabId, {
-      file: 'dist/inject.bundle.js',
-    });
+let gameSocket;
+let game;
+let tabId;
 
-    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-      chrome.tabs.sendMessage(tabs[0].id, leaderboard);
-    });
-  }
-});
+const onGame = (newGame) => {
+  game = newGame;
+  chrome.tabs.sendMessage(tabId, { message: 'game info', payload: { game } });
+};
+
+const endGame = () => {
+  console.log('end page reached');
+  gameSocket.disconnect();
+};
+
 
 chrome.runtime.onMessage.addListener((request, sender) => {
-  // save current game info in curGame
-  leaderboard = request;
+  // check tab and request info and final page reached
 
-  // redirect to new url
-  chrome.tabs.update(sender.tab.id, { url: request.url });
-  updatePage = true;
+  if (request.message === 'start game') {
+    const { roomhost, gameId, username } = request.payload.gameInfo;
+    gameSocket = new GameSocket(onGame, roomhost, gameId, username);
+    tabId = sender.id;
+    return;
+  }
+  if (sender.id !== tabId) { return; }
+  const { url: newUrl } = request;
+  chrome.tabs.update(sender.tab.id, { url: newUrl }, (tab) => {
+    if (newUrl === 'https://en.wikipedia.org/wiki/Paul_Kruger') {
+      chrome.tabs.executeScript({
+        file: 'dist/inject.injectEnd.js',
+      });
+      endGame();
+      return;
+    }
+    const { finishTime, numClicks, username } = request.playerInfo;
+    gameSocket.updatePlayer(finishTime, numClicks, username);
+    chrome.tabs.executeScript(tab.id, {
+      file: 'dist/inject.bundle.js',
+    }, () => {
+      chrome.tabs.sendMessage(tab.id, { message: 'new game', payload: { username, game } });
+    });
+  });
 });

@@ -22,4 +22,8 @@ export default class GameSocket {
     const req = { gameId: this.gameId, username: this.username, playerInfo };
     this.socket.emit('updatePlayer', req);
   }
+
+  disconnect() {
+    this.socket.disconnect();
+  }
 }
