@@ -27,23 +27,24 @@ chrome.runtime.onMessage.addListener((request, sender) => {
     const { roomhost, gameId, username } = request.payload;
     gameSocket = new GameSocket(onGame, roomhost, gameId, username);
     tabId = sender.tab.id;
-    return;
-  }
-  if (sender.tab.id !== tabId) { return; }
-  const { url: newUrl } = request;
+  } else if (sender.tab.id !== tabId || request.message !== 'new url') { return; }
+  const { newUrl } = request.payload;
   chrome.tabs.update(sender.tab.id, { url: newUrl }, (tab) => {
+    console.log('here');
     if (newUrl === 'https://en.wikipedia.org/wiki/Paul_Kruger') {
       chrome.tabs.executeScript({
-        file: 'dist/inject.injectEnd.js',
+        file: 'dist/injectEnd.bundle.js',
       });
       endGame();
       return;
     }
-    const { finishTime, numClicks, username } = request.playerInfo;
-    gameSocket.updatePlayer(finishTime, numClicks, username);
+    // const { finishTime, numClicks, username } = request.payload;
+    // gameSocket.updatePlayer(finishTime, numClicks, username);
+    const username = 'almawang';
     chrome.tabs.executeScript(tab.id, {
       file: 'dist/inject.bundle.js',
     }, () => {
+      console.log('executed here');
       chrome.tabs.sendMessage(tab.id, { message: 'new game', payload: { username, game } });
     });
   });

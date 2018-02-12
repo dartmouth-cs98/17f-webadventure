@@ -7,7 +7,8 @@ import Player from './player';
 import App from './components/app';
 
 class WikiGame {
-  constructor(curPlayer = new Player('curPlayer', { left: 100, top: 100 }, true)) {
+  constructor(onNewUrl, curPlayer = new Player('curPlayer', { left: 100, top: 100 }, true)) {
+    this.onNewUrl = onNewUrl;
     this.curPlayer = curPlayer;
     this.players = [];
     this.keysPressed = {
@@ -101,9 +102,7 @@ class WikiGame {
       const curPlayerObj = $.grep(this.leaderboard.players, (player) => {
         return player.name === this.leaderboard.curPlayer.name;
       });
-      curPlayerObj[0].numClicks += 1;
-
-      chrome.runtime.sendMessage(this.leaderboard);
+      this.onNewUrl(redirectLink, this.curPlayer.username, curPlayerObj[0].numClicks + 1);
     }
   }
 

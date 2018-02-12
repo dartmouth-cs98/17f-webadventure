@@ -39,6 +39,7 @@ class Lobby extends Component {
       roomhost: 'almawang',
       gameId: '5a80e8dff58b73d699780895',
       username: 'almawang',
+      newUrl: 'https://en.wikipedia.org/wiki/Victorian_architecture',
     };
     this.props.onStart(gameInfo);
   }
