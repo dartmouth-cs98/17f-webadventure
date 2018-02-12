@@ -11,7 +11,7 @@
  "rules": {
      "import/no-unresolved": [0, { "commonjs": true }],
      "no-underscore-dangle": "off",
-
+     "jsx-a11y/click-events-have-key-events": "off",
      "react/jsx-no-bind": [2, {
          "ignoreRefs": false,
          "allowArrowFunctions": false,

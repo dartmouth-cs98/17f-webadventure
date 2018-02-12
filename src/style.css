@@ -102,6 +102,8 @@
   animation-play-state: running;
 }
 
+
+
 .leaderboard-rank {
   margin-left: 5px;
   margin-right: 5px;
@@ -135,6 +137,24 @@
 .player-img {
   height: 40px;
   width: 40px;
+}
+
+.game-selected {
+  color: white;
+  /* text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black; */
+  background: linear-gradient(124deg, #ff2400, #e81d1d, #e8b71d, #e3e81d, #1de840, #1ddde8, #2b1de8, #dd00f3, #dd00f3);
+  background-size: 1800% 1800%;
+
+  animation-name: rainbow-gradient;
+  animation-duration: 18s;
+  animation-timing-function: ease-out;
+  animation-delay: 0;
+  animation-iteration-count: infinite;
+  animation-play-state: running;
+}
+
+.lobby-game-item:hover {
+  cursor: pointer;
 }
 
 #userStats {
