@@ -14,6 +14,7 @@ class SignUp extends Component {
     this.getInitialState = this.getInitialState.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
+    this.onItemClick = this.onItemClick.bind(this);
   }
 
   getInitialState() {
@@ -36,6 +37,15 @@ class SignUp extends Component {
     })
   }
 
+  onItemClick(event) {
+    //select avatar
+    // this.state.avatar = 1;
+    event.currentTarget.style.border = '20px';
+    this.setState({
+      avatar: event.target.av-id
+    });
+  }
+
   render() {
     if (this.state.signedUp) {
       console.log("signedup is true!");
@@ -44,10 +54,10 @@ class SignUp extends Component {
           <div id="signup-title">Username</div>
           <div>{this.state.username}</div>
           <div id="avatar-container">
-            <img class="avatar-option" src='https://i.imgur.com/rZSkKF0.gif'/>
-            <img class="avatar-option" src='https://i.imgur.com/rZSkKF0.gif'/>
-            <img class="avatar-option" src='https://i.imgur.com/rZSkKF0.gif'/>
-            <img class="avatar-option" src='https://i.imgur.com/rZSkKF0.gif'/>
+            <img className="avatar-option" onClick={this.onItemClick} av-id='0' src='https://i.imgur.com/rZSkKF0.gif'/>
+            <img className="avatar-option" onClick={this.onItemClick} av-id='1' src='https://i.imgur.com/YNcTBuU.gif'/>
+            <img className="avatar-option" onClick={this.onItemClick} av-id='2' src='https://i.imgur.com/rZSkKF0.gif'/>
+            <img className="avatar-option" onClick={this.onItemClick} av-id='3' src='https://i.imgur.com/rZSkKF0.gif'/>
           </div>
         </div>
       );

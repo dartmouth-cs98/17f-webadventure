@@ -60,6 +60,16 @@
 .avatar-option {
   width: 30px;
   height: 30px;
+  padding: 2px;
+  margin: 5px;
+}
+
+.avatar-option:hover {
+  /*border-width: 4px;
+  border-style: solid;
+  border-radius: 10px;
+  border-color: cornflowerblue;*/
+  outline: 4px solid cornflowerblue;
 }
 
 #leaderboard  {
