@@ -1,6 +1,6 @@
 /* eslint linebreak-style: ["error", "windows"] */
 import React, { Component } from 'react';
-import SignUp from './signup'
+import SignUp from './signup';
 import LobbyGameView from './lobbyGameView';
 import LobbyGamesView from './lobbyGamesView';
 
@@ -22,7 +22,7 @@ class Lobby extends Component {
           <div id="lobby-columns">
             <SignUp />
             <LobbyGameView />
-        </div>
+          </div>
         </div>
       </div>
     );

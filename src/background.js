@@ -23,7 +23,7 @@ chrome.runtime.onMessage.addListener((request, sender) => {
   // save current game info in curGame
   leaderboard = request;
 
-  console.log("on message");
+  console.log('on message');
   console.log(request);
 
   // redirect to new url
