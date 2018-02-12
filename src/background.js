@@ -1,7 +1,7 @@
 import GameSocket from './sockets/gameSocket';
 
 chrome.browserAction.onClicked.addListener((tab) => {
-  chrome.tabs.executeScript(tab.ib, {
+  chrome.tabs.executeScript(tab.id, {
     file: 'dist/injectLobby.bundle.js',
   });
 });
@@ -23,14 +23,13 @@ const endGame = () => {
 
 chrome.runtime.onMessage.addListener((request, sender) => {
   // check tab and request info and final page reached
-
   if (request.message === 'start game') {
-    const { roomhost, gameId, username } = request.payload.gameInfo;
+    const { roomhost, gameId, username } = request.payload;
     gameSocket = new GameSocket(onGame, roomhost, gameId, username);
-    tabId = sender.id;
+    tabId = sender.tab.id;
     return;
   }
-  if (sender.id !== tabId) { return; }
+  if (sender.tab.id !== tabId) { return; }
   const { url: newUrl } = request;
   chrome.tabs.update(sender.tab.id, { url: newUrl }, (tab) => {
     if (newUrl === 'https://en.wikipedia.org/wiki/Paul_Kruger') {

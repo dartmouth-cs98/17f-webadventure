@@ -18,6 +18,7 @@ class Lobby extends Component {
     // this.renderLobby = this.renderLobby.bind(this);
     this.generateKey = this.generateKey.bind(this);
     this.onInputKey = this.onInputKey.bind(this);
+    this.onStartGame = this.onStartGame.bind(this);
     this.startTimer = this.startTimer.bind(this);
     this.countDown = this.countDown.bind(this);
     this.checkNumPlayers = this.checkNumPlayers.bind(this);
@@ -32,6 +33,16 @@ class Lobby extends Component {
       joinKey: event.target.value,
     });
   }
+
+  onStartGame() {
+    const gameInfo = {
+      roomhost: 'almawang',
+      gameId: '5a80e8dff58b73d699780895',
+      username: 'almawang',
+    };
+    this.props.onStart(gameInfo);
+  }
+
 
   generateKey() {
     const key = Math.random().toString(36).substring(2, 9);
@@ -115,6 +126,9 @@ class Lobby extends Component {
           </button>
         </div>
         <div>{this.state.hostKey}</div>
+        <button onClick={this.onStartGame} >
+        Click me
+        </button>
       </div>
     );
   }

@@ -5,6 +5,7 @@ module.exports = {
     inject: './src/injectScripts/inject.js',
     injectLobby: './src/injectScripts/injectLobby.js',
     injectEnd: './src/injectScripts/injectEnd.js',
+    background: './src/background.js',
   },
   output: {
     filename: '[name].bundle.js',
