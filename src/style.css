@@ -20,6 +20,7 @@
 }
 
 #lobby-title {
+  text-align: center;
   font-family: impact;
   font-size: 25px;
 
@@ -34,9 +35,7 @@
 }
 
 #lobby {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
+  display: block;
   position: fixed;
   width: 20em;
   top: 10vw;
@@ -47,9 +46,20 @@
   border-radius: 10px;
 }
 
+#lobby-contents {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
 #lobby-columns {
   display: flex;
   flex-direction: column;
+}
+
+.avatar-option {
+  width: 30px;
+  height: 30px;
 }
 
 #leaderboard  {
@@ -68,6 +78,10 @@
   justify-content: flex-start;
   margin-left: 5px;
   margin-right: 5px;
+}
+
+#GamesView {
+  margin-right: 50px;
 }
 
 #lobby-game-view {

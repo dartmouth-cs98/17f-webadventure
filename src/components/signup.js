@@ -7,56 +7,67 @@ class SignUp extends Component {
     
     this.state = {
       username: 'TheNyanestCat', // default username
-      avatar: 0 // default nyan cat avatar id
+      avatar: 0, // default nyan cat avatar id
+      signedUp: false
     };
 
-    this.signUpUser = this.signUpUser.bind(this);
     this.getInitialState = this.getInitialState.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
   }
 
-  signUpUser() {
-    // do check for empty string
-    this.username = '';
-  }
-
   getInitialState() {
-    return { input: '' };
+    return { username: '' };
   }
 
   handleChange(event) {
     this.setState({
-      input: event.target.value
+      username: event.target.value
     });
   }
 
   handleClick() {
-    console.log(this.state.input);
+    console.log("signup username: "+this.state.username);
+    // replace div with signed up modal
+    this.state.signedUp = true;
+    // this.render();
+    this.setState({
+      username: this.state.username
+    })
   }
 
   render() {
-    return (
-      /*<div id="signup">
-        <div id="signup-title">SIGN IN</div>
-        <input id="signup-input"
-          placeholder="Private Game Key"
-          value={this.username}
-        />
-        <button onClick={this.signUpUser}>
-          ->
-        </button>
-      </div>
-      */
-      <div id="SignUp">
-        <input type="text" onChange={ this.handleChange } />
-        <input
-          type="button"
-          value="Alert the text input"
-          onClick={ this.handleClick }
-        />
-      </div>
-    );
+    if (this.state.signedUp) {
+      console.log("signedup is true!");
+      return (
+        <div id="SignUp">
+          <div id="signup-title">Username</div>
+          <div>{this.state.username}</div>
+          <div id="avatar-container">
+            <img class="avatar-option" src='https://i.imgur.com/rZSkKF0.gif'/>
+            <img class="avatar-option" src='https://i.imgur.com/rZSkKF0.gif'/>
+            <img class="avatar-option" src='https://i.imgur.com/rZSkKF0.gif'/>
+            <img class="avatar-option" src='https://i.imgur.com/rZSkKF0.gif'/>
+          </div>
+        </div>
+      );
+    }
+    else {
+      console.log("signedup is false!");
+      return (
+        <div id="SignUp">
+          <div id="signup-title">SIGN IN</div>
+          <input type="signup-input"
+            placeholder="Enter your username"
+            onChange={ this.handleChange } />
+          <input
+            type="button"
+            value="Sign In"
+            onClick={ this.handleClick }
+          />
+        </div>
+      );
+    }
   }
 }
 

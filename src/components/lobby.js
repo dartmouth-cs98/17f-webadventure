@@ -17,11 +17,12 @@ class Lobby extends Component {
     return (
       <div id="lobby">
         <div id="lobby-title">WEBADVENTURE</div>
-        <LobbyGameView />
-        <SignUp />
-        <div id="lobby-columns">
+        <div id="lobby-contents">
           <LobbyGamesView />
-          <LobbyGameView />
+          <div id="lobby-columns">
+            <SignUp />
+            <LobbyGameView />
+        </div>
         </div>
       </div>
     );
