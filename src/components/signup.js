@@ -5,46 +5,59 @@ class SignUp extends Component {
   constructor(props) {
     super(props);
     
-    this.username = 'TheNyanestCat'; // default username
-    this.avatar = 0; // default nyan cat avatar
+    this.state = {
+      username: 'TheNyanestCat', // default username
+      avatar: 0 // default nyan cat avatar id
+    };
 
-    this.signInUser = this.signInUser.bind(this);
+    this.signUpUser = this.signUpUser.bind(this);
+    this.getInitialState = this.getInitialState.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
-  componentDidMount() {
-  }
-
-  onInputKey(event) {
-    this.setState({
-      joinKey: event.target.value,
-    });
-  }
+  // componentDidMount() {
+  // }
 
   signUpUser() {
     // do check for empty string
-    this.username =
+    this.username = '';
   }
 
-  onSignUp(event) {
+  // getInitialState() {
+  //   return { input: '' };
+  // }
 
+  handleChange(event) {
+    this.setState({
+      input: event.target.value
+    });
+  }
+
+  handleClick() {
+    console.log(this.state.input);
   }
 
   render() {
     return (
-      <div id="signup">
+      /*<div id="signup">
         <div id="signup-title">SIGN IN</div>
-        
-        <div id="signup-input">
-          <input
-            placeholder="Private Game Key"
-            value={this.username}
-            onChange={this.onSignUp}
-          />
-          <button onClick={this.signUpUser}>
-            Sign In
-          </button>
-        </div>
-        <div>{this.state.hostKey}</div>
+        <input id="signup-input"
+          placeholder="Private Game Key"
+          value={this.username}
+        />
+        <button onClick={this.signUpUser}>
+          ->
+        </button>
+      </div>
+      */
+      <div id="signup">
+        <input type="text" onChange={ this.handleChange } />
+        <input
+          type="button"
+          value="Alert the text input"
+          onClick={this.handleClick}
+        />
       </div>
     );
   }
