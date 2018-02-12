@@ -1,5 +1,6 @@
 /* eslint linebreak-style: ["error", "windows"] */
 import React, { Component } from 'react';
+import SignUp from './signup';
 import LobbyGameView from './lobbyGameView';
 import LobbyGamesView from './lobbyGamesView';
 
@@ -16,9 +17,12 @@ class Lobby extends Component {
     return (
       <div id="lobby">
         <div id="lobby-title">WEBADVENTURE</div>
-        <div id="lobby-columns">
+        <div id="lobby-contents">
           <LobbyGamesView />
-          <LobbyGameView />
+          <div id="lobby-columns">
+            <SignUp />
+            <LobbyGameView />
+          </div>
         </div>
       </div>
     );

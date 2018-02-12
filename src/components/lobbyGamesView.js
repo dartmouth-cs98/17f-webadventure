@@ -42,6 +42,7 @@ class LobbyGamesView extends Component {
               className="lobby-game-item"
               key={index}
               onClick={e => this.selectGame(game.name, e)}
+              role="button"
               tabIndex={0}
             >{game.name}
             </div>
@@ -53,9 +54,7 @@ class LobbyGamesView extends Component {
   render() {
     return (
       <div id="GamesView">
-        <div>
-          {this.renderGames()}
-        </div>
+        {this.renderGames()}
       </div>
     );
   }
