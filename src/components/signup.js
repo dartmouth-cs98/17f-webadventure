@@ -16,17 +16,14 @@ class SignUp extends Component {
     this.handleClick = this.handleClick.bind(this);
   }
 
-  // componentDidMount() {
-  // }
-
   signUpUser() {
     // do check for empty string
     this.username = '';
   }
 
-  // getInitialState() {
-  //   return { input: '' };
-  // }
+  getInitialState() {
+    return { input: '' };
+  }
 
   handleChange(event) {
     this.setState({
@@ -51,12 +48,12 @@ class SignUp extends Component {
         </button>
       </div>
       */
-      <div id="signup">
+      <div id="SignUp">
         <input type="text" onChange={ this.handleChange } />
         <input
           type="button"
           value="Alert the text input"
-          onClick={this.handleClick}
+          onClick={ this.handleClick }
         />
       </div>
     );
