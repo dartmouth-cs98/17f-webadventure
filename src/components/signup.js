@@ -40,10 +40,12 @@ class SignUp extends Component {
   onItemClick(event) {
     //select avatar
     // this.state.avatar = 1;
-    event.currentTarget.style.border = '20px';
+    event.currentTarget.style.background = "yellow";
+    console.log("avatar selected was "+this.state.avatar);
     this.setState({
-      avatar: event.target.av-id
+      avatar: event.target.avID
     });
+    console.log("avatar selected is "+this.state.avatar);
   }
 
   render() {
@@ -54,10 +56,10 @@ class SignUp extends Component {
           <div id="signup-title">Username</div>
           <div>{this.state.username}</div>
           <div id="avatar-container">
-            <img className="avatar-option" onClick={this.onItemClick} av-id='0' src='https://i.imgur.com/rZSkKF0.gif'/>
-            <img className="avatar-option" onClick={this.onItemClick} av-id='1' src='https://i.imgur.com/YNcTBuU.gif'/>
-            <img className="avatar-option" onClick={this.onItemClick} av-id='2' src='https://i.imgur.com/rZSkKF0.gif'/>
-            <img className="avatar-option" onClick={this.onItemClick} av-id='3' src='https://i.imgur.com/rZSkKF0.gif'/>
+            <img className="avatar-option" onClick={this.onItemClick} avID='0' src='https://i.imgur.com/rZSkKF0.gif'/>
+            <img className="avatar-option" onClick={this.onItemClick} avID='1' src='https://i.imgur.com/YNcTBuU.gif'/>
+            <img className="avatar-option" onClick={this.onItemClick} avID='2' src='https://i.imgur.com/rZSkKF0.gif'/>
+            <img className="avatar-option" onClick={this.onItemClick} avID='3' src='https://i.imgur.com/rZSkKF0.gif'/>
           </div>
         </div>
       );

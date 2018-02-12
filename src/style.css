@@ -65,10 +65,6 @@
 }
 
 .avatar-option:hover {
-  /*border-width: 4px;
-  border-style: solid;
-  border-radius: 10px;
-  border-color: cornflowerblue;*/
   outline: 4px solid cornflowerblue;
 }
 
