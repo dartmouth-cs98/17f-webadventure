@@ -1,7 +1,7 @@
 /* eslint linebreak-style: ["error", "windows"] */
 import React, { Component } from 'react';
 import SignUp from './signup';
-import LobbyGameView from './lobbyGameView';
+import LobbyDetailsView from './lobbyDetailsView';
 import LobbyGamesView from './lobbyGamesView';
 
 class Lobby extends Component {
@@ -21,7 +21,7 @@ class Lobby extends Component {
           <LobbyGamesView />
           <div id="lobby-columns">
             <SignUp />
-            <LobbyGameView />
+            <LobbyDetailsView />
           </div>
         </div>
       </div>

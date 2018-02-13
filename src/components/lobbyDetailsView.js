@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-class LobbyGameView extends Component {
+class LobbyDetailsView extends Component {
   constructor(props) {
     super(props);
 
@@ -11,8 +11,9 @@ class LobbyGameView extends Component {
       seconds: '',
       // start: false,
       players: [],
+      privGameSel: false,
+      publGameSel: false,
     };
-
     this.timer = 0;
     this.onInputKey = this.onInputKey.bind(this);
     this.generateKey = this.generateKey.bind(this);
@@ -20,6 +21,9 @@ class LobbyGameView extends Component {
     this.countDown = this.countDown.bind(this);
     this.checkNumPlayers = this.checkNumPlayers.bind(this);
     this.addPlayer = this.addPlayer.bind(this);
+    this.joinPrivateGame = this.joinPrivateGame.bind(this);
+    this.joinPublicGame = this.joinPublicGame.bind(this);
+    this.backToGameSelect = this.backToGameSelect.bind(this);
   }
 
   onInputKey(event) {
@@ -39,7 +43,7 @@ class LobbyGameView extends Component {
     if (this.checkNumPlayers()) {
       clearInterval(this.timer);
       this.setState({
-        seconds: 16,
+        seconds: 6,
       });
       this.timer = setInterval(this.countDown, 1000);
     }
@@ -66,6 +70,32 @@ class LobbyGameView extends Component {
     }
   }
 
+  joinPublicGame() {
+    this.setState({
+      privGameSel: false,
+      publGameSel: true,
+    });
+    this.startTimer();
+  }
+
+  joinPrivateGame() {
+    this.setState({
+      privGameSel: true,
+      publGameSel: false,
+    });
+    this.startTimer();
+  }
+
+  backToGameSelect() {
+    this.setState({
+      privGameSel: false,
+      publGameSel: false,
+      time: {
+        s: 5,
+      },
+    });
+  }
+
   checkNumPlayers() {
     const reqNum = 5;
     if (this.state.players.length < reqNum) {
@@ -81,13 +111,45 @@ class LobbyGameView extends Component {
   }
 
   render() {
+    if (this.state.privGameSel) {
+      return (
+        <div id="lobby-game-view">
+          <div id="private">
+            <p>In Game {this.state.joinKey}!</p>
+            <p>{this.state.time.s}</p>
+          </div>
+          <div id="players">
+            Player 1
+            Player 2
+          </div>
+          <button onClick={this.backToGameSelect}>Go back</button>
+          <p>{this.publGameSel}</p>
+          <p>{this.privGameSel}</p>
+        </div>
+      );
+    } else if (this.state.publGameSel) {
+      return (
+        <div id="lobby-game-view">
+          <div id="public">
+            <p>In Game 5!</p>
+            <p>{this.state.time.s}</p>
+          </div>
+          <div id="players">
+            Player 1
+            Player 2
+          </div>
+          <button onClick={this.backToGameSelect}>Go back</button>
+          <p>{this.publGameSel}</p>
+          <p>{this.privGameSel}</p>
+        </div>
+      );
+    }
     return (
       <div id="lobby-game-view">
         <div id="public">
-          <button className="publicGame" onClick={this.startTimer}>
+          <button className="publicGame" onClick={this.joinPublicGame}>
             Join Public Game
           </button>
-          {this.state.time.s}
         </div>
         <div id="join-private">
           <input
@@ -95,7 +157,7 @@ class LobbyGameView extends Component {
             value={this.state.joinKey}
             onChange={this.onInputKey}
           />
-          <button className="join" onClick={this.addPlayer}>
+          <button className="join" onClick={this.joinPrivateGame}>
             Join Private Game
           </button>
         </div>
@@ -110,4 +172,4 @@ class LobbyGameView extends Component {
   }
 }
 
-export default LobbyGameView;
+export default LobbyDetailsView;
