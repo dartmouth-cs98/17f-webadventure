@@ -50,7 +50,7 @@ class SignUp extends Component {
     } else {
       return (
         <div id="SignUp">
-          <div id="signup-title">SIGN IN</div>
+          <div id="signup-title">Sign In</div>
           <input
             type="signup-input"
             placeholder="Enter your username"
