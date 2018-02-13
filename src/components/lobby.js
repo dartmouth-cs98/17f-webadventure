@@ -21,7 +21,7 @@ class Lobby extends Component {
       selectedGame: '',
       privateGameSelected: false,
       publicGameSelected: false,
-      signedUp: false,
+      // signedUp: false,
     };
 
     this.onGameChange = this.onGameChange.bind(this);
@@ -66,7 +66,7 @@ class Lobby extends Component {
               onSelectGame={this.onGameChange}
             />
             <div id="lobby-columns">
-              <SignUp signedUp username={this.state.username} />
+              <SignUp />
               <SelectedGameView />
             </div>
           </div>
@@ -83,7 +83,7 @@ class Lobby extends Component {
               onSelectGame={this.onGameChange}
             />
             <div id="lobby-columns">
-              <SignUp signedUp username={this.state.username} />
+              <SignUp />
               <LobbyDetailsView
                 privGameSel={privGameSel}
                 publGameSel={publGameSel}
