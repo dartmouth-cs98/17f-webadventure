@@ -22,6 +22,7 @@ class LobbyGamesView extends Component {
   }
 
   selectGame(name) {
+    console.log("name is "+name);
     this.setState({ selectedGame: name });
   }
 
