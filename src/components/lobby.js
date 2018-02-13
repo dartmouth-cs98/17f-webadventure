@@ -35,13 +35,15 @@ class Lobby extends Component {
   }
 
   onStartGame() {
-    const gameInfo = {
-      roomhost: 'almawang',
-      gameId: '5a80e8dff58b73d699780895',
-      username: 'almawang',
-      newUrl: 'https://en.wikipedia.org/wiki/Victorian_architecture',
+    const username = 'almawang';
+    const game = {
+      id: '5a80e8dff58b73d699780895',
+      host: 'almawang',
+      isPrivate: true,
+      startPage: 'https://en.wikipedia.org/wiki/Victorian_architecture',
+      goalPage: 'https://en.wikipedia.org/wiki/Architectural_style',
     };
-    this.props.onStart(gameInfo);
+    this.props.onStart(username, game);
   }
 
 

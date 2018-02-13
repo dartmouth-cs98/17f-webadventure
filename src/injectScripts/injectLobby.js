@@ -5,10 +5,13 @@ import Lobby from '../components/lobby';
 
 
 $('body').append('<div id=wa_main />');
-const onStart = (gameInfo) => {
+const onStart = (username, game) => {
   const request = {
     message: 'start game',
-    payload: gameInfo,
+    payload: {
+      username,
+      game,
+    },
   };
   chrome.runtime.sendMessage(request);
 };

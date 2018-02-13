@@ -97,12 +97,7 @@ class WikiGame {
     if (link !== null) {
       const redirectLink = `https://en.wikipedia.org${link}`;
       this.leaderboard.url = redirectLink;
-
-      // get current player from players in this.leaderboard
-      const curPlayerObj = $.grep(this.leaderboard.players, (player) => {
-        return player.name === this.leaderboard.curPlayer.name;
-      });
-      this.onNewUrl(redirectLink, this.curPlayer.username, curPlayerObj[0].numClicks + 1);
+      this.onNewUrl(redirectLink);
     }
   }
 

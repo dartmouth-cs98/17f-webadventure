@@ -20,7 +20,7 @@ export default class GameSocket {
   updatePlayer(finishTime, numClicks, curUrl) {
     const playerInfo = { finishTime, numClicks, curUrl };
     const req = { gameId: this.gameId, username: this.username, playerInfo };
-    this.socket.emit('updatePlayer', req);
+    // this.socket.emit('updatePlayer', req); // disabled for now
   }
 
   disconnect() {
