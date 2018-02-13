@@ -1,4 +1,5 @@
 /* eslint linebreak-style: ["error", "windows"] */
+
 import React, { Component } from 'react';
 import SignUp from './signup';
 import LobbyDetailsView from './lobbyDetailsView';
@@ -20,6 +21,7 @@ class Lobby extends Component {
       selectedGame: '',
       privateGameSelected: false,
       publicGameSelected: false,
+      signedUp: false,
     };
 
     this.onGameChange = this.onGameChange.bind(this);
@@ -64,7 +66,7 @@ class Lobby extends Component {
               onSelectGame={this.onGameChange}
             />
             <div id="lobby-columns">
-              <SignUp />
+              <SignUp signedUp username={this.state.username} />
               <SelectedGameView />
             </div>
           </div>
@@ -81,7 +83,7 @@ class Lobby extends Component {
               onSelectGame={this.onGameChange}
             />
             <div id="lobby-columns">
-              <SignUp />
+              <SignUp signedUp username={this.state.username} />
               <LobbyDetailsView
                 privGameSel={privGameSel}
                 publGameSel={publGameSel}
