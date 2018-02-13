@@ -7,7 +7,8 @@ import Player from './player';
 import App from './components/app';
 
 class WikiGame {
-  constructor(curPlayer = new Player('curPlayer', { left: 100, top: 100 }, true)) {
+  constructor(onNewUrl, curPlayer = new Player('curPlayer', { left: 100, top: 100 }, true)) {
+    this.onNewUrl = onNewUrl;
     this.curPlayer = curPlayer;
     this.players = [];
     this.keysPressed = {
@@ -55,6 +56,11 @@ class WikiGame {
     this.curPlayer.insertPlayer(curPosition.x, curPosition.y);
   }
 
+  updateLeaderboard(leaderboard) {
+    this.leaderboard = leaderboard;
+    ReactDOM.render(<App leaderboard={this.leaderboard} />, document.getElementById('wa-main'));
+  }
+
   setupToc() {
     const toc = $('#toc').detach();
     $(toc).attr('id', 'wa-toc');
@@ -84,9 +90,6 @@ class WikiGame {
       newLoc.y += 5;
     }
     this.curPlayer.movePlayer(newLoc.x, newLoc.y);
-
-    // update locations of other players
-    //
   }
 
   openLink() {
@@ -94,14 +97,7 @@ class WikiGame {
     if (link !== null) {
       const redirectLink = `https://en.wikipedia.org${link}`;
       this.leaderboard.url = redirectLink;
-
-      // get current player from players in this.leaderboard
-      const curPlayerObj = $.grep(this.leaderboard.players, (player) => {
-        return player.name === this.leaderboard.curPlayer.name;
-      });
-      curPlayerObj[0].numClicks += 1;
-
-      chrome.runtime.sendMessage(this.leaderboard);
+      this.onNewUrl(redirectLink);
     }
   }
 

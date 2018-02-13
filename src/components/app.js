@@ -1,7 +1,6 @@
 import React from 'react';
 import '../style.css';
 import Leaderboard from './leaderboard';
-import Lobby from './lobby';
 
 
 const App = (props) => {
@@ -12,7 +11,6 @@ const App = (props) => {
         time={props.leaderboard.time}
         players={props.leaderboard.players}
       />
-      <Lobby />
     </div>);
 };
 

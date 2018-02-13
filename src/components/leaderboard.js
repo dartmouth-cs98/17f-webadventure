@@ -8,9 +8,9 @@ class Leaderboard extends Component {
   }
 
   renderRankings() {
-    const top10 = this.props.players
+    const top5 = this.props.players
       .sort((a, b) => b.numClicks - a.numClicks)
-      .slice(0, 10)
+      .slice(0, 5)
       .map((player, index) => {
         if (player.name === this.props.curPlayer.name) {
           return (
@@ -31,7 +31,7 @@ class Leaderboard extends Component {
             <div className="leaderboard-item-right">{player.numClicks}</div>
           </div>);
       });
-    return top10;
+    return top5;
   }
 
   render() {

@@ -21,6 +21,7 @@ class Lobby extends Component {
     // this.renderLobby = this.renderLobby.bind(this);
     this.generateKey = this.generateKey.bind(this);
     this.onInputKey = this.onInputKey.bind(this);
+    this.onStartGame = this.onStartGame.bind(this);
     this.startTimer = this.startTimer.bind(this);
     this.countDown = this.countDown.bind(this);
     this.checkNumPlayers = this.checkNumPlayers.bind(this);
@@ -35,6 +36,19 @@ class Lobby extends Component {
       joinKey: event.target.value,
     });
   }
+
+  onStartGame() {
+    const username = 'almawang';
+    const game = {
+      id: '5a80e8dff58b73d699780895',
+      host: 'almawang',
+      isPrivate: true,
+      startPage: 'https://en.wikipedia.org/wiki/Victorian_architecture',
+      goalPage: 'https://en.wikipedia.org/wiki/Architectural_style',
+    };
+    this.props.onStart(username, game);
+  }
+
 
   generateKey() {
     const key = Math.random().toString(36).substring(this.startKeyIndex, this.endKeyIndex);
@@ -119,6 +133,9 @@ class Lobby extends Component {
           </button>
         </div>
         <div>{this.state.hostKey}</div>
+        <button onClick={this.onStartGame} >
+        Click me
+        </button>
       </div>
     );
   }
