@@ -1,35 +1,16 @@
 /* eslint react/no-array-index-key: 0, "react/jsx-no-bind": 0 */
 
-import React, { Component } from 'react';
+import React from 'react';
 
-class LobbyGamesView extends Component {
-  constructor(props) {
-    super(props);
+const LobbyGamesView = (props) => {
+  // const handleChange = (name) => {
+  //   props.onSelectGame(name);
+  // };
 
-    this.state = {
-      games: [
-        { name: 'Game1' },
-        { name: 'Game2' },
-        { name: 'Game3' },
-        { name: 'Game4' },
-        { name: 'Game5' },
-      ],
-      selectedGame: '',
-    };
-
-    this.renderGames = this.renderGames.bind(this);
-    this.selectGame = this.selectGame.bind(this);
-  }
-
-  selectGame(name) {
-    console.log("name is "+name);
-    this.setState({ selectedGame: name });
-  }
-
-  renderGames() {
-    return this.state.games
+  const renderGames = () => {
+    return props.games
       .map((game, index) => {
-        if (game.name === this.state.selectedGame) {
+        if (game.name === props.selectedGame) {
           return (
             <div
               className="lobby-game-item game-selected"
@@ -42,7 +23,7 @@ class LobbyGamesView extends Component {
             <div
               className="lobby-game-item"
               key={index}
-              onClick={e => this.selectGame(game.name, e)}
+              onClick={e => props.onSelectGame(game.name, e)}
               role="button"
               tabIndex={0}
             >{game.name}
@@ -50,15 +31,13 @@ class LobbyGamesView extends Component {
           );
         }
       });
-  }
+  };
 
-  render() {
-    return (
-      <div id="GamesView">
-        {this.renderGames()}
-      </div>
-    );
-  }
-}
+  return (
+    <div id="GamesView">
+      {renderGames()}
+    </div>
+  );
+};
 
 export default LobbyGamesView;
