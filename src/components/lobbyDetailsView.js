@@ -1,3 +1,5 @@
+/* eslint react/no-unused-state: 0  */
+
 import React, { Component } from 'react';
 
 class LobbyDetailsView extends Component {
@@ -11,8 +13,7 @@ class LobbyDetailsView extends Component {
       seconds: '',
       // start: false,
       players: [],
-      privGameSel: false,
-      publGameSel: false,
+
     };
     this.timer = 0;
     this.onInputKey = this.onInputKey.bind(this);
@@ -71,29 +72,18 @@ class LobbyDetailsView extends Component {
   }
 
   joinPublicGame() {
-    this.setState({
-      privGameSel: false,
-      publGameSel: true,
-    });
+    this.props.joinPublicGame();
     this.startTimer();
   }
 
   joinPrivateGame() {
-    this.setState({
-      privGameSel: true,
-      publGameSel: false,
-    });
+    this.props.joinPrivateGame();
     this.startTimer();
   }
 
   backToGameSelect() {
-    this.setState({
-      privGameSel: false,
-      publGameSel: false,
-      time: {
-        s: 5,
-      },
-    });
+    this.props.backToGameSelect();
+    this.setState({ time: { s: 5 } });
   }
 
   checkNumPlayers() {
@@ -111,39 +101,6 @@ class LobbyDetailsView extends Component {
   }
 
   render() {
-    if (this.state.privGameSel) {
-      return (
-        <div id="lobby-game-view">
-          <div id="private">
-            <p>In Game {this.state.joinKey}!</p>
-            <p>{this.state.time.s}</p>
-          </div>
-          <div id="players">
-            Player 1
-            Player 2
-          </div>
-          <button onClick={this.backToGameSelect}>Go back</button>
-          <p>{this.publGameSel}</p>
-          <p>{this.privGameSel}</p>
-        </div>
-      );
-    } else if (this.state.publGameSel) {
-      return (
-        <div id="lobby-game-view">
-          <div id="public">
-            <p>In Game 5!</p>
-            <p>{this.state.time.s}</p>
-          </div>
-          <div id="players">
-            Player 1
-            Player 2
-          </div>
-          <button onClick={this.backToGameSelect}>Go back</button>
-          <p>{this.publGameSel}</p>
-          <p>{this.privGameSel}</p>
-        </div>
-      );
-    }
     return (
       <div id="lobby-game-view">
         <div id="public">
