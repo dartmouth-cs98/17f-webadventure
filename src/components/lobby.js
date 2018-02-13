@@ -44,7 +44,7 @@ class Lobby extends Component {
           />
           <div id="lobby-columns">
             <SignUp />
-            <LobbyGameView />
+            {/* <LobbyGameView /> */}
           </div>
         </div>
       </div>
