@@ -13,6 +13,9 @@ class Lobby extends Component {
       players: [],
     };
     this.timer = 0;
+    this.startKeyIndex = 2;
+    this.endKeyIndex = 9;
+    this.keyLength = this.endKeyIndex - this.startKeyIndex;
     // this.players = this.gameData.getPlayers();
     // this.getPlayers = this.getPlayers.bind(this);
     // this.renderLobby = this.renderLobby.bind(this);
@@ -48,7 +51,7 @@ class Lobby extends Component {
 
 
   generateKey() {
-    const key = Math.random().toString(36).substring(2, 9);
+    const key = Math.random().toString(36).substring(this.startKeyIndex, this.endKeyIndex);
     this.setState({
       hostKey: key,
     });
@@ -118,6 +121,7 @@ class Lobby extends Component {
             placeholder="Private Game Key"
             value={this.state.joinKey}
             onChange={this.onInputKey}
+            maxLength={this.keyLength}
           />
           <button className="join" onClick={this.addPlayer}>
             Join Private Game
