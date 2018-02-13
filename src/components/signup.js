@@ -11,13 +11,8 @@ class SignUp extends Component {
       signedUp: false,
     };
 
-    this.getInitialState = this.getInitialState.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
-  }
-
-  getInitialState() {
-    return { username: '' };
   }
 
   handleChange(event) {

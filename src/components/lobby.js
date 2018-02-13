@@ -10,15 +10,15 @@ class Lobby extends Component {
 
     this.state = {
       games: [
-        { name: 'Game1' },
-        { name: 'Game2' },
-        { name: 'Game3' },
-        { name: 'Game4' },
-        { name: 'Game5' },
+        { name: 'Game1', players: ['Bill', 'Jill'] },
+        { name: 'Game2', players: ['Tommy', 'Eli', 'James'] },
+        { name: 'Game3', players: ['Tim'] },
+        { name: 'Game4', players: ['Alma', 'David', 'Stephanie', 'Lisa'] },
+        { name: 'Game5', players: ['Imanol', 'Barry'] },
       ],
       selectedGame: '',
     };
-    this.timer = 0;
+
     this.onGameChange = this.onGameChange.bind(this);
   }
 

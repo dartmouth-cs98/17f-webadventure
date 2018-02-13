@@ -3,9 +3,9 @@
 import React from 'react';
 
 const LobbyGamesView = (props) => {
-  const handleChange = (name) => {
-    props.onSelectGame(name);
-  };
+  // const handleChange = (name) => {
+  //   props.onSelectGame(name);
+  // };
 
   const renderGames = () => {
     return props.games
@@ -23,7 +23,7 @@ const LobbyGamesView = (props) => {
             <div
               className="lobby-game-item"
               key={index}
-              onClick={e => handleChange(game.name, e)}
+              onClick={e => props.onSelectGame(game.name, e)}
               role="button"
               tabIndex={0}
             >{game.name}
