@@ -14,7 +14,7 @@ const onNewUrl = (newUrl, username, numClicks, finishTime = -1) => {
       numClicks,
     },
   };
-  // chrome.runtime.sendMessage(req);
+  chrome.runtime.sendMessage(req);
 };
 
 chrome.runtime.onMessage.addListener((request) => {

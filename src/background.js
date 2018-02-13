@@ -30,7 +30,7 @@ chrome.runtime.onMessage.addListener((request, sender) => {
   } else if (sender.tab.id !== tabId || request.message !== 'new url') { return; }
   const { newUrl } = request.payload;
   chrome.tabs.update(sender.tab.id, { url: newUrl }, (tab) => {
-    console.log('here');
+    console.log(tab);
     if (newUrl === 'https://en.wikipedia.org/wiki/Paul_Kruger') {
       chrome.tabs.executeScript({
         file: 'dist/injectEnd.bundle.js',
