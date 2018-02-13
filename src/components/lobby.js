@@ -16,9 +16,6 @@ class Lobby extends Component {
     this.startKeyIndex = 2;
     this.endKeyIndex = 9;
     this.keyLength = this.endKeyIndex - this.startKeyIndex;
-    // this.players = this.gameData.getPlayers();
-    // this.getPlayers = this.getPlayers.bind(this);
-    // this.renderLobby = this.renderLobby.bind(this);
     this.generateKey = this.generateKey.bind(this);
     this.onInputKey = this.onInputKey.bind(this);
     this.onStartGame = this.onStartGame.bind(this);
@@ -101,10 +98,6 @@ class Lobby extends Component {
       players: ['a', 'b', 'c', 'd', 'e', 'f'],
     });
   }
-
-  /* renderLobby() {
-    this.players = this.gameData.getPlayers();
-  } */
 
   render() {
     return (
