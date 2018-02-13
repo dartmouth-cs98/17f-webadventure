@@ -1,8 +1,9 @@
 /* eslint linebreak-style: ["error", "windows"] */
 import React, { Component } from 'react';
 import SignUp from './signup';
-import LobbyGameView from './lobbyGameView';
+import LobbyDetailsView from './lobbyDetailsView';
 import LobbyGamesView from './lobbyGamesView';
+import SelectedGameView from './selectedGameView';
 
 class Lobby extends Component {
   constructor(props) {
@@ -33,22 +34,41 @@ class Lobby extends Component {
     const selectedGameName = this.state.selectedGame;
     const currentGames = this.state.games;
 
-    return (
-      <div id="lobby">
-        <div id="lobby-title">WEBADVENTURE</div>
-        <div id="lobby-contents">
-          <LobbyGamesView
-            games={currentGames}
-            selectedGame={selectedGameName}
-            onSelectGame={this.onGameChange}
-          />
-          <div id="lobby-columns">
-            <SignUp />
-            {/* <LobbyGameView /> */}
+    if (selectedGameName === '') {
+      return (
+        <div id="lobby">
+          <div id="lobby-title">WEBADVENTURE</div>
+          <div id="lobby-contents">
+            <LobbyGamesView
+              games={currentGames}
+              selectedGame={selectedGameName}
+              onSelectGame={this.onGameChange}
+            />
+            <div id="lobby-columns">
+              <SignUp />
+              <LobbyDetailsView />
+            </div>
           </div>
         </div>
-      </div>
-    );
+      );
+    } else {
+      return (
+        <div id="lobby">
+          <div id="lobby-title">WEBADVENTURE</div>
+          <div id="lobby-contents">
+            <LobbyGamesView
+              games={currentGames}
+              selectedGame={selectedGameName}
+              onSelectGame={this.onGameChange}
+            />
+            <div id="lobby-columns">
+              <SignUp />
+              <SelectedGameView />
+            </div>
+          </div>
+        </div>
+      );
+    }
   }
 }
 
