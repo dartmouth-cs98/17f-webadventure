@@ -28,7 +28,7 @@ class Lobby extends Component {
     this.joinPublicGame = this.joinPublicGame.bind(this);
     this.joinPrivateGame = this.joinPrivateGame.bind(this);
     this.backToGameSelect = this.backToGameSelect.bind(this);
-   
+
     this.timer = 0;
     this.startKeyIndex = 2;
     this.endKeyIndex = 9;
@@ -37,13 +37,6 @@ class Lobby extends Component {
   }
 
   componentDidMount() {
-  }
-
-  signUpLobby(username) {
-    this.setState({
-      signedUp: true,
-      username: username
-    });
   }
 
   onGameChange(game) {
@@ -62,6 +55,13 @@ class Lobby extends Component {
     this.props.onStart(username, game);
   }
 
+  signUpLobby(username) {
+    this.setState({
+      signedUp: true,
+      username,
+    });
+  }
+
   joinPublicGame() {
     this.setState({ privateGameSelected: false, publicGameSelected: true });
   }
@@ -75,10 +75,8 @@ class Lobby extends Component {
   }
 
   render() {
-
     // Render lobby with all lobby components
     if (this.state.signedUp) {
-
       const selectedGameName = this.state.selectedGame;
       const currentGames = this.state.games;
       const privGameSel = this.state.privateGameSelected;
@@ -95,7 +93,7 @@ class Lobby extends Component {
                 onSelectGame={this.onGameChange}
               />
               <div id="lobby-columns">
-                <SignUp signedUp={ true } username={ this.state.username }/>
+                <SignUp signedUp username={this.state.username} />
                 <SelectedGameView />
               </div>
             </div>
@@ -104,8 +102,7 @@ class Lobby extends Component {
             </button>
           </div>
         );
-      }
-      else {
+      } else {
         return (
           <div id="lobby">
             <div id="lobby-title">WEBADVENTURE</div>
@@ -116,7 +113,7 @@ class Lobby extends Component {
                 onSelectGame={this.onGameChange}
               />
               <div id="lobby-columns">
-                <SignUp signedUp={ true } username={ this.state.username }/>
+                <SignUp signedUp username={this.state.username} />
                 <LobbyDetailsView
                   privGameSel={privGameSel}
                   publGameSel={publGameSel}
@@ -138,7 +135,7 @@ class Lobby extends Component {
     return (
       <div id="lobby">
         <div id="lobby-title">WEBADVENTURE</div>
-        <SignUp signUpLobby={ this.signUpLobby.bind(this) }/>
+        <SignUp signUpLobby={this.signUpLobby.bind(this)} />
       </div>
     );
   }

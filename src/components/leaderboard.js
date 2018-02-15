@@ -36,7 +36,7 @@ class Leaderboard extends Component {
 
   render() {
     if (this.props.curPlayer) {
-      console.log("props.currplayer trueeeee");
+      // console.log('props.currplayer trueeeee');
       return (
         <div id="wa-container">
           <img id="wiki-logo" src="https://i.imgur.com/hQbOKPS.png" alt="wiki logo" />
@@ -53,7 +53,7 @@ class Leaderboard extends Component {
         </div>
       );
     }
-    console.log("props.currplayer falseeeee");
+    // console.log('props.currplayer falseeeee');
     return (
       <div id="leaderboard">
         <div id="userStats">
