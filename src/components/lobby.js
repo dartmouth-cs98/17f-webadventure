@@ -39,13 +39,6 @@ class Lobby extends Component {
   componentDidMount() {
   }
 
-  signUpLobby(username) {
-    this.setState({
-      signedUp: true,
-      username,
-    });
-  }
-
   onGameChange(game) {
     this.setState({ selectedGame: game });
   }
@@ -60,6 +53,13 @@ class Lobby extends Component {
       goalPage: 'https://en.wikipedia.org/wiki/Architectural_style',
     };
     this.props.onStart(username, game);
+  }
+
+  signUpLobby(username) {
+    this.setState({
+      signedUp: true,
+      username,
+    });
   }
 
   joinPublicGame() {
