@@ -99,6 +99,9 @@ class Lobby extends Component {
                 <SelectedGameView />
               </div>
             </div>
+            <button onClick={this.onStartGame} >
+              Click me
+            </button>
           </div>
         );
       }
@@ -123,6 +126,9 @@ class Lobby extends Component {
                 />
               </div>
             </div>
+            <button onClick={this.onStartGame} >
+              Click me
+            </button>
           </div>
         );
       }
