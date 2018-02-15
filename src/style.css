@@ -15,7 +15,12 @@
   position: fixed;
 }
 
+#wiki-logo {
+  width: inherit;
+}
+
 #lobby-title {
+  text-align: center;
   font-family: impact;
   font-size: 25px;
 
@@ -30,9 +35,7 @@
 }
 
 #lobby {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  display: block;
   position: fixed;
   width: 20em;
   top: 10vw;
@@ -43,16 +46,51 @@
   border-radius: 10px;
 }
 
+#lobby-contents {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+#lobby-columns {
+  display: flex;
+  flex-direction: column;
+}
+
+.avatar-option {
+  width: 30px;
+  height: 30px;
+  padding: 2px;
+  margin: 5px;
+}
+
+.avatar-option:hover {
+  outline: 4px solid cornflowerblue;
+}
+
 #leaderboard  {
   font-size: 15px;
   width: inherit;
+  /* padding-left: 10px; */
+  /* position: fixed; */
+
   height: 100%;
   position: absolute;
   background-color: rgba(246, 246, 246, 1);
 }
 
-#wiki-logo {
-  width: inherit;
+.leaderboard-item-left {
+  display: flex;
+  justify-content: flex-start;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+#lobby-game-view {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .leaderboard-item {
@@ -64,24 +102,20 @@
   font-size: 15px;
 }
 
-.leaderboard-item-left {
-  display: flex;
-  justify-content: flex-start;
-  margin-left: 5px;
-  margin-right: 5px;
-}
-
 .leaderboard-item-right {
   margin-left: 5px;
   margin-right: 10px;
 }
 
 .leaderboard-curPlayer {
+  /* line-height: 30px; */
+  /* background-color: rgba(3, 169, 244, 1); */
   color: white;
   text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black;
   background: linear-gradient(124deg, #ff2400, #e81d1d, #e8b71d, #e3e81d, #1de840, #1ddde8, #2b1de8, #dd00f3, #dd00f3);
   background-size: 1800% 1800%;
 
+  /*animation-name: rainbowgradient;*/
   animation-name: rainbow-gradient;
   animation-duration: 18s;
   animation-timing-function: ease-out;
@@ -89,6 +123,8 @@
   animation-iteration-count: infinite;
   animation-play-state: running;
 }
+
+
 
 .leaderboard-rank {
   margin-left: 5px;
@@ -125,6 +161,50 @@
   width: 40px;
 }
 
+.game-selected {
+  color: white;
+  /* text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black; */
+  background: linear-gradient(124deg, #ff2400, #e81d1d, #e8b71d, #e3e81d, #1de840, #1ddde8, #2b1de8, #dd00f3, #dd00f3);
+  background-size: 1800% 1800%;
+
+  animation-name: rainbow-gradient;
+  animation-duration: 18s;
+  animation-timing-function: ease-out;
+  animation-delay: 0;
+  animation-iteration-count: infinite;
+  animation-play-state: running;
+}
+
+#lobby-contents {
+  display: flex;
+  justify-content: center;
+}
+
+#GamesView {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  margin: 10px;
+  border: 1px solid #03193d;
+  border-radius: 5px;
+}
+
+.lobby-game-item {
+  margin: 1px;
+}
+
+.lobby-game-item:hover {
+  cursor: pointer;
+}
+
+#SignUp {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 #userStats {
   font-family: impact;
   font-size: 23px;
@@ -158,14 +238,22 @@
 }
 
 .curPlayerName {
+  /* font-family: 'Dhurjati', sans-serif; */
   font-family: 'Orbitron', sans-serif;
   font-size: 15px;
   margin-left: 20px;
+
+  /* animation:
+    nudge 5s linear infinite alternate; */
 }
 
 #wahoo {
   height: 30px;
   width: 30px;
+
+  font-family: 'Orbitron', sans-serif;
+  font-size: 15px;
+  margin-left: 20px;
 }
 
 #join-private{
