@@ -5,6 +5,7 @@ import SignUp from './signup';
 import LobbyDetailsView from './lobbyDetailsView';
 import LobbyGamesView from './lobbyGamesView';
 import SelectedGameView from './selectedGameView';
+import DisplayUser from './displayUser';
 
 class Lobby extends Component {
   constructor(props) {
@@ -28,6 +29,7 @@ class Lobby extends Component {
     this.joinPublicGame = this.joinPublicGame.bind(this);
     this.joinPrivateGame = this.joinPrivateGame.bind(this);
     this.backToGameSelect = this.backToGameSelect.bind(this);
+    this.signUpLobby = this.signUpLobby.bind(this);
 
     this.timer = 0;
     this.startKeyIndex = 2;
@@ -90,7 +92,7 @@ class Lobby extends Component {
                 onSelectGame={this.onGameChange}
               />
               <div id="lobby-columns">
-                <SignUp signedUp username={this.state.username} />
+                <DisplayUser username={this.state.username} />
                 <SelectedGameView
                   selectedGame={this.state.selectedGame}
                   onGoBack={this.backToGameSelect}
@@ -113,7 +115,7 @@ class Lobby extends Component {
                 onSelectGame={this.onGameChange}
               />
               <div id="lobby-columns">
-                <SignUp signedUp username={this.state.username} />
+                <DisplayUser username={this.state.username} />
                 <LobbyDetailsView
                   privGameSel={this.state.privateGameSelected}
                   publGameSel={this.state.publicGameSelected}
@@ -135,7 +137,7 @@ class Lobby extends Component {
     return (
       <div id="lobby">
         <div id="lobby-title">WEBADVENTURE</div>
-        <SignUp signUpLobby={this.signUpLobby.bind(this)} />
+        <SignUp signUpLobby={this.signUpLobby} />
       </div>
     );
   }
