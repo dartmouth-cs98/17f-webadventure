@@ -12,12 +12,12 @@ class Leaderboard extends Component {
       .sort((a, b) => b.numClicks - a.numClicks)
       .slice(0, 5)
       .map((player, index) => {
-        if (player.name === this.props.curPlayer.name) {
+        if (player.username === this.props.curPlayer.name) {
           return (
             <div className="leaderboard-item leaderboard-curPlayer">
               <div className="leaderboard-item-left">
                 <div className="leaderboard-rank">{index + 1}</div>
-                <div>{player.name}</div>
+                <div>{player.username}</div>
               </div>
               <div className="leaderboard-item-right">{player.numClicks}</div>
             </div>);
@@ -26,7 +26,7 @@ class Leaderboard extends Component {
           <div className="leaderboard-item">
             <div className="leaderboard-item-left">
               <div className="leaderboard-rank">{index + 1}</div>
-              <div>{player.name}</div>
+              <div>{player.username}</div>
             </div>
             <div className="leaderboard-item-right">{player.numClicks}</div>
           </div>);
