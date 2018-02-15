@@ -1,7 +1,9 @@
+/* eslint no-unused-vars: 0 */
+
 import React from 'react';
+
 import '../style.css';
 import Leaderboard from './leaderboard';
-
 
 const App = (props) => {
   return (
