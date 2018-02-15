@@ -28,15 +28,16 @@ class WikiGame {
         avatarRight: this.curPlayer.getAvatarRight(),
       },
       players: [
-        { name: 'Barry', numClicks: 40 },
-        { name: 'Alma', numClicks: 45 },
-        { name: 'David', numClicks: 60 },
-        { name: 'Imanol', numClicks: 70 },
-        { name: 'Tim', numClicks: 2 },
+        { username: 'Barry', numClicks: 40 },
+        { username: 'Alma', numClicks: 45 },
+        { username: 'David', numClicks: 60 },
+        { username: 'Imanol', numClicks: 70 },
+        { username: 'Tim', numClicks: 2 },
       ],
     };
 
     this.renderGame = this.renderGame.bind(this);
+    this.updateLeaderboard = this.updateLeaderboard.bind(this);
     this.setupToc = this.setupToc.bind(this);
     this.updateGame = this.updateGame.bind(this);
     this.onKeyDown = this.onKeyDown.bind(this);
@@ -56,8 +57,9 @@ class WikiGame {
     this.curPlayer.insertPlayer(curPosition.x, curPosition.y);
   }
 
-  updateLeaderboard(leaderboard) {
-    this.leaderboard = leaderboard;
+  updateLeaderboard(game) {
+    // this.leaderboard.players = game.players;
+    console.log(game);
     ReactDOM.render(<App leaderboard={this.leaderboard} />, document.getElementById('wa-main'));
   }
 

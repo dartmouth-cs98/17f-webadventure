@@ -3,9 +3,6 @@
 import React from 'react';
 
 const LobbyGamesView = (props) => {
-  // const handleChange = (name) => {
-  //   props.onSelectGame(name);
-  // };
 
   const renderGames = () => {
     return props.games

@@ -12,12 +12,12 @@ class Leaderboard extends Component {
       .sort((a, b) => b.numClicks - a.numClicks)
       .slice(0, 5)
       .map((player, index) => {
-        if (player.name === this.props.curPlayer.name) {
+        if (player.username === this.props.curPlayer.name) {
           return (
             <div className="leaderboard-item leaderboard-curPlayer">
               <div className="leaderboard-item-left">
                 <div className="leaderboard-rank">{index + 1}</div>
-                <div>{player.name}</div>
+                <div>{player.username}</div>
               </div>
               <div className="leaderboard-item-right">{player.numClicks}</div>
             </div>);
@@ -26,7 +26,7 @@ class Leaderboard extends Component {
           <div className="leaderboard-item">
             <div className="leaderboard-item-left">
               <div className="leaderboard-rank">{index + 1}</div>
-              <div>{player.name}</div>
+              <div>{player.username}</div>
             </div>
             <div className="leaderboard-item-right">{player.numClicks}</div>
           </div>);
@@ -36,6 +36,7 @@ class Leaderboard extends Component {
 
   render() {
     if (this.props.curPlayer) {
+      console.log('props.currplayer trueeeee');
       return (
         <div id="wa-container">
           <img id="wiki-logo" src="https://i.imgur.com/hQbOKPS.png" alt="wiki logo" />
@@ -52,14 +53,15 @@ class Leaderboard extends Component {
         </div>
       );
     }
+    console.log('props.currplayer falseeeee');
     return (
-      <div id="leaderboard">
-        <div id="userStats">
-          WEBADVENTURE
+      <div id="wa-container">
+        <img id="wiki-logo" src="https://i.imgur.com/hQbOKPS.png" alt="wiki logo" />
+        <div id="leaderboard">
+          <div id="userStats">WEBADVENTURE</div>
+          <div id="curUserRow" />
           <div id="userStatRow" />
         </div>
-        <p id="currentPlayerView">Leaderboard</p>
-        <div id="userStatRow" />
       </div>
     );
   }

@@ -19,13 +19,12 @@ const onGame = (newGame) => {
 };
 
 const endGame = () => {
-  console.log('end reached');
+  console.log('stop game');
   curPlayerInfo = null;
   curTabId = -1;
   clearInterval(interval);
   gameSocket.disconnect();
 };
-
 
 chrome.runtime.onMessage.addListener((request, sender) => {
   // check tab and request info and final page reached
