@@ -1,37 +1,53 @@
 /* eslint linebreak-style: ["error", "windows"] */
+
 import React, { Component } from 'react';
+import SignUp from './signup';
+import LobbyDetailsView from './lobbyDetailsView';
+import LobbyGamesView from './lobbyGamesView';
+import SelectedGameView from './selectedGameView';
 
 class Lobby extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
-      hostKey: '',
-      joinKey: '',
-      time: {},
-      seconds: '',
-      // start: false,
-      players: [],
+      signedUp: false,
+      games: [
+        { name: 'Game1', players: ['Bill', 'Jill'] },
+        { name: 'Game2', players: ['Tommy', 'Eli', 'James'] },
+        { name: 'Game3', players: ['Tim'] },
+        { name: 'Game4', players: ['Alma', 'David', 'Stephanie', 'Lisa'] },
+        { name: 'Game5', players: ['Imanol', 'Barry'] },
+      ],
+      selectedGame: '',
+      privateGameSelected: false,
+      publicGameSelected: false,
     };
+
+    this.onGameChange = this.onGameChange.bind(this);
+    this.joinPublicGame = this.joinPublicGame.bind(this);
+    this.joinPrivateGame = this.joinPrivateGame.bind(this);
+    this.backToGameSelect = this.backToGameSelect.bind(this);
+
     this.timer = 0;
     this.startKeyIndex = 2;
     this.endKeyIndex = 9;
     this.keyLength = this.endKeyIndex - this.startKeyIndex;
-    this.generateKey = this.generateKey.bind(this);
-    this.onInputKey = this.onInputKey.bind(this);
     this.onStartGame = this.onStartGame.bind(this);
-    this.startTimer = this.startTimer.bind(this);
-    this.countDown = this.countDown.bind(this);
-    this.checkNumPlayers = this.checkNumPlayers.bind(this);
-    this.addPlayer = this.addPlayer.bind(this);
   }
 
   componentDidMount() {
   }
 
-  onInputKey(event) {
+  signUpLobby(username) {
     this.setState({
-      joinKey: event.target.value,
+      signedUp: true,
+      username,
     });
+  }
+
+  onGameChange(game) {
+    this.setState({ selectedGame: game });
   }
 
   onStartGame() {
@@ -46,89 +62,80 @@ class Lobby extends Component {
     this.props.onStart(username, game);
   }
 
-
-  generateKey() {
-    const key = Math.random().toString(36).substring(this.startKeyIndex, this.endKeyIndex);
-    this.setState({
-      hostKey: key,
-    });
+  joinPublicGame() {
+    this.setState({ privateGameSelected: false, publicGameSelected: true });
   }
 
-  startTimer() {
-    if (this.checkNumPlayers()) {
-      clearInterval(this.timer);
-      this.setState({
-        seconds: 16,
-      });
-      this.timer = setInterval(this.countDown, 1000);
-    }
+  joinPrivateGame() {
+    this.setState({ privateGameSelected: true, publicGameSelected: false });
   }
 
-  countDown() {
-    // Remove one second, set state so a re-render happens.
-    const secs = this.state.seconds - 1;
-    this.setState({
-      time: {
-        s: secs,
-      },
-      seconds: secs,
-    });
-
-    // Check if we're at zero.
-    if (secs === 0) {
-      clearInterval(this.timer);
-      this.setState({
-        time: {
-          s: 'Game start!',
-        },
-      });
-    }
-  }
-
-  checkNumPlayers() {
-    const reqNum = 5;
-    if (this.state.players.length < reqNum) {
-      return false;
-    }
-    return true;
-  }
-
-  addPlayer() {
-    this.setState({
-      players: ['a', 'b', 'c', 'd', 'e', 'f'],
-    });
+  backToGameSelect() {
+    this.setState({ privateGameSelected: false, publicGameSelected: false });
   }
 
   render() {
+    // Render lobby with all lobby components
+    if (this.state.signedUp) {
+      const selectedGameName = this.state.selectedGame;
+      const currentGames = this.state.games;
+      const privGameSel = this.state.privateGameSelected;
+      const publGameSel = this.state.publicGameSelected;
+
+      if (publGameSel && selectedGameName !== '') {
+        return (
+          <div id="lobby">
+            <div id="lobby-title">WEBADVENTURE</div>
+            <div id="lobby-contents">
+              <LobbyGamesView
+                games={currentGames}
+                selectedGame={selectedGameName}
+                onSelectGame={this.onGameChange}
+              />
+              <div id="lobby-columns">
+                <SignUp signedUp username={this.state.username} />
+                <SelectedGameView />
+              </div>
+            </div>
+            <button onClick={this.onStartGame} >
+              Click me
+            </button>
+          </div>
+        );
+      } else {
+        return (
+          <div id="lobby">
+            <div id="lobby-title">WEBADVENTURE</div>
+            <div id="lobby-contents">
+              <LobbyGamesView
+                games={currentGames}
+                selectedGame={selectedGameName}
+                onSelectGame={this.onGameChange}
+              />
+              <div id="lobby-columns">
+                <SignUp signedUp username={this.state.username} />
+                <LobbyDetailsView
+                  privGameSel={privGameSel}
+                  publGameSel={publGameSel}
+                  joinPublicGame={this.joinPublicGame}
+                  joinPrivateGame={this.joinPrivateGame}
+                  backToGameSelect={this.backToGameSelect}
+                />
+              </div>
+            </div>
+            <button onClick={this.onStartGame} >
+              Click me
+            </button>
+          </div>
+        );
+      }
+    }
+
+    // Render initial lobby with just sign up component
     return (
       <div id="lobby">
         <div id="lobby-title">WEBADVENTURE</div>
-        <div id="public">
-          <button className="publicGame" onClick={this.startTimer}>
-            Join Public Game
-          </button>
-          {this.state.time.s}
-        </div>
-        <div id="join-private">
-          <input
-            placeholder="Private Game Key"
-            value={this.state.joinKey}
-            onChange={this.onInputKey}
-            maxLength={this.keyLength}
-          />
-          <button className="join" onClick={this.addPlayer}>
-            Join Private Game
-          </button>
-        </div>
-        <div id="host-private">
-          <button onClick={this.generateKey}>
-            Host Private Game
-          </button>
-        </div>
-        <div>{this.state.hostKey}</div>
-        <button onClick={this.onStartGame} >
-        Click me
-        </button>
+        <SignUp signUpLobby={this.signUpLobby.bind(this)} />
       </div>
     );
   }
