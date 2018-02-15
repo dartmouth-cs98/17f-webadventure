@@ -1,20 +1,10 @@
 import GameSocket from './sockets/gameSocket';
 
-// <<<<<<< HEAD
-// chrome.tabs.onUpdated.addListener((tabId, changeInfo) => {
-//   if (changeInfo.status === 'complete' && updatePage) {
-//     updatePage = false;
-//     chrome.tabs.executeScript(tabId, {
-//       file: 'dist/injectLobby.bundle.js',
-//       // file: 'dist/inject.bundle.js',
-//     });
-// =======
 chrome.browserAction.onClicked.addListener((tab) => {
   chrome.tabs.executeScript(tab.id, {
     file: 'dist/injectLobby.bundle.js',
   });
 });
-// >>>>>>> f8ce2127bc082776ff984790f6c993aec11994a2
 
 let gameSocket;
 let game; // {startPage, goalPage}
@@ -35,22 +25,6 @@ const endGame = () => {
   clearInterval(interval);
   gameSocket.disconnect();
 };
-
-// <<<<<<< HEAD
-//   console.log('on message');
-//   console.log(request);
-
-//   // redirect to new url
-//   chrome.tabs.update(sender.tab.id, { url: request.url });
-//   updatePage = true;
-// });
-
-// chrome.browserAction.onClicked.addListener((tab) => {
-//   chrome.tabs.executeScript(tab.ib, {
-//     file: 'dist/injectLobby.bundle.js',
-//     // file: 'dist/inject.bundle.js',
-//   });
-// =======
 
 chrome.runtime.onMessage.addListener((request, sender) => {
   // check tab and request info and final page reached
@@ -104,5 +78,4 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo) => {
       });
     });
   }
-// >>>>>>> f8ce2127bc082776ff984790f6c993aec11994a2
 });
