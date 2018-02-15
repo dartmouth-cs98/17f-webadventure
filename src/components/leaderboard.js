@@ -53,13 +53,13 @@ class Leaderboard extends Component {
       );
     }
     return (
-      <div id="leaderboard">
-        <div id="userStats">
-          WEBADVENTURE
+      <div id="wa-container">
+        <img id="wiki-logo" src="https://i.imgur.com/hQbOKPS.png" alt="wiki logo" />
+        <div id="leaderboard">
+          <div id="userStats">WEBADVENTURE</div>
+          <div id="curUserRow" />
           <div id="userStatRow" />
         </div>
-        <p id="currentPlayerView">Leaderboard</p>
-        <div id="userStatRow" />
       </div>
     );
   }
