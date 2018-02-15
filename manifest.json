@@ -5,7 +5,7 @@
   "description": "This extension allows the user to play a game of WebAdventure, a version of the Wiki Game!",
   "version": "1.0",
   "background": {
-    "scripts": [ "src/background.js"],
+    "scripts": [ "dist/background.bundle.js"],
     "persistent": false
   },
   "content_scripts": [{

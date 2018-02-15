@@ -2,8 +2,10 @@ const path = require('path');
 
 module.exports = {
   entry: {
-    inject: './src/inject.js',
-    injectLobby: './src/injectLobby.js',
+    inject: './src/injectScripts/inject.js',
+    injectLobby: './src/injectScripts/injectLobby.js',
+    injectEnd: './src/injectScripts/injectEnd.js',
+    background: './src/background.js',
   },
   output: {
     filename: '[name].bundle.js',

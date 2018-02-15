@@ -22,13 +22,18 @@ class Lobby extends Component {
       selectedGame: '',
       privateGameSelected: false,
       publicGameSelected: false,
-      // signedUp: false,
     };
 
     this.onGameChange = this.onGameChange.bind(this);
     this.joinPublicGame = this.joinPublicGame.bind(this);
     this.joinPrivateGame = this.joinPrivateGame.bind(this);
     this.backToGameSelect = this.backToGameSelect.bind(this);
+   
+    this.timer = 0;
+    this.startKeyIndex = 2;
+    this.endKeyIndex = 9;
+    this.keyLength = this.endKeyIndex - this.startKeyIndex;
+    this.onStartGame = this.onStartGame.bind(this);
   }
 
   componentDidMount() {
@@ -43,6 +48,18 @@ class Lobby extends Component {
 
   onGameChange(game) {
     this.setState({ selectedGame: game });
+  }
+
+  onStartGame() {
+    const username = 'almawang';
+    const game = {
+      id: '5a80e8dff58b73d699780895',
+      host: 'almawang',
+      isPrivate: true,
+      startPage: 'https://en.wikipedia.org/wiki/Victorian_architecture',
+      goalPage: 'https://en.wikipedia.org/wiki/Architectural_style',
+    };
+    this.props.onStart(username, game);
   }
 
   joinPublicGame() {
