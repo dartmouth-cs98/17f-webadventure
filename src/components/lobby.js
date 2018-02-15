@@ -19,7 +19,7 @@ class Lobby extends Component {
         { name: 'Game4', players: ['Alma', 'David', 'Stephanie', 'Lisa'] },
         { name: 'Game5', players: ['Imanol', 'Barry'] },
       ],
-      selectedGame: '',
+      selectedGame: null,
       privateGameSelected: false,
       publicGameSelected: false,
     };
@@ -40,7 +40,9 @@ class Lobby extends Component {
   }
 
   onGameChange(game) {
-    this.setState({ selectedGame: game });
+    if (!this.state.publicGameSelected) {
+      this.setState({ selectedGame: game });
+    }
   }
 
   onStartGame() {
@@ -77,24 +79,22 @@ class Lobby extends Component {
   render() {
     // Render lobby with all lobby components
     if (this.state.signedUp) {
-      const selectedGameName = this.state.selectedGame;
-      const currentGames = this.state.games;
-      const privGameSel = this.state.privateGameSelected;
-      const publGameSel = this.state.publicGameSelected;
-
-      if (publGameSel && selectedGameName !== '') {
+      if (this.state.publicGameSelected && this.state.selectedGame !== null) {
         return (
           <div id="lobby">
             <div id="lobby-title">WEBADVENTURE</div>
             <div id="lobby-contents">
               <LobbyGamesView
-                games={currentGames}
-                selectedGame={selectedGameName}
+                games={this.state.games}
+                selectedGame={this.state.selectedGame}
                 onSelectGame={this.onGameChange}
               />
               <div id="lobby-columns">
                 <SignUp signedUp username={this.state.username} />
-                <SelectedGameView />
+                <SelectedGameView
+                  selectedGame={this.state.selectedGame}
+                  onGoBack={this.backToGameSelect}
+                />
               </div>
             </div>
             <button onClick={this.onStartGame} >
@@ -108,15 +108,15 @@ class Lobby extends Component {
             <div id="lobby-title">WEBADVENTURE</div>
             <div id="lobby-contents">
               <LobbyGamesView
-                games={currentGames}
-                selectedGame={selectedGameName}
+                games={this.state.games}
+                selectedGame={this.state.selectedGame}
                 onSelectGame={this.onGameChange}
               />
               <div id="lobby-columns">
                 <SignUp signedUp username={this.state.username} />
                 <LobbyDetailsView
-                  privGameSel={privGameSel}
-                  publGameSel={publGameSel}
+                  privGameSel={this.state.privateGameSelected}
+                  publGameSel={this.state.publicGameSelected}
                   joinPublicGame={this.joinPublicGame}
                   joinPrivateGame={this.joinPrivateGame}
                   backToGameSelect={this.backToGameSelect}
