@@ -11,7 +11,7 @@
  "rules": {
      "import/no-unresolved": [0, { "commonjs": true }],
      "no-underscore-dangle": "off",
-
+     "jsx-a11y/click-events-have-key-events": "off",
      "react/jsx-no-bind": [2, {
          "ignoreRefs": false,
          "allowArrowFunctions": false,
@@ -25,5 +25,6 @@
      "prefer-arrow-callback": ["error", { "allowNamedFunctions": true }],
      "no-else-return": 0,
      "arrow-body-style": 0,
+     "linebreak-style": ["error", process.env.NODE_ENV === 'prod' ? "unix" : "windows"]
    },
 }

@@ -26,7 +26,6 @@ const endGame = () => {
   gameSocket.disconnect();
 };
 
-
 chrome.runtime.onMessage.addListener((request, sender) => {
   // check tab and request info and final page reached
   if (request.message === 'start game') {
