@@ -4,7 +4,7 @@ const SelectedGameView = (props) => {
   const renderPlayers = () => {
     return props.selectedGame.players
       .map((player, index) => {
-        const newKey = `Hello, ${index}!`;
+        const newKey = `player ${index}!`;
         return (<div key={newKey}>{player}</div>);
       });
   };
