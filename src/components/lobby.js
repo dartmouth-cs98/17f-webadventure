@@ -182,7 +182,10 @@ class Lobby extends Component {
     return (
       <div id="lobby">
         <div id="lobby-title">WEBADVENTURE</div>
-        <SignUp signUpLobby={this.signUpLobby} />
+        <SignUp
+          signUpLobby={this.signUpLobby}
+          signedUp={this.signedUp}
+        />
       </div>
     );
   }

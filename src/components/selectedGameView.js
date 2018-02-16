@@ -3,9 +3,8 @@ import React from 'react';
 const SelectedGameView = (props) => {
   const renderPlayers = () => {
     return props.selectedGame.players
-      .map((player, index) => {
-        const newKey = `player ${index}!`;
-        return (<div key={newKey}>{player}</div>);
+      .map((player) => {
+        return (<div>{player}</div>);
       });
   };
 
