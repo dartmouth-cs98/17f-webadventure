@@ -23,9 +23,11 @@ class Lobby extends Component {
       selectedGame: null,
       privateGameSelected: false,
       publicGameSelected: false,
+      joinKey: '',
     };
 
     this.onGameChange = this.onGameChange.bind(this);
+    this.onInputKey = this.onInputKey.bind(this);
     this.joinPublicGame = this.joinPublicGame.bind(this);
     this.joinPrivateGame = this.joinPrivateGame.bind(this);
     this.backToGameSelect = this.backToGameSelect.bind(this);
@@ -59,6 +61,14 @@ class Lobby extends Component {
     this.props.onStart(username, game);
   }
 
+  onInputKey(val) {
+    if (this.state.joinKey.length < 7) {
+      this.setState({
+        joinKey: val,
+      });
+    }
+  }
+
   signUpLobby(username) {
     this.setState({
       signedUp: true,
@@ -75,7 +85,7 @@ class Lobby extends Component {
   }
 
   backToGameSelect() {
-    this.setState({ privateGameSelected: false, publicGameSelected: false });
+    this.setState({ privateGameSelected: false, publicGameSelected: false, joinKey: '' });
   }
 
   render() {
@@ -104,6 +114,38 @@ class Lobby extends Component {
             </button>
           </div>
         );
+      } else if (this.state.privateGameSelected) {
+        // Hard-coded sample private game data
+        const privGame = {
+          name: 'Game1',
+          players: [
+            'Bob',
+            'Joe',
+            'Tom',
+          ],
+        };
+        return (
+          <div id="lobby">
+            <div id="lobby-title">WEBADVENTURE</div>
+            <div id="lobby-contents">
+              <LobbyGamesView
+                games={this.state.games}
+                selectedGame={this.state.selectedGame}
+                onSelectGame={this.onGameChange}
+              />
+              <div id="lobby-columns">
+                <DisplayUser username={this.state.username} />
+                <SelectedGameView
+                  selectedGame={privGame}
+                  onGoBack={this.backToGameSelect}
+                />
+              </div>
+            </div>
+            <button onClick={this.onStartGame} >
+              Click me
+            </button>
+          </div>
+        );
       } else {
         return (
           <div id="lobby">
@@ -122,6 +164,9 @@ class Lobby extends Component {
                   joinPublicGame={this.joinPublicGame}
                   joinPrivateGame={this.joinPrivateGame}
                   backToGameSelect={this.backToGameSelect}
+                  selectedGame={this.state.selectedGame}
+                  joinKey={this.state.joinKey}
+                  onInputKey={this.onInputKey}
                 />
               </div>
             </div>

@@ -19,7 +19,7 @@ const onGame = (newGame) => {
 };
 
 const endGame = () => {
-  console.log('end reached');
+  console.log('stop game');
   curPlayerInfo = null;
   curTabId = -1;
   clearInterval(interval);
