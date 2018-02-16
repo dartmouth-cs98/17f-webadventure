@@ -7,8 +7,8 @@ class LobbyDetailsView extends Component {
     super(props);
 
     this.state = {
-      hostKey: '',
       joinKey: '',
+      hostKey: '',
       time: {},
       seconds: '',
       // start: false,
@@ -17,6 +17,7 @@ class LobbyDetailsView extends Component {
     };
     this.timer = 0;
     this.onInputKey = this.onInputKey.bind(this);
+    this.onChange = this.onChange.bind(this);
     this.generateKey = this.generateKey.bind(this);
     this.startTimer = this.startTimer.bind(this);
     this.countDown = this.countDown.bind(this);
@@ -27,17 +28,15 @@ class LobbyDetailsView extends Component {
     this.backToGameSelect = this.backToGameSelect.bind(this);
   }
 
-  onInputKey(event) {
+  onChange(event) {
     this.setState({
       joinKey: event.target.value,
     });
+    this.props.onInputKey(event.target.value);
   }
 
-  generateKey() {
-    const key = Math.random().toString(36).substring(2, 9);
-    this.setState({
-      hostKey: key,
-    });
+  onInputKey() {
+    this.props.onInputKey();
   }
 
   startTimer() {
@@ -72,13 +71,17 @@ class LobbyDetailsView extends Component {
   }
 
   joinPublicGame() {
-    this.props.joinPublicGame();
-    this.startTimer();
+    if (this.props.selectedGame) {
+      this.props.joinPublicGame();
+      this.startTimer();
+    }
   }
 
   joinPrivateGame() {
-    this.props.joinPrivateGame();
-    this.startTimer();
+    if (this.props.joinKey.length === 7) {
+      this.props.joinPrivateGame();
+      this.startTimer();
+    }
   }
 
   backToGameSelect() {
@@ -100,6 +103,13 @@ class LobbyDetailsView extends Component {
     });
   }
 
+  generateKey() {
+    const key = Math.random().toString(36).substring(2, 9);
+    this.setState({
+      hostKey: key,
+    });
+  }
+
   render() {
     return (
       <div id="lobby-game-view">
@@ -111,8 +121,8 @@ class LobbyDetailsView extends Component {
         <div id="join-private">
           <input
             placeholder="Private Game Key"
-            value={this.state.joinKey}
-            onChange={this.onInputKey}
+            value={this.props.joinKey}
+            onChange={this.onChange}
           />
           <button className="join" onClick={this.joinPrivateGame}>
             Join Private Game
