@@ -24,6 +24,7 @@ class Lobby extends Component {
       privateGameSelected: false,
       publicGameSelected: false,
       joinKey: '',
+      avatar: '',
     };
 
     this.onGameChange = this.onGameChange.bind(this);
