@@ -17,15 +17,22 @@ export default class LobbySocket {
     this.socket.on('users', onUsers);
   }
 
-  updateUsername(username) {
+  getOrCreateUser(username) {
     this.username = username;
     return new Promise((resolve, reject) => {
-      this.socket.emit('updateUsername', { username }, (data) => {
+      this.socket.emit('getOrCreateUser', { username }, (data) => {
         if (data) { resolve(data); } else {
           reject(new Error('No data returned'));
         }
       });
     });
+  }
+
+  updateUser(username, fields) {
+    const req = {
+      username, fields,
+    };
+    this.socket.emit('updateUser', req);
   }
 
   createGame(endpoints, isPrivate) {
