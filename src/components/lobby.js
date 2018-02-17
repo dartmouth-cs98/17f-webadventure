@@ -62,7 +62,7 @@ class Lobby extends Component {
   }
 
   onInputKey(val) {
-    if (this.state.joinKey.length < 7) {
+    if (val.length <= 7) {
       this.setState({
         joinKey: val,
       });
