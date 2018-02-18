@@ -7,16 +7,18 @@ class LobbyDetailsView extends Component {
     super(props);
 
     this.state = {
-      hostKey: '',
       joinKey: '',
+      hostKey: '',
       time: {},
       seconds: '',
       // start: false,
       players: [],
-
+      errorMsgPublicGame: false,
+      errorMsgPrivateGame: false,
     };
     this.timer = 0;
     this.onInputKey = this.onInputKey.bind(this);
+    this.onChange = this.onChange.bind(this);
     this.generateKey = this.generateKey.bind(this);
     this.startTimer = this.startTimer.bind(this);
     this.countDown = this.countDown.bind(this);
@@ -27,17 +29,15 @@ class LobbyDetailsView extends Component {
     this.backToGameSelect = this.backToGameSelect.bind(this);
   }
 
-  onInputKey(event) {
+  onChange(event) {
     this.setState({
       joinKey: event.target.value,
     });
+    this.props.onInputKey(event.target.value);
   }
 
-  generateKey() {
-    const key = Math.random().toString(36).substring(2, 9);
-    this.setState({
-      hostKey: key,
-    });
+  onInputKey() {
+    this.props.onInputKey();
   }
 
   startTimer() {
@@ -72,13 +72,21 @@ class LobbyDetailsView extends Component {
   }
 
   joinPublicGame() {
-    this.props.joinPublicGame();
-    this.startTimer();
+    this.setState({ errorMsgPublicGame: true });
+    if (this.props.selectedGame) {
+      this.setState({ errorMsgPublicGame: false });
+      this.props.joinPublicGame();
+      this.startTimer();
+    }
   }
 
   joinPrivateGame() {
-    this.props.joinPrivateGame();
-    this.startTimer();
+    this.setState({ errorMsgPrivateGame: true });
+    if (this.props.joinKey.length === 7) {
+      this.setState({ errorMsgPrivateGame: false });
+      this.props.joinPrivateGame();
+      this.startTimer();
+    }
   }
 
   backToGameSelect() {
@@ -100,6 +108,33 @@ class LobbyDetailsView extends Component {
     });
   }
 
+  generateKey() {
+    const key = Math.random().toString(36).substring(2, 9);
+    this.setState({
+      hostKey: key,
+    });
+  }
+
+  renderErrorMessagePublicGame() {
+    if (this.state.errorMsgPublicGame) {
+      return (
+        <div className="errorMsg">Please select a game to join!</div>
+      );
+    } else {
+      return (<div />);
+    }
+  }
+
+  renderErrorMessagePrivateGame() {
+    if (this.state.errorMsgPrivateGame) {
+      return (
+        <div className="errorMsg">Please enter a valid join key!</div>
+      );
+    } else {
+      return (<div />);
+    }
+  }
+
   render() {
     return (
       <div id="lobby-game-view">
@@ -107,16 +142,18 @@ class LobbyDetailsView extends Component {
           <button className="publicGame" onClick={this.joinPublicGame}>
             Join Public Game
           </button>
+          {this.renderErrorMessagePublicGame()}
         </div>
         <div id="join-private">
           <input
             placeholder="Private Game Key"
-            value={this.state.joinKey}
-            onChange={this.onInputKey}
+            value={this.props.joinKey}
+            onChange={this.onChange}
           />
           <button className="join" onClick={this.joinPrivateGame}>
             Join Private Game
           </button>
+          {this.renderErrorMessagePrivateGame()}
         </div>
         <div id="host-private">
           <button onClick={this.generateKey}>

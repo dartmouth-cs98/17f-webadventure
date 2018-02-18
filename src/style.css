@@ -1,5 +1,27 @@
 @import url('https://fonts.googleapis.com/css?family=Orbitron:900');
 
+label input[type=radio] {
+    display: none;
+}
+
+input + img {
+  border: 3px solid transparent;
+}
+
+:checked + img {
+    opacity: 1;
+    border-radius: 5px;
+
+    animation-name: rainbow-border;
+    animation-duration: 3s;
+    animation-timing-function: ease-out;
+    animation-delay: 0;
+    animation-direction: alternate;
+    animation-iteration-count: infinite;
+    animation-fill-mode: none;
+    animation-play-state: running;
+}
+
 #wa-main {
   position: fixed;
   top: 0;
@@ -65,15 +87,14 @@
 }
 
 .avatar-option:hover {
-  outline: 4px solid cornflowerblue;
+  /* outline: 4px */
+  border: 3px solid cornflowerblue;
+  border-radius: 5px;
 }
 
 #leaderboard  {
   font-size: 15px;
   width: inherit;
-  /* padding-left: 10px; */
-  /* position: fixed; */
-
   height: 100%;
   position: absolute;
   background-color: rgba(246, 246, 246, 1);
@@ -124,7 +145,10 @@
   animation-play-state: running;
 }
 
-
+.errorMsg {
+  color: red;
+  font-size: 13px;
+}
 
 .leaderboard-rank {
   margin-left: 5px;
@@ -173,6 +197,12 @@
   animation-delay: 0;
   animation-iteration-count: infinite;
   animation-play-state: running;
+}
+
+#avatar-options {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 }
 
 #lobby-contents {
@@ -242,9 +272,6 @@
   font-family: 'Orbitron', sans-serif;
   font-size: 15px;
   margin-left: 20px;
-
-  /* animation:
-    nudge 5s linear infinite alternate; */
 }
 
 #wahoo {
@@ -257,6 +284,16 @@
 }
 
 #join-private{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#submit-fields {
+  margin: 5px;
+}
+
+#display-user {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -288,17 +325,25 @@ div.panel-alert:empty {
   }
 }
 
-@keyframes nudge {
-  0%, 100% {
-    transform: translate(0, 0);
-  }
+@keyframes rainbow-border {
 
-  50% {
-    transform: translate(20px, 0);
+  0% {
+    border: 3px solid red;
   }
-
+  20% {
+    border: 3px solid orange;
+  }
+  40% {
+    border: 3px solid gold;
+  }
+  60% {
+    border: 3px solid green;
+  }
   80% {
-    transform: translate(-20px, 0);
+    border: 3px solid blue;
+  }
+  100% {
+    border: 3px solid purple;
   }
 }
 
