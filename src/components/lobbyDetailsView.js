@@ -13,7 +13,8 @@ class LobbyDetailsView extends Component {
       seconds: '',
       // start: false,
       players: [],
-
+      errorMsgPublicGame: false,
+      errorMsgPrivateGame: false,
     };
     this.timer = 0;
     this.onInputKey = this.onInputKey.bind(this);
@@ -71,14 +72,18 @@ class LobbyDetailsView extends Component {
   }
 
   joinPublicGame() {
+    this.setState({ errorMsgPublicGame: true });
     if (this.props.selectedGame) {
+      this.setState({ errorMsgPublicGame: false });
       this.props.joinPublicGame();
       this.startTimer();
     }
   }
 
   joinPrivateGame() {
+    this.setState({ errorMsgPrivateGame: true });
     if (this.props.joinKey.length === 7) {
+      this.setState({ errorMsgPrivateGame: false });
       this.props.joinPrivateGame();
       this.startTimer();
     }
@@ -110,6 +115,26 @@ class LobbyDetailsView extends Component {
     });
   }
 
+  renderErrorMessagePublicGame() {
+    if (this.state.errorMsgPublicGame) {
+      return (
+        <div className="errorMsg">Please select a game to join!</div>
+      );
+    } else {
+      return (<div />);
+    }
+  }
+
+  renderErrorMessagePrivateGame() {
+    if (this.state.errorMsgPrivateGame) {
+      return (
+        <div className="errorMsg">Please enter a valid join key!</div>
+      );
+    } else {
+      return (<div />);
+    }
+  }
+
   render() {
     return (
       <div id="lobby-game-view">
@@ -117,6 +142,7 @@ class LobbyDetailsView extends Component {
           <button className="publicGame" onClick={this.joinPublicGame}>
             Join Public Game
           </button>
+          {this.renderErrorMessagePublicGame()}
         </div>
         <div id="join-private">
           <input
@@ -127,6 +153,7 @@ class LobbyDetailsView extends Component {
           <button className="join" onClick={this.joinPrivateGame}>
             Join Private Game
           </button>
+          {this.renderErrorMessagePrivateGame()}
         </div>
         <div id="host-private">
           <button onClick={this.generateKey}>
