@@ -163,12 +163,16 @@ class Lobby extends Component {
 
     // Render initial lobby with just sign up component
     return (
-      <div id="lobby">
-        <div id="lobby-title">WEBADVENTURE</div>
-        <SignUp
-          signUpLobby={this.signUpLobby}
-          signedUp={this.signedUp}
-        />
+      <div id="lobby-container">
+        <div id="overlay" />
+        <div id="lobby">
+          <img src="https://i.imgur.com/VUVNhtC.png" alt="webadventure!" id="webad-logo" />
+          <div id="lobby-title">WEBADVENTURE</div>
+          <SignUp
+            signUpLobby={this.signUpLobby}
+            signedUp={this.signedUp}
+          />
+        </div>
       </div>
     );
   }

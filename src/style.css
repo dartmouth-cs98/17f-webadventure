@@ -44,7 +44,8 @@ input + img {
 #lobby-title {
   text-align: center;
   font-family: impact;
-  font-size: 25px;
+  font-size: 30px;
+  margin: 10px 0px;
 
   animation-name: rainbow;
   animation-duration: 3s;
@@ -56,16 +57,41 @@ input + img {
   animation-play-state: running;
 }
 
+#overlay {
+  position: fixed;
+  background: black;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  opacity: 0.6;
+}
+
+#webad-logo {
+  display: block;
+  margin: auto;
+  width: 200px;
+}
+
 #lobby {
   display: block;
   position: fixed;
   width: 20em;
   top: 10vw;
   left: 38vw;
-  background-color: rgba(246, 246, 246, .95);
-  padding: 10px;
-  border: 1px solid black;
-  border-radius: 10px;
+  background: mintcream;
+  padding: 20px;
+  /*border: 10px double darkorchid;*/
+  /*opacity: .7;*/
+
+  animation-name: rainbow-border-thick;
+  animation-duration: 3s;
+  animation-timing-function: ease-out;
+  animation-delay: 0;
+  animation-direction: alternate;
+  animation-iteration-count: infinite;
+  animation-fill-mode: none;
+  animation-play-state: running;
 }
 
 #lobby-contents {
@@ -250,16 +276,6 @@ input + img {
   animation-play-state: running;
 }
 
-#overlay {
-  position: fixed;
-  background: grey;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  opacity: 0.5;
-}
-
 #curUserRow {
   display: flex;
   justify-content: center;
@@ -344,6 +360,34 @@ div.panel-alert:empty {
   }
   100% {
     border: 3px solid purple;
+  }
+}
+
+@keyframes rainbow-border-thick {
+
+  0% {
+    border: 10px solid red;
+    border-radius: 10px;
+  }
+  20% {
+    border: 10px solid orange;
+    border-radius: 10px;
+  }
+  40% {
+    border: 10px solid gold;
+    border-radius: 10px;
+  }
+  60% {
+    border: 10px solid green;
+    border-radius: 10px;
+  }
+  80% {
+    border: 10px solid blue;
+    border-radius: 10px;
+  }
+  100% {
+    border: 10px solid purple;
+    border-radius: 10px;
   }
 }
 
