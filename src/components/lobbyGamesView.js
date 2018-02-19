@@ -29,30 +29,6 @@ const LobbyGamesView = (props) => {
     return parts.pop();
   };
 
-  // const renderTitle = (game, index) => {
-  //   if (props.selectedGame !== null && game.name === props.selectedGame.name) {
-  //     return (
-  //       <div
-  //         className="lobby-game-item game-selected"
-  //         key={index}
-  //       >{props.selectedGame.name}
-  //       </div>
-  //     );
-  //   } else {
-  //     return (
-  //       <div
-  //         className="lobby-game-item"
-  //         key={index}
-  //         onClick={e => props.onSelectGame(game, e)}
-  //         role="button"
-  //         tabIndex={0}
-  //       >
-  //         {game.name}
-  //       </div>
-  //     );
-  //   }
-  // };
-
   const renderGames = () => {
     return props.games
       .map((game, index) => {
@@ -102,7 +78,7 @@ const LobbyGamesView = (props) => {
 
   return (
     <div id="GamesView">
-      <div id="public-games-header">Public Games</div>
+      <div id="public-games-header">PUBLIC GAMES</div>
       <div id="games-list">
         {renderGames()}
       </div>

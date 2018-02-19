@@ -1,4 +1,7 @@
+/* eslint import/no-webpack-loader-syntax: 0 */
+
 import React from 'react';
+import pencil from '../../assets/pencil.png';
 
 const DisplayUser = (props) => {
   const handleChange = (event) => {
@@ -7,7 +10,7 @@ const DisplayUser = (props) => {
 
   return (
     <div id="display-user">
-      <div>{props.username}</div>
+      <div>{props.username}<img className="pencil" alt="" src={pencil} /></div>
       <div>
         <form>
           <div id="avatars">

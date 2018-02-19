@@ -334,7 +334,7 @@ button:hover {
 #or {
   font-size: 11px;
   margin-top: 7px;
-  margin-bottom: 5px;
+  margin-bottom: 7px;
 }
 
 #games-list {
@@ -457,6 +457,11 @@ div.panel-alert:empty {
   background-color:#fb9e25;
 }
 
+.pencil {
+  height: 20px;
+  margin-left: 3px;
+}
+
 #public-game-button {
   padding: 10px 20px 10px 20px;
   font-family: 'Orbitron', sans-serif;
@@ -473,6 +478,8 @@ div.panel-alert:empty {
   animation-iteration-count: infinite;
   animation-play-state: running;
 }
+
+
 
 @keyframes rainbow {
 
