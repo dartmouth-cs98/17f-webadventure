@@ -3,6 +3,7 @@
 import React from 'react';
 
 const LobbyGamesView = (props) => {
+
   const renderGames = () => {
     return props.games
       .map((game, index) => {
