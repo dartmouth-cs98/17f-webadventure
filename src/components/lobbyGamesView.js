@@ -6,12 +6,12 @@ const LobbyGamesView = (props) => {
   const renderGames = () => {
     return props.games
       .map((game, index) => {
-        if (props.selectedGame !== null && game.name === props.selectedGame.name) {
+        if (props.selectedGame !== null && game.id === props.selectedGame.id) {
           return (
             <div
               className="lobby-game-item game-selected"
               key={index}
-            >{props.selectedGame.name}
+            >{props.selectedGame.host}
             </div>
           );
         } else {
@@ -22,7 +22,7 @@ const LobbyGamesView = (props) => {
               onClick={e => props.onSelectGame(game, e)}
               role="button"
               tabIndex={0}
-            >{game.name}
+            >{game.host}
             </div>
           );
         }

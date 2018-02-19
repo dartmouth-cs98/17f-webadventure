@@ -17,27 +17,18 @@ class LobbyDetailsView extends Component {
       errorMsgPrivateGame: false,
     };
     this.timer = 0;
-    this.onInputKey = this.onInputKey.bind(this);
     this.onChange = this.onChange.bind(this);
     this.generateKey = this.generateKey.bind(this);
     this.startTimer = this.startTimer.bind(this);
     this.countDown = this.countDown.bind(this);
     this.checkNumPlayers = this.checkNumPlayers.bind(this);
     this.addPlayer = this.addPlayer.bind(this);
-    this.joinPrivateGame = this.joinPrivateGame.bind(this);
-    this.joinPublicGame = this.joinPublicGame.bind(this);
-    this.backToGameSelect = this.backToGameSelect.bind(this);
   }
 
   onChange(event) {
     this.setState({
       joinKey: event.target.value,
     });
-    this.props.onInputKey(event.target.value);
-  }
-
-  onInputKey() {
-    this.props.onInputKey();
   }
 
   startTimer() {
@@ -82,16 +73,11 @@ class LobbyDetailsView extends Component {
 
   joinPrivateGame() {
     this.setState({ errorMsgPrivateGame: true });
-    if (this.props.joinKey.length === 7) {
+    if (this.joinKey.length === 7) {
       this.setState({ errorMsgPrivateGame: false });
-      this.props.joinPrivateGame();
+      this.props.joinPrivateGame(this.joinKey);
       this.startTimer();
     }
-  }
-
-  backToGameSelect() {
-    this.props.backToGameSelect();
-    this.setState({ time: { s: 5 } });
   }
 
   checkNumPlayers() {
@@ -156,7 +142,7 @@ class LobbyDetailsView extends Component {
           {this.renderErrorMessagePrivateGame()}
         </div>
         <div id="host-private">
-          <button onClick={this.generateKey}>
+          <button onClick={this.props.hostPrivateGame}>
             Host Private Game
           </button>
         </div>
