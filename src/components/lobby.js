@@ -5,6 +5,7 @@ import SignUp from './signup';
 import LobbyDetailsView from './lobbyDetailsView';
 import LobbyGamesView from './lobbyGamesView';
 import SelectedGameView from './selectedGameView';
+import DisplayUser from './displayUser';
 
 class Lobby extends Component {
   constructor(props) {
@@ -19,15 +20,20 @@ class Lobby extends Component {
         { name: 'Game4', players: ['Alma', 'David', 'Stephanie', 'Lisa'] },
         { name: 'Game5', players: ['Imanol', 'Barry'] },
       ],
-      selectedGame: '',
+      selectedGame: null,
       privateGameSelected: false,
       publicGameSelected: false,
+      joinKey: '',
+      playerAvatar: 'nyan',
     };
 
     this.onGameChange = this.onGameChange.bind(this);
+    this.onInputKey = this.onInputKey.bind(this);
     this.joinPublicGame = this.joinPublicGame.bind(this);
     this.joinPrivateGame = this.joinPrivateGame.bind(this);
     this.backToGameSelect = this.backToGameSelect.bind(this);
+    this.signUpLobby = this.signUpLobby.bind(this);
+    this.changeAvatar = this.changeAvatar.bind(this);
 
     this.timer = 0;
     this.startKeyIndex = 2;
@@ -40,7 +46,9 @@ class Lobby extends Component {
   }
 
   onGameChange(game) {
-    this.setState({ selectedGame: game });
+    if (!this.state.publicGameSelected) {
+      this.setState({ selectedGame: game });
+    }
   }
 
   onStartGame() {
@@ -53,6 +61,18 @@ class Lobby extends Component {
       goalPage: 'https://en.wikipedia.org/wiki/Architectural_style',
     };
     this.props.onStart(username, game);
+  }
+
+  onInputKey(val) {
+    if (val.length <= 7) {
+      this.setState({
+        joinKey: val,
+      });
+    }
+  }
+
+  changeAvatar(avatar) {
+    this.setState({ playerAvatar: avatar });
   }
 
   signUpLobby(username) {
@@ -71,71 +91,84 @@ class Lobby extends Component {
   }
 
   backToGameSelect() {
-    this.setState({ privateGameSelected: false, publicGameSelected: false });
+    this.setState({ privateGameSelected: false, publicGameSelected: false, joinKey: '' });
+  }
+
+  renderLowerLeftComponent() {
+    if (this.state.publicGameSelected && this.state.selectedGame !== null) {
+      return (
+        <SelectedGameView
+          selectedGame={this.state.selectedGame}
+          onGoBack={this.backToGameSelect}
+        />
+      );
+    } else if (this.state.privateGameSelected) {
+      const privGame = {
+        name: 'Game1',
+        players: [
+          'Bob',
+          'Joe',
+          'Tom',
+        ],
+      };
+      return (
+        <SelectedGameView
+          selectedGame={privGame}
+          onGoBack={this.backToGameSelect}
+        />
+      );
+    } else {
+      return (
+        <LobbyDetailsView
+          privGameSel={this.state.privateGameSelected}
+          publGameSel={this.state.publicGameSelected}
+          joinPublicGame={this.joinPublicGame}
+          joinPrivateGame={this.joinPrivateGame}
+          backToGameSelect={this.backToGameSelect}
+          selectedGame={this.state.selectedGame}
+          joinKey={this.state.joinKey}
+          onInputKey={this.onInputKey}
+        />
+      );
+    }
   }
 
   render() {
     // Render lobby with all lobby components
     if (this.state.signedUp) {
-      const selectedGameName = this.state.selectedGame;
-      const currentGames = this.state.games;
-      const privGameSel = this.state.privateGameSelected;
-      const publGameSel = this.state.publicGameSelected;
-
-      if (publGameSel && selectedGameName !== '') {
-        return (
-          <div id="lobby">
-            <div id="lobby-title">WEBADVENTURE</div>
-            <div id="lobby-contents">
-              <LobbyGamesView
-                games={currentGames}
-                selectedGame={selectedGameName}
-                onSelectGame={this.onGameChange}
+      return (
+        <div id="lobby">
+          <div id="lobby-title">WEBADVENTURE</div>
+          <div id="lobby-contents">
+            <LobbyGamesView
+              games={this.state.games}
+              selectedGame={this.state.selectedGame}
+              onSelectGame={this.onGameChange}
+            />
+            <div id="lobby-columns">
+              <DisplayUser
+                username={this.state.username}
+                avatar={this.state.playerAvatar}
+                onAvatar={this.changeAvatar}
               />
-              <div id="lobby-columns">
-                <SignUp signedUp username={this.state.username} />
-                <SelectedGameView />
-              </div>
+              {this.renderLowerLeftComponent()}
             </div>
-            <button onClick={this.onStartGame} >
-              Click me
-            </button>
           </div>
-        );
-      } else {
-        return (
-          <div id="lobby">
-            <div id="lobby-title">WEBADVENTURE</div>
-            <div id="lobby-contents">
-              <LobbyGamesView
-                games={currentGames}
-                selectedGame={selectedGameName}
-                onSelectGame={this.onGameChange}
-              />
-              <div id="lobby-columns">
-                <SignUp signedUp username={this.state.username} />
-                <LobbyDetailsView
-                  privGameSel={privGameSel}
-                  publGameSel={publGameSel}
-                  joinPublicGame={this.joinPublicGame}
-                  joinPrivateGame={this.joinPrivateGame}
-                  backToGameSelect={this.backToGameSelect}
-                />
-              </div>
-            </div>
-            <button onClick={this.onStartGame} >
-              Click me
-            </button>
-          </div>
-        );
-      }
+          <button onClick={this.onStartGame} >
+              Start Game
+          </button>
+        </div>
+      );
     }
 
     // Render initial lobby with just sign up component
     return (
       <div id="lobby">
         <div id="lobby-title">WEBADVENTURE</div>
-        <SignUp signUpLobby={this.signUpLobby.bind(this)} />
+        <SignUp
+          signUpLobby={this.signUpLobby}
+          signedUp={this.signedUp}
+        />
       </div>
     );
   }
