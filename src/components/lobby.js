@@ -137,26 +137,29 @@ class Lobby extends Component {
     // Render lobby with all lobby components
     if (this.state.signedUp) {
       return (
-        <div id="lobby">
-          <div id="lobby-title">WEBADVENTURE</div>
-          <div id="lobby-contents">
-            <LobbyGamesView
-              games={this.state.games}
-              selectedGame={this.state.selectedGame}
-              onSelectGame={this.onGameChange}
-            />
-            <div id="lobby-columns">
-              <DisplayUser
-                username={this.state.username}
-                avatar={this.state.playerAvatar}
-                onAvatar={this.changeAvatar}
+        <div id="lobby-container">
+          <div id="overlay" />
+          <div id="lobby">
+            <div id="lobby-title">WEBADVENTURE</div>
+            <div id="lobby-contents">
+              <LobbyGamesView
+                games={this.state.games}
+                selectedGame={this.state.selectedGame}
+                onSelectGame={this.onGameChange}
               />
-              {this.renderLowerLeftComponent()}
+              <div id="lobby-columns">
+                <DisplayUser
+                  username={this.state.username}
+                  avatar={this.state.playerAvatar}
+                  onAvatar={this.changeAvatar}
+                />
+                {this.renderLowerLeftComponent()}
+              </div>
             </div>
+            <button onClick={this.onStartGame} >
+                Start Game
+            </button>
           </div>
-          <button onClick={this.onStartGame} >
-              Start Game
-          </button>
         </div>
       );
     }
