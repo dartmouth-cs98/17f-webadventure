@@ -1,4 +1,4 @@
-/* eslint react/no-unused-state: 0  */
+/* eslint react/no-unused-state: 0, prefer-const: 0, max-len:0  */
 
 import React, { Component } from 'react';
 
@@ -11,8 +11,8 @@ class LobbyDetailsView extends Component {
       hostKey: '',
       time: {},
       seconds: '',
-      // start: false,
       players: [],
+      username: this.props.username,
       errorMsgPublicGame: false,
       errorMsgPrivateGame: false,
     };
@@ -73,9 +73,15 @@ class LobbyDetailsView extends Component {
 
   joinPublicGame() {
     this.setState({ errorMsgPublicGame: true });
-    if (this.props.selectedGame) {
-      this.setState({ errorMsgPublicGame: false });
-      this.props.joinPublicGame();
+    if (this.props.selectedGame && // if selectedGame exists
+        this.props.selectedGame.players.length < 5 && // if the length is less than 5
+        this.props.selectedGame.players.indexOf(this.state.username) === -1) { // it doesn't already exist
+      let newPlayers = Object.assign({}, this.props.selectedGame).players;
+      newPlayers.push(this.state.username);
+      this.setState({
+        errorMsgPublicGame: false,
+      });
+      this.props.joinPublicGame(newPlayers);
       this.startTimer();
     }
   }

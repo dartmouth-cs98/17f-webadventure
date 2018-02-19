@@ -44,7 +44,7 @@ input + img {
 #lobby-title {
   text-align: center;
   font-family: impact;
-  font-size: 30px;
+  font-size: 50px;
   margin: 10px 0px;
 
   animation-name: rainbow;
@@ -76,16 +76,17 @@ input + img {
 #lobby {
   display: block;
   position: fixed;
-  width: 20em;
-  top: 10vw;
-  left: 38vw;
+  width: 35em;
+  top: 5vw;
+  left: 22vw;
   background: mintcream;
   padding: 20px;
-  /*border: 10px double darkorchid;*/
+  /* border: 3px solid black; */
+  border-radius: 10px;
   /*opacity: .7;*/
 
-  animation-name: rainbow-border-thick;
-  animation-duration: 3s;
+  animation-name: rainbow-border2;
+  animation-duration: 12s;
   animation-timing-function: ease-out;
   animation-delay: 0;
   animation-direction: alternate;
@@ -103,11 +104,26 @@ input + img {
 #lobby-columns {
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
+}
+
+#avatars {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.avatar-options-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  width: 10em;
 }
 
 .avatar-option {
-  width: 30px;
-  height: 30px;
+  width: 50px;
+  height: 50px;
   padding: 2px;
   margin: 5px;
 }
@@ -216,6 +232,7 @@ input + img {
   /* text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black; */
   background: linear-gradient(124deg, #ff2400, #e81d1d, #e8b71d, #e3e81d, #1de840, #1ddde8, #2b1de8, #dd00f3, #dd00f3);
   background-size: 1800% 1800%;
+  border-radius: 5px;
 
   animation-name: rainbow-gradient;
   animation-duration: 18s;
@@ -225,33 +242,71 @@ input + img {
   animation-play-state: running;
 }
 
-#avatar-options {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-}
-
 #lobby-contents {
   display: flex;
   justify-content: center;
+  font-family: 'Orbitron', sans-serif;
 }
 
 #GamesView {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20px;
+  width: 10em;
+  padding-right: 35px;
+  padding-left: 35px;
+  padding-top: 10px;
+  padding-bottom:10px;
   margin: 10px;
-  border: 1px solid #03193d;
+  border-right: 1px solid gray;
+  border-top: 0;
+  border-bottom: 0;
+  border-left: 0;
+}
+
+#public-games-header {
+  font-family: impact;
+  font-size: 27px;
+}
+
+.game-item {
+  display: flex;
+  flex-direction: column;
+  padding: 3px;
+  margin: 5px;
+}
+
+.game-item:hover:not(.game-selected) {
+  color: white;
+  background: cornflowerblue;
   border-radius: 5px;
 }
 
+#games-list {
+  overflow: scroll;
+}
+
+.game-title-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 2px;
+  width: 11em;
+  align-items: baseline;
+}
+
+.starting-page {
+  font-size: 11px;
+  padding-left: 1em;
+}
+
 .lobby-game-item {
+  font-size: 20px;
   margin: 1px;
 }
 
-.lobby-game-item:hover {
-  cursor: pointer;
+.num-players {
+  font-size: 12px;
 }
 
 #SignUp {
@@ -363,31 +418,35 @@ div.panel-alert:empty {
   }
 }
 
-@keyframes rainbow-border-thick {
+@keyframes rainbow-border2 {
 
-  0% {
-    border: 10px solid red;
-    border-radius: 10px;
+  /* 0% {
+    border: 5px solid red;
   }
   20% {
-    border: 10px solid orange;
-    border-radius: 10px;
+    border: 5px solid orange;
   }
   40% {
-    border: 10px solid gold;
-    border-radius: 10px;
+    border: 5px solid gold;
   }
   60% {
-    border: 10px solid green;
-    border-radius: 10px;
+    border: 5px solid green;
   }
   80% {
-    border: 10px solid blue;
-    border-radius: 10px;
+    border: 5px solid blue;
   }
   100% {
-    border: 10px solid purple;
-    border-radius: 10px;
+    border: 5px solid purple;
+  } */
+
+  0% {
+    border: 5px solid white;
+  }
+  50% {
+    border: 5px solid gray;
+  }
+  100% {
+    border: 5px solid black;
   }
 }
 

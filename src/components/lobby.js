@@ -1,4 +1,4 @@
-/* eslint linebreak-style: ["error", "windows"] */
+/* eslint linebreak-style: ["error", "windows"], prefer-const:0 */
 
 import React, { Component } from 'react';
 import SignUp from './signup';
@@ -6,6 +6,7 @@ import LobbyDetailsView from './lobbyDetailsView';
 import LobbyGamesView from './lobbyGamesView';
 import SelectedGameView from './selectedGameView';
 import DisplayUser from './displayUser';
+import '../style.css';
 
 class Lobby extends Component {
   constructor(props) {
@@ -40,7 +41,7 @@ class Lobby extends Component {
         },
         {
           name: 'Game5',
-          players: ['Imanol', 'Barry'],
+          players: ['Imanol', 'Jerry'],
           startPage: 'https://en.wikipedia.org/wiki/Orange',
           endPage: 'https://en.wikipedia.org/wiki/Yellow',
         },
@@ -107,8 +108,15 @@ class Lobby extends Component {
     });
   }
 
-  joinPublicGame() {
-    this.setState({ privateGameSelected: false, publicGameSelected: true });
+  joinPublicGame(newPlayers) {
+    let newSelectedGame = Object.assign({}, this.state.selectedGame);
+    newSelectedGame.players = newPlayers;
+
+    this.setState({
+      privateGameSelected: false,
+      publicGameSelected: true,
+      selectedGame: newSelectedGame,
+    });
   }
 
   joinPrivateGame() {
@@ -116,7 +124,17 @@ class Lobby extends Component {
   }
 
   backToGameSelect() {
-    this.setState({ privateGameSelected: false, publicGameSelected: false, joinKey: '' });
+    let newSelectedGame = Object.assign({}, this.state.selectedGame);
+    const i = newSelectedGame.players.indexOf(this.state.username);
+    if (i !== -1) {
+      newSelectedGame.players.splice(i, 1);
+    }
+    this.setState({
+      privateGameSelected: false,
+      publicGameSelected: false,
+      joinKey: '',
+      selectedGame: newSelectedGame,
+    });
   }
 
   renderLowerLeftComponent() {
@@ -145,6 +163,7 @@ class Lobby extends Component {
     } else {
       return (
         <LobbyDetailsView
+          username={this.state.username}
           games={this.state.games}
           privGameSel={this.state.privateGameSelected}
           publGameSel={this.state.publicGameSelected}
