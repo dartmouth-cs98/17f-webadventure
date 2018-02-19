@@ -14,11 +14,36 @@ class Lobby extends Component {
     this.state = {
       signedUp: false,
       games: [
-        { name: 'Game1', players: ['Bill', 'Jill'] },
-        { name: 'Game2', players: ['Tommy', 'Eli', 'James'] },
-        { name: 'Game3', players: ['Tim'] },
-        { name: 'Game4', players: ['Alma', 'David', 'Stephanie', 'Lisa'] },
-        { name: 'Game5', players: ['Imanol', 'Barry'] },
+        {
+          name: 'Game1',
+          players: ['Bill', 'Jill'],
+          startPage: 'https://en.wikipedia.org/wiki/Victorian_architecture',
+          endPage: 'https://en.wikipedia.org/wiki/Architectural_style',
+        },
+        {
+          name: 'Game2',
+          players: ['Tommy', 'Eli', 'James'],
+          startPage: 'https://en.wikipedia.org/wiki/China',
+          endPage: 'https://en.wikipedia.org/wiki/Japan',
+        },
+        {
+          name: 'Game3',
+          players: ['Tim'],
+          startPage: 'https://en.wikipedia.org/wiki/Korea',
+          endPage: 'https://en.wikipedia.org/wiki/Bimbimbap',
+        },
+        {
+          name: 'Game4',
+          players: ['Alma', 'David', 'Stephanie', 'Lisa'],
+          startPage: 'https://en.wikipedia.org/wiki/Dartmouth',
+          endPage: 'https://en.wikipedia.org/wiki/Ivy_League',
+        },
+        {
+          name: 'Game5',
+          players: ['Imanol', 'Barry'],
+          startPage: 'https://en.wikipedia.org/wiki/Orange',
+          endPage: 'https://en.wikipedia.org/wiki/Yellow',
+        },
       ],
       selectedGame: null,
       privateGameSelected: false,
@@ -120,6 +145,7 @@ class Lobby extends Component {
     } else {
       return (
         <LobbyDetailsView
+          games={this.state.games}
           privGameSel={this.state.privateGameSelected}
           publGameSel={this.state.publicGameSelected}
           joinPublicGame={this.joinPublicGame}
