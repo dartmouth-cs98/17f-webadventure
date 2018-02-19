@@ -145,29 +145,31 @@ class LobbyDetailsView extends Component {
     return (
       <div id="lobby-game-view">
         <div id="public">
-          <button className="publicGame" onClick={this.joinPublicGame}>
-            Join Public Game
+          <button id="public-game-button" onClick={this.joinPublicGame}>
+            Join Public
           </button>
-          {this.renderErrorMessagePublicGame()}
         </div>
-        <div>--or--</div>
-        <div id="join-private">
-          <input
-            placeholder="Private Game Key"
-            value={this.props.joinKey}
-            onChange={this.onChange}
-          />
-          <button className="join" onClick={this.joinPrivateGame}>
-            Join Private Game
-          </button>
-          {this.renderErrorMessagePrivateGame()}
-        </div>
-        <div id="host-private">
-          <button onClick={this.generateKey}>
-            Host Private Game
-          </button>
+        <div id="or">&mdash;or&mdash;</div>
+        <div id="private">
+          <div id="join-private">
+            <input
+              placeholder="Private Game Key"
+              value={this.props.joinKey}
+              onChange={this.onChange}
+            />
+          </div>
+          <div id="private-buttons">
+            <button id="host-private-button" onClick={this.generateKey}>
+            Host Private
+            </button>
+            <button id="join-private-button" onClick={this.joinPrivateGame}>
+            Join Private
+            </button>
+          </div>
         </div>
         <div>{this.state.hostKey}</div>
+        {this.renderErrorMessagePublicGame()}
+        {this.renderErrorMessagePrivateGame()}
       </div>
     );
   }

@@ -4,8 +4,57 @@ label input[type=radio] {
     display: none;
 }
 
+input {
+  border-radius: 3px;
+  border: 1px solid #AAAAAA;
+  padding: 2px 3px;
+  font-family:
+    Verdana,Helvetica,Arial,sans-serif;
+  font-size: 9pt;
+  background: #F8FBFD;
+  box-shadow:
+    inset 0px 1px 2px #CCCCCC,
+    1px 1px 0 rgba(255, 255, 255, 0.6)
+
+}
+
 input + img {
   border: 3px solid transparent;
+}
+
+button {
+  margin: 5px;
+  font-family:
+    Verdana,Helvetica,Arial,sans-serif;
+  border-radius:3px;
+	border:1px solid #d83526;
+	display:inline-block;
+	cursor:pointer;
+	text-decoration:none;
+  background:#fc8d83;
+  padding: 3px 12px 3px 12px;
+  color: white;
+}
+
+#signup-button {
+  font-family: 'Orbitron', sans-serif;
+  border: 1px solid white;
+  background: linear-gradient(124deg, #ff2400, #e81d1d, #e8b71d, #e3e81d, #1de840, #1ddde8, #2b1de8, #dd00f3, #dd00f3);
+  background-size: 1800% 1800%;
+  padding: 7px 20px 3px 20px;
+  color: white;
+
+  /*animation-name: rainbowgradient;*/
+  animation-name: rainbow-gradient;
+  animation-duration: 18s;
+  animation-timing-function: ease-out;
+  animation-delay: 0;
+  animation-iteration-count: infinite;
+  animation-play-state: running;
+}
+
+button:hover {
+  background-color:#e4685d;
 }
 
 :checked + img {
@@ -282,6 +331,12 @@ input + img {
   border-radius: 5px;
 }
 
+#or {
+  font-size: 11px;
+  margin-top: 7px;
+  margin-bottom: 5px;
+}
+
 #games-list {
   overflow: scroll;
 }
@@ -370,8 +425,53 @@ input + img {
   align-items: center;
 }
 
+#join-private > input {
+  width: 90%;
+}
+
 div.panel-alert:empty {
     display: none;
+}
+
+#private-buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+#host-private-button {
+  background-color:#9cc2e9;
+  border:1px solid #84bbf3;
+}
+
+#host-private-button:hover {
+  background-color:#80b5ea;
+}
+
+#join-private-button {
+  background-color:#ffc477;
+  border:1px solid #eeb44f;
+}
+
+#join-private-button:hover {
+  background-color:#fb9e25;
+}
+
+#public-game-button {
+  padding: 10px 20px 10px 20px;
+  font-family: 'Orbitron', sans-serif;
+  border: 1px solid gray;
+  background: linear-gradient(124deg, #ff2400, #e81d1d, #e8b71d, #e3e81d, #1de840, #1ddde8, #2b1de8, #dd00f3, #dd00f3);
+  background-size: 1800% 1800%;
+  color: white;
+
+  /*animation-name: rainbowgradient;*/
+  animation-name: rainbow-gradient;
+  animation-duration: 18s;
+  animation-timing-function: ease-out;
+  animation-delay: 0;
+  animation-iteration-count: infinite;
+  animation-play-state: running;
 }
 
 @keyframes rainbow {

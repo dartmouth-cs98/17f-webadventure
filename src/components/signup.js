@@ -49,7 +49,7 @@ class SignUp extends Component {
               onChange={this.handleUsername}
               value={this.state.username}
             />
-            <button type="submit">Sign Up</button>
+            <button id="signup-button" type="submit">Sign Up</button>
           </form>
         </div>
         {this.renderErrorMessage()}
