@@ -150,6 +150,7 @@ class LobbyDetailsView extends Component {
           </button>
           {this.renderErrorMessagePublicGame()}
         </div>
+        <div>--or--</div>
         <div id="join-private">
           <input
             placeholder="Private Game Key"
