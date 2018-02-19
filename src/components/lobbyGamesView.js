@@ -31,6 +31,7 @@ const LobbyGamesView = (props) => {
 
   return (
     <div id="GamesView">
+      <div>Public Games</div>
       {renderGames()}
     </div>
   );
