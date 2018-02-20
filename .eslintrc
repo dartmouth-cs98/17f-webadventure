@@ -25,6 +25,7 @@
      "prefer-arrow-callback": ["error", { "allowNamedFunctions": true }],
      "no-else-return": 0,
      "arrow-body-style": 0,
+     "jsx-a11y/no-distracting-elements": 0,
      # "linebreak-style": ["error", process.env.NODE_ENV === 'prod' ? "unix" : "windows"]
    },
 }
