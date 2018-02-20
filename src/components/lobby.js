@@ -1,4 +1,4 @@
-/* eslint linebreak-style: ["error", "windows"], prefer-const:0 */
+/* eslint linebreak-style: ["error", "windows"], prefer-const:0, class-methods-use-this:0 */
 
 import React, { Component } from 'react';
 import LobbySocket from '../sockets/lobbySocket';
@@ -49,7 +49,6 @@ class Lobby extends Component {
       ],
       selectedGame: null,
       playerAvatar: 'nyan',
-      username: '',
     };
 
 
@@ -165,7 +164,7 @@ class Lobby extends Component {
               />
               <div id="lobby-columns">
                 <DisplayUser
-                  username={this.state.username}
+                  username={this.state.user.username}
                   avatar={this.state.playerAvatar}
                   onAvatar={this.changeAvatar}
                   onUsername={this.signUpLobby}
