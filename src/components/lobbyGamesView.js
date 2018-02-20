@@ -31,6 +31,7 @@ const LobbyGamesView = (props) => {
 
   const renderGames = () => {
     return props.games
+      .sort((a, b) => b.players.length - a.players.length)
       .map((game, index) => {
         const start = splitWord(game.startPage);
         const end = splitWord(game.endPage);

@@ -40,6 +40,7 @@ class DisplayUser extends Component {
       return (
         <div
           id="icon-button"
+          title="Finish Editing"
           onClick={this.toggleEditState}
           role="button"
           tabIndex={0}
@@ -54,6 +55,7 @@ class DisplayUser extends Component {
       return (
         <div
           id="icon-button"
+          title="Edit Username"
           onClick={this.toggleEditState}
           role="button"
           tabIndex={0}
@@ -64,7 +66,6 @@ class DisplayUser extends Component {
           </svg>
         </div>
       );
-      // return <i className="fa fa-pencil-square-o navigation-items" aria-hidden="true" onClick={this.toggleEditState} />;
     }
   }
 
@@ -81,7 +82,6 @@ class DisplayUser extends Component {
       <div id="display-user">
         <div id="username-row">
           <div className="empty-div" />
-          {/* <div>{this.state.username}</div> */}
           {this.renderUsername()}
           <div id="icon-button">
             {this.toggleEditIcon()}

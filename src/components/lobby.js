@@ -23,7 +23,7 @@ class Lobby extends Component {
         },
         {
           name: 'Game2',
-          players: ['Tommy', 'Eli', 'James'],
+          players: ['Tommy', 'Eli', 'James', 'Harrison'],
           startPage: 'https://en.wikipedia.org/wiki/China',
           endPage: 'https://en.wikipedia.org/wiki/Japan',
         },
@@ -137,6 +137,7 @@ class Lobby extends Component {
     if (this.state.publicGameSelected && this.state.selectedGame !== null) {
       return (
         <SelectedGameView
+          avatar={this.state.playerAvatar}
           selectedGame={this.state.selectedGame}
           onGoBack={this.backToGameSelect}
         />
