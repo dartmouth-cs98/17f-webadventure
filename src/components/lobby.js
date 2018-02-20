@@ -1,4 +1,4 @@
-/* eslint linebreak-style: ["error", "windows"] */
+/* eslint linebreak-style: ["error", "windows"], prefer-const:0 */
 
 import React, { Component } from 'react';
 import LobbySocket from '../sockets/lobbySocket';
@@ -7,6 +7,7 @@ import LobbyDetailsView from './lobbyDetailsView';
 import LobbyGamesView from './lobbyGamesView';
 import SelectedGameView from './selectedGameView';
 import DisplayUser from './displayUser';
+import '../style.css';
 
 class Lobby extends Component {
   constructor(props) {
@@ -15,14 +16,40 @@ class Lobby extends Component {
     this.state = {
       user: null,
       games: [
-        { name: 'Game1', players: ['Bill', 'Jill'] },
-        { name: 'Game2', players: ['Tommy', 'Eli', 'James'] },
-        { name: 'Game3', players: ['Tim'] },
-        { name: 'Game4', players: ['Alma', 'David', 'Stephanie', 'Lisa'] },
-        { name: 'Game5', players: ['Imanol', 'Barry'] },
+        {
+          name: 'Game1',
+          players: ['Bill', 'Jill'],
+          startPage: 'https://en.wikipedia.org/wiki/Victorian_architecture',
+          goalPage: 'https://en.wikipedia.org/wiki/Architectural_style',
+        },
+        {
+          name: 'Game2',
+          players: ['Tommy', 'Eli', 'James', 'Harrison'],
+          startPage: 'https://en.wikipedia.org/wiki/China',
+          goalPage: 'https://en.wikipedia.org/wiki/Japan',
+        },
+        {
+          name: 'Game3',
+          players: ['Tim'],
+          startPage: 'https://en.wikipedia.org/wiki/Korea',
+          goalPage: 'https://en.wikipedia.org/wiki/Bimbimbap',
+        },
+        {
+          name: 'Game4',
+          players: ['Alma', 'David', 'Stephanie', 'Lisa'],
+          startPage: 'https://en.wikipedia.org/wiki/Dartmouth',
+          goalPage: 'https://en.wikipedia.org/wiki/Ivy_League',
+        },
+        {
+          name: 'Game5',
+          players: ['Imanol', 'Jerry'],
+          startPage: 'https://en.wikipedia.org/wiki/Orange',
+          goalPage: 'https://en.wikipedia.org/wiki/Yellow',
+        },
       ],
       selectedGame: null,
       playerAvatar: 'nyan',
+      username: '',
     };
 
 
@@ -34,8 +61,9 @@ class Lobby extends Component {
     this.signUpLobby = this.signUpLobby.bind(this);
     this.changeAvatar = this.changeAvatar.bind(this);
     this.onGames = this.onGames.bind(this);
+    this.onUsers = this.onUsers.bind(this);
 
-    this.lobbySocket = new LobbySocket(this.onGames, null, null);
+    this.lobbySocket = new LobbySocket(this.onGames, this.onUsers, null);
     this.timer = 0;
     this.startKeyIndex = 2;
     this.endKeyIndex = 9;
@@ -45,6 +73,10 @@ class Lobby extends Component {
 
   onGames(games) {
     this.setState({ games });
+  }
+
+  onUsers(users) {
+    console.log(users);
   }
 
   onGameChange(game) {
@@ -99,6 +131,7 @@ class Lobby extends Component {
     if (this.state.selectedGame) {
       return (
         <SelectedGameView
+          avatar={this.state.playerAvatar}
           selectedGame={this.state.selectedGame}
           onGoBack={this.backToGameSelect}
         />
@@ -120,36 +153,44 @@ class Lobby extends Component {
     // Render lobby with all lobby components
     if (this.state.user) {
       return (
-        <div id="lobby">
-          <div id="lobby-title">WEBADVENTURE</div>
-          <div id="lobby-contents">
-            <LobbyGamesView
-              games={this.state.games}
-              selectedGame={this.state.selectedGame}
-              onSelectGame={this.onGameChange}
-            />
-            <div id="lobby-columns">
-              <DisplayUser
-                username={this.state.user.username}
-                avatar={this.state.playerAvatar}
-                onAvatar={this.changeAvatar}
+        <div id="lobby-container">
+          <div id="overlay" />
+          <div id="lobby">
+            <div id="lobby-title">WEBADVENTURE</div>
+            <div id="lobby-contents">
+              <LobbyGamesView
+                games={this.state.games}
+                selectedGame={this.state.selectedGame}
+                onSelectGame={this.onGameChange}
               />
-              {this.renderLowerLeftComponent()}
+              <div id="lobby-columns">
+                <DisplayUser
+                  username={this.state.username}
+                  avatar={this.state.playerAvatar}
+                  onAvatar={this.changeAvatar}
+                  onUsername={this.signUpLobby}
+                />
+                {this.renderLowerLeftComponent()}
+              </div>
             </div>
+            <button onClick={this.onStartGame} >
+                Start Game
+            </button>
           </div>
-          <button onClick={this.onStartGame} >
-              Start Game
-          </button>
         </div>
       );
     }
     return (
-      <div id="lobby">
-        <div id="lobby-title">WEBADVENTURE</div>
-        <SignUp
-          signUpLobby={this.signUpLobby}
-          signedUp={this.signedUp}
-        />
+      <div id="lobby-container">
+        <div id="overlay" />
+        <div id="lobby">
+          <img src="https://i.imgur.com/VUVNhtC.png" alt="webadventure!" id="webad-logo" />
+          <div id="lobby-title">WEBADVENTURE</div>
+          <SignUp
+            signUpLobby={this.signUpLobby}
+            signedUp={this.signedUp}
+          />
+        </div>
       </div>
     );
   }

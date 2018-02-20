@@ -1,4 +1,4 @@
-/* eslint react/no-unused-state: 0  */
+/* eslint react/no-unused-state: 0, prefer-const: 0, max-len:0  */
 
 import React, { Component } from 'react';
 
@@ -11,8 +11,8 @@ class LobbyDetailsView extends Component {
       hostKey: '',
       time: {},
       seconds: '',
-      // start: false,
       players: [],
+      username: this.props.username,
       errorMsgPublicGame: false,
       errorMsgPrivateGame: false,
     };
@@ -23,6 +23,12 @@ class LobbyDetailsView extends Component {
     this.countDown = this.countDown.bind(this);
     this.checkNumPlayers = this.checkNumPlayers.bind(this);
     this.addPlayer = this.addPlayer.bind(this);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.state.username !== nextProps.username) {
+      this.setState({ username: nextProps.username });
+    }
   }
 
   onChange(event) {
@@ -64,9 +70,15 @@ class LobbyDetailsView extends Component {
 
   joinPublicGame() {
     this.setState({ errorMsgPublicGame: true });
-    if (this.props.selectedGame) {
-      this.setState({ errorMsgPublicGame: false });
-      this.props.joinPublicGame();
+    if (this.props.selectedGame && // if selectedGame exists
+        this.props.selectedGame.players.length < 5 && // if the length is less than 5
+        this.props.selectedGame.players.indexOf(this.state.username) === -1) { // it doesn't already exist
+      let newPlayers = Object.assign({}, this.props.selectedGame).players;
+      newPlayers.push(this.state.username);
+      this.setState({
+        errorMsgPublicGame: false,
+      });
+      this.props.joinPublicGame(newPlayers);
       this.startTimer();
     }
   }
@@ -125,28 +137,31 @@ class LobbyDetailsView extends Component {
     return (
       <div id="lobby-game-view">
         <div id="public">
-          <button className="publicGame" onClick={this.joinPublicGame}>
-            Join Public Game
+          <button id="public-game-button" onClick={this.joinPublicGame}>
+            Join Public
           </button>
-          {this.renderErrorMessagePublicGame()}
         </div>
-        <div id="join-private">
-          <input
-            placeholder="Private Game Key"
-            value={this.props.joinKey}
-            onChange={this.onChange}
-          />
-          <button className="join" onClick={this.joinPrivateGame}>
-            Join Private Game
-          </button>
-          {this.renderErrorMessagePrivateGame()}
-        </div>
-        <div id="host-private">
-          <button onClick={this.props.hostPrivateGame}>
-            Host Private Game
-          </button>
+        <div id="or">&mdash;or&mdash;</div>
+        <div id="private">
+          <div id="join-private">
+            <input
+              placeholder="Private Game Key"
+              value={this.state.joinKey}
+              onChange={this.onChange}
+            />
+          </div>
+          <div id="private-buttons">
+            <button id="host-private-button" onClick={this.props.hostPrivateGame}>
+            Host Private
+            </button>
+            <button id="join-private-button" onClick={this.joinPrivateGame}>
+            Join Private
+            </button>
+          </div>
         </div>
         <div>{this.state.hostKey}</div>
+        {this.renderErrorMessagePublicGame()}
+        {this.renderErrorMessagePrivateGame()}
       </div>
     );
   }

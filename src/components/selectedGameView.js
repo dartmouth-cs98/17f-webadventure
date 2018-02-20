@@ -10,7 +10,7 @@ const SelectedGameView = (props) => {
 
   return (
     <div id="selectedGameView">
-      <div>In {props.selectedGame.host}</div>
+      <div>In {props.selectedGame.host} as {props.avatar}</div>
       {renderPlayers()}
       <button onClick={props.onGoBack}>Go back</button>
     </div>

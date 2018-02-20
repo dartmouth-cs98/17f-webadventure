@@ -23,6 +23,14 @@ module.exports = {
         exclude: /node_modules/,
         loader: 'babel-loader',
       },
+      {
+        test: /\.jpg$/,
+        loader: 'url-loader?mimetype=image/jpg',
+      },
+      {
+        test: /\.svg$/,
+        loader: 'svg-loader?pngScale=2',
+      },
     ],
   },
 };

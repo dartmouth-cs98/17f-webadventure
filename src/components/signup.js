@@ -21,7 +21,7 @@ class SignUp extends Component {
 
   signInSubmit(event) {
     event.preventDefault();
-    if (this.state.username === '') {
+    if (this.state.username === '' || this.state.username.length > 12) {
       this.setState({ errorMsg: true });
     } else {
       this.props.signUpLobby(this.state.username);
@@ -31,7 +31,7 @@ class SignUp extends Component {
   renderErrorMessage() {
     if (this.state.errorMsg) {
       return (
-        <div className="errorMsg">Please enter a valid username!</div>
+        <div className="errorMsg">Please enter a valid username (less than 12 chars)!</div>
       );
     } else {
       return (<div />);
@@ -49,7 +49,7 @@ class SignUp extends Component {
               onChange={this.handleUsername}
               value={this.state.username}
             />
-            <button type="submit">Sign Up</button>
+            <button id="signup-button" type="submit">Sign Up</button>
           </form>
         </div>
         {this.renderErrorMessage()}
