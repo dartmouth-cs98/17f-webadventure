@@ -4,7 +4,7 @@ import $ from 'jquery';
 import Lobby from '../components/lobby';
 
 
-$('body').append('<div id=wa_main />');
+$('body').append('<div id=wa_lobby />');
 const onStart = (username, game) => {
   const request = {
     message: 'start game',
@@ -13,6 +13,7 @@ const onStart = (username, game) => {
       game,
     },
   };
+  document.getElementById('wa_lobby').remove();
   chrome.runtime.sendMessage(request);
 };
-ReactDOM.render(<Lobby onStart={onStart} />, document.getElementById('wa_main'));
+ReactDOM.render(<Lobby onStart={onStart} />, document.getElementById('wa_lobby'));

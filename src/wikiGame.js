@@ -32,7 +32,7 @@ class WikiGame {
         { username: 'Alma', numClicks: 45 },
         { username: 'David', numClicks: 60 },
         { username: 'Imanol', numClicks: 70 },
-        { username: 'Tim', numClicks: 2 },
+        { username: 'Tim', numClicks: 7 },
       ],
     };
 

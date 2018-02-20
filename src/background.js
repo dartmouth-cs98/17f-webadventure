@@ -44,7 +44,19 @@ chrome.runtime.onMessage.addListener((request, sender) => {
     curPlayerInfo.numClicks += 1;
     curPlayerInfo.curUrl = request.payload.newUrl;
   }
-  chrome.tabs.update(curTabId, { url: curPlayerInfo.curUrl });
+
+  if (sender.url === curPlayerInfo.curUrl) {
+    chrome.tabs.executeScript(curTabId, {
+      file: 'dist/inject.bundle.js',
+    }, () => {
+      chrome.tabs.sendMessage(curTabId, {
+        message: 'new game',
+        payload: { username: curPlayerInfo.username, game, counter },
+      });
+    });
+  } else {
+    chrome.tabs.update(curTabId, { url: curPlayerInfo.curUrl });
+  }
 });
 
 chrome.tabs.onUpdated.addListener((tabId, changeInfo) => {
@@ -58,7 +70,6 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo) => {
       chrome.tabs.executeScript({
         file: 'dist/injectEnd.bundle.js',
       });
-      // update backend
       gameSocket.updatePlayer(
         curPlayerInfo.finishTime,
         curPlayerInfo.numClicks, curPlayerInfo.curUrl,
