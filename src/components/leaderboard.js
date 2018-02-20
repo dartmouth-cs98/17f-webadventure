@@ -6,11 +6,6 @@ class Leaderboard extends Component {
     this.renderRankings = this.renderRankings.bind(this);
   }
 
-  getPageTitle(str) {
-    const parts = str.split('/');
-    return parts.pop();
-  }
-
   renderRankings() {
     const top5 = this.props.players
       .sort((a, b) => b.numClicks - a.numClicks)
