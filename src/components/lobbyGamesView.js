@@ -24,7 +24,7 @@ const LobbyGamesView = (props) => {
     );
   };
 
-  const splitWord = (str) => {
+  const getPageTitle = (str) => {
     const parts = str.split('/');
     return parts.pop();
   };
@@ -33,8 +33,8 @@ const LobbyGamesView = (props) => {
     return props.games
       .sort((a, b) => b.players.length - a.players.length)
       .map((game, index) => {
-        const start = splitWord(game.startPage);
-        const end = splitWord(game.goalPage);
+        const start = getPageTitle(game.startPage);
+        const end = getPageTitle(game.goalPage);
         if (props.selectedGame !== null && game.id === props.selectedGame.id) {
           return (
             <div className="game-selected game-item">

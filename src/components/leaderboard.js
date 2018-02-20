@@ -6,6 +6,11 @@ class Leaderboard extends Component {
     this.renderRankings = this.renderRankings.bind(this);
   }
 
+  getPageTitle(str) {
+    const parts = str.split('/');
+    return parts.pop();
+  }
+
   renderRankings() {
     const top5 = this.props.players
       .sort((a, b) => b.numClicks - a.numClicks)
@@ -40,7 +45,7 @@ class Leaderboard extends Component {
         <div id="wa-container">
           <img id="wiki-logo" src="https://i.imgur.com/hQbOKPS.png" alt="wiki logo" />
           <div id="leaderboard">
-            <div id="userStats">WEBADVENTURE</div>
+            <div className="userStats">WEBADVENTURE</div>
             <div id="curUserRow">
               <div>
                 <img id="wahoo" src={this.props.curPlayer.avatarRight} alt="userIcon" />
@@ -57,7 +62,7 @@ class Leaderboard extends Component {
       <div id="wa-container">
         <img id="wiki-logo" src="https://i.imgur.com/hQbOKPS.png" alt="wiki logo" />
         <div id="leaderboard">
-          <div id="userStats">WEBADVENTURE</div>
+          <div className="userStats">WEBADVENTURE</div>
           <div id="curUserRow" />
           <div id="userStatRow" />
         </div>

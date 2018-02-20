@@ -34,6 +34,7 @@ class WikiGame {
         { username: 'Imanol', numClicks: 70 },
         { username: 'Tim', numClicks: 2 },
       ],
+      goalPage: 'https://en.wikipedia.org/wiki/Orange',
     };
 
     this.renderGame = this.renderGame.bind(this);
