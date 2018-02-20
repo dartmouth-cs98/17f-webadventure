@@ -22,6 +22,9 @@ class LobbyDetailsView extends Component {
     this.countDown = this.countDown.bind(this);
     this.checkNumPlayers = this.checkNumPlayers.bind(this);
     this.addPlayer = this.addPlayer.bind(this);
+    this.joinPublicGame = this.joinPublicGame.bind(this);
+    this.joinPrivateGame = this.joinPrivateGame.bind(this);
+    this.renderError = this.renderError.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -82,7 +85,7 @@ class LobbyDetailsView extends Component {
   }
 
   joinPrivateGame() {
-    if (this.joinKey.length === 7) {
+    if (this.state.joinKey.length === 7) {
       this.setState({ error: null });
       // Should be handled in back end if error
       this.props.joinPrivateGame(this.joinKey);
@@ -150,7 +153,7 @@ class LobbyDetailsView extends Component {
           </div>
         </div>
         <div>{this.state.hostKey}</div>
-        {renderError()}
+        {this.renderError()}
       </div>
     );
   }
