@@ -65,8 +65,7 @@ chrome.runtime.onMessage.addListener((request, sender) => {
 
 chrome.tabs.onUpdated.addListener((tabId, changeInfo) => {
   if (changeInfo.status === 'loading' && tabId === curTabId && changeInfo.url) {
-    curPlayerInfo.url = changeInfo.url;
-    if (changeInfo.url !== curPlayerInfo.url) {
+    if (!changeInfo.url.includes(curPlayerInfo.curUrl)) {
       endGame();
       return;
     }
@@ -87,7 +86,7 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo) => {
       curPlayerInfo.finishTime,
       curPlayerInfo.numClicks, curPlayerInfo.curUrl,
     );
-    if (!curPlayerInfo.url.includes('#')) {
+    if (!curPlayerInfo.curUrl.includes('#')) {
       chrome.tabs.executeScript(tabId, {
         file: 'dist/inject.bundle.js',
       }, () => {
