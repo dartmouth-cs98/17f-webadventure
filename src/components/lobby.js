@@ -1,4 +1,4 @@
-/* eslint linebreak-style: ["error", "windows"], prefer-const:0 */
+/* eslint linebreak-style: ["error", "windows"], prefer-const:0, class-methods-use-this:0 */
 
 import React, { Component } from 'react';
 import LobbySocket from '../sockets/lobbySocket';
