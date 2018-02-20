@@ -73,7 +73,6 @@ class Lobby extends Component {
   }
 
   onGameChange(game) {
-    console.log(`username in onGameChange is ${this.state.username}`);
     if (!this.state.publicGameSelected) {
       this.setState({ selectedGame: game });
     }
@@ -97,17 +96,12 @@ class Lobby extends Component {
     }
   }
 
-  // changeUsername(name) {
-  //   this.setState({ username: name });
-  // }
-
   changeAvatar(avatar) {
     this.setState({ playerAvatar: avatar });
   }
 
   signUpLobby(username) {
     this.setState({ signedUp: true, username });
-    console.log('username changed');
   }
 
   joinPublicGame(newPlayers) {
@@ -158,6 +152,7 @@ class Lobby extends Component {
       };
       return (
         <SelectedGameView
+          avatar={this.state.playerAvatar}
           selectedGame={privGame}
           onGoBack={this.backToGameSelect}
         />

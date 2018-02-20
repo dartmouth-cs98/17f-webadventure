@@ -78,7 +78,6 @@ class LobbyDetailsView extends Component {
   }
 
   joinPublicGame() {
-    console.log(`username in joinPublicGame is ${this.state.username}`);
     this.setState({ errorMsgPublicGame: true });
     if (this.props.selectedGame && // if selectedGame exists
         this.props.selectedGame.players.length < 5 && // if the length is less than 5
