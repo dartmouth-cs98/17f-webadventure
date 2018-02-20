@@ -1,7 +1,7 @@
 import io from 'socket.io-client';
 
-// const socketserver = 'https://webadventure-api.herokuapp.com/';
-const socketserver = 'http://localhost:9090/';
+const socketserver = 'https://webadventure-api.herokuapp.com/';
+// const socketserver = 'http://localhost:9090/';
 
 export default class GameSocket {
   constructor(onGame, roomhost, gameId, username) {

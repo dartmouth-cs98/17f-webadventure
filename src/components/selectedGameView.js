@@ -4,13 +4,13 @@ const SelectedGameView = (props) => {
   const renderPlayers = () => {
     return props.selectedGame.players
       .map((player) => {
-        return (<div>{player}</div>);
+        return (<div>{player.username}</div>);
       });
   };
 
   return (
     <div id="selectedGameView">
-      <div>In {props.selectedGame.name} as {props.avatar}</div>
+      <div>In {props.selectedGame.host} as {props.avatar}</div>
       {renderPlayers()}
       <button onClick={props.onGoBack}>Go back</button>
     </div>

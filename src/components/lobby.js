@@ -1,6 +1,7 @@
 /* eslint linebreak-style: ["error", "windows"], prefer-const:0 */
 
 import React, { Component } from 'react';
+import LobbySocket from '../sockets/lobbySocket';
 import SignUp from './signup';
 import LobbyDetailsView from './lobbyDetailsView';
 import LobbyGamesView from './lobbyGamesView';
@@ -13,7 +14,7 @@ class Lobby extends Component {
     super(props);
 
     this.state = {
-      signedUp: false,
+      user: null,
       games: [
         {
           name: 'Game1',
@@ -47,21 +48,21 @@ class Lobby extends Component {
         },
       ],
       selectedGame: null,
-      privateGameSelected: false,
-      publicGameSelected: false,
-      joinKey: '',
       playerAvatar: 'nyan',
       username: '',
     };
 
+
     this.onGameChange = this.onGameChange.bind(this);
-    this.onInputKey = this.onInputKey.bind(this);
     this.joinPublicGame = this.joinPublicGame.bind(this);
     this.joinPrivateGame = this.joinPrivateGame.bind(this);
+    this.hostPrivateGame = this.hostPrivateGame.bind(this);
     this.backToGameSelect = this.backToGameSelect.bind(this);
     this.signUpLobby = this.signUpLobby.bind(this);
     this.changeAvatar = this.changeAvatar.bind(this);
+    this.onGames = this.onGames.bind(this);
 
+    this.lobbySocket = new LobbySocket(this.onGames, null, null);
     this.timer = 0;
     this.startKeyIndex = 2;
     this.endKeyIndex = 9;
@@ -69,17 +70,15 @@ class Lobby extends Component {
     this.onStartGame = this.onStartGame.bind(this);
   }
 
-  componentDidMount() {
+  onGames(games) {
+    this.setState({ games });
   }
 
   onGameChange(game) {
-    if (!this.state.publicGameSelected) {
-      this.setState({ selectedGame: game });
-    }
+    this.setState({ selectedGame: game });
   }
 
   onStartGame() {
-    const username = 'almawang';
     const game = {
       id: '5a80e8dff58b73d699780895',
       host: 'almawang',
@@ -87,13 +86,7 @@ class Lobby extends Component {
       startPage: 'https://en.wikipedia.org/wiki/Victorian_architecture',
       goalPage: 'https://en.wikipedia.org/wiki/Architectural_style',
     };
-    this.props.onStart(username, game);
-  }
-
-  onInputKey(val) {
-    if (val.length <= 7) {
-      this.setState({ joinKey: val });
-    }
+    this.props.onStart(this.state.user.username, game);
   }
 
   changeAvatar(avatar) {
@@ -101,76 +94,51 @@ class Lobby extends Component {
   }
 
   signUpLobby(username) {
-    this.setState({ signedUp: true, username });
-  }
-
-  joinPublicGame(newPlayers) {
-    let newSelectedGame = Object.assign({}, this.state.selectedGame);
-    newSelectedGame.players = newPlayers;
-
-    this.setState({
-      privateGameSelected: false,
-      publicGameSelected: true,
-      selectedGame: newSelectedGame,
+    this.lobbySocket.getOrCreateUser(username).then((user) => {
+      this.setState({
+        user,
+      });
     });
   }
 
-  joinPrivateGame() {
-    this.setState({ privateGameSelected: true, publicGameSelected: false });
+  joinPublicGame(gameId) {
+    const tempGame = {
+      id: gameId,
+    };
+    this.setState({ selectedGame: tempGame });
   }
 
+  joinPrivateGame(gameId) {
+    this.lobbySocket.joinNewGame(gameId).then((game) => {
+      this.setState({ selectedGame: game });
+    });
+  }
+  hostPrivateGame() {
+    this.lobbySocket.createGame(true).then((newGame) => {
+      this.setState({ selectedGame: newGame });
+    });
+  }
   backToGameSelect() {
-    let newSelectedGame = Object.assign({}, this.state.selectedGame);
-    const i = newSelectedGame.players.indexOf(this.state.username);
-    if (i !== -1) {
-      newSelectedGame.players.splice(i, 1);
-    }
-    this.setState({
-      privateGameSelected: false,
-      publicGameSelected: false,
-      joinKey: '',
-      selectedGame: newSelectedGame,
-    });
+    this.setState({ selectedGame: null });
   }
 
   renderLowerLeftComponent() {
-    if (this.state.publicGameSelected && this.state.selectedGame !== null) {
+    if (this.state.selectedGame) {
       return (
         <SelectedGameView
           avatar={this.state.playerAvatar}
           selectedGame={this.state.selectedGame}
-          onGoBack={this.backToGameSelect}
-        />
-      );
-    } else if (this.state.privateGameSelected) {
-      const privGame = {
-        name: 'Game1',
-        players: [
-          'Bob',
-          'Joe',
-          'Tom',
-        ],
-      };
-      return (
-        <SelectedGameView
-          avatar={this.state.playerAvatar}
-          selectedGame={privGame}
           onGoBack={this.backToGameSelect}
         />
       );
     } else {
       return (
         <LobbyDetailsView
-          username={this.state.username}
-          games={this.state.games}
-          privGameSel={this.state.privateGameSelected}
-          publGameSel={this.state.publicGameSelected}
           joinPublicGame={this.joinPublicGame}
           joinPrivateGame={this.joinPrivateGame}
+          hostPrivateGame={this.hostPrivateGame}
           backToGameSelect={this.backToGameSelect}
           selectedGame={this.state.selectedGame}
-          joinKey={this.state.joinKey}
-          onInputKey={this.onInputKey}
         />
       );
     }
@@ -178,7 +146,7 @@ class Lobby extends Component {
 
   render() {
     // Render lobby with all lobby components
-    if (this.state.signedUp) {
+    if (this.state.user) {
       return (
         <div id="lobby-container">
           <div id="overlay" />
@@ -207,8 +175,6 @@ class Lobby extends Component {
         </div>
       );
     }
-
-    // Render initial lobby with just sign up component
     return (
       <div id="lobby-container">
         <div id="overlay" />
