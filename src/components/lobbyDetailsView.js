@@ -13,8 +13,7 @@ class LobbyDetailsView extends Component {
       seconds: '',
       players: [],
       username: this.props.username,
-      errorMsgPublicGame: false,
-      errorMsgPrivateGame: false,
+      errorMsg: null,
     };
     this.timer = 0;
     this.onChange = this.onChange.bind(this);
@@ -69,26 +68,27 @@ class LobbyDetailsView extends Component {
   }
 
   joinPublicGame() {
-    this.setState({ errorMsgPublicGame: true });
     if (this.props.selectedGame && // if selectedGame exists
         this.props.selectedGame.players.length < 5 && // if the length is less than 5
         this.props.selectedGame.players.indexOf(this.state.username) === -1) { // it doesn't already exist
       let newPlayers = Object.assign({}, this.props.selectedGame).players;
       newPlayers.push(this.state.username);
-      this.setState({
-        errorMsgPublicGame: false,
-      });
+      this.setState({ errorMsg: null });
       this.props.joinPublicGame(newPlayers);
       this.startTimer();
+    } else {
+      this.setState({ errorMsg: 'Please select a game to join!' });
     }
   }
 
   joinPrivateGame() {
-    this.setState({ errorMsgPrivateGame: true });
     if (this.joinKey.length === 7) {
-      this.setState({ errorMsgPrivateGame: false });
+      this.setState({ error: null });
+      // Should be handled in back end if error
       this.props.joinPrivateGame(this.joinKey);
       this.startTimer();
+    } else {
+      this.setState({ errorMsg: 'Please enter a valid join key!' });
     }
   }
 
@@ -113,20 +113,10 @@ class LobbyDetailsView extends Component {
     });
   }
 
-  renderErrorMessagePublicGame() {
-    if (this.state.errorMsgPublicGame) {
+  renderError() {
+    if (this.state.errorMsg) {
       return (
-        <div className="errorMsg">Please select a game to join!</div>
-      );
-    } else {
-      return (<div />);
-    }
-  }
-
-  renderErrorMessagePrivateGame() {
-    if (this.state.errorMsgPrivateGame) {
-      return (
-        <div className="errorMsg">Please enter a valid join key!</div>
+        <div className="errorMsg">{this.state.errorMsg}</div>
       );
     } else {
       return (<div />);
@@ -160,8 +150,7 @@ class LobbyDetailsView extends Component {
           </div>
         </div>
         <div>{this.state.hostKey}</div>
-        {this.renderErrorMessagePublicGame()}
-        {this.renderErrorMessagePrivateGame()}
+        {renderError()}
       </div>
     );
   }
