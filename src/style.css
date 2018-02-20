@@ -503,13 +503,20 @@ div.panel-alert:empty {
   margin-right:10px;
 }
 
-/* #edit-button {
-  border-radius: 5px;
-  border: 3px solid black;
-} */
-
 #icon-button:focus {
    outline:0;
+}
+
+#end {
+  display: block;
+  position: fixed;
+  width: 20em;
+  top: 10vw;
+  left: 38vw;
+  background-color: rgba(246, 246, 246, .95);
+  padding: 10px;
+  border: 1px solid black;
+  border-radius: 10px;
 }
 
 @keyframes rainbow {
@@ -557,25 +564,6 @@ div.panel-alert:empty {
 }
 
 @keyframes rainbow-border2 {
-
-  /* 0% {
-    border: 5px solid red;
-  }
-  20% {
-    border: 5px solid orange;
-  }
-  40% {
-    border: 5px solid gold;
-  }
-  60% {
-    border: 5px solid green;
-  }
-  80% {
-    border: 5px solid blue;
-  }
-  100% {
-    border: 5px solid purple;
-  } */
 
   0% {
     border: 5px solid white;
