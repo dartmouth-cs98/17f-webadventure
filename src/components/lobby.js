@@ -49,7 +49,6 @@ class Lobby extends Component {
       ],
       selectedGame: null,
       playerAvatar: 'nyan',
-      username: '',
     };
 
 
@@ -131,7 +130,7 @@ class Lobby extends Component {
     if (this.state.selectedGame) {
       return (
         <SelectedGameView
-          avatar={this.state.playerAvatar}
+          avatar={this.state.user.playerAvatar}
           selectedGame={this.state.selectedGame}
           onGoBack={this.backToGameSelect}
         />
@@ -165,7 +164,7 @@ class Lobby extends Component {
               />
               <div id="lobby-columns">
                 <DisplayUser
-                  username={this.state.username}
+                  username={this.state.user.username}
                   avatar={this.state.playerAvatar}
                   onAvatar={this.changeAvatar}
                   onUsername={this.signUpLobby}
