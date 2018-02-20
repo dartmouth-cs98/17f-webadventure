@@ -101,6 +101,7 @@ class WikiGame {
   }
 
   openLink() {
+    console.log(this.curPlayer.getLink());
     const link = this.curPlayer.getLink();
     if (link !== null) {
       const redirectLink = `https://en.wikipedia.org${link}`;
