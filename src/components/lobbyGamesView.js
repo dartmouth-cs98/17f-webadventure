@@ -34,7 +34,7 @@ const LobbyGamesView = (props) => {
       .sort((a, b) => b.players.length - a.players.length)
       .map((game, index) => {
         const start = splitWord(game.startPage);
-        const end = splitWord(game.endPage);
+        const end = splitWord(game.goalPage);
         if (props.selectedGame !== null && game.id === props.selectedGame.id) {
           return (
             <div className="game-selected game-item">

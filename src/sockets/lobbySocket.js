@@ -6,7 +6,8 @@ const socketserver = 'https://webadventure-api.herokuapp.com/lobby';
 export default class LobbySocket {
   constructor(onGames, onUsers, username) {
     this.username = username;
-    this.socket = io(`${socketserver}?username=${username}`);
+    const socketURL = username ? `${socketserver}?username=${username}` : `${socketserver}`;
+    this.socket = io(socketURL);
 
     this.socket.on('connect', () => { console.log('socket.io connected'); });
     this.socket.on('disconnect', () => { console.log('socket.io disconnected'); });

@@ -20,31 +20,31 @@ class Lobby extends Component {
           name: 'Game1',
           players: ['Bill', 'Jill'],
           startPage: 'https://en.wikipedia.org/wiki/Victorian_architecture',
-          endPage: 'https://en.wikipedia.org/wiki/Architectural_style',
+          goalPage: 'https://en.wikipedia.org/wiki/Architectural_style',
         },
         {
           name: 'Game2',
           players: ['Tommy', 'Eli', 'James', 'Harrison'],
           startPage: 'https://en.wikipedia.org/wiki/China',
-          endPage: 'https://en.wikipedia.org/wiki/Japan',
+          goalPage: 'https://en.wikipedia.org/wiki/Japan',
         },
         {
           name: 'Game3',
           players: ['Tim'],
           startPage: 'https://en.wikipedia.org/wiki/Korea',
-          endPage: 'https://en.wikipedia.org/wiki/Bimbimbap',
+          goalPage: 'https://en.wikipedia.org/wiki/Bimbimbap',
         },
         {
           name: 'Game4',
           players: ['Alma', 'David', 'Stephanie', 'Lisa'],
           startPage: 'https://en.wikipedia.org/wiki/Dartmouth',
-          endPage: 'https://en.wikipedia.org/wiki/Ivy_League',
+          goalPage: 'https://en.wikipedia.org/wiki/Ivy_League',
         },
         {
           name: 'Game5',
           players: ['Imanol', 'Jerry'],
           startPage: 'https://en.wikipedia.org/wiki/Orange',
-          endPage: 'https://en.wikipedia.org/wiki/Yellow',
+          goalPage: 'https://en.wikipedia.org/wiki/Yellow',
         },
       ],
       selectedGame: null,
@@ -61,8 +61,9 @@ class Lobby extends Component {
     this.signUpLobby = this.signUpLobby.bind(this);
     this.changeAvatar = this.changeAvatar.bind(this);
     this.onGames = this.onGames.bind(this);
+    this.onUsers = this.onUsers.bind(this);
 
-    this.lobbySocket = new LobbySocket(this.onGames, null, null);
+    this.lobbySocket = new LobbySocket(this.onGames, this.onUsers, null);
     this.timer = 0;
     this.startKeyIndex = 2;
     this.endKeyIndex = 9;
@@ -72,6 +73,10 @@ class Lobby extends Component {
 
   onGames(games) {
     this.setState({ games });
+  }
+
+  onUsers(users) {
+    console.log(users);
   }
 
   onGameChange(game) {
