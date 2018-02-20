@@ -48,11 +48,13 @@ class Lobby extends Component {
         },
       ],
       selectedGame: null,
+      selectedGameID: null,
       playerAvatar: 'nyan',
     };
 
 
     this.onGameChange = this.onGameChange.bind(this);
+    this.onGameIDChange = this.onGameIDChange.bind(this);
     this.joinPublicGame = this.joinPublicGame.bind(this);
     this.joinPrivateGame = this.joinPrivateGame.bind(this);
     this.hostPrivateGame = this.hostPrivateGame.bind(this);
@@ -82,6 +84,10 @@ class Lobby extends Component {
     this.setState({ selectedGame: game });
   }
 
+  onGameIDChange(game) {
+    this.setState({ selectedGameID: game.id });
+  }
+
   onStartGame() {
     const game = {
       id: '5a80e8dff58b73d699780895',
@@ -106,10 +112,7 @@ class Lobby extends Component {
   }
 
   joinPublicGame(gameId) {
-    const tempGame = {
-      id: gameId,
-    };
-    this.setState({ selectedGame: tempGame });
+    this.setState({ selectedGame: this.state.selectedGame });
   }
 
   joinPrivateGame(gameId) {
@@ -127,10 +130,10 @@ class Lobby extends Component {
   }
 
   renderLowerLeftComponent() {
-    if (this.state.selectedGame) {
+    if (this.state.selectedGameID && this.state.selectedGame) {
       return (
         <SelectedGameView
-          avatar={this.state.user.playerAvatar}
+          avatar={this.state.playerAvatar}
           selectedGame={this.state.selectedGame}
           onGoBack={this.backToGameSelect}
         />
@@ -159,8 +162,8 @@ class Lobby extends Component {
             <div id="lobby-contents">
               <LobbyGamesView
                 games={this.state.games}
-                selectedGame={this.state.selectedGame}
-                onSelectGame={this.onGameChange}
+                selectedGameID={this.state.selectedGameID}
+                onSelectGame={this.onGameIDChange}
               />
               <div id="lobby-columns">
                 <DisplayUser

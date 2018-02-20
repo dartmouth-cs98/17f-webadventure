@@ -35,14 +35,14 @@ const LobbyGamesView = (props) => {
       .map((game, index) => {
         const start = splitWord(game.startPage);
         const end = splitWord(game.goalPage);
-        if (props.selectedGame !== null && game.id === props.selectedGame.id) {
+        if (game.id === props.selectedGameID) {
           return (
             <div className="game-selected game-item">
               <div className="game-title-row">
                 <div
                   className="lobby-game-item"
                   key={index}
-                >{props.selectedGame.host}
+                >{game.host}
                 </div>
                 <div className="num-players">
                   ({game.players.length}/5)
