@@ -51,6 +51,7 @@ class Lobby extends Component {
       publicGameSelected: false,
       joinKey: '',
       playerAvatar: 'nyan',
+      username: '',
     };
 
     this.onGameChange = this.onGameChange.bind(this);
@@ -72,6 +73,7 @@ class Lobby extends Component {
   }
 
   onGameChange(game) {
+    console.log(`username in onGameChange is ${this.state.username}`);
     if (!this.state.publicGameSelected) {
       this.setState({ selectedGame: game });
     }
@@ -91,21 +93,21 @@ class Lobby extends Component {
 
   onInputKey(val) {
     if (val.length <= 7) {
-      this.setState({
-        joinKey: val,
-      });
+      this.setState({ joinKey: val });
     }
   }
+
+  // changeUsername(name) {
+  //   this.setState({ username: name });
+  // }
 
   changeAvatar(avatar) {
     this.setState({ playerAvatar: avatar });
   }
 
   signUpLobby(username) {
-    this.setState({
-      signedUp: true,
-      username,
-    });
+    this.setState({ signedUp: true, username });
+    console.log('username changed');
   }
 
   joinPublicGame(newPlayers) {
@@ -197,6 +199,7 @@ class Lobby extends Component {
                   username={this.state.username}
                   avatar={this.state.playerAvatar}
                   onAvatar={this.changeAvatar}
+                  onUsername={this.signUpLobby}
                 />
                 {this.renderLowerLeftComponent()}
               </div>

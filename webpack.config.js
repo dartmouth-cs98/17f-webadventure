@@ -24,8 +24,12 @@ module.exports = {
         loader: 'babel-loader',
       },
       {
-        test: /\.png$/,
-        loader: 'url-loader?mimetype=image/png',
+        test: /\.jpg$/,
+        loader: 'url-loader?mimetype=image/jpg',
+      },
+      {
+        test: /\.svg$/,
+        loader: 'svg-loader?pngScale=2',
       },
     ],
   },

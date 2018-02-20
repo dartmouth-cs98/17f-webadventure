@@ -29,6 +29,12 @@ class LobbyDetailsView extends Component {
     this.backToGameSelect = this.backToGameSelect.bind(this);
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (this.state.username !== nextProps.username) {
+      this.setState({ username: nextProps.username });
+    }
+  }
+
   onChange(event) {
     this.setState({
       joinKey: event.target.value,
@@ -72,6 +78,7 @@ class LobbyDetailsView extends Component {
   }
 
   joinPublicGame() {
+    console.log(`username in joinPublicGame is ${this.state.username}`);
     this.setState({ errorMsgPublicGame: true });
     if (this.props.selectedGame && // if selectedGame exists
         this.props.selectedGame.players.length < 5 && // if the length is less than 5
