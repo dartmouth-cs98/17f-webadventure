@@ -11,6 +11,7 @@ class Powerups {
     this.icon = ICON;
 
     this.powerups = [];
+    this.jqueryPowerups = [];
 
     this.createPowerups = this.createPowerups.bind(this);
     this.insertPowerups = this.insertPowerups.bind(this);
@@ -29,8 +30,8 @@ class Powerups {
       let x = Math.floor(Math.random()*$window.width());
       let y = Math.floor(Math.random()*$window.height());
 
-      const powerupType = Math.floor(Math.random() * 3);
-      let powerup = new Powerup(powerupType, { left: x, top: y });  // flipControls, speedUp, slowDown
+      const type = Math.floor(Math.random() * this.types.length);
+      let powerup = new Powerup(type, { left: x, top: y });  // flipControls, speedUp, slowDown
       
       this.powerups.push(powerup);
     }
@@ -39,7 +40,17 @@ class Powerups {
   insertPowerups() {
     console.log("insertPowerups");
     $('body').append(`<div id="powerups" style="position: absolute; top: 0px; left: 0px;"></div>`);
-    this.powerups.map(powerup => powerup.insertPowerup());
+    for(var i=0; i<this.powerups.length; i++){
+      console.log(this.powerups[i]);
+      var powerDiv = this.powerups[i].insertPowerup();
+      this.jqueryPowerups.push($(powerDiv));
+    }
+    // $.each(this.powerups, (powerup) => {
+    //   console.log(powerup);
+    //   var power = powerup.insertPowerup();
+    //   this.jqueryPowerups.push(power);
+    // });
+    console.log(this.jqueryPowerups);
   }
 }
 

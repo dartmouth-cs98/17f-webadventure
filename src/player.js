@@ -1,5 +1,5 @@
 import $ from 'jquery';
-import Powerups from './powerups';
+// import Powerups from './powerups';
 
 const NYAN_CATS = ['https://i.imgur.com/rZSkKF0.gif', 'https://i.imgur.com/YNcTBuU.gif'];
 
@@ -14,7 +14,7 @@ class Player {
     this.avatar = NYAN_CATS;
     this.link = null;
 
-    this.powerups = new Powerups();
+    // this.powerups = new Powerups();
 
     this.insertPlayer = this.insertPlayer.bind(this);
     this.getLinks = this.getLinks.bind(this);
@@ -24,7 +24,7 @@ class Player {
     this.getAvatarRight = this.getAvatarRight.bind(this);
     this.getLink = this.getLink.bind(this);
     this.updateOnLink = this.updateOnLink.bind(this);
-    this.updateOnPowerup = this.updateOnPowerup.bind(this);
+    // this.updateOnPowerup = this.updateOnPowerup.bind(this);
   }
 
   getLinks() {
@@ -64,7 +64,8 @@ class Player {
         Player.scrollIntoCenterView(`#${this.id}`);
       }
       this.updateOnLink();
-      this.updateOnPowerup();
+      // console.log("got to movePlayer");
+      // this.updateOnPowerup();
     }
   }
 
@@ -97,42 +98,43 @@ class Player {
     this.link = link;
   }
 
-  updateOnPowerup() {
-    const leftEnd = this.position.left;
-    const rightEnd = this.position.left + this.size.width;
-    const topEnd = this.position.top;
-    const bottomEnd = this.position.top + this.size.height;
+  // updateOnPowerup() {
+  //   const leftEnd = this.position.left;
+  //   const rightEnd = this.position.left + this.size.width;
+  //   const topEnd = this.position.top;
+  //   const bottomEnd = this.position.top + this.size.height;
 
-    const overlap = this.powerups.powerups.filter((powerup) => {
-      const xOverlap = (leftEnd > powerup.getPosition().left && leftEnd < powerup.getPosition().left + powerup.size.width) ||
-        (rightEnd > powerup.position.left && rightEnd < powerup.position.left + powerup.size.width) ||
-        (leftEnd < powerup.position.left && rightEnd > powerup.position.left + powerup.size.width);
-      const yOverlap = (topEnd > powerup.position.top && topEnd < powerup.position.top + powerup.size.height) ||
-        (bottomEnd > powerup.position.top && bottomEnd < powerup.position.top + powerup.size.height) ||
-        (topEnd < powerup.position.top && bottomEnd > powerup.top + powerup.size.height);
-      return xOverlap && yOverlap;
-    });
-    const hitPowerup = overlap.length !== 0 ? overlap[0] : null;
-    if (hitPowerup) {
-      // do something
-      if (hitPowerup.type === "flipControls") {
-        console.log("hit flipControls powerup!!");
-      }
-      // Remove from powerups array
-      this.powerups.powerups = this.powerups.powerups.filter((powerup) => {
-        return powerup !== hitPowerup;
-      });
+  //   const overlap = this.powerups.powerups.filter((powerup) => {
+  //     const xOverlap = (leftEnd > powerup.getPosition().left && leftEnd < powerup.getPosition().left + powerup.size.width) ||
+  //       (rightEnd > powerup.position.left && rightEnd < powerup.position.left + powerup.size.width) ||
+  //       (leftEnd < powerup.position.left && rightEnd > powerup.position.left + powerup.size.width);
+  //     const yOverlap = (topEnd > powerup.position.top && topEnd < powerup.position.top + powerup.size.height) ||
+  //       (bottomEnd > powerup.position.top && bottomEnd < powerup.position.top + powerup.size.height) ||
+  //       (topEnd < powerup.position.top && bottomEnd > powerup.top + powerup.size.height);
+  //     return xOverlap && yOverlap;
+  //   });
+  //   const hitPowerup = overlap.length !== 0 ? overlap[0] : null;
+  //   if (hitPowerup) {
+  //     // do something
+  //     if (hitPowerup.type === "flipControls") {
+  //       console.log("hit flipControls powerup!!");
 
-      const domPowerup = document.elementFromPoint(hitPowerup.position.left, hitPowerup.position.top);
-      $(domPowerup).css('visibility', 'hidden');
+  //     }
+  //     // Remove from powerups array
+  //     this.powerups.powerups = this.powerups.powerups.filter((powerup) => {
+  //       return powerup !== hitPowerup;
+  //     });
 
-      // $('#powerups').removeChild($(hitPowerup));
-      // $(hitPowerup).parentNode.removeChild($(hitPowerup));
-      // $(hitPowerup).css({'visibility': 'hidden'});
-      // $(hitPowerup).css({'display': 'none'});
-      // console.log($(hitPowerup));
-    }
-  }
+  //     const domPowerup = document.elementFromPoint(hitPowerup.position.left, hitPowerup.position.top);
+  //     $(domPowerup).css('visibility', 'hidden');
+
+  //     // $('#powerups').removeChild($(hitPowerup));
+  //     // $(hitPowerup).parentNode.removeChild($(hitPowerup));
+  //     // $(hitPowerup).css({'visibility': 'hidden'});
+  //     // $(hitPowerup).css({'display': 'none'});
+  //     // console.log($(hitPowerup));
+  //   }
+  // }
 
   // Detect collisions of avatar with links and powerups
   // detectCollision(collider) {
@@ -166,7 +168,6 @@ class Player {
   getLink() {
     return this.link ? $(this.link).attr('href') : null;
   }
-
 
   static isScrolledIntoView(elem) {
     const $elem = $(elem);

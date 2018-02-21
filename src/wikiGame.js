@@ -50,7 +50,9 @@ class WikiGame {
 
     this.updateOnPowerup = this.updateOnPowerup.bind(this);
     this.flipControls = this.flipControls.bind(this);
-    this.unflipControls = this.unflipControls.bind(this);
+    this.speedUp = this.speedUp.bind(this);
+    this.slowDown = this.slowDown.bind(this);
+    this.resetMultiplier = this.resetMultiplier.bind(this);
 
     this.renderGame();
     window.addEventListener('keydown', this.onKeyDown);
@@ -122,48 +124,135 @@ class WikiGame {
     const topEnd = this.curPlayer.position.top;
     const bottomEnd = this.curPlayer.position.top + this.curPlayer.size.height;
 
-    const overlap = this.powerups.powerups.filter((powerup) => {
-      const xOverlap = (leftEnd > powerup.getPosition().left && leftEnd < powerup.getPosition().left + powerup.size.width) ||
-        (rightEnd > powerup.position.left && rightEnd < powerup.position.left + powerup.size.width) ||
-        (leftEnd < powerup.position.left && rightEnd > powerup.position.left + powerup.size.width);
-      const yOverlap = (topEnd > powerup.position.top && topEnd < powerup.position.top + powerup.size.height) ||
-        (bottomEnd > powerup.position.top && bottomEnd < powerup.position.top + powerup.size.height) ||
-        (topEnd < powerup.position.top && bottomEnd > powerup.top + powerup.size.height);
+    const overlap = this.powerups.jqueryPowerups.filter((powerup) => {
+      console.log(powerup);
+      const xOverlap = (leftEnd > powerup.style.left && leftEnd < powerup.style.left + powerup.style.width) ||
+        (rightEnd > powerup.style.left && rightEnd < powerup.style.left + powerup.style.width) ||
+        (leftEnd < powerup.style.left && rightEnd > powerup.style.left + powerup.style.width);
+      const yOverlap = (topEnd > powerup.style.top && topEnd < powerup.style.top + powerup.style.height) ||
+        (bottomEnd > powerup.style.top && bottomEnd < powerup.style.top + powerup.style.height) ||
+        (topEnd < powerup.style.top && bottomEnd > powerup.top + powerup.style.height);
       return xOverlap && yOverlap;
     });
     const hitPowerup = overlap.length !== 0 ? overlap[0] : null;
     if (hitPowerup) {
-      if (hitPowerup.type === "flipControls") {
+      // if (hitPowerup.type === "flipControls") {
+      if (hitPowerup.powerupID === 0) {
         console.log("hit flipControls powerup!!");
         this.flipControls();
       }
+      else if (hitPowerup.powerupID === 1) {
+        console.log("hit speedUp powerup!!");
+        this.speedUp();
+      }
+      else if (hitPowerup.powerupID === 2) {
+        console.log("hit slowDown powerup!!");
+        this.slowDown();
+      }
       // Remove from powerups array
-      this.powerups.powerups = this.powerups.powerups.filter((powerup) => {
+      this.powerups.powerups = this.powerups.jqueryPowerups.filter((powerup) => {
         return powerup !== hitPowerup;
       });
+
+      let index = hitPowerup.index;
+      console.log("index is " + index);
+      console.log("logging hitpowerup");
+      console.log($(hitPowerup));
 
       // Hide icon from user
       // console.log($('.flipControls'));
 
-      // const domPowerup = document.elementFromPoint(hitPowerup.position.left, hitPowerup.position.top);
-      // $(domPowerup).css('visibility', 'hidden');
+      // $('.powerup')[index].css({'visibility': 'hidden'});
+      // $('.powerup[index='+index+']').css({'visibility': 'hidden'});
 
-      // $('#powerups').removeChild($(hitPowerup));
-      // $(hitPowerup).parentNode.removeChild($(hitPowerup));
       $(hitPowerup).css({'visibility': 'hidden'});
       // $(hitPowerup).css({'display': 'none'});
       console.log($(hitPowerup));
     }
   }
 
+  // updateOnPowerup() {
+  //   const leftEnd = this.curPlayer.position.left;
+  //   const rightEnd = this.curPlayer.position.left + this.curPlayer.size.width;
+  //   const topEnd = this.curPlayer.position.top;
+  //   const bottomEnd = this.curPlayer.position.top + this.curPlayer.size.height;
+
+  //   const overlap = this.powerups.powerups.filter((powerup) => {
+  //     const xOverlap = (leftEnd > powerup.position.left && leftEnd < powerup.position.left + powerup.size.width) ||
+  //       (rightEnd > powerup.position.left && rightEnd < powerup.position.left + powerup.size.width) ||
+  //       (leftEnd < powerup.position.left && rightEnd > powerup.position.left + powerup.size.width);
+  //     const yOverlap = (topEnd > powerup.position.top && topEnd < powerup.position.top + powerup.size.height) ||
+  //       (bottomEnd > powerup.position.top && bottomEnd < powerup.position.top + powerup.size.height) ||
+  //       (topEnd < powerup.position.top && bottomEnd > powerup.top + powerup.size.height);
+  //     return xOverlap && yOverlap;
+  //   });
+  //   const hitPowerup = overlap.length !== 0 ? overlap[0] : null;
+  //   if (hitPowerup) {
+  //     // if (hitPowerup.type === "flipControls") {
+  //     if (hitPowerup.powerupID === 0) {
+  //       console.log("hit flipControls powerup!!");
+  //       this.flipControls();
+  //     }
+  //     else if (hitPowerup.powerupID === 1) {
+  //       console.log("hit speedUp powerup!!");
+  //       this.speedUp();
+  //     }
+  //     else if (hitPowerup.powerupID === 2) {
+  //       console.log("hit slowDown powerup!!");
+  //       this.slowDown();
+  //     }
+  //     // Remove from powerups array
+  //     this.powerups.powerups = this.powerups.powerups.filter((powerup) => {
+  //       return powerup !== hitPowerup;
+  //     });
+
+  //     let index = hitPowerup.index;
+  //     console.log("index is " + index);
+  //     console.log("logging hitpowerup");
+  //     console.log($(hitPowerup));
+
+  //     // Hide icon from user
+  //     // console.log($('.flipControls'));
+
+  //     // const domPowerup = document.elementFromPoint(hitPowerup.position.left, hitPowerup.position.top);
+  //     // $(domPowerup).css('visibility', 'hidden');
+
+  //     // $('#powerups').removeChild($(hitPowerup));
+  //     // $(hitPowerup).parentNode.removeChild($(hitPowerup));
+
+  //     // let strrr = '.powerup[index=\''+index+'\']';
+  //     // console.log(strrr);
+
+  //     // $('.powerup')[index].css({'visibility': 'hidden'});
+  //     // $('.powerup[index='+index+']').css({'visibility': 'hidden'});
+
+
+  //     // $(hitPowerup).css({'visibility': 'hidden'});
+  //     // $(hitPowerup).css({'display': 'none'});
+  //     // console.log($(hitPowerup));
+  //     console.log($('.powerup')[index]);
+  //   }
+  // }
+
   flipControls() {
     console.log("in flipControls");
     this.flipMultiplier = -1;
-
-    setTimeout(this.unflipControls, 5000);
+    setTimeout(this.resetMultiplier, 5000);
   }
 
-  unflipControls() {
+  speedUp() {
+    console.log("in speedUp");
+    this.flipMultiplier = 2;
+    setTimeout(this.resetMultiplier, 5000);
+  }
+
+  slowDown() {
+    console.log("in slowDown");
+    this.flipMultiplier = 0.3;
+    setTimeout(this.resetMultiplier, 5000);
+  }
+
+  resetMultiplier() {
     this.flipMultiplier = 1;
   }
 
@@ -176,9 +265,7 @@ class WikiGame {
       case 76: // click link with L
         this.openLink();
         break;
-      case 80: // Testing flip controls with 'P'
-        console.log('pressed p, flipping controls');
-        this.flipControls();
+      case 80: // P
         break;
       default:
         break;
