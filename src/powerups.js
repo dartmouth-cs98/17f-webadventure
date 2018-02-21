@@ -11,7 +11,7 @@ class Powerups {
     this.icon = ICON;
 
     this.powerups = [];
-    this.jqueryPowerups = [];
+    // this.jqueryPowerups = [];
 
     this.createPowerups = this.createPowerups.bind(this);
     this.insertPowerups = this.insertPowerups.bind(this);
@@ -41,16 +41,9 @@ class Powerups {
     console.log("insertPowerups");
     $('body').append(`<div id="powerups" style="position: absolute; top: 0px; left: 0px;"></div>`);
     for(var i=0; i<this.powerups.length; i++){
+      this.powerups[i].insertPowerup(i);
       console.log(this.powerups[i]);
-      var powerDiv = this.powerups[i].insertPowerup();
-      this.jqueryPowerups.push($(powerDiv));
     }
-    // $.each(this.powerups, (powerup) => {
-    //   console.log(powerup);
-    //   var power = powerup.insertPowerup();
-    //   this.jqueryPowerups.push(power);
-    // });
-    console.log(this.jqueryPowerups);
   }
 }
 

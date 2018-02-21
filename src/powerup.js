@@ -7,40 +7,22 @@ const types = ['flipControls', 'speedUp', 'slowDown'];
 
 class Powerup {
   constructor(type, position = { left: 0, top: 0 }) {
-    this.powerupID = type;
+    this.type = type; // corresponds to index of types array above
     this.position = position;
     this.size = { height: 100, width: 100 };
     this.icon = ICON;
     this.index = 0;
 
     this.insertPowerup = this.insertPowerup.bind(this);
-    this.getHTML = this.getHTML.bind(this);
-    this.getPosition = this.getPosition.bind(this);
   }
 
-  insertPowerup() {
-    // this.index = index;
+  insertPowerup(index) {
+    this.index = index;
     console.log("inserting at "+this.position);
-    // $('#powerups').append(`<div powerupID="${this.powerupID} "index=${index} class=powerup
-    //           style="position: absolute; left:${this.position.left}px; top:${this.position.top}px;">
-    //           <img class="powerup" src="${ICON[this.powerupID]}" alt="powerup img"/>
-    //         </div>`);
-    var powerup = this.getHTML();
-    $('#powerups').append(powerup);
-    return powerup;
-  }
-
-  getHTML() {
-    // return `<img powerupID=${this.powerupID} index=${index} class=powerup
-    //           style="position: absolute; left:${this.position.left}px; top:${this.position.top}px; width:100px; height:100px;"
-    //           src=${ICON[this.powerupID]} alt="powerup img" />`;
-    return `<img powerupID=${this.powerupID} class=powerup
-              style="position: absolute; left:${this.position.left}px; top:${this.position.top}px; width:100px; height:100px;"
-              src=${ICON[this.powerupID]} alt="powerup img" />`;
-  }
-
-  getPosition() {
-    return { left: this.position.left, top: this.position.top };
+    $('#powerups').append(`<img type=${this.type} index=${index} class=powerup
+              style="position: absolute; left:${this.position.left}px; top:${this.position.top}px;
+              width:${this.size.width}px; height${this.size.height}px;"
+              src=${ICON[this.type]} alt="${types[this.type]}" />`);
   }
 }
 
