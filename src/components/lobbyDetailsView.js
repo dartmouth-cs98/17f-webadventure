@@ -68,7 +68,7 @@ class LobbyDetailsView extends Component {
     }
   }
 
-  joinPublicGame() {
+  /*joinPublicGame() {
     this.setState({ errorMsgPublicGame: true });
     if (this.props.selectedGame && // if selectedGame exists
         this.props.selectedGame.players.length < 5 && // if the length is less than 5
@@ -81,7 +81,7 @@ class LobbyDetailsView extends Component {
       this.props.joinPublicGame(newPlayers);
       this.startTimer();
     }
-  }
+  }*/
 
   joinPrivateGame() {
     this.setState({ errorMsgPrivateGame: true });
@@ -137,7 +137,7 @@ class LobbyDetailsView extends Component {
     return (
       <div id="lobby-game-view">
         <div id="public">
-          <button id="public-game-button" onClick={this.joinPublicGame}>
+          <button id="public-game-button" onClick={e => this.props.joinPublicGame(e)}>
             Join Public
           </button>
         </div>

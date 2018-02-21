@@ -111,8 +111,8 @@ class Lobby extends Component {
     });
   }
 
-  joinPublicGame(gameId) {
-    this.setState({ selectedGame: this.state.selectedGame });
+  joinPublicGame() {
+    this.setState({ selectedGameID: this.state.selectedGame.id });
   }
 
   joinPrivateGame(gameId) {
@@ -126,10 +126,12 @@ class Lobby extends Component {
     });
   }
   backToGameSelect() {
-    this.setState({ selectedGame: null });
+    this.setState({ selectedGameID: null });
   }
 
   renderLowerLeftComponent() {
+    console.log(this.state.selectedGameID);
+    console.log(this.state.selectedGame);
     if (this.state.selectedGameID && this.state.selectedGame) {
       return (
         <SelectedGameView
@@ -141,8 +143,8 @@ class Lobby extends Component {
     } else {
       return (
         <LobbyDetailsView
-          joinPublicGame={this.joinPublicGame}
           joinPrivateGame={this.joinPrivateGame}
+          joinPublicGame={this.joinPublicGame}
           hostPrivateGame={this.hostPrivateGame}
           backToGameSelect={this.backToGameSelect}
           selectedGame={this.state.selectedGame}
@@ -162,8 +164,8 @@ class Lobby extends Component {
             <div id="lobby-contents">
               <LobbyGamesView
                 games={this.state.games}
-                selectedGameID={this.state.selectedGameID}
-                onSelectGame={this.onGameIDChange}
+                selectedGame={this.state.selectedGame}
+                onSelectGame={this.onGameChange}
               />
               <div id="lobby-columns">
                 <DisplayUser

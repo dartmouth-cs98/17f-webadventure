@@ -35,7 +35,7 @@ const LobbyGamesView = (props) => {
       .map((game, index) => {
         const start = splitWord(game.startPage);
         const end = splitWord(game.goalPage);
-        if (game.id === props.selectedGameID) {
+        if (props.selectedGame && game.id === props.selectedGame.id) {
           return (
             <div className="game-selected game-item">
               <div className="game-title-row">
