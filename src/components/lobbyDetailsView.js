@@ -68,7 +68,7 @@ class LobbyDetailsView extends Component {
     }
   }
 
-  /*joinPublicGame() {
+  joinPublicGame() {
     this.setState({ errorMsgPublicGame: true });
     if (this.props.selectedGame && // if selectedGame exists
         this.props.selectedGame.players.length < 5 && // if the length is less than 5
@@ -78,10 +78,10 @@ class LobbyDetailsView extends Component {
       this.setState({
         errorMsgPublicGame: false,
       });
-      this.props.joinPublicGame(newPlayers);
+      this.props.joinPublicGame();
       this.startTimer();
     }
-  }*/
+  }
 
   joinPrivateGame() {
     this.setState({ errorMsgPrivateGame: true });
