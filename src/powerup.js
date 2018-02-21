@@ -1,7 +1,7 @@
 import $ from 'jquery';
 
 const ICON = ['https://i.imgur.com/pp96Q4O.gif', 'https://media.giphy.com/media/11d7p2CrzQzfOw/giphy.gif',
-'https://78.media.tumblr.com/4abad145cfeca409f3f76cac7e9393de/tumblr_mq50y4zfz71szhoyto1_400.gif'];
+  'https://78.media.tumblr.com/4abad145cfeca409f3f76cac7e9393de/tumblr_mq50y4zfz71szhoyto1_400.gif'];
 
 const types = ['flipControls', 'speedUp', 'slowDown'];
 
@@ -18,11 +18,11 @@ class Powerup {
 
   insertPowerup(index) {
     this.index = index;
-    console.log("inserting at "+this.position);
-    $('#powerups').append(`<img type=${this.type} index=${index} class=powerup
-              style="position: absolute; left:${this.position.left}px; top:${this.position.top}px;
-              width:${this.size.width}px; height${this.size.height}px;"
-              src=${ICON[this.type]} alt="${types[this.type]}" />`);
+    const element = `<img type=${this.type} index=${index} class=powerup
+      style="position: absolute; left:${this.position.left}px; top:${this.position.top}px;
+      width:' + this.size.width + 'px; height:' + this.size.height + 'px;"
+      src=${ICON[this.type]} alt="${types[this.type]}" />`;
+    $('#powerups').append(element);
   }
 }
 

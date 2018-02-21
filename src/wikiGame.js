@@ -91,7 +91,7 @@ class WikiGame {
 
   updateGame() {
     const newLoc = this.curPlayer.getPosition();
-    var stepSize = 5 * this.flipMultiplier;
+    const stepSize = 5 * this.flipMultiplier;
     if (this.keysPressed.x.left && !this.keysPressed.x.right) {
       newLoc.x -= stepSize;
       this.curPlayer.updateDirRight(false);
@@ -118,32 +118,27 @@ class WikiGame {
   }
 
   updateOnPowerup() {
-    const leftEnd = this.curPlayer.position.left;
-    const rightEnd = this.curPlayer.position.left + this.curPlayer.size.width;
-    const topEnd = this.curPlayer.position.top;
-    const bottomEnd = this.curPlayer.position.top + this.curPlayer.size.height;
+    const left = this.curPlayer.position.left;
+    const right = this.curPlayer.position.left + this.curPlayer.size.width;
+    const top = this.curPlayer.position.top;
+    const bottom = this.curPlayer.position.top + this.curPlayer.size.height;
 
-    const overlap = this.powerups.powerups.filter((powerup) => {
-      const xOverlap = (leftEnd > powerup.position.left && leftEnd < powerup.position.left + powerup.size.width) ||
-        (rightEnd > powerup.position.left && rightEnd < powerup.position.left + powerup.size.width) ||
-        (leftEnd < powerup.position.left && rightEnd > powerup.position.left + powerup.size.width);
-      const yOverlap = (topEnd > powerup.position.top && topEnd < powerup.position.top + powerup.size.height) ||
-        (bottomEnd > powerup.position.top && bottomEnd < powerup.position.top + powerup.size.height) ||
-        (topEnd < powerup.position.top && bottomEnd > powerup.top + powerup.size.height);
+    const overlap = this.powerups.powerups.filter((pow) => {
+      const xOverlap = (left > pow.position.left && left < pow.position.left + pow.size.width) ||
+        (right > pow.position.left && right < pow.position.left + pow.size.width) ||
+        (left < pow.position.left && right > pow.position.left + pow.size.width);
+      const yOverlap = (top > pow.position.top && top < pow.position.top + pow.size.height) ||
+        (bottom > pow.position.top && bottom < pow.position.top + pow.size.height) ||
+        (top < pow.position.top && bottom > pow.top + pow.size.height);
       return xOverlap && yOverlap;
     });
     const hitPowerup = overlap.length !== 0 ? overlap[0] : null;
     if (hitPowerup) {
       if (hitPowerup.type === 0) {
-        console.log("hit flipControls powerup!!");
         this.flipControls();
-      }
-      else if (hitPowerup.type === 1) {
-        console.log("hit speedUp powerup!!");
+      } else if (hitPowerup.type === 1) {
         this.speedUp();
-      }
-      else if (hitPowerup.type === 2) {
-        console.log("hit slowDown powerup!!");
+      } else if (hitPowerup.type === 2) {
         this.slowDown();
       }
       // Remove from powerups array
@@ -151,30 +146,24 @@ class WikiGame {
         return powerup !== hitPowerup;
       });
 
-      let index = hitPowerup.index;
-      console.log("index is " + index);
-      console.log("logging hitpowerup");
-      console.log($(hitPowerup));
-
       // Hide icon from user
-      $('.powerup[index='+index+']').css({'visibility': 'hidden'});
+      // const powerupSelect = '.powerup[index=' + hitPowerup.index + ']';
+      const powerupSelect = `.powerup[index=${hitPowerup.index}]`;
+      $(powerupSelect).css({ visibility: 'hidden' });
     }
   }
 
   flipControls() {
-    console.log("in flipControls");
     this.flipMultiplier = -1;
     setTimeout(this.resetMultiplier, 5000);
   }
 
   speedUp() {
-    console.log("in speedUp");
     this.flipMultiplier = 2;
     setTimeout(this.resetMultiplier, 5000);
   }
 
   slowDown() {
-    console.log("in slowDown");
     this.flipMultiplier = 0.3;
     setTimeout(this.resetMultiplier, 5000);
   }
