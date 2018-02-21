@@ -16,4 +16,7 @@ const onStart = (username, game) => {
   document.getElementById('wa_lobby').remove();
   chrome.runtime.sendMessage(request);
 };
-ReactDOM.render(<Lobby onStart={onStart} />, document.getElementById('wa_lobby'));
+const exitGame = () => {
+  document.getElementById('wa_lobby').remove();
+};
+ReactDOM.render(<Lobby onStart={onStart} exitGame={exitGame} />, document.getElementById('wa_lobby'));

@@ -226,6 +226,21 @@ svg:hover {
   align-items: center
 }
 
+.exit-lobby-button {
+  color: black;
+  font-weight: 900;
+  background: none;
+  border: none;
+  font-size: 20px;
+  position: fixed;
+  margin: 0;
+  padding: 0;
+}
+.exit-lobby-button:hover {
+  color: gray;
+  background: none;
+}
+
 .avatar-options-row {
   display: flex;
   flex-direction: row;
