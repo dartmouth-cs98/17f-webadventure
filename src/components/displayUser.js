@@ -9,12 +9,14 @@ class DisplayUser extends Component {
     this.state = {
       username: this.props.username,
       isEditing: false,
+      errorMsg: false,
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.toggleEditIcon = this.toggleEditIcon.bind(this);
     this.toggleEditState = this.toggleEditState.bind(this);
     this.renderUsername = this.renderUsername.bind(this);
+    this.renderErrorMessage = this.renderErrorMessage.bind(this);
     this.onInputUsernameChange = this.onInputUsernameChange.bind(this);
   }
 
@@ -29,26 +31,31 @@ class DisplayUser extends Component {
   toggleEditState() {
     if (this.state.isEditing) {
       this.props.onUsername(this.state.username);
-      this.setState({ isEditing: false });
+      this.setState({ isEditing: false, errorMsg: false });
+      if (this.state.username === '' || this.state.username.length > 12) {
+        this.setState({ isEditing: true, errorMsg: true });
+      }
     } else {
-      this.setState({ isEditing: true });
+      this.setState({ isEditing: true, errorMsg: false });
     }
   }
 
   toggleEditIcon() {
     if (this.state.isEditing) {
       return (
-        <div
-          id="icon-button"
-          title="Finish Editing"
-          onClick={this.toggleEditState}
-          role="button"
-          tabIndex={0}
-        >
-          <svg fill="#000000" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
-            <path d="M0 0h24v24H0z" fill="none" />
-            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
-          </svg>
+        <div>
+          <div
+            id="icon-button"
+            title="Finish Editing"
+            onClick={this.toggleEditState}
+            role="button"
+            tabIndex={0}
+          >
+            <svg fill="#000000" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M0 0h24v24H0z" fill="none" />
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
+            </svg>
+          </div>
         </div>
       );
     } else {
@@ -77,9 +84,20 @@ class DisplayUser extends Component {
     }
   }
 
+  renderErrorMessage() {
+    if (this.state.errorMsg) {
+      return (
+        <div className="errorMsg">Must be valid username (less than 12 chars)!</div>
+      );
+    } else {
+      return (<div />);
+    }
+  }
+
   render() {
     return (
       <div id="display-user">
+        {this.renderErrorMessage()}
         <div id="username-row">
           <div className="empty-div" />
           {this.renderUsername()}
