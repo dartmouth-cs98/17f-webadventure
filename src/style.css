@@ -226,6 +226,21 @@ svg:hover {
   align-items: center
 }
 
+.exit-lobby-button {
+  color: black;
+  font-weight: 900;
+  background: none;
+  border: none;
+  font-size: 20px;
+  position: fixed;
+  margin: 0;
+  padding: 0;
+}
+.exit-lobby-button:hover {
+  color: gray;
+  background: none;
+}
+
 .avatar-options-row {
   display: flex;
   flex-direction: row;
@@ -257,7 +272,7 @@ svg:hover {
   display: flex;
   justify-content: flex-start;
   margin-left: 5px;
-  margin-right: 5px
+  margin-right: 5px;
 }
 
 #lobby-game-view {
@@ -273,7 +288,8 @@ svg:hover {
   align-items: center;
   line-height: 30px;
   font-family: 'Orbitron',sans-serif;
-  font-size: 15px
+  font-size: 15px;
+  /* padding-top: 5px; */
 }
 
 .leaderboard-item-right {
@@ -286,6 +302,7 @@ svg:hover {
   text-shadow: -2px 0 #000,0 2px #000,2px 0 #000,0 -2px #000;
   background: linear-gradient(124deg,#ff2400,#e81d1d,#e8b71d,#e3e81d,#1de840,#1ddde8,#2b1de8,#dd00f3,#dd00f3);
   background-size: 1800% 1800%;
+  padding-top: 5px;
   animation-name: rainbow-gradient;
   animation-duration: 18s;
   animation-timing-function: ease-out;
@@ -383,6 +400,13 @@ svg:hover {
   color: #fff;
   background: #6495ed;
   border-radius: 5px
+}
+
+#goal-page {
+  text-align: center;
+  font-family: 'Orbitron',sans-serif;
+  font-size: 15px;
+  margin: 6px 0;
 }
 
 #or {
@@ -585,4 +609,10 @@ div.panel-alert:empty {
 
 #end-flex > button {
   margin-top: 20px;
+}
+
+#top, #timer {
+  font-family: 'Orbitron',sans-serif;
+  text-align: center;
+  margin-bottom:3px;
 }
