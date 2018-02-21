@@ -7,7 +7,7 @@ const ICON = 'https://media.giphy.com/media/26tPgy93ssTeTTSqA/giphy.gif';
 
 class Powerups {
   constructor() {
-    this.types = ["flip", "speedup", "slowdown"];
+    this.types = ["flipControls", "speedup", "slowdown"];
     this.icon = ICON;
 
     this.powerups = [];
@@ -22,7 +22,6 @@ class Powerups {
     console.log("createPowerups");
 
     const numPowerups = Math.floor(Math.random() * 5);
-    console.log(numPowerups);
 
     var i;
     for(i=0; i<numPowerups; i++){
@@ -37,6 +36,7 @@ class Powerups {
 
   insertPowerups() {
     console.log("insertPowerups");
+    $('body').append(`<div id="powerups" style="position: absolute; top: 0px; left: 0px;"></div>`);
     this.powerups.map(powerup => powerup.insertPowerup());
   }
 }

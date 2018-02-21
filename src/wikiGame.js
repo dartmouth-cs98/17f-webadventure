@@ -22,7 +22,7 @@ class WikiGame {
       },
     };
 
-    this.powerups = new Powerups();
+    this.powerups = this.curPlayer.powerups;
 
     this.flipMultiplier = 1; // either 1 or -1 for flipped controls
     this.leaderboard = {
@@ -61,8 +61,6 @@ class WikiGame {
     ReactDOM.render(<App leaderboard={this.leaderboard} />, document.getElementById('wa-main'));
     this.setupToc();
     const curPosition = this.curPlayer.getPosition();
-    console.log("inserting player at curPosition "+curPosition);
-    console.log(curPosition.x+", "+curPosition.y);
     this.curPlayer.insertPlayer(curPosition.x, curPosition.y);
     this.powerups.insertPowerups();
   }
