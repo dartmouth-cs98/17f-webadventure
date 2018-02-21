@@ -1,9 +1,9 @@
 import $ from 'jquery';
 
-const ICON = 'https://media.giphy.com/media/26tPgy93ssTeTTSqA/giphy.gif';
+const ICON = 'https://i.imgur.com/pp96Q4O.gif';
 
 class FlipControls {
-  constructor(type, position = { left: 600, top: 600 }) {
+  constructor(position = { left: 0, top: 0 }) {
     this.type = "FlipControls";
     this.position = position;
     this.size = { height: 40, width: 40 };
@@ -16,7 +16,7 @@ class FlipControls {
   insertPowerup() {
     console.log("inserting at "+this.position);
     $('body').append(`<div id="${this.type}" class="powerup"
-              style="position: absolute; left="${this.position.left}"; top="${this.position.right}";">
+              style="position: absolute; left:${this.position.left}px; top:${this.position.top}px;">
               <img class="player-img" src="${ICON}" alt="powerup img"/>
             </div>`);
   }

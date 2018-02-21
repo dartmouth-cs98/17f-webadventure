@@ -27,8 +27,8 @@ class Powerups {
     var i;
     for(i=0; i<numPowerups; i++){
       const $window = $(window);
-      let x = Math.random()*$window.width();
-      let y = Math.random()*$window.height();
+      let x = Math.floor(Math.random()*$window.width());
+      let y = Math.floor(Math.random()*$window.height());
 
       let powerup = new FlipControls({ left: x, top: y });
       this.powerups.push(powerup);
@@ -36,7 +36,7 @@ class Powerups {
   }
 
   insertPowerups() {
-    console.log("insertPowerups asddf"+this.powerups.length+" safsdwowow");
+    console.log("insertPowerups");
     this.powerups.map(powerup => powerup.insertPowerup());
   }
 }
