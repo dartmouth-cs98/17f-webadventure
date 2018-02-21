@@ -41,21 +41,6 @@ const End = () => {
       });
   };
 
-  // const renderGames = () => {
-  //   return games.players
-  //     .sort((a, b) => a.numClicks - b.numClicks)
-  //     .map((player, index) => {
-  //       return (
-  //         <div>
-  //           <div className="leaderboard-item-left">
-  //             <div className="leaderboard-rank">{index + 1}</div>
-  //             {renderFinishTime(player)}
-  //           </div>
-  //         </div>
-  //       );
-  //     });
-  // };
-
   return (
     <div id="end">
       <div id="end-flex">

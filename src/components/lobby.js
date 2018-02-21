@@ -48,6 +48,7 @@ class Lobby extends Component {
   }
 
   onGameChange(game) {
+    console.log('check');
     this.setState({ selectedGame: game });
   }
 
