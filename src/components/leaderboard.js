@@ -3,9 +3,7 @@ import React, { Component } from 'react';
 class Leaderboard extends Component {
   constructor(props) {
     super(props);
-
     this.state = { timer: 54 };
-
     this.renderRankings = this.renderRankings.bind(this);
   }
 
@@ -39,7 +37,6 @@ class Leaderboard extends Component {
   render() {
     const goalPage = this.props.goalPage.split('/').pop();
     if (this.props.curPlayer) {
-      // console.log('props.currplayer trueeeee');
       return (
         <div id="wa-container">
           <img id="wiki-logo" src="https://i.imgur.com/hQbOKPS.png" alt="wiki logo" />
@@ -62,7 +59,6 @@ class Leaderboard extends Component {
         </div>
       );
     }
-    // console.log('props.currplayer falseeeee');
     return (
       <div id="wa-container">
         <img id="wiki-logo" src="https://i.imgur.com/hQbOKPS.png" alt="wiki logo" />
