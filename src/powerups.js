@@ -1,6 +1,6 @@
 import $ from 'jquery';
 
-import FlipControls from './powerups/FlipControls';
+import FlipControls from './powerups/flipControls';
 
 
 const ICON = 'https://media.giphy.com/media/26tPgy93ssTeTTSqA/giphy.gif';
@@ -21,7 +21,7 @@ class Powerups {
   createPowerups() {
     console.log("createPowerups");
 
-    const numPowerups = Math.floor(Math.random() * 5);
+    const numPowerups = Math.floor(Math.random() * 5)+3;
 
     var i;
     for(i=0; i<numPowerups; i++){

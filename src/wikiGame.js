@@ -22,7 +22,8 @@ class WikiGame {
       },
     };
 
-    this.powerups = this.curPlayer.powerups;
+    // this.powerups = this.curPlayer.powerups;
+    this.powerups = new Powerups();
 
     this.flipMultiplier = 1; // either 1 or -1 for flipped controls
     this.leaderboard = {
@@ -47,6 +48,7 @@ class WikiGame {
     this.onKeyDown = this.onKeyDown.bind(this);
     this.onKeyUp = this.onKeyUp.bind(this);
 
+    this.updateOnPowerup = this.updateOnPowerup.bind(this);
     this.flipControls = this.flipControls.bind(this);
     this.unflipControls = this.unflipControls.bind(this);
 
@@ -81,6 +83,7 @@ class WikiGame {
         const { left, top } = $(document.getElementById(id.substring(1))).offset();
         // Issue with jquery on id's with special characters; i.e. (, ), -
         this.curPlayer.movePlayer(left, top);
+        this.updateOnPowerup();
       });
     });
   }
@@ -101,6 +104,7 @@ class WikiGame {
       newLoc.y += stepSize;
     }
     this.curPlayer.movePlayer(newLoc.x, newLoc.y);
+    this.updateOnPowerup();
   }
 
   openLink() {
@@ -109,6 +113,44 @@ class WikiGame {
       const redirectLink = `https://en.wikipedia.org${link}`;
       this.leaderboard.url = redirectLink;
       this.onNewUrl(redirectLink);
+    }
+  }
+
+  updateOnPowerup() {
+    const leftEnd = this.curPlayer.position.left;
+    const rightEnd = this.curPlayer.position.left + this.curPlayer.size.width;
+    const topEnd = this.curPlayer.position.top;
+    const bottomEnd = this.curPlayer.position.top + this.curPlayer.size.height;
+
+    const overlap = this.powerups.powerups.filter((powerup) => {
+      const xOverlap = (leftEnd > powerup.getPosition().left && leftEnd < powerup.getPosition().left + powerup.size.width) ||
+        (rightEnd > powerup.position.left && rightEnd < powerup.position.left + powerup.size.width) ||
+        (leftEnd < powerup.position.left && rightEnd > powerup.position.left + powerup.size.width);
+      const yOverlap = (topEnd > powerup.position.top && topEnd < powerup.position.top + powerup.size.height) ||
+        (bottomEnd > powerup.position.top && bottomEnd < powerup.position.top + powerup.size.height) ||
+        (topEnd < powerup.position.top && bottomEnd > powerup.top + powerup.size.height);
+      return xOverlap && yOverlap;
+    });
+    const hitPowerup = overlap.length !== 0 ? overlap[0] : null;
+    if (hitPowerup) {
+      // do something
+      if (hitPowerup.type === "flipControls") {
+        console.log("hit flipControls powerup!!");
+        
+      }
+      // Remove from powerups array
+      this.powerups.powerups = this.powerups.powerups.filter((powerup) => {
+        return powerup !== hitPowerup;
+      });
+
+      const domPowerup = document.elementFromPoint(hitPowerup.position.left, hitPowerup.position.top);
+      $(domPowerup).css('visibility', 'hidden');
+
+      // $('#powerups').removeChild($(hitPowerup));
+      // $(hitPowerup).parentNode.removeChild($(hitPowerup));
+      // $(hitPowerup).css({'visibility': 'hidden'});
+      // $(hitPowerup).css({'display': 'none'});
+      // console.log($(hitPowerup));
     }
   }
 
