@@ -1,7 +1,7 @@
 import $ from 'jquery';
-
-import FlipControls from './powerups/flipControls';
-
+// import FlipControls from './powerups/flipControls';
+// import SpeedUp from './powerups/speedUp';
+import Powerup from './powerup';
 
 const ICON = 'https://media.giphy.com/media/26tPgy93ssTeTTSqA/giphy.gif';
 
@@ -29,7 +29,9 @@ class Powerups {
       let x = Math.floor(Math.random()*$window.width());
       let y = Math.floor(Math.random()*$window.height());
 
-      let powerup = new FlipControls({ left: x, top: y });
+      const powerupType = Math.floor(Math.random() * 3);
+      let powerup = new Powerup(powerupType, { left: x, top: y });  // flipControls, speedUp, slowDown
+      
       this.powerups.push(powerup);
     }
   }

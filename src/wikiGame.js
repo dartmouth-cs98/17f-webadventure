@@ -133,24 +133,26 @@ class WikiGame {
     });
     const hitPowerup = overlap.length !== 0 ? overlap[0] : null;
     if (hitPowerup) {
-      // do something
       if (hitPowerup.type === "flipControls") {
         console.log("hit flipControls powerup!!");
-        
+        this.flipControls();
       }
       // Remove from powerups array
       this.powerups.powerups = this.powerups.powerups.filter((powerup) => {
         return powerup !== hitPowerup;
       });
 
-      const domPowerup = document.elementFromPoint(hitPowerup.position.left, hitPowerup.position.top);
-      $(domPowerup).css('visibility', 'hidden');
+      // Hide icon from user
+      // console.log($('.flipControls'));
+
+      // const domPowerup = document.elementFromPoint(hitPowerup.position.left, hitPowerup.position.top);
+      // $(domPowerup).css('visibility', 'hidden');
 
       // $('#powerups').removeChild($(hitPowerup));
       // $(hitPowerup).parentNode.removeChild($(hitPowerup));
-      // $(hitPowerup).css({'visibility': 'hidden'});
+      $(hitPowerup).css({'visibility': 'hidden'});
       // $(hitPowerup).css({'display': 'none'});
-      // console.log($(hitPowerup));
+      console.log($(hitPowerup));
     }
   }
 
