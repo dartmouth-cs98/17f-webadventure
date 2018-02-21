@@ -15,38 +15,7 @@ class Lobby extends Component {
 
     this.state = {
       user: null,
-      games: [
-        {
-          name: 'Game1',
-          players: ['Bill', 'Jill'],
-          startPage: 'https://en.wikipedia.org/wiki/Victorian_architecture',
-          goalPage: 'https://en.wikipedia.org/wiki/Architectural_style',
-        },
-        {
-          name: 'Game2',
-          players: ['Tommy', 'Eli', 'James', 'Harrison'],
-          startPage: 'https://en.wikipedia.org/wiki/China',
-          goalPage: 'https://en.wikipedia.org/wiki/Japan',
-        },
-        {
-          name: 'Game3',
-          players: ['Tim'],
-          startPage: 'https://en.wikipedia.org/wiki/Korea',
-          goalPage: 'https://en.wikipedia.org/wiki/Bimbimbap',
-        },
-        {
-          name: 'Game4',
-          players: ['Alma', 'David', 'Stephanie', 'Lisa'],
-          startPage: 'https://en.wikipedia.org/wiki/Dartmouth',
-          goalPage: 'https://en.wikipedia.org/wiki/Ivy_League',
-        },
-        {
-          name: 'Game5',
-          players: ['Imanol', 'Jerry'],
-          startPage: 'https://en.wikipedia.org/wiki/Orange',
-          goalPage: 'https://en.wikipedia.org/wiki/Yellow',
-        },
-      ],
+      games: [],
       selectedGame: null,
       playerAvatar: 'nyan',
     };
@@ -131,7 +100,7 @@ class Lobby extends Component {
     if (this.state.selectedGame) {
       return (
         <SelectedGameView
-          avatar={this.state.playerAvatar}
+          avatar={this.state.user.playerAvatar}
           selectedGame={this.state.selectedGame}
           onGoBack={this.backToGameSelect}
         />
