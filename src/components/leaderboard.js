@@ -3,6 +3,9 @@ import React, { Component } from 'react';
 class Leaderboard extends Component {
   constructor(props) {
     super(props);
+
+    this.state = { timer: 54 };
+
     this.renderRankings = this.renderRankings.bind(this);
   }
 
@@ -34,6 +37,7 @@ class Leaderboard extends Component {
   }
 
   render() {
+    const goalPage = this.props.goalPage.split('/').pop();
     if (this.props.curPlayer) {
       // console.log('props.currplayer trueeeee');
       return (
@@ -46,6 +50,12 @@ class Leaderboard extends Component {
                 <img id="wahoo" src={this.props.curPlayer.avatarRight} alt="userIcon" />
               </div>
               <div className="curPlayerName">{this.props.curPlayer.name}</div>
+            </div>
+            <div id="top">
+              GOAL: {goalPage}
+            </div>
+            <div id="timer">
+              {this.state.timer}s elapsed
             </div>
             <div id="userStatRow">{this.renderRankings()}</div>
           </div>

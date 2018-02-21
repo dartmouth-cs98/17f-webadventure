@@ -257,7 +257,7 @@ svg:hover {
   display: flex;
   justify-content: flex-start;
   margin-left: 5px;
-  margin-right: 5px
+  margin-right: 5px;
 }
 
 #lobby-game-view {
@@ -273,7 +273,8 @@ svg:hover {
   align-items: center;
   line-height: 30px;
   font-family: 'Orbitron',sans-serif;
-  font-size: 15px
+  font-size: 15px;
+  padding-top: 5px;
 }
 
 .leaderboard-item-right {
@@ -383,6 +384,13 @@ svg:hover {
   color: #fff;
   background: #6495ed;
   border-radius: 5px
+}
+
+#goal-page {
+  text-align: center;
+  font-family: 'Orbitron',sans-serif;
+  font-size: 15px;
+  margin: 6px 0;
 }
 
 #or {
@@ -585,4 +593,9 @@ div.panel-alert:empty {
 
 #end-flex > button {
   margin-top: 20px;
+}
+
+#top, #timer {
+  font-family: 'Orbitron',sans-serif;
+  text-align: center;
 }
