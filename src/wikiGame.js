@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
 import Player from './player';
-
+import Powerups from './powerups';
 
 import App from './components/app';
 
@@ -21,6 +21,10 @@ class WikiGame {
         down: false,
       },
     };
+
+    this.powerups = new Powerups();
+
+    this.flipMultiplier = 1; // either 1 or -1 for flipped controls
     this.leaderboard = {
       time: 1234,
       curPlayer: {
@@ -43,6 +47,9 @@ class WikiGame {
     this.onKeyDown = this.onKeyDown.bind(this);
     this.onKeyUp = this.onKeyUp.bind(this);
 
+    this.flipControls = this.flipControls.bind(this);
+    this.unflipControls = this.unflipControls.bind(this);
+
     this.renderGame();
     window.addEventListener('keydown', this.onKeyDown);
     window.addEventListener('keyup', this.onKeyUp);
@@ -55,6 +62,7 @@ class WikiGame {
     this.setupToc();
     const curPosition = this.curPlayer.getPosition();
     this.curPlayer.insertPlayer(curPosition.x, curPosition.y);
+    this.powerups.insertPowerups();
   }
 
   updateLeaderboard(game) {
@@ -79,17 +87,18 @@ class WikiGame {
 
   updateGame() {
     const newLoc = this.curPlayer.getPosition();
+    var stepSize = 5 * this.flipMultiplier;
     if (this.keysPressed.x.left && !this.keysPressed.x.right) {
-      newLoc.x -= 5;
+      newLoc.x -= stepSize;
       this.curPlayer.updateDirRight(false);
     } else if (!this.keysPressed.x.left && this.keysPressed.x.right) {
-      newLoc.x += 5;
+      newLoc.x += stepSize;
       this.curPlayer.updateDirRight(true);
     }
     if (this.keysPressed.y.up && !this.keysPressed.y.down) {
-      newLoc.y -= 5;
+      newLoc.y -= stepSize;
     } else if (!this.keysPressed.y.up && this.keysPressed.y.down) {
-      newLoc.y += 5;
+      newLoc.y += stepSize;
     }
     this.curPlayer.movePlayer(newLoc.x, newLoc.y);
   }
@@ -103,6 +112,17 @@ class WikiGame {
     }
   }
 
+  flipControls() {
+    console.log("in flipControls");
+    this.flipMultiplier = -1;
+
+    setTimeout(this.unflipControls, 5000);
+  }
+
+  unflipControls() {
+    this.flipMultiplier = 1;
+  }
+
   onKeyDown(evt) {
     switch (evt.keyCode) {
       case 65: this.keysPressed.x.left = true; break;
@@ -112,8 +132,9 @@ class WikiGame {
       case 76: // click link with L
         this.openLink();
         break;
-      case 80: // Pause game with 'P'
-        // console.log('pause game, pause pop up?');
+      case 80: // Testing flip controls with 'P'
+        console.log('pressed p, flipping controls');
+        this.flipControls();
         break;
       default:
         break;
