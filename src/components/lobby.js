@@ -144,7 +144,7 @@ class Lobby extends Component {
                 <div id="info-box">
                   HOW TO PLAY
                   <div>Race other WebAdventurers to the goal page and learn more about the world!</div>
-                  <img id="nav-keys" class="info-img" alt="nav-keys" src="https://i.imgur.com/qPjFtPZ.png"/>
+                  <img id="nav-keys" className="info-img" alt="nav-keys" src="https://i.imgur.com/qPjFtPZ.png" />
                   <div>Move across the page with WASD and jump links with the L key</div>
                 </div>
               </div>
@@ -189,7 +189,7 @@ class Lobby extends Component {
               <div id="info-box">
                 HOW TO PLAY
                 <div>Race other WebAdventurers to the goal page and learn more about the world!</div>
-                <img id="nav-keys" class="info-img" alt="nav-keys" src="https://i.imgur.com/qPjFtPZ.png"/>
+                <img id="nav-keys" className="info-img" alt="nav-keys" src="https://i.imgur.com/qPjFtPZ.png" />
                 <div>Move across the page with WASD and jump links with the L key</div>
               </div>
             </div>
