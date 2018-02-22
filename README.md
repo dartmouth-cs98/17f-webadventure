@@ -3,9 +3,14 @@
 WebAdventure is a Chrome Extension that provides a unique and fun way of interacting with Wikipedia via a game format. Players compete against each other in a version of the "Wiki Game." For each player, the object of the game is to reach the "goal" page before any other player does.
 
 Example of Game:
-![Snake in Action](assets/Gameplay.png)
 
-![Gameover](assets/Gameover.png)
+![login](assets/login.png)
+
+![lobby](assets/lobby.png)
+
+![Snake in Action](assets/gameplay.png)
+
+![Gameover](assets/end.png)
 
 ## Architecture
 
