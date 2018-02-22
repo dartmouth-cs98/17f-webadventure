@@ -3,14 +3,21 @@ import React, { Component } from 'react';
 class Leaderboard extends Component {
   constructor(props) {
     super(props);
-    this.state = { timer: 54 };
+    this.state = {
+      timer: props.counter,
+    };
     this.renderRankings = this.renderRankings.bind(this);
+    this.incTimer = this.incTimer.bind(this);
+    setInterval(this.incTimer, 1000);
+  }
+
+  incTimer() {
+    this.setState({ timer: this.state.timer + 1 });
   }
 
   renderRankings() {
     const top5 = this.props.players
-      .sort((a, b) => b.numClicks - a.numClicks)
-      .slice(0, 5)
+      .sort((a, b) => a.numClicks - b.numClicks)
       .map((player, index) => {
         if (player.username === this.props.curPlayer.name) {
           return (
