@@ -1,4 +1,5 @@
 import React from 'react';
+import '../style.css';
 
 const End = () => {
   const curPlayer = {
@@ -16,16 +17,25 @@ const End = () => {
     ],
   };
 
+  const renderFinishTime = (finishTime) => {
+    if (finishTime === -1) {
+      return <div className="leaderboard-item-right">PENDING</div>;
+    } else {
+      return <div className="leaderboard-item-right">{finishTime}</div>;
+    }
+  };
+
   const renderGames = () => {
     return games.players
       .sort((a, b) => a.numClicks - b.numClicks)
       .map((player, index) => {
         return (
-          <div>
+          <div className="leaderboard-item">
             <div className="leaderboard-item-left">
               <div className="leaderboard-rank">{index + 1}</div>
-              <div>{player.username}: {player.numClicks}</div>
+              <div>{player.username}</div>
             </div>
+            {renderFinishTime(player.finishTime)}
           </div>
         );
       });
@@ -33,11 +43,18 @@ const End = () => {
 
   return (
     <div id="end">
-      <div>
-        {`${curPlayer.username} wins!`}
+      <div id="end-flex">
+        <div className="userStats">WEBADVENTURE</div>
+        <div id="winner">
+          {`${curPlayer.username} wins!`}
+        </div>
+        <div id="user-rankings">
+          {renderGames()}
+        </div>
+        <button>To lobby</button>
       </div>
-      {renderGames()}
-    </div>);
+    </div>
+  );
 };
 
 export default End;
