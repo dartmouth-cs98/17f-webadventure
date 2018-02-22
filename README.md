@@ -8,13 +8,13 @@ Example of Game:
 
 ![lobby](assets/lobby.png)
 
-![Snake in Action](assets/gameplay.png)
+![gameplay](assets/Gameplay.png)
 
 ![Gameover](assets/end.png)
 
 ## Architecture
 
-Our Chrome Extension currently injects Javascript into a Wikipedia page and using JQuery to parse and modify the page. The extension code is compiled and built using Babel and Webpack.
+Our Chrome Extension currently injects Javascript into a Wikipedia page and uses React to modify page by displaying game elements. The extension code is compiled and built using Babel and Webpack.
 
 On the backend we are using MongoDB and Mongoose to access the data. Visit https://github.com/dartmouth-cs98/webadventure-backend for the backend repo.
 
@@ -22,7 +22,7 @@ The frontend and backend communicate via web sockets (using Socket.io).
 
 ## Setup
 
-We are using vanilla Javascript, JQuery, HTML and CSS right now to inject the game onto the Wikipedia page.
+We are using vanilla Javascript, JQuery, React, HTML and CSS right now to inject the game onto the Wikipedia page.
 
 After pulling the repo run:
 ```
@@ -51,18 +51,19 @@ Click on the extension.
 
 Have fun!
 
+In the near future, we plan to have the game on the Google Chrome App store.
+
 ## Gameplay
-To move the snake make sure the Wikipedia page in focus (click on it if it's not) and move using the keys 'W', 'A', 'S', 'D'.
 
-The edges of the game are the top and bottom of any given section. Avoid going into an edge and the snake's trail.
+### Lobby
 
-## Snake Colors Supported
-Blue jeans: 91, 192, 235
-Gargoyle Gas: 253, 231, 76
-Android Green: 155, 197, 61
-Flame: 229, 89, 52
-Princeton Orange: 250, 121, 33
-(Found on [coolors.co](https://coolors.co/5bc0eb-fde74c-9bc53d-e55934-fa7921))
+Upon opening the game extension, the user is taken to a sign in page where they can sign in and register as a player. Once the user signs in, the user is able to select an avatar, choose from one of the public games (generated via the backend), and join a game. In the near future, we also plan to allow the user to host and join private games via private game key.
+
+### Game
+
+Once a game reaches capacity (which we have set to 5 players), then the game will start.
+
+To move the avatar, make sure the Wikipedia page in focus (click on it if it's not) and move using the keys 'W', 'A', 'S', 'D'. To go to another page, press "l" when a link is highlighted.
 
 ## Summary of Term 1
 
