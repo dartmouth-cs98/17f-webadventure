@@ -75,7 +75,7 @@ class WikiGame {
       this.leaderboard.players = game.players;
       this.leaderboard.goalPage = game.goalPage;
     }
-    ReactDOM.hydrate(<App leaderboard={this.leaderboard} counter={this.counter} />, document.getElementById('wa-main'));
+    ReactDOM.render(<App leaderboard={this.leaderboard} counter={this.counter} />, document.getElementById('wa-main'));
   }
 
   increaseCounter() {
