@@ -1,32 +1,16 @@
 import React from 'react';
 import '../style.css';
 
-const End = () => {
+const End = (props) => {
+  console.log(props);
   const curPlayer = {
-    username: 'Alma',
+    username: 'alma',
     curScore: 2,
-    index: 0,
     avatar: 'https://i.imgur.com/YNcTBuU.gif',
   };
 
-  const games = {
-    players: [
-      { username: 'Alma', numClicks: 2, finishTime: 23 },
-      { username: 'Barry', numClicks: 11, finishTime: -1 },
-      { username: 'Stephanie', numClicks: 4, finishTime: -1 },
-    ],
-  };
-
-  const renderFinishTime = (finishTime) => {
-    if (finishTime === -1) {
-      return <div className="leaderboard-item-right">PENDING</div>;
-    } else {
-      return <div className="leaderboard-item-right">{finishTime}</div>;
-    }
-  };
-
-  const renderGames = () => {
-    return games.players
+  const renderPlayers = () => {
+    return props.leaderboard
       .sort((a, b) => a.numClicks - b.numClicks)
       .map((player, index) => {
         return (
@@ -35,23 +19,30 @@ const End = () => {
               <div className="leaderboard-rank">{index + 1}</div>
               <div>{player.username}</div>
             </div>
-            {renderFinishTime(player.finishTime)}
+            <div className="leaderboard-item-right">
+              {player.finishTime === -1 ? 'PENDING' : player.finishTime}
+            </div>
           </div>
         );
       });
   };
 
+  const onNewGame = () => {
+    props.onNewGame(curPlayer.username);
+  };
+
   return (
     <div id="end">
+      <button className="exit-lobby-button" onClick={props.exitGame}> &times; </button>
       <div id="end-flex">
         <div className="userStats">WEBADVENTURE</div>
         <div id="winner">
           {`${curPlayer.username} wins!`}
         </div>
         <div id="user-rankings">
-          {renderGames()}
+          {renderPlayers()}
         </div>
-        <button>To lobby</button>
+        <button onClick={onNewGame}>To Lobby</button>
       </div>
     </div>
   );
