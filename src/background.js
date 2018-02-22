@@ -26,7 +26,6 @@ const onGame = (newGame) => {
 };
 
 const endGame = () => {
-  console.log('stop game');
   curPlayerInfo = null;
   curTabId = -1;
   clearInterval(interval);
@@ -78,7 +77,6 @@ chrome.runtime.onMessage.addListener((request, sender) => {
     } else if (request.message === 'end to lobby') {
       const tabId = curTabId;
       const { username } = curPlayerInfo;
-      console.log(username);
       endGame();
       renderLobby(tabId, username);
     }

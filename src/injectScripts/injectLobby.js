@@ -21,7 +21,6 @@ const exitGame = () => {
 };
 chrome.runtime.onMessage.addListener((req) => {
   if (req.message === 'render lobby') {
-    console.log(req);
     if (req.payload && req.payload.username) {
       ReactDOM.render(<Lobby onStart={onStart} username={req.payload.username} exitGame={exitGame} />, document.getElementById('wa-lobby'));
     } else {
