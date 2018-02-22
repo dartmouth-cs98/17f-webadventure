@@ -2,7 +2,6 @@ import WikiGame from '../wikiGame';
 import Player from '../player';
 
 let wikiGame;
-let curPlayer;
 
 const onNewUrl = (newUrl) => {
   const req = {
@@ -15,15 +14,12 @@ const onNewUrl = (newUrl) => {
 };
 
 chrome.runtime.onMessage.addListener((request) => {
-  switch (request.message) {
-    case 'new game':
-      curPlayer = new Player(request.payload.username, { left: 100, top: 100 }, true);
-      wikiGame = new WikiGame(onNewUrl, curPlayer);
-      wikiGame.updateLeaderboard(request.payload.game);
-      break;
-    case 'game info':
-      wikiGame.updateLeaderboard(request.payload.game);
-      break;
-    default:
+  if (request.message === 'new game') {
+    const { counter, username } = request.payload;
+    const curPlayer = new Player(username, { left: 100, top: 100 }, true);
+    wikiGame = new WikiGame(onNewUrl, curPlayer, counter);
+    wikiGame.updateLeaderboard(request.payload.game);
+  } else if (request.message === 'game info') {
+    wikiGame.updateLeaderboard(request.payload.game);
   }
 });

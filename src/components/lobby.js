@@ -69,7 +69,7 @@ class Lobby extends Component {
         { username: 'Barry', numClicks: 40, finishTime: -1 },
         { username: 'Alma', numClicks: 45, finishTime: -1 },
         { username: 'David', numClicks: 60, finishTime: -1 },
-        { username: 'Imanol', numClicks: 70, finishTime: -1 },
+        { username: this.state.user.username, numClicks: 0, finishTime: -1 },
         { username: 'Tim', numClicks: 7, finishTime: -1 },
       ],
     };
