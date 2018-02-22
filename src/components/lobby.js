@@ -1,4 +1,4 @@
-/* eslint linebreak-style: ["error", "windows"], prefer-const:0 */
+/* eslint linebreak-style: ["error", "windows"], prefer-const:0, class-methods-use-this:0 */
 
 import React, { Component } from 'react';
 import LobbySocket from '../sockets/lobbySocket';
@@ -15,45 +15,15 @@ class Lobby extends Component {
 
     this.state = {
       user: null,
-      games: [
-        {
-          name: 'Game1',
-          players: ['Bill', 'Jill'],
-          startPage: 'https://en.wikipedia.org/wiki/Victorian_architecture',
-          goalPage: 'https://en.wikipedia.org/wiki/Architectural_style',
-        },
-        {
-          name: 'Game2',
-          players: ['Tommy', 'Eli', 'James', 'Harrison'],
-          startPage: 'https://en.wikipedia.org/wiki/China',
-          goalPage: 'https://en.wikipedia.org/wiki/Japan',
-        },
-        {
-          name: 'Game3',
-          players: ['Tim'],
-          startPage: 'https://en.wikipedia.org/wiki/Korea',
-          goalPage: 'https://en.wikipedia.org/wiki/Bimbimbap',
-        },
-        {
-          name: 'Game4',
-          players: ['Alma', 'David', 'Stephanie', 'Lisa'],
-          startPage: 'https://en.wikipedia.org/wiki/Dartmouth',
-          goalPage: 'https://en.wikipedia.org/wiki/Ivy_League',
-        },
-        {
-          name: 'Game5',
-          players: ['Imanol', 'Jerry'],
-          startPage: 'https://en.wikipedia.org/wiki/Orange',
-          goalPage: 'https://en.wikipedia.org/wiki/Yellow',
-        },
-      ],
+      games: [],
       selectedGame: null,
       playerAvatar: 'nyan',
-      username: '',
     };
 
 
     this.onGameChange = this.onGameChange.bind(this);
+    this.onStartGame = this.onStartGame.bind(this);
+    this.exitGame = this.exitGame.bind(this);
     this.joinPublicGame = this.joinPublicGame.bind(this);
     this.joinPrivateGame = this.joinPrivateGame.bind(this);
     this.hostPrivateGame = this.hostPrivateGame.bind(this);
@@ -68,7 +38,6 @@ class Lobby extends Component {
     this.startKeyIndex = 2;
     this.endKeyIndex = 9;
     this.keyLength = this.endKeyIndex - this.startKeyIndex;
-    this.onStartGame = this.onStartGame.bind(this);
   }
 
   onGames(games) {
@@ -80,6 +49,7 @@ class Lobby extends Component {
   }
 
   onGameChange(game) {
+    console.log('check');
     this.setState({ selectedGame: game });
   }
 
@@ -92,6 +62,11 @@ class Lobby extends Component {
       goalPage: 'https://en.wikipedia.org/wiki/Architectural_style',
     };
     this.props.onStart(this.state.user.username, game);
+  }
+
+  exitGame() {
+    this.lobbySocket.disconnect();
+    this.props.exitGame();
   }
 
   changeAvatar(avatar) {
@@ -131,7 +106,7 @@ class Lobby extends Component {
     if (this.state.selectedGame) {
       return (
         <SelectedGameView
-          avatar={this.state.playerAvatar}
+          avatar={this.state.user.playerAvatar}
           selectedGame={this.state.selectedGame}
           onGoBack={this.backToGameSelect}
         />
@@ -156,6 +131,7 @@ class Lobby extends Component {
         <div id="lobby-container">
           <div id="overlay" />
           <div id="lobby">
+            <button className="exit-lobby-button" onClick={this.exitGame}> &times; </button>
             <div id="lobby-title">WEBADVENTURE</div>
             <div id="lobby-contents">
               <LobbyGamesView
@@ -165,7 +141,7 @@ class Lobby extends Component {
               />
               <div id="lobby-columns">
                 <DisplayUser
-                  username={this.state.username}
+                  username={this.state.user.username}
                   avatar={this.state.playerAvatar}
                   onAvatar={this.changeAvatar}
                   onUsername={this.signUpLobby}
@@ -184,6 +160,7 @@ class Lobby extends Component {
       <div id="lobby-container">
         <div id="overlay" />
         <div id="lobby">
+          <button className="exit-lobby-button" onClick={this.exitGame}> &times; </button>
           <img src="https://i.imgur.com/VUVNhtC.png" alt="webadventure!" id="webad-logo" />
           <div id="lobby-title">WEBADVENTURE</div>
           <SignUp

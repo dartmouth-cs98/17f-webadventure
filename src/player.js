@@ -17,6 +17,7 @@ class Player {
     this.getLinks = this.getLinks.bind(this);
     this.movePlayer = this.movePlayer.bind(this);
     this.updateDirRight = this.updateDirRight.bind(this);
+    this.getWidth = this.getWidth.bind(this);
     this.getPosition = this.getPosition.bind(this);
     this.getAvatarRight = this.getAvatarRight.bind(this);
     this.getLink = this.getLink.bind(this);
@@ -100,6 +101,10 @@ class Player {
       $($(`#${this.id}`).children('img')[0]).attr('src', NYAN_CATS[0]);
       this.facingRight = false;
     }
+  }
+
+  getWidth() {
+    return $(`#${this.id}`).width();
   }
 
   getPosition() {

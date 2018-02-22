@@ -70,6 +70,9 @@ export default class LobbySocket {
       });
     });
   }
+  disconnect() {
+    this.socket.close();
+  }
 
   startGame(gameId) {
     return new Promise((resolve, reject) => {

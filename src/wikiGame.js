@@ -36,8 +36,9 @@ class WikiGame {
         { username: 'Alma', numClicks: 45 },
         { username: 'David', numClicks: 60 },
         { username: 'Imanol', numClicks: 70 },
-        { username: 'Tim', numClicks: 2 },
+        { username: 'Tim', numClicks: 7 },
       ],
+      goalPage: 'https://en.wikipedia.org/wiki/Orange',
     };
 
     this.renderGame = this.renderGame.bind(this);
@@ -66,6 +67,11 @@ class WikiGame {
     const curPosition = this.curPlayer.getPosition();
     this.curPlayer.insertPlayer(curPosition.x, curPosition.y);
     this.powerups.insertPowerups();
+
+    this.borders = {
+      width: $(document).width() - this.curPlayer.getWidth(),
+      height: $(document).height(),
+    };
   }
 
   updateLeaderboard(game) {
@@ -92,16 +98,19 @@ class WikiGame {
   updateGame() {
     const newLoc = this.curPlayer.getPosition();
     const stepSize = 5 * this.flipMultiplier;
-    if (this.keysPressed.x.left && !this.keysPressed.x.right) {
+
+    if (this.keysPressed.x.left && !this.keysPressed.x.right && newLoc.x - 5 > 0) {
       newLoc.x -= stepSize;
       this.curPlayer.updateDirRight(false);
-    } else if (!this.keysPressed.x.left && this.keysPressed.x.right) {
+    } else if (!this.keysPressed.x.left &&
+      this.keysPressed.x.right && newLoc.x + 5 < this.borders.width) {
       newLoc.x += stepSize;
       this.curPlayer.updateDirRight(true);
     }
-    if (this.keysPressed.y.up && !this.keysPressed.y.down) {
+    if (this.keysPressed.y.up && !this.keysPressed.y.down && newLoc.y - 5 > 0) {
       newLoc.y -= stepSize;
-    } else if (!this.keysPressed.y.up && this.keysPressed.y.down) {
+    } else if (!this.keysPressed.y.up &&
+      this.keysPressed.y.down && newLoc.y + 5 < this.borders.height) {
       newLoc.y += stepSize;
     }
     this.curPlayer.movePlayer(newLoc.x, newLoc.y);
@@ -109,6 +118,7 @@ class WikiGame {
   }
 
   openLink() {
+    console.log(this.curPlayer.getLink());
     const link = this.curPlayer.getLink();
     if (link !== null) {
       const redirectLink = `https://en.wikipedia.org${link}`;
