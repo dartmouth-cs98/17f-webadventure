@@ -22,7 +22,7 @@ class LobbyDetailsView extends Component {
     this.countDown = this.countDown.bind(this);
     this.checkNumPlayers = this.checkNumPlayers.bind(this);
     this.addPlayer = this.addPlayer.bind(this);
-    this.joinPublicGame = this.joinPublicGame.bind(this);
+    this.onJoinPublicGame = this.onJoinPublicGame.bind(this);
     this.joinPrivateGame = this.joinPrivateGame.bind(this);
     this.renderError = this.renderError.bind(this);
   }
@@ -37,6 +37,18 @@ class LobbyDetailsView extends Component {
     this.setState({
       joinKey: event.target.value,
     });
+  }
+
+
+  onJoinPublicGame() {
+    if (this.props.selectedGame === null) {
+      this.setState({ errorMsg: 'Please select a game to join!' });
+    } else if (this.props.selectedGame.players.length > 5) {
+      this.setState({ errorMsg: 'Too many people! Please select another game' });
+    } else {
+      this.props.joinPublicGame();
+      this.startTimer();
+    }
   }
 
   startTimer() {
@@ -67,22 +79,6 @@ class LobbyDetailsView extends Component {
           s: 'Game start!',
         },
       });
-    }
-  }
-
-  joinPublicGame() {
-    if (this.props.selectedGame && // if selectedGame exists
-        this.props.selectedGame.players.length < 5 && // if the length is less than 5
-        this.props.selectedGame.players.indexOf(this.state.username) === -1) { // it doesn't already exist
-      let newPlayers = Object.assign({}, this.props.selectedGame).players;
-      newPlayers.push(this.state.username);
-      this.setState({
-        errorMsgPublicGame: false,
-      });
-      this.props.joinPublicGame();
-      this.startTimer();
-    } else {
-      this.setState({ errorMsg: 'Please select a game to join!' });
     }
   }
 
@@ -132,7 +128,7 @@ class LobbyDetailsView extends Component {
     return (
       <div id="lobby-game-view">
         <div id="public">
-          <button id="public-game-button" onClick={this.props.joinPublicGame}>
+          <button id="public-game-button" onClick={this.onJoinPublicGame}>
             Join Public
           </button>
         </div>
