@@ -1,23 +1,29 @@
 import GameSocket from './sockets/gameSocket';
 
-chrome.browserAction.onClicked.addListener((tab) => {
-  chrome.tabs.executeScript(tab.id, {
-    file: 'dist/injectLobby.bundle.js',
-  });
-});
 
 let gameSocket;
 let game; // {startPage, goalPage}
-let curPlayerInfo; // {username, numClicks, curUrl, finishTime?}
+let curPlayerInfo; // {username, avatar, numClicks, curUrl, finishTime?}
 let counter;
 let interval;
 let curTabId;
 
-const onGame = (newGame) => {
-  game = newGame;
-  chrome.tabs.sendMessage(curTabId, { message: 'game info', payload: { newGame } });
+const renderLobby = (tabId, username) => {
+  chrome.tabs.executeScript(tabId, {
+    file: 'dist/injectLobby.bundle.js',
+  }, () => {
+    const req = {
+      message: 'render lobby',
+      payload: { username },
+    };
+    chrome.tabs.sendMessage(tabId, req);
+  });
 };
 
+const onGame = (newGame) => {
+  game = newGame;
+  chrome.tabs.sendMessage(curTabId, { message: 'game info', payload: { game } });
+};
 
 const endGame = () => {
   console.log('stop game');
@@ -25,8 +31,27 @@ const endGame = () => {
   curTabId = -1;
   clearInterval(interval);
   gameSocket.disconnect();
+  gameSocket = null;
 };
 
+const injectGame = (sender) => {
+  if (sender.url === curPlayerInfo.curUrl) {
+    chrome.tabs.executeScript(curTabId, {
+      file: 'dist/inject.bundle.js',
+    }, () => {
+      chrome.tabs.sendMessage(curTabId, {
+        message: 'new game',
+        payload: { username: curPlayerInfo.username, game, counter },
+      });
+    });
+  } else {
+    chrome.tabs.update(curTabId, { url: curPlayerInfo.curUrl });
+  }
+};
+
+chrome.browserAction.onClicked.addListener((tab) => {
+  renderLobby(tab.id);
+});
 
 chrome.runtime.onMessage.addListener((request, sender) => {
   // check tab and request info and final page reached
@@ -42,24 +67,21 @@ chrome.runtime.onMessage.addListener((request, sender) => {
       numClicks: -1,
       curUrl: game.startPage,
     };
-  } else if (sender.tab.id !== curTabId || request.message !== 'new url') {
-    return;
-  } else {
-    curPlayerInfo.numClicks += 1;
-    curPlayerInfo.curUrl = request.payload.newUrl;
-  }
-
-  if (sender.url === curPlayerInfo.curUrl) {
-    chrome.tabs.executeScript(curTabId, {
-      file: 'dist/inject.bundle.js',
-    }, () => {
-      chrome.tabs.sendMessage(curTabId, {
-        message: 'new game',
-        payload: { username: curPlayerInfo.username, game, counter },
-      });
-    });
-  } else {
-    chrome.tabs.update(curTabId, { url: curPlayerInfo.curUrl });
+    injectGame(sender);
+  } else if (sender.tab.id === curTabId) {
+    if (request.message === 'new url') {
+      curPlayerInfo.numClicks += 1;
+      curPlayerInfo.curUrl = request.payload.newUrl;
+      injectGame(sender);
+    } else if (request.message === 'quit game') {
+      endGame();
+    } else if (request.message === 'end to lobby') {
+      const tabId = curTabId;
+      const { username } = curPlayerInfo;
+      console.log(username);
+      endGame();
+      renderLobby(tabId, username);
+    }
   }
 });
 
@@ -73,13 +95,23 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo) => {
   if (changeInfo.status === 'complete' && tabId === curTabId) {
     if (curPlayerInfo.curUrl === game.goalPage) {
       curPlayerInfo.finishTime = counter;
-      chrome.tabs.executeScript({
-        file: 'dist/injectEnd.bundle.js',
-      });
       gameSocket.updatePlayer(
         curPlayerInfo.finishTime,
-        curPlayerInfo.numClicks, curPlayerInfo.curUrl,
+        curPlayerInfo.numClicks,
+        curPlayerInfo.curUrl,
       );
+      chrome.tabs.executeScript({
+        file: 'dist/injectEnd.bundle.js',
+      }, () => {
+        const req = {
+          message: 'end game info',
+          payload: {
+            curPlayerInfo,
+            game,
+          },
+        };
+        chrome.tabs.sendMessage(tabId, req);
+      });
       return;
     }
     gameSocket.updatePlayer(
