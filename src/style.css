@@ -576,6 +576,7 @@ div.panel-alert:empty {
   padding: 10px 0;
   border: 1px solid #000;
   border-radius: 10px;
+  padding: 20px;
 }
 
 #user-rankings {
