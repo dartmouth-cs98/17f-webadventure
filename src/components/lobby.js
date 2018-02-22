@@ -160,7 +160,10 @@ class Lobby extends Component {
       <div id="lobby-container">
         <div id="overlay" />
         <div id="lobby">
-          <button className="exit-lobby-button" onClick={this.exitGame}> &times; </button>
+          <div id="lobby-top">
+            <button className="exit-lobby-button" onClick={this.exitGame}> &times; </button>
+            <button className="info-button" >i</button>
+          </div>
           <img src="https://i.imgur.com/VUVNhtC.png" alt="webadventure!" id="webad-logo" />
           <div id="lobby-title">WEBADVENTURE</div>
           <SignUp
