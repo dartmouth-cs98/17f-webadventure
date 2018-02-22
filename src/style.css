@@ -633,11 +633,10 @@ div.panel-alert:empty {
   top: 20vh;
   background: #f5fffa;
   width: 20vw;
-  padding-top: 10px;
-  padding-left: 10px;
-  padding-bottom: 40px;
+  padding: 10px;
   border: 5px solid black;
   border-radius: 5px;
+  text-align: center;
 
   animation-name: gray-border;
   animation-duration: 12s;
@@ -651,4 +650,14 @@ div.panel-alert:empty {
 
 #info:hover + #info-box{
   visibility: visible;
+}
+
+#info-box div {
+  font-size: 13px;
+  padding: 8px 0px 8px 0px;
+}
+
+#info-box img {
+  width: inherit;
+  padding: 5px 0px 5px 0px;
 }
