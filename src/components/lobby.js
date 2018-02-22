@@ -23,7 +23,6 @@ class Lobby extends Component {
 
 
     this.onGameChange = this.onGameChange.bind(this);
-    this.onGameIDChange = this.onGameIDChange.bind(this);
     this.onStartGame = this.onStartGame.bind(this);
     this.exitGame = this.exitGame.bind(this);
     this.joinPublicGame = this.joinPublicGame.bind(this);
@@ -53,10 +52,6 @@ class Lobby extends Component {
   onGameChange(game) {
     console.log('check');
     this.setState({ selectedGame: game });
-  }
-
-  onGameIDChange(game) {
-    this.setState({ selectedGameID: game.id });
   }
 
   onStartGame() {

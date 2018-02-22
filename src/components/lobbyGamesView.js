@@ -24,7 +24,7 @@ const LobbyGamesView = (props) => {
     );
   };
 
-  const getPageTitle = (str) => {
+  const splitWord = (str) => {
     const parts = str.split('/');
     return parts.pop();
   };
