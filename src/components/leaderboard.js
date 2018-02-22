@@ -7,6 +7,12 @@ class Leaderboard extends Component {
       timer: props.counter,
     };
     this.renderRankings = this.renderRankings.bind(this);
+    this.incTimer = this.incTimer.bind(this);
+    setInterval(this.incTimer, 1000);
+  }
+
+  incTimer() {
+    this.setState({ timer: this.state.timer + 1 });
   }
 
   renderRankings() {
