@@ -4,9 +4,9 @@ import React from 'react';
 
 const LobbyGamesView = (props) => {
   const handlOverflow = (start, end) => {
-    start = decodeURIComponent(start).replace(/_/g, " ");;
-    end = decodeURIComponent(end).replace(/_/g, " ");;
-    const compare = start + end;
+    const parsedStart = decodeURIComponent(start).replace(/_/g, ' ');
+    const parsedEnd = decodeURIComponent(end).replace(/_/g, ' ');
+    const compare = parsedStart + parsedEnd;
     if (compare.length > 20) {
       return (
         <marquee
@@ -15,13 +15,13 @@ const LobbyGamesView = (props) => {
           direction="left"
           scrollamount="3"
         >
-          {start}&rarr;{end}
+          {parsedStart}&rarr;{parsedEnd}
         </marquee>
       );
     }
     return (
       <div className="starting-page">
-        {start}&rarr;{end}
+        {parsedStart}&rarr;{parsedEnd}
       </div>
     );
   };

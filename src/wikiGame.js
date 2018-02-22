@@ -128,10 +128,11 @@ class WikiGame {
   }
 
   updateOnPowerup() {
-    const left = this.curPlayer.position.left;
-    const right = this.curPlayer.position.left + this.curPlayer.size.width;
-    const top = this.curPlayer.position.top;
-    const bottom = this.curPlayer.position.top + this.curPlayer.size.height;
+    const currLoc = this.curPlayer.getPosition();
+    const left = currLoc.x;
+    const right = currLoc.x + this.curPlayer.size.width;
+    const top = currLoc.y;
+    const bottom = currLoc.y + this.curPlayer.size.height;
 
     const overlap = this.powerups.powerups.filter((pow) => {
       const xOverlap = (left > pow.position.left && left < pow.position.left + pow.size.width) ||
