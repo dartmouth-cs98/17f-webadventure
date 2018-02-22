@@ -1,10 +1,6 @@
 # WebAdventure
 
-WebAdventure is a Chrome Extension that provides a unique and fun way of interacting with Wikipedia via a game format. Players interact with webpages in a multiplayer snake game that combines reading content with the competitive multiplayer snake game.
-
-We developed the game by adapting the popular game of Snake and [paper.io](http://www.best.io/paper-io) so that it takes place on the text of a webpage (we choose Wikipedia.com for this iteration). Players fight for control of a webpage by taking up area with the limitation they cannot exceed the boundaries of the content and cannot run into any snake trail (their own or any opponents'). They  As the game runs the player's stats (score, area collected) are displayed to other users.
-
-For mockups of the page, please visit https://github.com/dartmouth-cs98/17f-webadventure/wiki and click on the link titled "Link to Figma"
+WebAdventure is a Chrome Extension that provides a unique and fun way of interacting with Wikipedia via a game format. Players compete against each other in a version of the "Wiki Game." For each player, the object of the game is to reach the "goal" page before any other player does.
 
 Example of Game:
 ![Snake in Action](assets/Gameplay.png)
