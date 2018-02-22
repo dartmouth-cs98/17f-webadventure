@@ -98,6 +98,7 @@ class Lobby extends Component {
       id: gameId,
     };
     this.setState({ selectedGame: tempGame });
+    this.lobbySocket.joinNewGame(this.selectedGame.gameId);
   }
 
   joinPrivateGame(gameId) {

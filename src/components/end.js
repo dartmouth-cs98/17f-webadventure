@@ -2,7 +2,6 @@ import React from 'react';
 import '../style.css';
 
 const End = (props) => {
-  console.log(props);
   const curPlayer = {
     username: 'alma',
     curScore: 2,
@@ -20,7 +19,7 @@ const End = (props) => {
               <div>{player.username}</div>
             </div>
             <div className="leaderboard-item-right">
-              {player.finishTime === -1 ? 'PENDING' : player.finishTime}
+              {player.finishTime === -1 ? 'PENDING' : `${player.finishTime}s`}
             </div>
           </div>
         );

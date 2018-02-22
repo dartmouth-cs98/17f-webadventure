@@ -51,13 +51,14 @@ export default class LobbySocket {
 
   joinNewGame(gameId) {
     const req = { gameId, username: this.username };
-    return new Promise((resolve, reject) => {
-      this.socket.emit('joinNewGame', req, (data) => {
-        if (data) { resolve(data); } else {
-          reject(new Error('No data returned'));
-        }
-      });
-    });
+    console.log(req);
+    // return new Promise((resolve, reject) => {
+    //   this.socket.emit('joinNewGame', req, (data) => {
+    //     if (data) { resolve(data); } else {
+    //       reject(new Error('No data returned'));
+    //     }
+    //   });
+    // });
   }
 
   leaveNewGame(gameId) {
