@@ -14,13 +14,14 @@ class Lobby extends Component {
   constructor(props) {
     super(props);
 
+    const username = props.username ? props.username : null;
+
     this.state = {
       user: null,
       games: [],
       selectedGame: null,
       playerAvatar: 'nyan',
     };
-
 
     this.onGameChange = this.onGameChange.bind(this);
     this.onStartGame = this.onStartGame.bind(this);
@@ -34,7 +35,10 @@ class Lobby extends Component {
     this.onGames = this.onGames.bind(this);
     this.onUsers = this.onUsers.bind(this);
 
-    this.lobbySocket = new LobbySocket(this.onGames, this.onUsers, null);
+    this.lobbySocket = new LobbySocket(this.onGames, this.onUsers, username);
+    if (username) {
+      this.signUpLobby(username);
+    }
     this.timer = 0;
     this.startKeyIndex = 2;
     this.endKeyIndex = 9;
@@ -61,6 +65,13 @@ class Lobby extends Component {
       isPrivate: true,
       startPage: 'https://en.wikipedia.org/wiki/Victorian_architecture',
       goalPage: 'https://en.wikipedia.org/wiki/Architectural_style',
+      players: [
+        { username: 'Barry', numClicks: 40, finishTime: -1 },
+        { username: 'Alma', numClicks: 45, finishTime: -1 },
+        { username: 'David', numClicks: 60, finishTime: -1 },
+        { username: 'Imanol', numClicks: 70, finishTime: -1 },
+        { username: 'Tim', numClicks: 7, finishTime: -1 },
+      ],
     };
     this.props.onStart(this.state.user.username, game);
   }
