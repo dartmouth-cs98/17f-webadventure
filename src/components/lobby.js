@@ -1,4 +1,5 @@
-/* eslint linebreak-style: ["error", "windows"], prefer-const:0, class-methods-use-this:0 */
+/* eslint linebreak-style: ["error", "windows"],
+prefer-const:0, class-methods-use-this:0, max-len:0 */
 
 import React, { Component } from 'react';
 import LobbySocket from '../sockets/lobbySocket';
@@ -161,8 +162,16 @@ class Lobby extends Component {
         <div id="overlay" />
         <div id="lobby">
           <div id="lobby-top">
-            <button className="exit-lobby-button" onClick={this.exitGame}> &times; </button>
-            <button className="info-button" >i</button>
+            <span>
+              <button className="exit-lobby-button" onClick={this.exitGame}>&times;</button>
+            </span>
+            <div>
+              <svg id="info" fill="#000000" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0 0h24v24H0z" fill="none" />
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z" />
+              </svg>
+              <div id="info-box">Test</div>
+            </div>
           </div>
           <img src="https://i.imgur.com/VUVNhtC.png" alt="webadventure!" id="webad-logo" />
           <div id="lobby-title">WEBADVENTURE</div>
