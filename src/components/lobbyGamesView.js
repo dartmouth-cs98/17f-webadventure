@@ -4,13 +4,15 @@ import React from 'react';
 
 const LobbyGamesView = (props) => {
   const handlOverflow = (start, end) => {
+    start = decodeURIComponent(start).replace(/_/g, " ");;
+    end = decodeURIComponent(end).replace(/_/g, " ");;
     const compare = start + end;
     if (compare.length > 20) {
       return (
         <marquee
           className="starting-page"
           behavior="scroll"
-          direction="right"
+          direction="left"
           scrollamount="3"
         >
           {start}&rarr;{end}
