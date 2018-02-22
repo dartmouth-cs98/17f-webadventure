@@ -132,7 +132,7 @@ class LobbyDetailsView extends Component {
     return (
       <div id="lobby-game-view">
         <div id="public">
-          <button id="public-game-button" onClick={e => this.props.joinPublicGame(e)}>
+          <button id="public-game-button" onClick={this.props.joinPublicGame}>
             Join Public
           </button>
         </div>
