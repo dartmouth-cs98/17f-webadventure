@@ -1,5 +1,3 @@
-/* eslint no-unused-vars: 0 */
-
 import React from 'react';
 
 import '../style.css';
@@ -13,6 +11,7 @@ const App = (props) => {
         curPlayer={props.leaderboard.curPlayer}
         time={props.leaderboard.time}
         players={props.leaderboard.players}
+        counter={props.counter}
       />
     </div>);
 };

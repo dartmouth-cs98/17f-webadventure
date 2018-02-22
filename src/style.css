@@ -42,7 +42,7 @@
   }
 }
 
-@keyframes rainbow-border2 {
+@keyframes gray-border {
   0% {
       border: 5px solid #fff
   }
@@ -97,7 +97,7 @@ button {
 
 #signup-button {
   font-family: 'Orbitron',sans-serif;
-  border: 1px solid #fff;
+  border: 1px solid gray;
   background: linear-gradient(124deg,#ff2400,#e81d1d,#e8b71d,#e3e81d,#1de840,#1ddde8,#2b1de8,#dd00f3,#dd00f3);
   background-size: 1800% 1800%;
   padding: 7px 20px 3px;
@@ -193,9 +193,9 @@ svg:hover {
   top: 5vw;
   left: 22vw;
   background: #f5fffa;
-  padding: 20px;
+  padding: 5px 20px 20px;
   border-radius: 10px;
-  animation-name: rainbow-border2;
+  animation-name: gray-border;
   animation-duration: 12s;
   animation-timing-function: ease-out;
   animation-delay: 0;
@@ -581,6 +581,7 @@ div.panel-alert:empty {
   padding: 10px 0;
   border: 1px solid #000;
   border-radius: 10px;
+  padding: 20px;
 }
 
 #user-rankings {
@@ -620,4 +621,49 @@ div.panel-alert:empty {
   font-family: 'Orbitron',sans-serif;
   text-align: center;
   margin-bottom:3px;
+}
+
+#lobby-top {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+#info-box {
+  visibility: hidden;
+
+  position: fixed;
+  font-family: 'Orbitron',sans-serif;
+  left: 63vw;
+  top: 20vh;
+  background: #f5fffa;
+  width: 20vw;
+  padding: 10px;
+  border: 5px solid black;
+  border-radius: 5px;
+  text-align: center;
+
+  animation-name: gray-border;
+  animation-duration: 12s;
+  animation-timing-function: ease-out;
+  animation-delay: 0;
+  animation-direction: alternate;
+  animation-iteration-count: infinite;
+  animation-fill-mode: none;
+  animation-play-state: running
+}
+
+#info:hover + #info-box{
+  visibility: visible;
+}
+
+#info-box div {
+  font-size: 13px;
+  padding: 8px 0px 8px 0px;
+}
+
+#info-box img {
+  width: inherit;
+  padding: 5px 0px 5px 0px;
 }

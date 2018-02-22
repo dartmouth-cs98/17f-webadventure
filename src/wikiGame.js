@@ -7,8 +7,13 @@ import Powerups from './powerups';
 import App from './components/app';
 
 class WikiGame {
-  constructor(onNewUrl, curPlayer = new Player('curPlayer', { left: 100, top: 100 }, true)) {
+  constructor(
+    onNewUrl,
+    curPlayer = new Player('curPlayer', { left: 100, top: 100 }, true),
+    counter = 0,
+  ) {
     this.onNewUrl = onNewUrl;
+    this.counter = counter;
     this.curPlayer = curPlayer;
     this.players = [];
     this.keysPressed = {
@@ -28,14 +33,14 @@ class WikiGame {
     this.leaderboard = {
       time: 1234,
       curPlayer: {
-        name: 'Alma',
+        name: curPlayer.username,
         avatarRight: this.curPlayer.getAvatarRight(),
       },
       players: [
         { username: 'Barry', numClicks: 40 },
         { username: 'Alma', numClicks: 45 },
         { username: 'David', numClicks: 60 },
-        { username: 'Imanol', numClicks: 70 },
+        { username: curPlayer.username, numClicks: 0 },
         { username: 'Tim', numClicks: 7 },
       ],
       goalPage: 'https://en.wikipedia.org/wiki/Orange',
@@ -43,6 +48,7 @@ class WikiGame {
 
     this.renderGame = this.renderGame.bind(this);
     this.updateLeaderboard = this.updateLeaderboard.bind(this);
+    this.increaseCounter = this.increaseCounter.bind(this);
     this.setupToc = this.setupToc.bind(this);
     this.updateGame = this.updateGame.bind(this);
     this.onKeyDown = this.onKeyDown.bind(this);
@@ -54,15 +60,17 @@ class WikiGame {
     this.slowDown = this.slowDown.bind(this);
     this.resetMultiplier = this.resetMultiplier.bind(this);
 
+    setInterval(this.increaseCounter, 1000);
     this.renderGame();
     window.addEventListener('keydown', this.onKeyDown);
     window.addEventListener('keyup', this.onKeyUp);
     this.updateInterval = window.setInterval(this.updateGame, 10);
   }
 
+
   renderGame() {
     $('body').append('<div id=wa-main />');
-    ReactDOM.render(<App leaderboard={this.leaderboard} />, document.getElementById('wa-main'));
+    ReactDOM.render(<App leaderboard={this.leaderboard} counter={this.counter} />, document.getElementById('wa-main'));
     this.setupToc();
     const curPosition = this.curPlayer.getPosition();
     this.curPlayer.insertPlayer(curPosition.x, curPosition.y);
@@ -75,9 +83,16 @@ class WikiGame {
   }
 
   updateLeaderboard(game) {
-    // this.leaderboard.players = game.players;
-    console.log(game);
-    ReactDOM.render(<App leaderboard={this.leaderboard} />, document.getElementById('wa-main'));
+    if (game) {
+      this.leaderboard.players = game.players;
+      this.leaderboard.goalPage = game.goalPage;
+    }
+    ReactDOM.render(<App leaderboard={this.leaderboard} counter={this.counter} />, document.getElementById('wa-main'));
+  }
+
+  increaseCounter() {
+    this.counter = this.counter + 1;
+    this.updateLeaderboard();
   }
 
   setupToc() {
