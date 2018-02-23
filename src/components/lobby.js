@@ -49,7 +49,7 @@ class Lobby extends Component {
   onGames(games) {
     this.setState({ games });
     if (this.state.selectedGame) {
-      this.setState({ selectedGameID: this.state.selectedGame._id });
+      this.setState({ selectedGameID: this.state.selectedGame.id });
     }
   }
 
