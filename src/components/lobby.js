@@ -21,6 +21,7 @@ class Lobby extends Component {
       games: [],
       selectedGame: null,
       playerAvatar: 'nyan',
+      allUsers: [],
     };
 
     this.onGameChange = this.onGameChange.bind(this);
@@ -51,6 +52,7 @@ class Lobby extends Component {
 
   onUsers(users) {
     console.log(users);
+    this.setState({ allUsers: users });
   }
 
   onGameChange(game) {
@@ -198,6 +200,7 @@ class Lobby extends Component {
           <img src="https://i.imgur.com/VUVNhtC.png" alt="webadventure!" id="webad-logo" />
           <div id="lobby-title">WEBADVENTURE</div>
           <SignUp
+            allUsers={this.state.allUsers}
             signUpLobby={this.signUpLobby}
             signedUp={this.signedUp}
           />
