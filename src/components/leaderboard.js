@@ -47,6 +47,8 @@ class Leaderboard extends Component {
       return (
         <div id="wa-container">
           <img id="wiki-logo" src="https://i.imgur.com/hQbOKPS.png" alt="wiki logo" />
+          <div id="topbar">
+          </div>
           <div id="leaderboard">
             <div className="userStats">WEBADVENTURE</div>
             <div id="curUserRow">

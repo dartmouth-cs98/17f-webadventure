@@ -142,6 +142,11 @@ svg:hover {
   position: fixed
 }
 
+#mw-head {
+  /*display: none;*/
+  z-index: 0;
+}
+
 #wa-main {
   background: #00f
 }
@@ -149,6 +154,16 @@ svg:hover {
 #wa-container {
   width: 11em;
   height: 100%
+}
+
+#topbar {
+  position: fixed;
+  top: 0;
+  height: 80px;
+  width: 100%;
+  border-bottom: 1px solid #aedaf9;
+  background: linear-gradient(white, white,#f6f6f6);
+  z-index: -1;
 }
 
 #wiki-logo {
