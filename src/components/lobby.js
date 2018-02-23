@@ -20,6 +20,7 @@ class Lobby extends Component {
       user: null,
       games: [],
       selectedGame: null,
+      selectedGameID: null,
       playerAvatar: 'nyan',
     };
 
@@ -69,7 +70,7 @@ class Lobby extends Component {
         { username: 'Barry', numClicks: 40, finishTime: -1 },
         { username: 'Alma', numClicks: 45, finishTime: -1 },
         { username: 'David', numClicks: 60, finishTime: -1 },
-        { username: 'Imanol', numClicks: 70, finishTime: -1 },
+        { username: this.state.user.username, numClicks: 0, finishTime: -1 },
         { username: 'Tim', numClicks: 7, finishTime: -1 },
       ],
     };
@@ -93,12 +94,9 @@ class Lobby extends Component {
     });
   }
 
-  joinPublicGame(gameId) {
-    const tempGame = {
-      id: gameId,
-    };
-    this.setState({ selectedGame: tempGame });
-    this.lobbySocket.joinNewGame(this.selectedGame.gameId);
+  joinPublicGame() {
+    this.setState({ selectedGameID: this.state.selectedGame.id });
+    this.lobbySocket.joinNewGame(this.state.selectedGame.id);
   }
 
   joinPrivateGame(gameId) {
@@ -112,7 +110,7 @@ class Lobby extends Component {
     });
   }
   backToGameSelect() {
-    this.setState({ selectedGame: null });
+    this.setState({ selectedGameID: null });
   }
 
   renderLobbyTop() {
@@ -138,10 +136,12 @@ class Lobby extends Component {
   }
 
   renderLowerLeftComponent() {
-    if (this.state.selectedGame) {
+    console.log(this.state.selectedGameID);
+    console.log(this.state.selectedGame);
+    if (this.state.selectedGameID && this.state.selectedGame) {
       return (
         <SelectedGameView
-          avatar={this.state.user.playerAvatar}
+          avatar={this.state.playerAvatar}
           selectedGame={this.state.selectedGame}
           onGoBack={this.backToGameSelect}
         />
@@ -149,8 +149,8 @@ class Lobby extends Component {
     } else {
       return (
         <LobbyDetailsView
-          joinPublicGame={this.joinPublicGame}
           joinPrivateGame={this.joinPrivateGame}
+          joinPublicGame={this.joinPublicGame}
           hostPrivateGame={this.hostPrivateGame}
           backToGameSelect={this.backToGameSelect}
           selectedGame={this.state.selectedGame}

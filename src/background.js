@@ -29,6 +29,7 @@ const endGame = () => {
   curPlayerInfo = null;
   curTabId = -1;
   clearInterval(interval);
+  counter = 0;
   gameSocket.disconnect();
   gameSocket = null;
 };
@@ -59,11 +60,12 @@ chrome.runtime.onMessage.addListener((request, sender) => {
     ({ game } = request.payload);
     gameSocket = new GameSocket(onGame, game.host, game.id, username);
     curTabId = sender.tab.id;
+    counter = 0;
     interval = setInterval(() => { counter += 1; }, 1000);
     curPlayerInfo = {
       username,
       finishTime: -1,
-      numClicks: -1,
+      numClicks: 0,
       curUrl: game.startPage,
     };
     injectGame(sender);
@@ -114,7 +116,8 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo) => {
     }
     gameSocket.updatePlayer(
       curPlayerInfo.finishTime,
-      curPlayerInfo.numClicks, curPlayerInfo.curUrl,
+      curPlayerInfo.numClicks,
+      curPlayerInfo.curUrl,
     );
     if (!curPlayerInfo.curUrl.includes('#')) {
       chrome.tabs.executeScript(tabId, {
