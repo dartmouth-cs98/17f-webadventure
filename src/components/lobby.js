@@ -46,11 +46,17 @@ class Lobby extends Component {
     this.keyLength = this.endKeyIndex - this.startKeyIndex;
   }
 
+  componentDidMount() {
+    window.addEventListener('beforeunload', this.exitGame);
+  }
+
+  componentWillUnmount() {
+    this.exitGame();
+    window.removeEventListener('beforeunload', this.exitGame);
+  }
+
   onGames(games) {
     this.setState({ games });
-    if (this.state.selectedGame) {
-      this.setState({ selectedGameID: this.state.selectedGame.id });
-    }
   }
 
   onUsers(users) {
@@ -80,6 +86,10 @@ class Lobby extends Component {
   }
 
   exitGame() {
+    if (this.state.selectedGameID) {
+      // Do I need to do something with what is returned?
+      this.lobbySocket.leaveNewGame(this.state.selectedGameID);
+    }
     this.lobbySocket.disconnect();
     this.props.exitGame();
   }
@@ -95,10 +105,23 @@ class Lobby extends Component {
   }
 
   joinPublicGame() {
-    // this.setState({ selectedGameID: this.state.selectedGame.id });
     this.lobbySocket.joinNewGame(this.state.selectedGame.id)
       .then((game) => {
         this.setState({ selectedGame: game });
+        this.setState({ selectedGameID: this.state.selectedGame.id });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  backToGameSelect() {
+    this.lobbySocket.leaveNewGame(this.state.selectedGame.id)
+      .then((game) => {
+        // anything else to do with what is returned? should game even be returned if leaveNewGame?
+        if (game) {
+          this.setState({ selectedGameID: null });
+        }
       })
       .catch((error) => {
         console.log(error);
@@ -114,9 +137,6 @@ class Lobby extends Component {
     this.lobbySocket.createGame(true).then((newGame) => {
       this.setState({ selectedGame: newGame });
     });
-  }
-  backToGameSelect() {
-    this.setState({ selectedGameID: null });
   }
 
   renderLobbyTop() {
