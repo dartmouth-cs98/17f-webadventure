@@ -48,8 +48,9 @@ class Lobby extends Component {
 
   onGames(games) {
     this.setState({ games });
-    console.log('new state');
-    console.log(games);
+    if (this.state.selectedGame) {
+      this.setState({ selectedGameID: this.state.selectedGame._id });
+    }
   }
 
   onUsers(users) {
@@ -57,7 +58,6 @@ class Lobby extends Component {
   }
 
   onGameChange(game) {
-    console.log('game changed');
     this.setState({ selectedGame: game });
   }
 
@@ -98,7 +98,6 @@ class Lobby extends Component {
     // this.setState({ selectedGameID: this.state.selectedGame.id });
     this.lobbySocket.joinNewGame(this.state.selectedGame.id)
       .then((game) => {
-        // this.setState({ selectedGameID: game._id });
         this.setState({ selectedGame: game });
       })
       .catch((error) => {
@@ -144,9 +143,6 @@ class Lobby extends Component {
 
   renderLowerLeftComponent() {
     if (this.state.selectedGameID && this.state.selectedGame) {
-      console.log('rendering selectedGameView');
-      console.log(this.state.selectedGameID);
-      console.log(this.state.selectedGame);
       return (
         <SelectedGameView
           avatar={this.state.playerAvatar}

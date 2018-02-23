@@ -32,12 +32,18 @@ const LobbyGamesView = (props) => {
   };
 
   const renderGames = () => {
+    // switches the selectedGameID to ._id from .id. Kind of a hacky fix for now
+    let id = 0;
+    if (props.selectedGame) {
+      id = '_id' in props.selectedGame ? props.selectedGame._id : props.selectedGame.id;
+    }
+
     return props.games
       .sort((a, b) => b.players.length - a.players.length)
       .map((game, index) => {
         const start = splitWord(game.startPage);
         const end = splitWord(game.goalPage);
-        if (props.selectedGame && game.id === props.selectedGame.id) {
+        if (props.selectedGame && game.id === id) {
           return (
             <div className="game-selected game-item">
               <div className="game-title-row">
