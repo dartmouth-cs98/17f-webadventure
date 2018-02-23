@@ -1,6 +1,12 @@
 import React from 'react';
 
 const SelectedGameView = (props) => {
+  const returnStartPage = () => {
+  	const pageName = decodeURIComponent(props.selectedGame.startPage.split('/').pop()).replace(/_/g, ' ');
+  	console.log(pageName);
+  	return pageName;
+  }
+
   const renderPlayers = () => {
     return props.selectedGame.players
       .map((player) => {
@@ -10,7 +16,10 @@ const SelectedGameView = (props) => {
 
   return (
     <div id="selectedGameView">
-      <div>In {props.selectedGame.host} as {props.avatar}</div>
+      <div>Playing as {props.avatar}</div>
+      <div>Waiting... {props.selectedGame.players.length}/5 players joined</div>
+      <div>Start: {returnStartPage()}</div>
+      <div>Players in game:</div>
       {renderPlayers()}
       <button onClick={props.onGoBack}>Go back</button>
     </div>
