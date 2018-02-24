@@ -2,10 +2,9 @@ import React from 'react';
 
 const SelectedGameView = (props) => {
   const returnStartPage = () => {
-  	const pageName = decodeURIComponent(props.selectedGame.startPage.split('/').pop()).replace(/_/g, ' ');
-  	console.log(pageName);
-  	return pageName;
-  }
+    const pageName = decodeURIComponent(props.selectedGame.startPage.split('/').pop()).replace(/_/g, ' ');
+    return pageName;
+  };
 
   const renderPlayers = () => {
     return props.selectedGame.players
