@@ -5,11 +5,11 @@ import Lobby from '../components/lobby';
 
 
 $('body').append('<div id=wa-lobby />');
-const onStart = (username, game) => {
+const onStart = (user, game) => {
   const request = {
     message: 'start game',
     payload: {
-      username,
+      user,
       game,
     },
   };

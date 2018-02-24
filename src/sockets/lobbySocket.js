@@ -21,8 +21,8 @@ export default class LobbySocket {
   getOrCreateUser(username) {
     this.username = username;
     return new Promise((resolve, reject) => {
-      this.socket.emit('getOrCreateUser', { username }, (data) => {
-        if (data) { resolve(data); } else {
+      this.socket.emit('getOrCreateUser', { username }, (user) => {
+        if (user) { resolve(user); } else {
           reject(new Error('No data returned'));
         }
       });
@@ -33,7 +33,13 @@ export default class LobbySocket {
     const req = {
       username, fields,
     };
-    this.socket.emit('updateUser', req);
+    return new Promise((resolve, reject) => {
+      this.socket.emit('updateUser', req, (user) => {
+        if (user) { resolve(user); } else {
+          reject(new Error('No data returned'));
+        }
+      });
+    });
   }
 
   createGame(isPrivate) {

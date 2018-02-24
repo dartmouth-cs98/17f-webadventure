@@ -21,14 +21,13 @@ class Lobby extends Component {
       games: [],
       selectedGame: null,
       joinedGame: null,
-      playerAvatar: 'nyan',
     };
 
     this.onGames = this.onGames.bind(this);
     this.onUsers = this.onUsers.bind(this);
     this.onStartGame = this.onStartGame.bind(this);
     this.exitGame = this.exitGame.bind(this);
-    this.changeAvatar = this.changeAvatar.bind(this);
+    this.updateUser = this.updateUser.bind(this);
     this.signUpLobby = this.signUpLobby.bind(this);
     this.selectGame = this.selectGame.bind(this);
     this.joinPublicGame = this.joinPublicGame.bind(this);
@@ -69,7 +68,7 @@ class Lobby extends Component {
         { username: 'Tim', numClicks: 7, finishTime: -1 },
       ],
     };
-    this.props.onStart(this.state.user.username, game);
+    this.props.onStart(this.state.user, game);
   }
 
   exitGame() {
@@ -77,8 +76,10 @@ class Lobby extends Component {
     this.props.exitGame();
   }
 
-  changeAvatar(avatar) {
-    this.setState({ playerAvatar: avatar });
+  updateUser(fields) {
+    this.lobbySocket.updateUser(this.state.user.username, fields).then((user) => {
+      this.setState({ user });
+    });
   }
 
   signUpLobby(username) {
@@ -175,10 +176,9 @@ class Lobby extends Component {
               />
               <div id="lobby-columns">
                 <DisplayUser
+                  user={this.state.user}
                   username={this.state.user.username}
-                  avatar={this.state.playerAvatar}
-                  onAvatar={this.changeAvatar}
-                  onUsername={this.signUpLobby}
+                  updateUser={this.updateUser}
                 />
                 {this.renderGameSelectComponent()}
               </div>
