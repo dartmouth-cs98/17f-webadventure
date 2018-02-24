@@ -57,7 +57,7 @@ const LobbyGamesView = (props) => {
           return (
             <div
               className="game-item"
-              onClick={e => props.onSelectGame(game, e)}
+              onClick={() => props.selectGame(game)}
               role="button"
               tabIndex={0}
             >

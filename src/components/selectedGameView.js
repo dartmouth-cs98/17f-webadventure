@@ -1,13 +1,13 @@
 import React from 'react';
 
 const SelectedGameView = (props) => {
-  const returnStartPage = () => {
-    const pageName = decodeURIComponent(props.selectedGame.startPage.split('/').pop()).replace(/_/g, ' ');
+  const renderStartPage = () => {
+    const pageName = decodeURIComponent(props.joinedGame.startPage.split('/').pop()).replace(/_/g, ' ');
     return pageName;
   };
 
   const renderPlayers = () => {
-    return props.selectedGame.players
+    return props.joinedGame.players
       .map((player) => {
         return (<div>{player.username}</div>);
       });
@@ -16,11 +16,11 @@ const SelectedGameView = (props) => {
   return (
     <div id="selectedGameView">
       <div>Playing as {props.avatar}</div>
-      <div>Waiting... {props.selectedGame.players.length}/5 players joined</div>
-      <div>Start: {returnStartPage()}</div>
+      <div>Waiting... {props.joinedGame.players.length}/5 players joined</div>
+      <div>Start: {renderStartPage()}</div>
       <div>Players in game:</div>
       {renderPlayers()}
-      <button onClick={props.onGoBack}>Go back</button>
+      <button onClick={props.backToGameSelect}>Go back</button>
     </div>
   );
 };
