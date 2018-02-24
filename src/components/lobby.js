@@ -56,6 +56,7 @@ class Lobby extends Component {
   }
 
   onGames(games) {
+    // need to update selectedGame with new selectedGame
     this.setState({ games });
   }
 
