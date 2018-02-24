@@ -4,11 +4,20 @@ class Leaderboard extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      players: props.players,
       timer: props.counter,
     };
-    this.renderRankings = this.renderRankings.bind(this);
+    this.onMessageRequest = this.onMessageRequest.bind(this);
     this.incTimer = this.incTimer.bind(this);
     setInterval(this.incTimer, 1000);
+
+    chrome.runtime.onMessage.addListener(this.onMessageRequest);
+  }
+
+  onMessageRequest(req) {
+    if (req.message === 'game info') {
+      this.setState({ players: req.payload.game.players });
+    }
   }
 
   incTimer() {
@@ -16,7 +25,7 @@ class Leaderboard extends Component {
   }
 
   renderRankings() {
-    const top5 = this.props.players
+    const top5 = this.state.players
       .sort((a, b) => a.numClicks - b.numClicks)
       .map((player, index) => {
         if (player.username === this.props.curPlayer.name) {

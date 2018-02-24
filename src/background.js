@@ -41,7 +41,9 @@ const injectGame = (sender) => {
     }, () => {
       chrome.tabs.sendMessage(curTabId, {
         message: 'new game',
-        payload: { username: curPlayerInfo.username, game, counter },
+        payload: {
+          username: curPlayerInfo.username, avatar: curPlayerInfo.avatar, game, counter,
+        },
       });
     });
   } else {
@@ -58,7 +60,7 @@ chrome.browserAction.onClicked.addListener((tab) => {
 chrome.runtime.onMessage.addListener((request, sender) => {
   // check tab and request info and final page reached
   if (request.message === 'start game') {
-    const { username } = request.payload;
+    const { username, avatar } = request.payload.user;
     ({ game } = request.payload);
     gameSocket = new GameSocket(onGame, game.host, game.id, username);
     curTabId = sender.tab.id;
@@ -66,6 +68,7 @@ chrome.runtime.onMessage.addListener((request, sender) => {
     interval = setInterval(() => { counter += 1; }, 1000);
     curPlayerInfo = {
       username,
+      avatar,
       finishTime: -1,
       numClicks: 0,
       curUrl: game.startPage,
@@ -127,7 +130,9 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo) => {
       }, () => {
         chrome.tabs.sendMessage(tabId, {
           message: 'new game',
-          payload: { username: curPlayerInfo.username, game, counter },
+          payload: {
+            username: curPlayerInfo.username, avatar: curPlayerInfo.avatar, game, counter,
+          },
         });
       });
     }

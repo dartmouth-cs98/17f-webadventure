@@ -1,15 +1,32 @@
-import React from 'react';
+import React, { Component } from 'react';
 import '../style.css';
 
-const End = (props) => {
-  const curPlayer = {
-    username: 'alma',
-    curScore: 2,
-    avatar: 'https://i.imgur.com/YNcTBuU.gif',
-  };
+class End extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      leaderboard: props.leaderboard,
+    };
 
-  const renderPlayers = () => {
-    return props.leaderboard
+    this.onRequest = this.onRequest.bind(this);
+    this.onNewGame = this.onNewGame.bind(this);
+
+    chrome.runtime.onMessage.addListener(this.onRequest);
+  }
+
+  onRequest(req) {
+    if (req.message === 'game info') {
+      const leaderboard = req.payload.game.players; // leaderboard
+      this.setState({ leaderboard });
+    }
+  }
+
+  onNewGame() {
+    this.props.onNewGame(this.props.curPlayerInfo.username);
+  }
+
+  renderPlayers() {
+    return this.state.leaderboard
       .sort((a, b) => a.numClicks - b.numClicks)
       .map((player, index) => {
         return (
@@ -24,27 +41,26 @@ const End = (props) => {
           </div>
         );
       });
-  };
+  }
 
-  const onNewGame = () => {
-    props.onNewGame(curPlayer.username);
-  };
 
-  return (
-    <div id="end">
-      <button className="exit-lobby-button" onClick={props.exitGame}> &times; </button>
-      <div id="end-flex">
-        <div className="userStats">WEBADVENTURE</div>
-        <div id="winner">
-          {`${curPlayer.username} wins!`}
+  render() {
+    return (
+      <div id="end">
+        <button className="exit-lobby-button" onClick={this.props.exitGame}> &times; </button>
+        <div id="end-flex">
+          <div className="userStats">WEBADVENTURE</div>
+          <div id="winner">
+            {`${this.props.curPlayerInfo.username} wins!`}
+          </div>
+          <div id="user-rankings">
+            {this.renderPlayers()}
+          </div>
+          <button onClick={this.onNewGame}>To Lobby</button>
         </div>
-        <div id="user-rankings">
-          {renderPlayers()}
-        </div>
-        <button onClick={onNewGame}>To Lobby</button>
       </div>
-    </div>
-  );
-};
+    );
+  }
+}
 
 export default End;

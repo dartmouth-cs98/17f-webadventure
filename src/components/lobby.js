@@ -21,21 +21,20 @@ class Lobby extends Component {
       user: null,
       games: [],
       selectedGame: null,
-      selectedGameID: null,
-      playerAvatar: 'nyan',
+      joinedGame: null,
     };
 
-    this.onGameChange = this.onGameChange.bind(this);
+    this.onGames = this.onGames.bind(this);
+    this.onUsers = this.onUsers.bind(this);
     this.onStartGame = this.onStartGame.bind(this);
     this.exitGame = this.exitGame.bind(this);
+    this.updateUser = this.updateUser.bind(this);
+    this.signUpLobby = this.signUpLobby.bind(this);
+    this.selectGame = this.selectGame.bind(this);
     this.joinPublicGame = this.joinPublicGame.bind(this);
     this.joinPrivateGame = this.joinPrivateGame.bind(this);
     this.hostPrivateGame = this.hostPrivateGame.bind(this);
     this.backToGameSelect = this.backToGameSelect.bind(this);
-    this.signUpLobby = this.signUpLobby.bind(this);
-    this.changeAvatar = this.changeAvatar.bind(this);
-    this.onGames = this.onGames.bind(this);
-    this.onUsers = this.onUsers.bind(this);
 
     this.lobbySocket = new LobbySocket(this.onGames, this.onUsers, username);
     if (username) {
@@ -74,10 +73,6 @@ class Lobby extends Component {
     console.log(users);
   }
 
-  onGameChange(game) {
-    this.setState({ selectedGame: game });
-  }
-
   onStartGame() {
     const game = {
       id: '5a80e8dff58b73d699780895',
@@ -93,7 +88,7 @@ class Lobby extends Component {
         { username: 'Tim', numClicks: 7, finishTime: -1 },
       ],
     };
-    this.props.onStart(this.state.user.username, game);
+    this.props.onStart(this.state.user, game);
   }
 
   exitGame() {
@@ -105,8 +100,10 @@ class Lobby extends Component {
     this.props.exitGame();
   }
 
-  changeAvatar(avatar) {
-    this.setState({ playerAvatar: avatar });
+  updateUser(fields) {
+    this.lobbySocket.updateUser(this.state.user.username, fields).then((user) => {
+      this.setState({ user });
+    });
   }
 
   signUpLobby(username) {
@@ -114,49 +111,43 @@ class Lobby extends Component {
       this.setState({ user });
     });
   }
-
-  joinPublicGame() {
-    this.lobbySocket.joinNewGame(this.state.selectedGame.id)
-      .then((game) => {
-        this.setState({ selectedGame: game });
-        this.setState({ selectedGameID: this.state.selectedGame.id });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    
+  selectGame(game) {
+    if (!this.state.joinedGame) { this.setState({ selectedGame: game }); }
   }
 
-  backToGameSelect() {
-    this.lobbySocket.leaveNewGame(this.state.selectedGame.id)
-      .then((game) => {
-        // anything else to do with what is returned? should game even be returned if leaveNewGame?
-        if (game) {
-          this.setState({ selectedGameID: null });
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+  joinPublicGame(gameId) {
+    this.lobbySocket.joinNewGame(gameId).then((game) => {
+      this.setState({ joinedGame: game });
+    });
   }
 
   joinPrivateGame(gameId) {
     this.lobbySocket.joinNewGame(gameId).then((game) => {
-      this.setState({ selectedGame: game });
+      this.setState({ joinedGame: game, selectedGame: null });
     });
   }
   hostPrivateGame() {
     this.lobbySocket.createGame(true).then((newGame) => {
-      this.setState({ selectedGame: newGame });
+      this.setState({ joinedGame: newGame, selectedGame: null });
     });
   }
 
-  renderLowerLeftComponent() {
-    if (this.state.selectedGameID && this.state.selectedGame) {
+  backToGameSelect() {
+    if (this.state.selectedGame) {
+      this.lobbySocket.leaveNewGame(this.state.selectedGame.id).then(() => {
+        this.setState({ selectedGame: null, joinedGame: null });
+      });
+    }
+  }
+      
+  renderGameSelectComponent() {
+    if (this.state.joinedGame) {
       return (
         <SelectedGameView
           avatar={this.state.playerAvatar}
-          selectedGame={this.state.selectedGame}
-          onGoBack={this.backToGameSelect}
+          joinedGame={this.state.joinedGame}
+          backToGameSelect={this.backToGameSelect}
         />
       );
     } else {
@@ -165,7 +156,6 @@ class Lobby extends Component {
           joinPrivateGame={this.joinPrivateGame}
           joinPublicGame={this.joinPublicGame}
           hostPrivateGame={this.hostPrivateGame}
-          backToGameSelect={this.backToGameSelect}
           selectedGame={this.state.selectedGame}
         />
       );
@@ -185,16 +175,15 @@ class Lobby extends Component {
               <LobbyGamesView
                 games={this.state.games}
                 selectedGame={this.state.selectedGame}
-                onSelectGame={this.onGameChange}
+                selectGame={this.selectGame}
               />
               <div id="lobby-columns">
                 <DisplayUser
+                  user={this.state.user}
                   username={this.state.user.username}
-                  avatar={this.state.playerAvatar}
-                  onAvatar={this.changeAvatar}
-                  onUsername={this.signUpLobby}
+                  updateUser={this.updateUser}
                 />
-                {this.renderLowerLeftComponent()}
+                {this.renderGameSelectComponent()}
               </div>
             </div>
             <button onClick={this.onStartGame} >
