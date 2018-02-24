@@ -59,12 +59,12 @@ class Lobby extends Component {
     this.setState({ games });
 
     // cleaner way to write this?
-    if (this.state.selectedGame) {
-      for (let i = 0; i < games.length; i += 1) {
-        if (this.state.selectedGame.id === games[i].id) {
-          this.setState({ selectedGame: games[i] });
-          break;
-        }
+    for (let i = 0; i < games.length; i += 1) {
+      if (this.state.selectedGame && this.state.selectedGame.id === games[i].id) {
+        this.setState({ selectedGame: games[i] });
+      }
+      if (this.state.joinedGame && this.state.joinedGame.id === games[i].id) {
+        this.setState({ joinedGame: games[i] });
       }
     }
   }
@@ -111,7 +111,7 @@ class Lobby extends Component {
       this.setState({ user });
     });
   }
-    
+
   selectGame(game) {
     if (!this.state.joinedGame) { this.setState({ selectedGame: game }); }
   }
@@ -127,6 +127,7 @@ class Lobby extends Component {
       this.setState({ joinedGame: game, selectedGame: null });
     });
   }
+
   hostPrivateGame() {
     this.lobbySocket.createGame(true).then((newGame) => {
       this.setState({ joinedGame: newGame, selectedGame: null });
@@ -140,7 +141,7 @@ class Lobby extends Component {
       });
     }
   }
-      
+
   renderGameSelectComponent() {
     if (this.state.joinedGame) {
       return (
