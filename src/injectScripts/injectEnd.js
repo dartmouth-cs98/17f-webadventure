@@ -36,17 +36,6 @@ chrome.runtime.onMessage.addListener((req) => {
       />,
       document.getElementById('wa-main-end'),
     );
-  } else if (req.message === 'game info') {
-    const leaderboard = req.payload.game.players; // leaderboard
-    ReactDOM.render(
-      <End
-        onNewGame={onNewGame}
-        exitGame={exitGame}
-        curPlayerInfo={curPlayerInfo}
-        leaderboard={leaderboard}
-      />,
-      document.getElementById('wa-main-end'),
-    );
   }
 });
 $('body').append('<div id=wa-main-end />');
