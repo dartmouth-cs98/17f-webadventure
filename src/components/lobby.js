@@ -20,20 +20,21 @@ class Lobby extends Component {
       user: null,
       games: [],
       selectedGame: null,
+      joinedGame: null,
       playerAvatar: 'nyan',
     };
 
-    this.onGameChange = this.onGameChange.bind(this);
+    this.onGames = this.onGames.bind(this);
+    this.onUsers = this.onUsers.bind(this);
     this.onStartGame = this.onStartGame.bind(this);
     this.exitGame = this.exitGame.bind(this);
+    this.changeAvatar = this.changeAvatar.bind(this);
+    this.signUpLobby = this.signUpLobby.bind(this);
+    this.selectGame = this.selectGame.bind(this);
     this.joinPublicGame = this.joinPublicGame.bind(this);
     this.joinPrivateGame = this.joinPrivateGame.bind(this);
     this.hostPrivateGame = this.hostPrivateGame.bind(this);
     this.backToGameSelect = this.backToGameSelect.bind(this);
-    this.signUpLobby = this.signUpLobby.bind(this);
-    this.changeAvatar = this.changeAvatar.bind(this);
-    this.onGames = this.onGames.bind(this);
-    this.onUsers = this.onUsers.bind(this);
 
     this.lobbySocket = new LobbySocket(this.onGames, this.onUsers, username);
     if (username) {
@@ -51,11 +52,6 @@ class Lobby extends Component {
 
   onUsers(users) {
     console.log(users);
-  }
-
-  onGameChange(game) {
-    console.log('check');
-    this.setState({ selectedGame: game });
   }
 
   onStartGame() {
@@ -87,30 +83,36 @@ class Lobby extends Component {
 
   signUpLobby(username) {
     this.lobbySocket.getOrCreateUser(username).then((user) => {
-      this.setState({
-        user,
-      });
+      this.setState({ user });
     });
+  }
+
+  selectGame(game) {
+    if (!this.state.joinedGame) { this.setState({ selectedGame: game }); }
   }
 
   joinPublicGame(gameId) {
     this.lobbySocket.joinNewGame(gameId).then((game) => {
-      this.setState({ selectedGame: game });
+      this.setState({ joinedGame: game });
     });
   }
 
   joinPrivateGame(gameId) {
     this.lobbySocket.joinNewGame(gameId).then((game) => {
-      this.setState({ selectedGame: game });
+      this.setState({ joinedGame: game, selectedGame: null });
     });
   }
   hostPrivateGame() {
     this.lobbySocket.createGame(true).then((newGame) => {
-      this.setState({ selectedGame: newGame });
+      this.setState({ joinedGame: newGame, selectedGame: null });
     });
   }
   backToGameSelect() {
-    this.setState({ selectedGame: null });
+    if (this.state.selectedGame) {
+      this.lobbySocket.leaveNewGame(this.state.selectedGame.id).then(() => {
+        this.setState({ selectedGame: null, joinedGame: null });
+      });
+    }
   }
 
   renderLobbyTop() {
@@ -135,22 +137,21 @@ class Lobby extends Component {
     );
   }
 
-  renderLowerLeftComponent() {
-    if (this.state.selectedGame) {
+  renderGameSelectComponent() {
+    if (this.state.joinedGame) {
       return (
         <SelectedGameView
-          avatar={this.state.user.playerAvatar}
-          selectedGame={this.state.selectedGame}
-          onGoBack={this.backToGameSelect}
+          avatar={this.state.playerAvatar}
+          joinedGame={this.state.joinedGame}
+          backToGameSelect={this.backToGameSelect}
         />
       );
     } else {
       return (
         <LobbyDetailsView
-          joinPublicGame={this.joinPublicGame}
           joinPrivateGame={this.joinPrivateGame}
+          joinPublicGame={this.joinPublicGame}
           hostPrivateGame={this.hostPrivateGame}
-          backToGameSelect={this.backToGameSelect}
           selectedGame={this.state.selectedGame}
         />
       );
@@ -170,7 +171,7 @@ class Lobby extends Component {
               <LobbyGamesView
                 games={this.state.games}
                 selectedGame={this.state.selectedGame}
-                onSelectGame={this.onGameChange}
+                selectGame={this.selectGame}
               />
               <div id="lobby-columns">
                 <DisplayUser
@@ -179,7 +180,7 @@ class Lobby extends Component {
                   onAvatar={this.changeAvatar}
                   onUsername={this.signUpLobby}
                 />
-                {this.renderLowerLeftComponent()}
+                {this.renderGameSelectComponent()}
               </div>
             </div>
             <button onClick={this.onStartGame} >

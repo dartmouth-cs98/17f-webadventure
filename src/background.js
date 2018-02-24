@@ -50,7 +50,9 @@ const injectGame = (sender) => {
 };
 
 chrome.browserAction.onClicked.addListener((tab) => {
-  renderLobby(tab.id);
+  if (!gameSocket) {
+    renderLobby(tab.id); 
+  }
 });
 
 chrome.runtime.onMessage.addListener((request, sender) => {
