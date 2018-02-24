@@ -9,7 +9,7 @@ import App from './components/app';
 class WikiGame {
   constructor(
     onNewUrl,
-    curPlayer = new Player('curPlayer', { left: 100, top: 100 }, true),
+    curPlayer = new Player('curPlayer'),
     counter = 0,
   ) {
     this.onNewUrl = onNewUrl;

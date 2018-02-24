@@ -15,8 +15,8 @@ const onNewUrl = (newUrl) => {
 
 chrome.runtime.onMessage.addListener((request) => {
   if (request.message === 'new game') {
-    const { counter, username } = request.payload;
-    const curPlayer = new Player(username, { left: 100, top: 100 }, true);
+    const { counter, username, avatar } = request.payload;
+    const curPlayer = new Player(username, avatar);
     wikiGame = new WikiGame(onNewUrl, curPlayer, counter);
     wikiGame.updateLeaderboard(request.payload.game);
   } else if (request.message === 'game info') {
