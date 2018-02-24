@@ -3,6 +3,7 @@ prefer-const:0, class-methods-use-this:0, max-len:0 */
 
 import React, { Component } from 'react';
 import LobbySocket from '../sockets/lobbySocket';
+import LobbyTop from './lobbyTop';
 import SignUp from './signup';
 import LobbyDetailsView from './lobbyDetailsView';
 import LobbyGamesView from './lobbyGamesView';
@@ -140,27 +141,27 @@ class Lobby extends Component {
     });
   }
 
-  renderLobbyTop() {
-    return (
-      <div id="lobby-top">
-        <span>
-          <button className="exit-lobby-button" onClick={this.exitGame}>&times;</button>
-        </span>
-        <div>
-          <svg id="info" fill="#000000" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
-            <path d="M0 0h24v24H0z" fill="none" />
-            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z" />
-          </svg>
-          <div id="info-box">
-            HOW TO PLAY
-            <div>Race other WebAdventurers to the goal page and learn more about the world!</div>
-            <img id="nav-keys" className="info-img" alt="nav-keys" src="https://i.imgur.com/qPjFtPZ.png" />
-            <div>Move across the page with WASD and jump links with the L key</div>
-          </div>
-        </div>
-      </div>
-    );
-  }
+  // renderLobbyTop() {
+  //   return (
+  //     <div id="lobby-top">
+  //       <span>
+  //         <button className="exit-lobby-button" onClick={this.exitGame}>&times;</button>
+  //       </span>
+  //       <div>
+  //         <svg id="info" fill="#000000" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+  //           <path d="M0 0h24v24H0z" fill="none" />
+  //           <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z" />
+  //         </svg>
+  //         <div id="info-box">
+  //           HOW TO PLAY
+  //           <div>Race other WebAdventurers to the goal page and learn more about the world!</div>
+  //           <img id="nav-keys" className="info-img" alt="nav-keys" src="https://i.imgur.com/qPjFtPZ.png" />
+  //           <div>Move across the page with WASD and jump links with the L key</div>
+  //         </div>
+  //       </div>
+  //     </div>
+  //   );
+  // }
 
   renderLowerLeftComponent() {
     if (this.state.selectedGameID && this.state.selectedGame) {
@@ -191,7 +192,7 @@ class Lobby extends Component {
         <div id="lobby-container">
           <div id="overlay" />
           <div id="lobby">
-            {this.renderLobbyTop()}
+            <LobbyTop exitGame={this.exitGame} />
             <div id="lobby-title">WEBADVENTURE</div>
             <div id="lobby-contents">
               <LobbyGamesView
@@ -220,7 +221,7 @@ class Lobby extends Component {
       <div id="lobby-container">
         <div id="overlay" />
         <div id="lobby">
-          {this.renderLobbyTop()}
+          <LobbyTop exitGame={this.exitGame} />
           <img src="https://i.imgur.com/VUVNhtC.png" alt="webadventure!" id="webad-logo" />
           <div id="lobby-title">WEBADVENTURE</div>
           <SignUp

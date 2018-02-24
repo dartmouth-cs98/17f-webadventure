@@ -51,7 +51,7 @@ const injectGame = (sender) => {
 
 chrome.browserAction.onClicked.addListener((tab) => {
   if (!gameSocket) {
-    renderLobby(tab.id); 
+    renderLobby(tab.id);
   }
 });
 

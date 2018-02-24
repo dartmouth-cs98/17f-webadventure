@@ -62,10 +62,6 @@ class LobbyDetailsView extends Component {
     }
   }
 
-  onHostPrivateGame() {
-
-  }
-
   startTimer() {
     if (this.checkNumPlayers()) {
       clearInterval(this.timer);
