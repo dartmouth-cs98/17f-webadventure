@@ -32,6 +32,7 @@ const LobbyGamesView = (props) => {
   };
 
   const renderGames = () => {
+    console.log(props.games);
     return props.games
       .sort((a, b) => b.players.length - a.players.length)
       .map((game, index) => {

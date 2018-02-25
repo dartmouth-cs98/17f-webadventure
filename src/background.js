@@ -62,7 +62,8 @@ chrome.runtime.onMessage.addListener((request, sender) => {
   if (request.message === 'start game') {
     const { username, avatar } = request.payload.user;
     ({ game } = request.payload);
-    gameSocket = new GameSocket(onGame, game.host, game.id, username);
+    console.log(request);
+    gameSocket = new GameSocket(onGame, game.id, username);
     curTabId = sender.tab.id;
     counter = 0;
     interval = setInterval(() => { counter += 1; }, 1000);

@@ -25,6 +25,7 @@ class Lobby extends Component {
     };
 
     this.onGames = this.onGames.bind(this);
+    this.onGameStarted = this.onGameStarted.bind(this);
     this.onUsers = this.onUsers.bind(this);
     this.onStartGame = this.onStartGame.bind(this);
     this.exitGame = this.exitGame.bind(this);
@@ -36,7 +37,7 @@ class Lobby extends Component {
     this.hostPrivateGame = this.hostPrivateGame.bind(this);
     this.backToGameSelect = this.backToGameSelect.bind(this);
 
-    this.lobbySocket = new LobbySocket(this.onGames, this.onUsers, username);
+    this.lobbySocket = new LobbySocket(this.onGames, this.onUsers, this.onGameStarted, username);
     if (username) {
       this.signUpLobby(username);
     }
@@ -69,26 +70,18 @@ class Lobby extends Component {
     }
   }
 
+  onGameStarted(game) {
+    this.props.onStart(this.state.user, game);
+  }
+
   onUsers(users) {
     console.log(users);
   }
 
   onStartGame() {
-    const game = {
-      id: '5a80e8dff58b73d699780895',
-      host: 'almawang',
-      isPrivate: true,
-      startPage: 'https://en.wikipedia.org/wiki/Victorian_architecture',
-      goalPage: 'https://en.wikipedia.org/wiki/Architectural_style',
-      players: [
-        { username: 'Barry', numClicks: 40, finishTime: -1 },
-        { username: 'Alma', numClicks: 45, finishTime: -1 },
-        { username: 'David', numClicks: 60, finishTime: -1 },
-        { username: this.state.user.username, numClicks: 0, finishTime: -1 },
-        { username: 'Tim', numClicks: 7, finishTime: -1 },
-      ],
-    };
-    this.props.onStart(this.state.user, game);
+    this.lobbySocket.startGame(this.state.joinedGame.id)
+      .then(() => {})
+      .catch(err => console.log(err));
   }
 
   exitGame() {
