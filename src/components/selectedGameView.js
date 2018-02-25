@@ -1,3 +1,5 @@
+/* eslint no-mixed-spaces-and-tabs:0, no-tabs:0 */
+
 import React from 'react';
 
 const SelectedGameView = (props) => {
@@ -16,7 +18,7 @@ const SelectedGameView = (props) => {
   return (
     <div id="selectedGameView">
       <div>Playing as {props.avatar}</div>
-      <div>Waiting... {props.joinedGame.players.length}/5 players joined</div>
+      <div>{props.joinedGame.players.length}/5 players joined</div>
       <div>Start: {renderStartPage()}</div>
       <div>Players in game:</div>
       {renderPlayers()}
