@@ -42,14 +42,9 @@ class Lobby extends Component {
       this.signUpLobby(username);
     }
     this.timer = 0;
-    this.startKeyIndex = 2;
-    this.endKeyIndex = 9;
-    this.keyLength = this.endKeyIndex - this.startKeyIndex;
   }
 
-  componentDidMount() {
-    window.addEventListener('beforeunload', this.exitGame);
-  }
+  componentDidMount() { window.addEventListener('beforeunload', this.exitGame); }
 
   componentWillUnmount() {
     this.exitGame();
@@ -57,26 +52,20 @@ class Lobby extends Component {
   }
 
   onGames(games) {
-    this.setState({ games });
-
-    // cleaner way to write this?
-    for (let i = 0; i < games.length; i += 1) {
-      if (this.state.selectedGame && this.state.selectedGame.id === games[i].id) {
-        this.setState({ selectedGame: games[i] });
+    const newState = { games };
+    games.forEach((game) => {
+      if (this.state.selectedGame && this.state.selectedGame.id === game.id) {
+        newState.selectedGame = game;
       }
-      if (this.state.joinedGame && this.state.joinedGame.id === games[i].id) {
-        this.setState({ joinedGame: games[i] });
+      if (this.state.joinedGame && this.state.joinedGame.id === game.id) {
+        newState.joinedGame = game;
       }
-    }
+    });
+    this.setState(newState);
   }
 
-  onGameStarted(game) {
-    this.props.onStart(this.state.user, game);
-  }
-
-  onUsers(users) {
-    console.log(users);
-  }
+  onGameStarted(game) { this.props.onStart(this.state.user, game); }
+  onUsers(users) { console.log(users); }
 
   onStartGame() {
     this.lobbySocket.startGame(this.state.joinedGame.id)
@@ -85,9 +74,8 @@ class Lobby extends Component {
   }
 
   exitGame() {
-    if (this.state.selectedGameID) {
-      // Do I need to do something with what is returned?
-      this.lobbySocket.leaveNewGame(this.state.selectedGameID);
+    if (this.state.selectedGame) {
+      this.lobbySocket.leaveNewGame(this.state.selectedGame.id);
     }
     this.lobbySocket.disconnect();
     this.props.exitGame();
@@ -105,9 +93,7 @@ class Lobby extends Component {
     });
   }
 
-  selectGame(game) {
-    if (!this.state.joinedGame) { this.setState({ selectedGame: game }); }
-  }
+  selectGame(game) { if (!this.state.joinedGame) { this.setState({ selectedGame: game }); } }
 
   joinPublicGame(gameId) {
     this.lobbySocket.joinNewGame(gameId).then((game) => {
