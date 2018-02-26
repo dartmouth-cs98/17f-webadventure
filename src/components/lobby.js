@@ -21,6 +21,7 @@ class Lobby extends Component {
       user: null,
       games: [],
       selectedGame: null,
+      allUsers: [],
       joinedGame: null,
     };
 
@@ -65,8 +66,12 @@ class Lobby extends Component {
   }
 
   onGameStarted(game) { this.props.onStart(this.state.user, game); }
-  onUsers(users) { console.log(users); }
-
+  
+  onUsers(users) {
+    console.log(users);
+    this.setState({ allUsers: users });
+  }
+    
   onStartGame() {
     this.lobbySocket.startGame(this.state.joinedGame.id)
       .then(() => {})
@@ -181,6 +186,7 @@ class Lobby extends Component {
           <img src="https://i.imgur.com/VUVNhtC.png" alt="webadventure!" id="webad-logo" />
           <div id="lobby-title">WEBADVENTURE</div>
           <SignUp
+            allUsers={this.state.allUsers}
             signUpLobby={this.signUpLobby}
             signedUp={this.signedUp}
           />
