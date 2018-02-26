@@ -12,11 +12,16 @@ Example of Game:
 
 ![Gameover](assets/end.png)
 
+## Other Repos
+Backend Repo: https://github.com/dartmouth-cs98/webadventure-backend
+
+WikiGraph Repo: https://github.com/dartmouth-cs98/17f-webadventure-wikigraphDB
+
 ## Architecture
 
 Our Chrome Extension currently injects Javascript into a Wikipedia page and uses React to modify page by displaying game elements. The extension code is compiled and built using Babel and Webpack.
 
-On the backend we are using MongoDB and Mongoose to access the data. Visit https://github.com/dartmouth-cs98/webadventure-backend for the backend repo.
+On the backend we are using MongoDB and Mongoose to access the data. Visit the (backend repo)[https://github.com/dartmouth-cs98/webadventure-backend for the backend repo].
 
 The frontend and backend communicate via web sockets (using Socket.io).
 
