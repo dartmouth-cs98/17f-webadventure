@@ -3,6 +3,7 @@ prefer-const:0, class-methods-use-this:0, max-len:0 */
 
 import React, { Component } from 'react';
 import LobbySocket from '../sockets/lobbySocket';
+import LobbyTop from './lobbyTop';
 import SignUp from './signup';
 import LobbyDetailsView from './lobbyDetailsView';
 import LobbyGamesView from './lobbyGamesView';
@@ -20,131 +21,118 @@ class Lobby extends Component {
       user: null,
       games: [],
       selectedGame: null,
-      selectedGameID: null,
-      playerAvatar: 'nyan',
       allUsers: [],
+      joinedGame: null,
     };
 
-    this.onGameChange = this.onGameChange.bind(this);
+    this.onGames = this.onGames.bind(this);
+    this.onGameStarted = this.onGameStarted.bind(this);
+    this.onUsers = this.onUsers.bind(this);
     this.onStartGame = this.onStartGame.bind(this);
     this.exitGame = this.exitGame.bind(this);
+    this.updateUser = this.updateUser.bind(this);
+    this.signUpLobby = this.signUpLobby.bind(this);
+    this.selectGame = this.selectGame.bind(this);
     this.joinPublicGame = this.joinPublicGame.bind(this);
     this.joinPrivateGame = this.joinPrivateGame.bind(this);
     this.hostPrivateGame = this.hostPrivateGame.bind(this);
     this.backToGameSelect = this.backToGameSelect.bind(this);
-    this.signUpLobby = this.signUpLobby.bind(this);
-    this.changeAvatar = this.changeAvatar.bind(this);
-    this.onGames = this.onGames.bind(this);
-    this.onUsers = this.onUsers.bind(this);
 
-    this.lobbySocket = new LobbySocket(this.onGames, this.onUsers, username);
+    this.lobbySocket = new LobbySocket(this.onGames, this.onUsers, this.onGameStarted, username);
     if (username) {
       this.signUpLobby(username);
     }
     this.timer = 0;
-    this.startKeyIndex = 2;
-    this.endKeyIndex = 9;
-    this.keyLength = this.endKeyIndex - this.startKeyIndex;
+  }
+
+  componentDidMount() { window.addEventListener('beforeunload', this.exitGame); }
+
+  componentWillUnmount() {
+    this.exitGame();
+    window.removeEventListener('beforeunload', this.exitGame);
   }
 
   onGames(games) {
-    this.setState({ games });
+    const newState = { games };
+    games.forEach((game) => {
+      if (this.state.selectedGame && this.state.selectedGame.id === game.id) {
+        newState.selectedGame = game;
+      }
+      if (this.state.joinedGame && this.state.joinedGame.id === game.id) {
+        newState.joinedGame = game;
+      }
+    });
+    this.setState(newState);
   }
 
+  onGameStarted(game) { this.props.onStart(this.state.user, game); }
+  
   onUsers(users) {
     console.log(users);
     this.setState({ allUsers: users });
   }
-
-  onGameChange(game) {
-    console.log('check');
-    this.setState({ selectedGame: game });
-  }
-
+    
   onStartGame() {
-    const game = {
-      id: '5a80e8dff58b73d699780895',
-      host: 'almawang',
-      isPrivate: true,
-      startPage: 'https://en.wikipedia.org/wiki/Victorian_architecture',
-      goalPage: 'https://en.wikipedia.org/wiki/Architectural_style',
-      players: [
-        { username: 'Barry', numClicks: 40, finishTime: -1 },
-        { username: 'Alma', numClicks: 45, finishTime: -1 },
-        { username: 'David', numClicks: 60, finishTime: -1 },
-        { username: this.state.user.username, numClicks: 0, finishTime: -1 },
-        { username: 'Tim', numClicks: 7, finishTime: -1 },
-      ],
-    };
-    this.props.onStart(this.state.user.username, game);
+    this.lobbySocket.startGame(this.state.joinedGame.id)
+      .then(() => {})
+      .catch(err => console.log(err));
   }
 
   exitGame() {
+    if (this.state.selectedGame) {
+      this.lobbySocket.leaveNewGame(this.state.selectedGame.id);
+    }
     this.lobbySocket.disconnect();
     this.props.exitGame();
   }
 
-  changeAvatar(avatar) {
-    this.setState({ playerAvatar: avatar });
+  updateUser(fields) {
+    this.lobbySocket.updateUser(this.state.user.username, fields).then((user) => {
+      this.setState({ user });
+    });
   }
 
   signUpLobby(username) {
     this.lobbySocket.getOrCreateUser(username).then((user) => {
-      this.setState({
-        user,
-      });
+      this.setState({ user });
     });
   }
 
-  joinPublicGame() {
-    this.setState({ selectedGameID: this.state.selectedGame.id });
+  selectGame(game) { if (!this.state.joinedGame) { this.setState({ selectedGame: game }); } }
+
+  joinPublicGame(gameId) {
+    this.lobbySocket.joinNewGame(gameId).then((game) => {
+      this.setState({ joinedGame: game });
+    });
   }
 
   joinPrivateGame(gameId) {
     this.lobbySocket.joinNewGame(gameId).then((game) => {
-      this.setState({ selectedGame: game });
+      this.setState({ joinedGame: game, selectedGame: null });
     });
   }
+
   hostPrivateGame() {
     this.lobbySocket.createGame(true).then((newGame) => {
-      this.setState({ selectedGame: newGame });
+      this.setState({ joinedGame: newGame, selectedGame: null });
     });
   }
+
   backToGameSelect() {
-    this.setState({ selectedGameID: null });
+    if (this.state.selectedGame) {
+      this.lobbySocket.leaveNewGame(this.state.selectedGame.id).then(() => {
+        this.setState({ selectedGame: null, joinedGame: null });
+      });
+    }
   }
 
-  renderLobbyTop() {
-    return (
-      <div id="lobby-top">
-        <span>
-          <button className="exit-lobby-button" onClick={this.exitGame}>&times;</button>
-        </span>
-        <div>
-          <svg id="info" fill="#000000" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
-            <path d="M0 0h24v24H0z" fill="none" />
-            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z" />
-          </svg>
-          <div id="info-box">
-            HOW TO PLAY
-            <div>Race other WebAdventurers to the goal page and learn more about the world!</div>
-            <img id="nav-keys" className="info-img" alt="nav-keys" src="https://i.imgur.com/qPjFtPZ.png" />
-            <div>Move across the page with WASD and jump links with the L key</div>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  renderLowerLeftComponent() {
-    console.log(this.state.selectedGameID);
-    console.log(this.state.selectedGame);
-    if (this.state.selectedGameID && this.state.selectedGame) {
+  renderGameSelectComponent() {
+    if (this.state.joinedGame) {
       return (
         <SelectedGameView
           avatar={this.state.playerAvatar}
-          selectedGame={this.state.selectedGame}
-          onGoBack={this.backToGameSelect}
+          joinedGame={this.state.joinedGame}
+          backToGameSelect={this.backToGameSelect}
         />
       );
     } else {
@@ -153,7 +141,6 @@ class Lobby extends Component {
           joinPrivateGame={this.joinPrivateGame}
           joinPublicGame={this.joinPublicGame}
           hostPrivateGame={this.hostPrivateGame}
-          backToGameSelect={this.backToGameSelect}
           selectedGame={this.state.selectedGame}
         />
       );
@@ -167,22 +154,21 @@ class Lobby extends Component {
         <div id="lobby-container">
           <div id="overlay" />
           <div id="lobby">
-            {this.renderLobbyTop()}
+            <LobbyTop exitGame={this.exitGame} />
             <div id="lobby-title">WEBADVENTURE</div>
             <div id="lobby-contents">
               <LobbyGamesView
                 games={this.state.games}
                 selectedGame={this.state.selectedGame}
-                onSelectGame={this.onGameChange}
+                selectGame={this.selectGame}
               />
               <div id="lobby-columns">
                 <DisplayUser
+                  user={this.state.user}
                   username={this.state.user.username}
-                  avatar={this.state.playerAvatar}
-                  onAvatar={this.changeAvatar}
-                  onUsername={this.signUpLobby}
+                  updateUser={this.updateUser}
                 />
-                {this.renderLowerLeftComponent()}
+                {this.renderGameSelectComponent()}
               </div>
             </div>
             <button onClick={this.onStartGame} >
@@ -196,7 +182,7 @@ class Lobby extends Component {
       <div id="lobby-container">
         <div id="overlay" />
         <div id="lobby">
-          {this.renderLobbyTop()}
+          <LobbyTop exitGame={this.exitGame} />
           <img src="https://i.imgur.com/VUVNhtC.png" alt="webadventure!" id="webad-logo" />
           <div id="lobby-title">WEBADVENTURE</div>
           <SignUp

@@ -32,6 +32,7 @@ const LobbyGamesView = (props) => {
   };
 
   const renderGames = () => {
+    console.log(props.games);
     return props.games
       .sort((a, b) => b.players.length - a.players.length)
       .map((game, index) => {
@@ -57,7 +58,7 @@ const LobbyGamesView = (props) => {
           return (
             <div
               className="game-item"
-              onClick={e => props.onSelectGame(game, e)}
+              onClick={() => props.selectGame(game)}
               role="button"
               tabIndex={0}
             >
