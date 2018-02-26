@@ -50,6 +50,8 @@ class WikiGame {
     this.onKeyDown = this.onKeyDown.bind(this);
     this.onKeyUp = this.onKeyUp.bind(this);
 
+    this.setupTopbar = this.setupTopbar.bind(this);
+
     setInterval(this.increaseCounter, 1000);
     this.renderGame();
     window.addEventListener('keydown', this.onKeyDown);
@@ -62,6 +64,7 @@ class WikiGame {
     $('body').append('<div id=wa-main />');
     ReactDOM.render(<App leaderboard={this.leaderboard} counter={this.counter} />, document.getElementById('wa-main'));
     this.setupToc();
+    this.setupTopbar();
     const curPosition = this.curPlayer.getPosition();
     this.curPlayer.insertPlayer(curPosition.x, curPosition.y);
     this.borders = {
@@ -82,6 +85,32 @@ class WikiGame {
     this.counter = this.counter + 1;
     this.updateLeaderboard();
   }
+
+  setupTopbar() {
+    var myAudio = document.getElementById("myAudio");
+    console.log(myAudio);
+
+    // function togglePlay() {
+    $('.sound').click(function() {
+      console.log("sound clicked");
+      $('.sound').toggleClass('sound-mute');
+      $('.sound').toggleClass('sound-on');
+      // myAudio.paused ? myAudio.play() : myAudio.pause();
+
+      chrome.runtime.sendMessage({message: "sound"}, function(response) {
+        // console.log(response.farewell);
+      });
+
+    });
+      // $("#sound-on").toggle();
+      // $("#sound-mute").toggle();
+  }
+
+  // toggleVolume() {
+  //   $('.sound').click(function() {
+  //     $(this).toggleClass('sound-mute');
+  //   });
+  // }
 
   setupToc() {
     const toc = $('#toc').detach();

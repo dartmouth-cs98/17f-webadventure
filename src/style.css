@@ -166,6 +166,23 @@ svg:hover {
   z-index: -1;
 }
 
+.sound {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  padding: 10px;
+  right: 0;
+  display: block;
+}
+
+.sound-on {
+  content:url("https://i.imgur.com/IBdWqJb.png");
+}
+
+.sound-mute {
+  content:url("https://i.imgur.com/CwDJxek.png");
+}
+
 #wiki-logo {
   width: inherit
 }

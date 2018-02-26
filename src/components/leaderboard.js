@@ -41,6 +41,11 @@ class Leaderboard extends Component {
     return top5;
   }
 
+  // <audio id="myAudio" src="http://www.sousound.com/music/healing/healing_01.mp3" preload="auto"></audio>
+  //file:///Users/stephanie/Documents/cs98/webad/assets/wii.mp3
+//             loop="true" autoplay="true"
+// <audio id="myAudio" src="http://k003.kiwi6.com/hotlink/3ewofkoxts/wii.mp3" loop="true" autoplay="true"></audio>
+
   render() {
     const goalPage = this.props.goalPage.split('/').pop();
     if (this.props.curPlayer) {
@@ -48,6 +53,10 @@ class Leaderboard extends Component {
         <div id="wa-container">
           <img id="wiki-logo" src="https://i.imgur.com/hQbOKPS.png" alt="wiki logo" />
           <div id="topbar">
+            <div className="sound sound-on">
+              <img id="sound-on" src="https://i.imgur.com/IBdWqJb.png" />
+              <img id="sound-mute" src="https://i.imgur.com/CwDJxek.png" />
+            </div>
           </div>
           <div id="leaderboard">
             <div className="userStats">WEBADVENTURE</div>
