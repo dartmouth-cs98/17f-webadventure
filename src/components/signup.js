@@ -25,6 +25,8 @@ class SignUp extends Component {
       this.setState({ errorMsg: 'Sorry! That username is already taken!' });
     } else if (this.state.username === '' || this.state.username.length > 12) {
       this.setState({ errorMsg: 'Please enter a valid username (less than 12 chars)!' });
+    } else if (!this.state.username.match(/^[0-9a-zA-Z]+$/)) {
+      this.setState({ errorMsg: 'Please use only alphanumeric characters!' });
     } else {
       this.props.signUpLobby(this.state.username);
     }
