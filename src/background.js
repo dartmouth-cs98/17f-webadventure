@@ -7,7 +7,8 @@ let curPlayerInfo; // {username, avatar, numClicks, curUrl, finishTime?}
 let counter;
 let interval;
 let curTabId;
-let myAudio = document.createElement("AUDIO");
+let audioOn = true;
+let bgAudio = document.createElement("AUDIO"); // Persistent across redirects
 
 const renderLobby = (tabId, username) => {
   chrome.tabs.executeScript(tabId, {
@@ -23,9 +24,7 @@ const renderLobby = (tabId, username) => {
 
 const onGame = (newGame) => {
   game = newGame;
-  chrome.tabs.sendMessage(curTabId, { message: 'game info', payload: { game } });
-  // var myAudio = document.getElementById("myAudio");
-  
+  chrome.tabs.sendMessage(curTabId, { message: 'game info', payload: { game } });  
 };
 
 const endGame = () => {
@@ -54,21 +53,24 @@ const injectGame = (sender) => {
 
 chrome.browserAction.onClicked.addListener((tab) => {
   renderLobby(tab.id);
-  // const audio = new Audio("http://k003.kiwi6.com/hotlink/3ewofkoxts/wii.mp3");
-  // document.write('<audio id="myAudio" src="http://k003.kiwi6.com/hotlink/3ewofkoxts/wii.mp3" loop="true" autoplay="true"></audio>');
-  // var myAudio = document.createElement("AUDIO");
-  myAudio.setAttribute("id", "myAudio");
-  myAudio.setAttribute("src","http://k003.kiwi6.com/hotlink/3ewofkoxts/wii.mp3");
-  // var myAudio = document.getElementById("myAudio");
-  myAudio.play();
+
+  // Background audio setup
+  bgAudio.setAttribute("id", "bgAudio");
+  bgAudio.setAttribute("src","http://k003.kiwi6.com/hotlink/3ewofkoxts/wii.mp3");
+  bgAudio.setAttribute("loop", "true");
+
+  bgAudio.play();
 });
 
 chrome.runtime.onMessage.addListener((request, sender) => {
 
   if (request.message === 'sound') {
-    console.log("got sound message");
-    // var myAudio = document.getElementById("myAudio");
-    myAudio.paused ? myAudio.play() : myAudio.pause();
+    if (audioOn) {
+      bgAudio.muted = true;
+    } else {
+      bgAudio.muted = false;
+    }
+    audioOn = !audioOn;
     return;
   }
 

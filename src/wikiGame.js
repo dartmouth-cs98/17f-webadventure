@@ -42,6 +42,8 @@ class WikiGame {
       goalPage: 'https://en.wikipedia.org/wiki/Orange',
     };
 
+    this.soundEffects = [];
+
     this.renderGame = this.renderGame.bind(this);
     this.updateLeaderboard = this.updateLeaderboard.bind(this);
     this.increaseCounter = this.increaseCounter.bind(this);
@@ -51,6 +53,7 @@ class WikiGame {
     this.onKeyUp = this.onKeyUp.bind(this);
 
     this.setupTopbar = this.setupTopbar.bind(this);
+    this.toggleAudio = this.toggleAudio.bind(this);
 
     setInterval(this.increaseCounter, 1000);
     this.renderGame();
@@ -86,31 +89,32 @@ class WikiGame {
     this.updateLeaderboard();
   }
 
-  setupTopbar() {
-    var myAudio = document.getElementById("myAudio");
-    console.log(myAudio);
+  toggleAudio() {
+    console.log("toggleAudio");
+    const linkAudio = document.createElement("AUDIO");
+    linkAudio.setAttribute("id", "whoosh");
+    linkAudio.setAttribute("src","http://k003.kiwi6.com/hotlink/6etyb9h8wr/swoosh.mp3");
 
-    // function togglePlay() {
+    var audio = document.querySelectorAll("audio");
+    // for each audio, set mute
+  }
+
+  setupTopbar() {
+
+    var bgAudio = document.getElementById("bgAudio");
+    console.log(bgAudio);
+
     $('.sound').click(function() {
       console.log("sound clicked");
       $('.sound').toggleClass('sound-mute');
       $('.sound').toggleClass('sound-on');
-      // myAudio.paused ? myAudio.play() : myAudio.pause();
 
+      // this.toggleAudio(); // Toggle sound effects
+      // Toggle background music
       chrome.runtime.sendMessage({message: "sound"}, function(response) {
-        // console.log(response.farewell);
       });
-
     });
-      // $("#sound-on").toggle();
-      // $("#sound-mute").toggle();
   }
-
-  // toggleVolume() {
-  //   $('.sound').click(function() {
-  //     $(this).toggleClass('sound-mute');
-  //   });
-  // }
 
   setupToc() {
     const toc = $('#toc').detach();
@@ -155,6 +159,10 @@ class WikiGame {
     }
   }
 
+  playSound() {
+    console.log("playSound");
+  }
+
   onKeyDown(evt) {
     switch (evt.keyCode) {
       case 65: this.keysPressed.x.left = true; break;
@@ -180,6 +188,7 @@ class WikiGame {
       case 83: this.keysPressed.y.down = false; break;
       case 80: // Pause game with 'P'
         // console.log('pause game, pause pop up?');
+        this.playSound();
         break;
       default:
         break;
