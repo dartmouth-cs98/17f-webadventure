@@ -159,10 +159,11 @@ svg:hover {
 #topbar {
   position: fixed;
   top: 0;
-  height: 80px;
+  height: 40px;
   width: 100%;
   border-bottom: 1px solid #aedaf9;
-  background: linear-gradient(white, white,#f6f6f6);
+  background: white;
+  /*background: linear-gradient(white, white,#f6f6f6);*/
   z-index: -1;
 }
 
