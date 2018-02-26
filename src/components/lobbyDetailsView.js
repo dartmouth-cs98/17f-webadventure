@@ -43,7 +43,7 @@ class LobbyDetailsView extends Component {
   onJoinPublicGame() {
     if (this.props.selectedGame === null) {
       this.setState({ errorMsg: 'Please select a game to join!' });
-    } else if (this.props.selectedGame.players.length > 5) {
+    } else if (this.props.selectedGame.players.length >= 5) {
       this.setState({ errorMsg: 'Too many people! Please select another game' });
     } else {
       this.props.joinPublicGame(this.props.selectedGame.id);
