@@ -8,7 +8,8 @@ let counter;
 let interval;
 let curTabId;
 let audioOn = true;
-let bgAudio = document.createElement("AUDIO"); // Persistent across redirects
+let bgAudio = document.createElement("AUDIO");    // Persistent across redirects
+let linkAudio = document.createElement("AUDIO");  // Whoosh sound on link clicked
 
 const renderLobby = (tabId, username) => {
   chrome.tabs.executeScript(tabId, {
@@ -48,6 +49,7 @@ const injectGame = (sender) => {
     });
   } else {
     chrome.tabs.update(curTabId, { url: curPlayerInfo.curUrl });
+    linkAudio.play();    
   }
 };
 
@@ -58,12 +60,15 @@ chrome.browserAction.onClicked.addListener((tab) => {
   bgAudio.setAttribute("id", "bgAudio");
   bgAudio.setAttribute("src","http://k003.kiwi6.com/hotlink/3ewofkoxts/wii.mp3");
   bgAudio.setAttribute("loop", "true");
-
   bgAudio.play();
+
+  // Link whoosh sound setup
+  linkAudio.setAttribute("id", "linkAudio");
+  linkAudio.setAttribute("src","https://k003.kiwi6.com/hotlink/6etyb9h8wr/swoosh.mp3");
 });
 
 chrome.runtime.onMessage.addListener((request, sender) => {
-
+  // Process sound toggle request
   if (request.message === 'sound') {
     if (audioOn) {
       bgAudio.muted = true;

@@ -42,8 +42,6 @@ class WikiGame {
       goalPage: 'https://en.wikipedia.org/wiki/Orange',
     };
 
-    this.soundEffects = [];
-
     this.renderGame = this.renderGame.bind(this);
     this.updateLeaderboard = this.updateLeaderboard.bind(this);
     this.increaseCounter = this.increaseCounter.bind(this);
@@ -52,8 +50,9 @@ class WikiGame {
     this.onKeyDown = this.onKeyDown.bind(this);
     this.onKeyUp = this.onKeyUp.bind(this);
 
-    this.setupTopbar = this.setupTopbar.bind(this);
-    this.toggleAudio = this.toggleAudio.bind(this);
+    // this.createSounds = this.createSounds.bind(this);
+    // this.soundEffects = this.createSounds();
+    // this.toggleAudio = this.toggleAudio.bind(this);
 
     setInterval(this.increaseCounter, 1000);
     this.renderGame();
@@ -89,30 +88,40 @@ class WikiGame {
     this.updateLeaderboard();
   }
 
-  toggleAudio() {
-    console.log("toggleAudio");
-    const linkAudio = document.createElement("AUDIO");
-    linkAudio.setAttribute("id", "whoosh");
-    linkAudio.setAttribute("src","http://k003.kiwi6.com/hotlink/6etyb9h8wr/swoosh.mp3");
+  // createSounds() {
+  //   console.log("create sounds");
+  //   let soundArray = [];
 
-    var audio = document.querySelectorAll("audio");
-    // for each audio, set mute
-  }
+  //   // const linkAudio = document.createElement("AUDIO");
+  //   // linkAudio.setAttribute("id", "linkAudio");
+  //   // // linkAudio.setAttribute("src","https://k003.kiwi6.com/hotlink/6etyb9h8wr/swoosh.mp3");
+  //   // linkAudio.setAttribute("src", "https://k003.kiwi6.com/hotlink/3ewofkoxts/wii.mp3");
+  //   // document.body.appendChild(linkAudio);
+  //   // soundArray.push(linkAudio);
+
+  //   console.log(soundArray);
+  //   return soundArray;
+  // }
+
+  // toggleAudio() {
+  //   console.log("toggleAudio");
+
+  //   var audio = document.querySelectorAll('audio');
+  //   console.log(audio);
+  //   // for each audio, set mute
+  // }
 
   setupTopbar() {
+    // var bgAudio = document.getElementById("bgAudio");
+    // console.log(bgAudio);
 
-    var bgAudio = document.getElementById("bgAudio");
-    console.log(bgAudio);
-
-    $('.sound').click(function() {
-      console.log("sound clicked");
+    $('.sound').click(() => {
       $('.sound').toggleClass('sound-mute');
       $('.sound').toggleClass('sound-on');
 
       // this.toggleAudio(); // Toggle sound effects
       // Toggle background music
-      chrome.runtime.sendMessage({message: "sound"}, function(response) {
-      });
+      chrome.runtime.sendMessage({ message: 'sound' });
     });
   }
 
@@ -150,17 +159,12 @@ class WikiGame {
   }
 
   openLink() {
-    console.log(this.curPlayer.getLink());
     const link = this.curPlayer.getLink();
     if (link !== null) {
       const redirectLink = `https://en.wikipedia.org${link}`;
       this.leaderboard.url = redirectLink;
       this.onNewUrl(redirectLink);
     }
-  }
-
-  playSound() {
-    console.log("playSound");
   }
 
   onKeyDown(evt) {
@@ -188,7 +192,6 @@ class WikiGame {
       case 83: this.keysPressed.y.down = false; break;
       case 80: // Pause game with 'P'
         // console.log('pause game, pause pop up?');
-        this.playSound();
         break;
       default:
         break;
