@@ -3,10 +3,9 @@
 import React from 'react';
 
 const NYAN_CATS = ['https://i.imgur.com/rZSkKF0.gif', 'https://i.imgur.com/YNcTBuU.gif'];
-// Need flipped versions of these:
-const SONIC = ['https://media.giphy.com/media/jBvHCY91NcurK/giphy.gif', 'https://media.giphy.com/media/jBvHCY91NcurK/giphy.gif'];
-const PIKACHU = ['https://media.giphy.com/media/jM4bWFBKpSFeo/giphy.gif', 'https://media.giphy.com/media/jM4bWFBKpSFeo/giphy.gif'];
-const LUIGI = ['https://media.giphy.com/media/a9291T1hx1I2I/giphy.gif', 'https://media.giphy.com/media/a9291T1hx1I2I/giphy.gif'];
+const SONIC = ['https://i.imgur.com/o8Jq7fs.gif', 'https://i.imgur.com/Fu68Kg1.gif'];
+const PIKACHU = ['https://i.imgur.com/x5PeYrM.gif', 'https://i.imgur.com/lBC1MrV.gif'];
+const LUIGI = ['https://i.imgur.com/aupFa2g.gif', 'https://i.imgur.com/UEI2KTq.gif'];
 
 const DisplayUser = (props) => {
   const handleChange = (event) => {
