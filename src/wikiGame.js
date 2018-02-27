@@ -11,7 +11,7 @@ class WikiGame {
     onNewUrl,
     curPlayer = new Player('curPlayer', { left: 100, top: 100 }, true),
     counter = 0,
-    audioOn = true,
+    // audioOn = true,
   ) {
     this.onNewUrl = onNewUrl;
     this.counter = counter;
@@ -104,23 +104,19 @@ class WikiGame {
   //   return soundArray;
   // }
 
-  // toggleAudio() {
-  //   console.log("toggleAudio");
+  toggleAudio() {
+    console.log("toggleAudio");
 
-  //   var audio = document.querySelectorAll('audio');
-  //   console.log(audio);
-  //   // for each audio, set mute
-  // }
+    var audio = document.querySelectorAll('audio');
+    console.log(audio);
+    // for each audio, set mute
+  }
 
   setupTopbar() {
-    // var bgAudio = document.getElementById("bgAudio");
-    // console.log(bgAudio);
 
     $('#sound').click(() => {
-      // $('.sound').addClass('sound-mute');
-      // $('.sound').removeClass('sound-on');
 
-      // this.toggleAudio(); // Toggle sound effects
+      this.toggleAudio(); // Toggle sound effects
       // Toggle background music
       chrome.runtime.sendMessage({ message: 'sound' }, (response) => {
         console.log(response.audio);
