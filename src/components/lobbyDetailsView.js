@@ -51,10 +51,10 @@ class LobbyDetailsView extends Component {
   }
 
   onJoinPrivateGame() {
-    if (this.state.joinKey.length === 7) {
-      this.setState({ error: null });
+    if (this.props.games.some(e => e.id === this.state.joinKey && e.isPrivate === true)) {
+      this.setState({ errorMsg: null });
       // Should be handled in back end if error
-      this.props.joinPrivateGame(this.joinKey);
+      this.props.joinPrivateGame(this.state.joinKey);
       this.startTimer();
     } else {
       this.setState({ errorMsg: 'Please enter a valid join key!' });
