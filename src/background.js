@@ -17,6 +17,7 @@ const renderLobby = (tabId, username) => {
   }, () => {
     const req = {
       message: 'render lobby',
+      // audioOn: audioOn,
       payload: { username },
     };
     chrome.tabs.sendMessage(tabId, req);
@@ -25,7 +26,7 @@ const renderLobby = (tabId, username) => {
 
 const onGame = (newGame) => {
   game = newGame;
-  chrome.tabs.sendMessage(curTabId, { message: 'game info', payload: { game } });  
+  chrome.tabs.sendMessage(curTabId, { message: 'game info', payload: { game } });
 };
 
 const endGame = () => {
@@ -67,7 +68,7 @@ chrome.browserAction.onClicked.addListener((tab) => {
   linkAudio.setAttribute("src","https://k003.kiwi6.com/hotlink/6etyb9h8wr/swoosh.mp3");
 });
 
-chrome.runtime.onMessage.addListener((request, sender) => {
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   // Process sound toggle request
   if (request.message === 'sound') {
     if (audioOn) {
@@ -76,6 +77,7 @@ chrome.runtime.onMessage.addListener((request, sender) => {
       bgAudio.muted = false;
     }
     audioOn = !audioOn;
+    sendResponse({audio: audioOn});
     return;
   }
 

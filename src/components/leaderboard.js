@@ -9,6 +9,8 @@ class Leaderboard extends Component {
     this.renderRankings = this.renderRankings.bind(this);
     this.incTimer = this.incTimer.bind(this);
     setInterval(this.incTimer, 1000);
+
+    this.audioOn = true;
   }
 
   incTimer() {
@@ -46,6 +48,9 @@ class Leaderboard extends Component {
 //             loop="true" autoplay="true"
 // <audio id="myAudio" src="http://k003.kiwi6.com/hotlink/3ewofkoxts/wii.mp3" loop="true" autoplay="true"></audio>
 
+// <img id="sound-on" src="https://i.imgur.com/IBdWqJb.png" />
+              // <img id="sound-mute" src="https://i.imgur.com/CwDJxek.png" />
+
   render() {
     const goalPage = this.props.goalPage.split('/').pop();
     if (this.props.curPlayer) {
@@ -53,9 +58,7 @@ class Leaderboard extends Component {
         <div id="wa-container">
           <img id="wiki-logo" src="https://i.imgur.com/hQbOKPS.png" alt="wiki logo" />
           <div id="topbar">
-            <div className="sound sound-on">
-              <img id="sound-on" src="https://i.imgur.com/IBdWqJb.png" />
-              <img id="sound-mute" src="https://i.imgur.com/CwDJxek.png" />
+            <div id="sound" className="sound-on">
             </div>
           </div>
           <div id="leaderboard">

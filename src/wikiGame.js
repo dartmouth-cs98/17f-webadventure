@@ -11,6 +11,7 @@ class WikiGame {
     onNewUrl,
     curPlayer = new Player('curPlayer', { left: 100, top: 100 }, true),
     counter = 0,
+    audioOn = true,
   ) {
     this.onNewUrl = onNewUrl;
     this.counter = counter;
@@ -115,13 +116,19 @@ class WikiGame {
     // var bgAudio = document.getElementById("bgAudio");
     // console.log(bgAudio);
 
-    $('.sound').click(() => {
-      $('.sound').toggleClass('sound-mute');
-      $('.sound').toggleClass('sound-on');
+    $('#sound').click(() => {
+      // $('.sound').addClass('sound-mute');
+      // $('.sound').removeClass('sound-on');
 
       // this.toggleAudio(); // Toggle sound effects
       // Toggle background music
-      chrome.runtime.sendMessage({ message: 'sound' });
+      chrome.runtime.sendMessage({ message: 'sound' }, (response) => {
+        console.log(response.audio);
+        if (response.audio)
+          document.getElementById("sound").className = 'sound-on';
+        else
+          document.getElementById("sound").className = 'sound-off';
+      });
     });
   }
 
