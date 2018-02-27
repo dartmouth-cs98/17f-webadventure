@@ -25,15 +25,15 @@ class Powerups {
       const $window = $(window);
 
       // Scatter powerups semi-randomly
-      // const offset_x = $("#wa-container").width();
-      const offset_x = 176; // 11em ish
-      console.log("offset x is "+offset_x);
-      const body = document.body,
-            html = document.documentElement;
-      const height = Math.max( body.scrollHeight, body.offsetHeight, 
-                     html.clientHeight, html.scrollHeight, html.offsetHeight );
-      console.log("height is "+height);
-      const x = Math.floor(Math.random() * ($window.width() - offset_x)) + offset_x - 50;
+      // const offsetX = $("#wa-container").width();
+      const offsetX = 126; // 11em ish - 50 (width of avatar)
+      const body = document.body;
+      const html = document.documentElement;
+      const height = Math.max(
+        body.scrollHeight, body.offsetHeight,
+        html.clientHeight, html.scrollHeight, html.offsetHeight
+      );
+      const x = Math.floor(Math.random() * ($window.width() - offsetX)) + offsetX;
       const y = Math.floor(Math.random() * height);
 
       const type = Math.floor(Math.random() * this.types.length);
