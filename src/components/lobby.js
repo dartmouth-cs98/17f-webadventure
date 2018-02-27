@@ -68,7 +68,6 @@ class Lobby extends Component {
   onGameStarted(game) { this.props.onStart(this.state.user, game); }
 
   onUsers(users) {
-    console.log(users);
     this.setState({ allUsers: users });
   }
 
@@ -114,6 +113,7 @@ class Lobby extends Component {
 
   hostPrivateGame() {
     this.lobbySocket.createGame(true).then((newGame) => {
+      console.log(newGame);
       this.setState({ joinedGame: newGame, selectedGame: null });
     });
   }
@@ -137,6 +137,7 @@ class Lobby extends Component {
     } else {
       return (
         <LobbyDetailsView
+          games={this.state.games}
           joinPrivateGame={this.joinPrivateGame}
           joinPublicGame={this.joinPublicGame}
           hostPrivateGame={this.hostPrivateGame}
