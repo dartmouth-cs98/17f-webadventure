@@ -19,12 +19,22 @@ class Powerups {
   }
 
   createPowerups() {
-    const numPowerups = Math.floor(Math.random() * 5) + 3;
+    const numPowerups = Math.floor(Math.random() * 5) + 4;
 
     for (let i = 0; i < numPowerups; i += 1) {
       const $window = $(window);
-      const x = Math.floor(Math.random() * $window.width());
-      const y = Math.floor(Math.random() * $window.height());
+
+      // Scatter powerups semi-randomly
+      // const offset_x = $("#wa-container").width();
+      const offset_x = 176; // 11em
+      console.log("offset x is "+offset_x);
+      const body = document.body,
+            html = document.documentElement;
+      const height = Math.max( body.scrollHeight, body.offsetHeight, 
+                     html.clientHeight, html.scrollHeight, html.offsetHeight );
+      console.log("height is "+height);
+      const x = Math.floor(Math.random() * ($window.width() - offset_x)) + offset_x ;
+      const y = Math.floor(Math.random() * height);
 
       const type = Math.floor(Math.random() * this.types.length);
       const powerup = new Powerup(type, { left: x, top: y }); // flipControls, speedUp, slowDown
