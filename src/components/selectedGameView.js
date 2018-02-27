@@ -4,7 +4,6 @@ import React from 'react';
 
 const SelectedGameView = (props) => {
   const renderStartPage = () => {
-    console.log(props.joinedGame);
     const pageName = decodeURIComponent(props.joinedGame.startPage.split('/').pop()).replace(/_/g, ' ');
     return pageName;
   };
@@ -22,8 +21,8 @@ const SelectedGameView = (props) => {
         <div>{props.joinedGame.id}</div>
       );
     }
-    return (<div/>);
-  }
+    return (<div />);
+  };
 
   return (
     <div id="selectedGameView">

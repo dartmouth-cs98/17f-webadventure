@@ -51,7 +51,7 @@ class LobbyDetailsView extends Component {
   }
 
   onJoinPrivateGame() {
-    if (this.props.games.some(e => e.id === this.state.joinKey && e.isPrivate === true)) {
+    if (this.props.games.some(e => e.id === this.state.joinKey && e.isPrivate)) {
       this.setState({ errorMsg: null });
       // Should be handled in back end if error
       this.props.joinPrivateGame(this.state.joinKey);
