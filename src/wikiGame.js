@@ -9,13 +9,13 @@ import App from './components/app';
 class WikiGame {
   constructor(
     onNewUrl,
-    curPlayer = new Player('curPlayer', { left: 100, top: 100 }, true),
+    curPlayer = new Player('curPlayer'),
     counter = 0,
+    game,
   ) {
     this.onNewUrl = onNewUrl;
     this.counter = counter;
     this.curPlayer = curPlayer;
-    this.players = [];
     this.keysPressed = {
       x: {
         left: false,
@@ -30,25 +30,22 @@ class WikiGame {
     this.powerups = new Powerups();
 
     this.flipMultiplier = 1; // scales step size and direction; 1 for normal movement
-    this.leaderboard = {
-      time: 1234,
-      curPlayer: {
-        name: curPlayer.username,
-        avatarRight: this.curPlayer.getAvatarRight(),
-      },
-      players: [
-        { username: 'Barry', numClicks: 40 },
-        { username: 'Alma', numClicks: 45 },
-        { username: 'David', numClicks: 60 },
-        { username: curPlayer.username, numClicks: 0 },
-        { username: 'Tim', numClicks: 7 },
-      ],
-      goalPage: 'https://en.wikipedia.org/wiki/Orange',
-    };
+    // this.leaderboard = {
+    //   time: 1234,
+    //   curPlayer: {
+    //     name: curPlayer.username,
+    //     avatarRight: this.curPlayer.getAvatarRight(),
+    //   },
+    //   players: [
+    //     { username: 'Barry', numClicks: 40 },
+    //     { username: 'Alma', numClicks: 45 },
+    //     { username: 'David', numClicks: 60 },
+    //     { username: curPlayer.username, numClicks: 0 },
+    //     { username: 'Tim', numClicks: 7 },
+    //   ],
+    //   goalPage: 'https://en.wikipedia.org/wiki/Orange',
+    // };
 
-    this.renderGame = this.renderGame.bind(this);
-    this.updateLeaderboard = this.updateLeaderboard.bind(this);
-    this.increaseCounter = this.increaseCounter.bind(this);
     this.setupToc = this.setupToc.bind(this);
     this.updateGame = this.updateGame.bind(this);
     this.onKeyDown = this.onKeyDown.bind(this);
@@ -60,17 +57,26 @@ class WikiGame {
     this.slowDown = this.slowDown.bind(this);
     this.resetMultiplier = this.resetMultiplier.bind(this);
 
-    setInterval(this.increaseCounter, 1000);
-    this.renderGame();
+    // setInterval(this.increaseCounter, 1000);
+    // this.renderGame();
+    const leaderboard = {
+      curPlayer: {
+        name: curPlayer.username,
+        avatarRight: this.curPlayer.getAvatarRight(),
+      },
+      players: game.players,
+      goalPage: game.goalPage,
+    };
+    this.renderGame(leaderboard, counter);
     window.addEventListener('keydown', this.onKeyDown);
     window.addEventListener('keyup', this.onKeyUp);
     this.updateInterval = window.setInterval(this.updateGame, 10);
   }
 
 
-  renderGame() {
+  renderGame(leaderboard, counter) {
     $('body').append('<div id=wa-main />');
-    ReactDOM.render(<App leaderboard={this.leaderboard} counter={this.counter} />, document.getElementById('wa-main'));
+    ReactDOM.render(<App leaderboard={leaderboard} counter={counter} />, document.getElementById('wa-main'));
     this.setupToc();
     const curPosition = this.curPlayer.getPosition();
     this.curPlayer.insertPlayer(curPosition.x, curPosition.y);
@@ -82,17 +88,9 @@ class WikiGame {
     };
   }
 
-  updateLeaderboard(game) {
-    if (game) {
-      this.leaderboard.players = game.players;
-      this.leaderboard.goalPage = game.goalPage;
-    }
-    ReactDOM.render(<App leaderboard={this.leaderboard} counter={this.counter} />, document.getElementById('wa-main'));
-  }
 
   increaseCounter() {
     this.counter = this.counter + 1;
-    this.updateLeaderboard();
   }
 
   setupToc() {
@@ -137,7 +135,6 @@ class WikiGame {
     const link = this.curPlayer.getLink();
     if (link !== null) {
       const redirectLink = `https://en.wikipedia.org${link}`;
-      this.leaderboard.url = redirectLink;
       this.onNewUrl(redirectLink);
     }
   }

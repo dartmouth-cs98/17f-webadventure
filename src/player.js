@@ -3,14 +3,17 @@ import $ from 'jquery';
 const NYAN_CATS = ['https://i.imgur.com/rZSkKF0.gif', 'https://i.imgur.com/YNcTBuU.gif'];
 
 class Player {
-  constructor(username, position = { left: 0, top: 0 }, isCurPlayer = false) {
+  constructor(
+    username, avatar = NYAN_CATS,
+    position = { left: 100, top: 100 }, isCurPlayer = true,
+  ) {
     this.username = username;
     this.id = username.replace(' ', '');
     this.facingRight = true;
     this.position = position;
     this.size = { height: 40, width: 40 };
     this.isCurPlayer = isCurPlayer;
-    this.avatar = NYAN_CATS;
+    this.avatar = avatar;
     this.link = null;
 
     this.insertPlayer = this.insertPlayer.bind(this);
@@ -46,7 +49,7 @@ class Player {
     this.getLinks();
     $('body').append(`<div id="${this.id}" class="playerDiv" style="position: absolute">
               <span class="playerName">${this.id}</span>
-              <img class="player-img" src="${NYAN_CATS[1]}" alt="nyan cat"/>
+              <img class="player-img" src="${this.avatar[1]}" alt="nyan cat"/>
             </div>`);
     this.movePlayer(x, y);
   }
@@ -95,10 +98,10 @@ class Player {
 
   updateDirRight(isRight) {
     if (isRight && !this.facingRight) {
-      $($(`#${this.id}`).children('img')[0]).attr('src', NYAN_CATS[1]);
+      $($(`#${this.id}`).children('img')[0]).attr('src', this.avatar[1]);
       this.facingRight = true;
     } else if (!isRight && this.facingRight) {
-      $($(`#${this.id}`).children('img')[0]).attr('src', NYAN_CATS[0]);
+      $($(`#${this.id}`).children('img')[0]).attr('src', this.avatar[0]);
       this.facingRight = false;
     }
   }
