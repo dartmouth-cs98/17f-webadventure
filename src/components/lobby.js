@@ -119,8 +119,10 @@ class Lobby extends Component {
   }
 
   backToGameSelect() {
-    if (this.state.selectedGame) {
-      this.lobbySocket.leaveNewGame(this.state.selectedGame.id).then(() => {
+    console.log('backToGameSelect');
+    console.log(this.state.joinedGame);
+    if (this.state.joinedGame) {
+      this.lobbySocket.leaveNewGame(this.state.joinedGame.id).then(() => {
         this.setState({ selectedGame: null, joinedGame: null });
       });
     }
