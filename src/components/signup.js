@@ -21,9 +21,9 @@ class SignUp extends Component {
 
   signInSubmit(event) {
     event.preventDefault();
-    // if (this.props.allUsers.some(e => e.username === this.state.username)) {
-    //   this.setState({ errorMsg: 'Sorry! That username is already taken!' });
-    if (this.state.username === '' || this.state.username.length > 12) {
+    if (this.props.allUsers.some(e => e.username === this.state.username)) {
+      this.setState({ errorMsg: 'Sorry! That username is currently active!' });
+    } else if (this.state.username === '' || this.state.username.length > 12) {
       this.setState({ errorMsg: 'Please enter a valid username (less than 12 chars)!' });
     } else if (!this.state.username.match(/^[0-9a-zA-Z]+$/)) {
       this.setState({ errorMsg: 'Please use only alphanumeric characters!' });
