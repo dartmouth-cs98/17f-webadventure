@@ -70,8 +70,8 @@ class Player {
   updateOnLink() {
     const leftEnd = this.position.left;
     const rightEnd = this.position.left + this.size.width;
-    const topEnd = this.position.top;
-    const bottomEnd = this.position.top + this.size.height;
+    const topEnd = this.position.top + 42;
+    const bottomEnd = (this.position.top + 42) + this.size.height;
     const linksList = this.links[Math.floor(topEnd / 100)] ?
       this.links[Math.floor(topEnd / 100)] : [];
     if (Math.floor(topEnd / 100) !== Math.floor(bottomEnd / 100)) {
@@ -86,7 +86,23 @@ class Player {
         (topEnd < linkItem.top && bottomEnd > linkItem.top + linkItem.width);
       return xOverlap && yOverlap;
     });
-    const link = overlap.length !== 0 ? overlap[0].link : null;
+    let link = overlap[0];
+    if (overlap.length === 1) {
+      console.log('overlap 1');
+      console.log(overlap);
+      link = overlap[0];
+    } else if (overlap.length > 1) {
+      console.log('overlap > 1');
+      const center = { y: (topEnd + bottomEnd) / 2, x: (leftEnd + rightEnd) / 2 };
+      link = overlap.filter((linkItem) => {
+        return linkItem.left < center.x && linkItem.left + linkItem.width > center.x
+        && linkItem.top < center.y && linkItem.top + linkItem.top + linkItem.height < center.y;
+      })[0];
+    } else {
+      link = null;
+    }
+    console.log(link);
+
     if (link) {
       $(link).css('color', 'pink');
     }
