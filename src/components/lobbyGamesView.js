@@ -38,7 +38,7 @@ const LobbyGamesView = (props) => {
     });
     console.log("foo");
     console.log(publicGames);
-    return props.games
+    return publicGames
       .sort((a, b) => b.players.length - a.players.length)
       .map((game, index) => {
         const start = splitWord(game.startPage);
