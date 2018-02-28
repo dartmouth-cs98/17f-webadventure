@@ -17,7 +17,6 @@ class LobbyDetailsView extends Component {
     };
     this.timer = 0;
     this.onChange = this.onChange.bind(this);
-    this.generateKey = this.generateKey.bind(this);
     this.startTimer = this.startTimer.bind(this);
     this.countDown = this.countDown.bind(this);
     this.checkNumPlayers = this.checkNumPlayers.bind(this);
@@ -104,13 +103,6 @@ class LobbyDetailsView extends Component {
   addPlayer() {
     this.setState({
       players: ['a', 'b', 'c', 'd', 'e', 'f'],
-    });
-  }
-
-  generateKey() {
-    const key = Math.random().toString(36).substring(2, 9);
-    this.setState({
-      hostKey: key,
     });
   }
 
