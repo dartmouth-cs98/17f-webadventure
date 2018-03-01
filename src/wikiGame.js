@@ -2,6 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
 import Player from './player';
+import Powerups from './powerups';
+
 import App from './components/app';
 
 class WikiGame {
@@ -26,11 +28,21 @@ class WikiGame {
       },
     };
 
+    this.powerups = new Powerups();
+
+    this.flipMultiplier = 1; // scales step size and direction; 1 for normal movement
+
     this.setupToc = this.setupToc.bind(this);
     this.updateGame = this.updateGame.bind(this);
     this.onKeyDown = this.onKeyDown.bind(this);
     this.onKeyUp = this.onKeyUp.bind(this);
     this.isNoKeysPressed = this.isNoKeysPressed.bind(this);
+
+    this.updateOnPowerup = this.updateOnPowerup.bind(this);
+    this.flipControls = this.flipControls.bind(this);
+    this.speedUp = this.speedUp.bind(this);
+    this.slowDown = this.slowDown.bind(this);
+    this.resetMultiplier = this.resetMultiplier.bind(this);
 
     const leaderboard = {
       curPlayer: {
@@ -53,6 +65,8 @@ class WikiGame {
     this.setupToc();
     const curPosition = this.curPlayer.getPosition();
     this.curPlayer.insertPlayer(curPosition.x, curPosition.y);
+    this.powerups.insertPowerups();
+
     this.borders = {
       width: $(document).width() - this.curPlayer.getWidth(),
       height: $(document).height(),
@@ -74,27 +88,31 @@ class WikiGame {
         const { left, top } = $(document.getElementById(id.substring(1))).offset();
         // Issue with jquery on id's with special characters; i.e. (, ), -
         this.curPlayer.movePlayer(left, top);
+        this.updateOnPowerup();
       });
     });
   }
 
   updateGame() {
     const newLoc = this.curPlayer.getPosition();
+    const stepSize = this.speed * this.flipMultiplier;
+
     if (this.keysPressed.x.left && !this.keysPressed.x.right && newLoc.x - 5 > 0) {
-      newLoc.x -= this.speed;
+      newLoc.x -= stepSize;
       this.curPlayer.updateDirRight(false);
     } else if (!this.keysPressed.x.left &&
       this.keysPressed.x.right && newLoc.x + 5 < this.borders.width) {
-      newLoc.x += this.speed;
+      newLoc.x += stepSize;
       this.curPlayer.updateDirRight(true);
     }
     if (this.keysPressed.y.up && !this.keysPressed.y.down && newLoc.y - 5 > 0) {
-      newLoc.y -= this.speed;
+      newLoc.y -= stepSize;
     } else if (!this.keysPressed.y.up &&
       this.keysPressed.y.down && newLoc.y + 5 < this.borders.height) {
-      newLoc.y += this.speed;
+      newLoc.y += stepSize;
     }
     this.curPlayer.movePlayer(newLoc.x, newLoc.y);
+    this.updateOnPowerup();
   }
 
   openLink() {
@@ -106,6 +124,62 @@ class WikiGame {
     }
   }
 
+  updateOnPowerup() {
+    const currLoc = this.curPlayer.getPosition();
+    const left = currLoc.x;
+    const right = currLoc.x + this.curPlayer.size.width;
+    const top = currLoc.y;
+    const bottom = currLoc.y + this.curPlayer.size.height;
+
+    const overlap = this.powerups.powerups.filter((pow) => {
+      const xOverlap = (left > pow.position.left && left < pow.position.left + pow.size.width) ||
+        (right > pow.position.left && right < pow.position.left + pow.size.width) ||
+        (left < pow.position.left && right > pow.position.left + pow.size.width);
+      const yOverlap = (top > pow.position.top && top < pow.position.top + pow.size.height) ||
+        (bottom > pow.position.top && bottom < pow.position.top + pow.size.height) ||
+        (top < pow.position.top && bottom > pow.top + pow.size.height);
+      return xOverlap && yOverlap;
+    });
+    const hitPowerup = overlap.length !== 0 ? overlap[0] : null;
+    if (hitPowerup) {
+      if (hitPowerup.type === 0) {
+        this.flipControls();
+      } else if (hitPowerup.type === 1) {
+        this.speedUp();
+      } else if (hitPowerup.type === 2) {
+        this.slowDown();
+      }
+      // Remove from powerups array
+      this.powerups.powerups = this.powerups.powerups.filter((powerup) => {
+        return powerup !== hitPowerup;
+      });
+
+      // Hide icon from user
+      // const powerupSelect = '.powerup[index=' + hitPowerup.index + ']';
+      const powerupSelect = `.powerup[index=${hitPowerup.index}]`;
+      $(powerupSelect).css({ visibility: 'hidden' });
+    }
+  }
+
+  flipControls() {
+    this.flipMultiplier = -1;
+    setTimeout(this.resetMultiplier, 5000);
+  }
+
+  speedUp() {
+    this.flipMultiplier = 2;
+    setTimeout(this.resetMultiplier, 5000);
+  }
+
+  slowDown() {
+    this.flipMultiplier = 0.3;
+    setTimeout(this.resetMultiplier, 5000);
+  }
+
+  resetMultiplier() {
+    this.flipMultiplier = 1;
+  }
+
   onKeyDown(evt) {
     switch (evt.keyCode) {
       case 65: this.keysPressed.x.left = true; break;
@@ -115,8 +189,7 @@ class WikiGame {
       case 76: // click link with L
         this.openLink();
         break;
-      case 80: // Pause game with 'P'
-        // console.log('pause game, pause pop up?');
+      case 80: // P
         break;
       default:
         break;
@@ -133,7 +206,6 @@ class WikiGame {
       case 87: this.keysPressed.y.up = false; break;
       case 83: this.keysPressed.y.down = false; break;
       case 80: // Pause game with 'P'
-        // console.log('pause game, pause pop up?');
         break;
       default:
         break;
