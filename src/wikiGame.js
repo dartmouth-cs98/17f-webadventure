@@ -14,6 +14,7 @@ class WikiGame {
     this.onNewUrl = onNewUrl;
     this.counter = counter;
     this.curPlayer = curPlayer;
+    this.speed = 1;
     this.keysPressed = {
       x: {
         left: false,
@@ -29,6 +30,7 @@ class WikiGame {
     this.updateGame = this.updateGame.bind(this);
     this.onKeyDown = this.onKeyDown.bind(this);
     this.onKeyUp = this.onKeyUp.bind(this);
+    this.isNoKeysPressed = this.isNoKeysPressed.bind(this);
 
     const leaderboard = {
       curPlayer: {
@@ -79,18 +81,18 @@ class WikiGame {
   updateGame() {
     const newLoc = this.curPlayer.getPosition();
     if (this.keysPressed.x.left && !this.keysPressed.x.right && newLoc.x - 5 > 0) {
-      newLoc.x -= 5;
+      newLoc.x -= this.speed;
       this.curPlayer.updateDirRight(false);
     } else if (!this.keysPressed.x.left &&
       this.keysPressed.x.right && newLoc.x + 5 < this.borders.width) {
-      newLoc.x += 5;
+      newLoc.x += this.speed;
       this.curPlayer.updateDirRight(true);
     }
     if (this.keysPressed.y.up && !this.keysPressed.y.down && newLoc.y - 5 > 0) {
-      newLoc.y -= 5;
+      newLoc.y -= this.speed;
     } else if (!this.keysPressed.y.up &&
       this.keysPressed.y.down && newLoc.y + 5 < this.borders.height) {
-      newLoc.y += 5;
+      newLoc.y += this.speed;
     }
     this.curPlayer.movePlayer(newLoc.x, newLoc.y);
   }
@@ -119,6 +121,9 @@ class WikiGame {
       default:
         break;
     }
+    if (!this.isNoKeysPressed() && this.speed < 5) {
+      this.speed = this.speed + 2;
+    }
   }
 
   onKeyUp(evt) {
@@ -133,6 +138,14 @@ class WikiGame {
       default:
         break;
     }
+    if (this.isNoKeysPressed()) {
+      this.speed = 1;
+    }
+  }
+
+  isNoKeysPressed() {
+    return !this.keysPressed.x.left && !this.keysPressed.x.right
+    && !this.keysPressed.y.up && !this.keysPressed.y.down;
   }
 }
 
