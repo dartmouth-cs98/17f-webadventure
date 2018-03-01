@@ -16,6 +16,7 @@ class WikiGame {
     this.onNewUrl = onNewUrl;
     this.counter = counter;
     this.curPlayer = curPlayer;
+    this.speed = 1;
     this.keysPressed = {
       x: {
         left: false,
@@ -30,26 +31,12 @@ class WikiGame {
     this.powerups = new Powerups();
 
     this.flipMultiplier = 1; // scales step size and direction; 1 for normal movement
-    // this.leaderboard = {
-    //   time: 1234,
-    //   curPlayer: {
-    //     name: curPlayer.username,
-    //     avatarRight: this.curPlayer.getAvatarRight(),
-    //   },
-    //   players: [
-    //     { username: 'Barry', numClicks: 40 },
-    //     { username: 'Alma', numClicks: 45 },
-    //     { username: 'David', numClicks: 60 },
-    //     { username: curPlayer.username, numClicks: 0 },
-    //     { username: 'Tim', numClicks: 7 },
-    //   ],
-    //   goalPage: 'https://en.wikipedia.org/wiki/Orange',
-    // };
 
     this.setupToc = this.setupToc.bind(this);
     this.updateGame = this.updateGame.bind(this);
     this.onKeyDown = this.onKeyDown.bind(this);
     this.onKeyUp = this.onKeyUp.bind(this);
+    this.isNoKeysPressed = this.isNoKeysPressed.bind(this);
 
     this.updateOnPowerup = this.updateOnPowerup.bind(this);
     this.flipControls = this.flipControls.bind(this);
@@ -57,8 +44,6 @@ class WikiGame {
     this.slowDown = this.slowDown.bind(this);
     this.resetMultiplier = this.resetMultiplier.bind(this);
 
-    // setInterval(this.increaseCounter, 1000);
-    // this.renderGame();
     const leaderboard = {
       curPlayer: {
         name: curPlayer.username,
@@ -110,7 +95,7 @@ class WikiGame {
 
   updateGame() {
     const newLoc = this.curPlayer.getPosition();
-    const stepSize = 5 * this.flipMultiplier;
+    const stepSize = this.speed * this.flipMultiplier;
 
     if (this.keysPressed.x.left && !this.keysPressed.x.right && newLoc.x - 5 > 0) {
       newLoc.x -= stepSize;
@@ -209,6 +194,9 @@ class WikiGame {
       default:
         break;
     }
+    if (!this.isNoKeysPressed() && this.speed < 5) {
+      this.speed = this.speed + 2;
+    }
   }
 
   onKeyUp(evt) {
@@ -218,11 +206,18 @@ class WikiGame {
       case 87: this.keysPressed.y.up = false; break;
       case 83: this.keysPressed.y.down = false; break;
       case 80: // Pause game with 'P'
-        // console.log('pause game, pause pop up?');
         break;
       default:
         break;
     }
+    if (this.isNoKeysPressed()) {
+      this.speed = 1;
+    }
+  }
+
+  isNoKeysPressed() {
+    return !this.keysPressed.x.left && !this.keysPressed.x.right
+    && !this.keysPressed.y.up && !this.keysPressed.y.down;
   }
 }
 
