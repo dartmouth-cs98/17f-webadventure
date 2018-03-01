@@ -113,14 +113,11 @@ class Lobby extends Component {
 
   hostPrivateGame() {
     this.lobbySocket.createGame(true).then((newGame) => {
-      console.log(newGame);
       this.setState({ joinedGame: newGame, selectedGame: null });
     });
   }
 
   backToGameSelect() {
-    console.log('backToGameSelect');
-    console.log(this.state.joinedGame);
     if (this.state.joinedGame) {
       this.lobbySocket.leaveNewGame(this.state.joinedGame.id).then(() => {
         this.setState({ selectedGame: null, joinedGame: null });

@@ -50,8 +50,6 @@ export default class LobbySocket {
     console.log(req);
     return new Promise((resolve, reject) => {
       this.socket.emit('createGame', req, (data) => {
-        console.log('createGame');
-        console.log(data);
         if (data) { resolve(data); } else {
           reject(new Error('No data returned'));
         }
