@@ -14,13 +14,6 @@ class LobbyDetailsView extends Component {
       errorMsg: null,
     };
     this.onChange = this.onChange.bind(this);
-<<<<<<< HEAD
-=======
-    this.startTimer = this.startTimer.bind(this);
-    this.countDown = this.countDown.bind(this);
-    this.checkNumPlayers = this.checkNumPlayers.bind(this);
-    this.addPlayer = this.addPlayer.bind(this);
->>>>>>> f9e067dcfd8af4353428ef9e13677bdd879b3a59
     this.onJoinPublicGame = this.onJoinPublicGame.bind(this);
     this.onJoinPrivateGame = this.onJoinPrivateGame.bind(this);
     this.renderError = this.renderError.bind(this);
