@@ -2,22 +2,22 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
 import Player from './player';
-
-
 import App from './components/app';
 
 class WikiGame {
   constructor(
     onNewUrl,
-    curPlayer = new Player('curPlayer', { left: 100, top: 100 }, true),
+    curPlayer = new Player('curPlayer'),
     counter = 0,
+    game,
     audioOn,
   ) {
     this.onNewUrl = onNewUrl;
     this.counter = counter;
     this.curPlayer = curPlayer;
-    this.players = [];
+
     this.audioOn = audioOn;
+    this.speed = 1;
     this.keysPressed = {
       x: {
         left: false,
@@ -28,45 +28,39 @@ class WikiGame {
         down: false,
       },
     };
-    this.leaderboard = {
-      time: 1234,
-      curPlayer: {
-        name: curPlayer.username,
-        avatarRight: this.curPlayer.getAvatarRight(),
-      },
-      players: [
-        { username: 'Barry', numClicks: 40 },
-        { username: 'Alma', numClicks: 45 },
-        { username: 'David', numClicks: 60 },
-        { username: curPlayer.username, numClicks: 0 },
-        { username: 'Tim', numClicks: 7 },
-      ],
-      goalPage: 'https://en.wikipedia.org/wiki/Orange',
-    };
 
-    this.renderGame = this.renderGame.bind(this);
-    this.updateLeaderboard = this.updateLeaderboard.bind(this);
-    this.increaseCounter = this.increaseCounter.bind(this);
     this.setupToc = this.setupToc.bind(this);
     this.updateGame = this.updateGame.bind(this);
     this.onKeyDown = this.onKeyDown.bind(this);
     this.onKeyUp = this.onKeyUp.bind(this);
+    this.isNoKeysPressed = this.isNoKeysPressed.bind(this);
 
     // this.createSounds = this.createSounds.bind(this);
     // this.soundEffects = this.createSounds();
     // this.toggleAudio = this.toggleAudio.bind(this);
+    console.log("audioOn in wikiGame is "+this.audioOn);
 
-    setInterval(this.increaseCounter, 1000);
-    this.renderGame();
+    const leaderboard = {
+      curPlayer: {
+        name: curPlayer.username,
+        avatarRight: this.curPlayer.getAvatarRight(),
+      },
+      players: game.players,
+      goalPage: game.goalPage,
+      audioOn: this.audioOn,
+    };
+    this.renderGame(leaderboard, counter, this.audioOn);
     window.addEventListener('keydown', this.onKeyDown);
     window.addEventListener('keyup', this.onKeyUp);
     this.updateInterval = window.setInterval(this.updateGame, 10);
   }
 
 
-  renderGame() {
+  renderGame(leaderboard, counter, audioOn) {
+    console.log("audioOn in renderGame in wikiGame is "+audioOn);
     $('body').append('<div id=wa-main />');
-    ReactDOM.render(<App leaderboard={this.leaderboard} counter={this.counter} />, document.getElementById('wa-main'));
+    // audioOn={audioOn}
+    ReactDOM.render(<App leaderboard={leaderboard} counter={counter}/>, document.getElementById('wa-main'));
     this.setupToc();
     this.setupTopbar();
     const curPosition = this.curPlayer.getPosition();
@@ -77,17 +71,9 @@ class WikiGame {
     };
   }
 
-  updateLeaderboard(game) {
-    if (game) {
-      this.leaderboard.players = game.players;
-      this.leaderboard.goalPage = game.goalPage;
-    }
-    ReactDOM.render(<App leaderboard={this.leaderboard} counter={this.counter} />, document.getElementById('wa-main'));
-  }
 
   increaseCounter() {
     this.counter = this.counter + 1;
-    this.updateLeaderboard();
   }
 
   // createSounds() {
@@ -119,10 +105,14 @@ class WikiGame {
       // Toggle background music
       chrome.runtime.sendMessage({ message: 'sound' }, (response) => {
         console.log(response.audio);
-        if (response.audio)
+        if (response.audio){
+          console.log("in setupTopbar, audio is on");
           document.getElementById("sound").className = 'sound-on';
-        else
+        }
+        else{
+          console.log("in setupTopbar, audio is off");
           document.getElementById("sound").className = 'sound-off';
+        }
       });
     });
   }
@@ -144,18 +134,18 @@ class WikiGame {
   updateGame() {
     const newLoc = this.curPlayer.getPosition();
     if (this.keysPressed.x.left && !this.keysPressed.x.right && newLoc.x - 5 > 0) {
-      newLoc.x -= 5;
+      newLoc.x -= this.speed;
       this.curPlayer.updateDirRight(false);
     } else if (!this.keysPressed.x.left &&
       this.keysPressed.x.right && newLoc.x + 5 < this.borders.width) {
-      newLoc.x += 5;
+      newLoc.x += this.speed;
       this.curPlayer.updateDirRight(true);
     }
     if (this.keysPressed.y.up && !this.keysPressed.y.down && newLoc.y - 5 > 0) {
-      newLoc.y -= 5;
+      newLoc.y -= this.speed;
     } else if (!this.keysPressed.y.up &&
       this.keysPressed.y.down && newLoc.y + 5 < this.borders.height) {
-      newLoc.y += 5;
+      newLoc.y += this.speed;
     }
     this.curPlayer.movePlayer(newLoc.x, newLoc.y);
   }
@@ -164,7 +154,6 @@ class WikiGame {
     const link = this.curPlayer.getLink();
     if (link !== null) {
       const redirectLink = `https://en.wikipedia.org${link}`;
-      this.leaderboard.url = redirectLink;
       this.onNewUrl(redirectLink);
     }
   }
@@ -184,6 +173,9 @@ class WikiGame {
       default:
         break;
     }
+    if (!this.isNoKeysPressed() && this.speed < 5) {
+      this.speed = this.speed + 2;
+    }
   }
 
   onKeyUp(evt) {
@@ -198,6 +190,14 @@ class WikiGame {
       default:
         break;
     }
+    if (this.isNoKeysPressed()) {
+      this.speed = 1;
+    }
+  }
+
+  isNoKeysPressed() {
+    return !this.keysPressed.x.left && !this.keysPressed.x.right
+    && !this.keysPressed.y.up && !this.keysPressed.y.down;
   }
 }
 

@@ -26,25 +26,28 @@ const LobbyGamesView = (props) => {
     );
   };
 
-  const getPageTitle = (str) => {
+  const splitWord = (str) => {
     const parts = str.split('/');
     return parts.pop();
   };
 
   const renderGames = () => {
-    return props.games
+    const publicGames = props.games.filter((game) => {
+      return !game.isPrivate;
+    });
+    return publicGames
       .sort((a, b) => b.players.length - a.players.length)
       .map((game, index) => {
-        const start = getPageTitle(game.startPage);
-        const end = getPageTitle(game.goalPage);
-        if (props.selectedGame !== null && game.id === props.selectedGame.id) {
+        const start = splitWord(game.startPage);
+        const end = splitWord(game.goalPage);
+        if (props.selectedGame && game.id === props.selectedGame.id) {
           return (
             <div className="game-selected game-item">
               <div className="game-title-row">
                 <div
                   className="lobby-game-item"
                   key={index}
-                >{props.selectedGame.host}
+                >{game.host}
                 </div>
                 <div className="num-players">
                   ({game.players.length}/5)
@@ -57,7 +60,7 @@ const LobbyGamesView = (props) => {
           return (
             <div
               className="game-item"
-              onClick={e => props.onSelectGame(game, e)}
+              onClick={() => props.selectGame(game)}
               role="button"
               tabIndex={0}
             >

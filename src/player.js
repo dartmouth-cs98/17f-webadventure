@@ -3,18 +3,22 @@ import $ from 'jquery';
 const NYAN_CATS = ['https://i.imgur.com/rZSkKF0.gif', 'https://i.imgur.com/YNcTBuU.gif'];
 
 class Player {
-  constructor(username, position = { left: 0, top: 0 }, isCurPlayer = false) {
+  constructor(
+    username, avatar = NYAN_CATS,
+    position = { left: 100, top: 100 }, isCurPlayer = true,
+  ) {
     this.username = username;
     this.id = username.replace(' ', '');
     this.facingRight = true;
     this.position = position;
     this.size = { height: 40, width: 40 };
     this.isCurPlayer = isCurPlayer;
-    this.avatar = NYAN_CATS;
+    this.avatar = avatar;
     this.link = null;
 
     this.insertPlayer = this.insertPlayer.bind(this);
     this.getLinks = this.getLinks.bind(this);
+    this.addToLinksList = this.addToLinksList.bind(this);
     this.movePlayer = this.movePlayer.bind(this);
     this.updateDirRight = this.updateDirRight.bind(this);
     this.getWidth = this.getWidth.bind(this);
@@ -24,21 +28,40 @@ class Player {
     this.updateOnLink = this.updateOnLink.bind(this);
   }
 
+  addToLinksList(link, checkLine = true) {
+    const { top, left } = $(link).offset();
+    const width = $(link).width();
+    const height = $(link).height();
+    const vertSection = Math.floor((top + height) / 100);
+    const linksList = this.links[vertSection] ? this.links[vertSection] : [];
+    if (checkLine) {
+      const lineHeightWord = $(link).css('line-height');
+      const lineHeight = parseInt(lineHeightWord.substring(0, lineHeightWord.length - 2), 10);
+      if (lineHeight < height) {
+        const href = $(link).attr('href');
+        const newTags = $(link).text().split(' ').map(word => `<a href=${href}>${word}</a>`)
+          .join(' ');
+        const newTagsElement = $(newTags);
+        $(link).replaceWith(newTagsElement);
+        newTagsElement.filter('a').each((index, newLink) => {
+          this.addToLinksList(newLink, false);
+        });
+        return;
+      }
+    }
+    linksList.push({
+      top, left, width, height, link,
+    });
+    this.links[vertSection] = linksList;
+  }
+
   getLinks() {
     this.links = [];
     $('a').each((i, link) => {
       if (!$(link).attr('href') || $(link).attr('href').includes('#')) {
         return;
       }
-      const { top, left } = $(link).offset();
-      const width = $(link).width();
-      const height = $(link).height();
-      const vertSection = Math.floor((top + height) / 100);
-      const linksList = this.links[vertSection] ? this.links[vertSection] : [];
-      linksList.push({
-        top, left, width, height, link,
-      });
-      this.links[vertSection] = linksList;
+      this.addToLinksList(link);
     });
   }
 
@@ -46,7 +69,7 @@ class Player {
     this.getLinks();
     $('body').append(`<div id="${this.id}" class="playerDiv" style="position: absolute">
               <span class="playerName">${this.id}</span>
-              <img class="player-img" src="${NYAN_CATS[1]}" alt="nyan cat"/>
+              <img class="player-img" src="${this.avatar[1]}" alt="nyan cat"/>
             </div>`);
     this.movePlayer(x, y);
   }
@@ -78,12 +101,25 @@ class Player {
       const xOverlap = (leftEnd > linkItem.left && leftEnd < linkItem.left + linkItem.width) ||
         (rightEnd > linkItem.left && rightEnd < linkItem.left + linkItem.width) ||
         (leftEnd < linkItem.left && rightEnd > linkItem.left + linkItem.width);
-      const yOverlap = (topEnd > linkItem.top && topEnd < linkItem.top + linkItem.width) ||
-        (bottomEnd > linkItem.top && bottomEnd < linkItem.top + linkItem.width) ||
-        (topEnd < linkItem.top && bottomEnd > linkItem.top + linkItem.width);
+      const yOverlap = (topEnd > linkItem.top && topEnd < linkItem.top + linkItem.height) ||
+        (bottomEnd > linkItem.top && bottomEnd < linkItem.top + linkItem.height) ||
+        (topEnd < linkItem.top && bottomEnd > linkItem.top + linkItem.height);
       return xOverlap && yOverlap;
     });
-    const link = overlap.length !== 0 ? overlap[0].link : null;
+    let link;
+    if (overlap.length === 1) {
+      link = overlap[0].link;
+    } else if (overlap.length > 1) {
+      const center = { y: (topEnd + bottomEnd) / 2, x: (leftEnd + rightEnd) / 2 };
+      const centerOverlap = overlap.filter((linkItem) => {
+        return linkItem.left < center.x && linkItem.left + linkItem.width > center.x
+        && linkItem.top < center.y && linkItem.top + linkItem.height > center.y;
+      });
+      link = centerOverlap.length === 0 ? overlap[0].link : centerOverlap[0].link;
+    } else {
+      link = null;
+    }
+
     if (link) {
       $(link).css('color', 'pink');
     }
@@ -95,10 +131,10 @@ class Player {
 
   updateDirRight(isRight) {
     if (isRight && !this.facingRight) {
-      $($(`#${this.id}`).children('img')[0]).attr('src', NYAN_CATS[1]);
+      $($(`#${this.id}`).children('img')[0]).attr('src', this.avatar[1]);
       this.facingRight = true;
     } else if (!isRight && this.facingRight) {
-      $($(`#${this.id}`).children('img')[0]).attr('src', NYAN_CATS[0]);
+      $($(`#${this.id}`).children('img')[0]).attr('src', this.avatar[0]);
       this.facingRight = false;
     }
   }

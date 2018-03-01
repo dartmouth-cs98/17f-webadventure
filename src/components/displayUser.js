@@ -2,15 +2,37 @@
 
 import React from 'react';
 
+const NYAN_CATS = ['https://i.imgur.com/rZSkKF0.gif', 'https://i.imgur.com/YNcTBuU.gif'];
+const SONIC = ['https://i.imgur.com/o8Jq7fs.gif', 'https://i.imgur.com/Fu68Kg1.gif'];
+const PIKACHU = ['https://i.imgur.com/x5PeYrM.gif', 'https://i.imgur.com/lBC1MrV.gif'];
+const LUIGI = ['https://i.imgur.com/aupFa2g.gif', 'https://i.imgur.com/UEI2KTq.gif'];
+
 const DisplayUser = (props) => {
   const handleChange = (event) => {
-    props.onAvatar(event.target.value);
+    let { avatar } = props.user;
+    switch (event.target.value) {
+      case 'nyan':
+        avatar = NYAN_CATS;
+        break;
+      case 'sonic':
+        avatar = SONIC;
+        break;
+      case 'pikachu':
+        avatar = PIKACHU;
+        break;
+      case 'luigi':
+        avatar = LUIGI;
+        break;
+      default:
+        ({ avatar } = props.user);
+    }
+    props.updateUser({ avatar });
   };
 
   return (
     <div id="display-user">
       <div>
-        {props.username}
+        {props.user.username}
       </div>
       <div>
         <form>
@@ -22,10 +44,10 @@ const DisplayUser = (props) => {
                     id="nyan"
                     type="radio"
                     value="nyan"
-                    checked={props.avatar === 'nyan'}
+                    checked={props.user.avatar[0] === NYAN_CATS[0]}
                     onChange={handleChange}
                   />
-                  <img className="avatar-option" alt="" src="https://i.imgur.com/rZSkKF0.gif" />
+                  <img className="avatar-option" alt="" src={NYAN_CATS[1]} />
                 </label>
               </div>
               <div className="avatar-radio">
@@ -34,10 +56,10 @@ const DisplayUser = (props) => {
                     id="sonic"
                     type="radio"
                     value="sonic"
-                    checked={props.avatar === 'sonic'}
+                    checked={props.user.avatar[0] === SONIC[0]}
                     onChange={handleChange}
                   />
-                  <img className="avatar-option" alt="" src="https://media.giphy.com/media/jBvHCY91NcurK/giphy.gif" />
+                  <img className="avatar-option" alt="" src={SONIC[1]} />
                 </label>
               </div>
             </div>
@@ -48,10 +70,10 @@ const DisplayUser = (props) => {
                     id="pikachu"
                     type="radio"
                     value="pikachu"
-                    checked={props.avatar === 'pikachu'}
+                    checked={props.user.avatar[0] === PIKACHU[0]}
                     onChange={handleChange}
                   />
-                  <img className="avatar-option" alt="" src="https://media.giphy.com/media/jM4bWFBKpSFeo/giphy.gif" />
+                  <img className="avatar-option" alt="" src={PIKACHU[1]} />
                 </label>
               </div>
               <div className="avatar-radio">
@@ -60,10 +82,10 @@ const DisplayUser = (props) => {
                     id="luigi"
                     type="radio"
                     value="luigi"
-                    checked={props.avatar === 'luigi'}
+                    checked={props.user.avatar[0] === LUIGI[0]}
                     onChange={handleChange}
                   />
-                  <img className="avatar-option" alt="" src="https://media.giphy.com/media/a9291T1hx1I2I/giphy.gif" />
+                  <img className="avatar-option" alt="" src={LUIGI[1]} />
                 </label>
               </div>
             </div>

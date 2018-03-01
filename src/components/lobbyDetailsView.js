@@ -17,13 +17,12 @@ class LobbyDetailsView extends Component {
     };
     this.timer = 0;
     this.onChange = this.onChange.bind(this);
-    this.generateKey = this.generateKey.bind(this);
     this.startTimer = this.startTimer.bind(this);
     this.countDown = this.countDown.bind(this);
     this.checkNumPlayers = this.checkNumPlayers.bind(this);
     this.addPlayer = this.addPlayer.bind(this);
-    this.joinPublicGame = this.joinPublicGame.bind(this);
-    this.joinPrivateGame = this.joinPrivateGame.bind(this);
+    this.onJoinPublicGame = this.onJoinPublicGame.bind(this);
+    this.onJoinPrivateGame = this.onJoinPrivateGame.bind(this);
     this.renderError = this.renderError.bind(this);
   }
 
@@ -37,6 +36,28 @@ class LobbyDetailsView extends Component {
     this.setState({
       joinKey: event.target.value,
     });
+  }
+
+
+  onJoinPublicGame() {
+    if (this.props.selectedGame === null) {
+      this.setState({ errorMsg: 'Please select a game to join!' });
+    } else if (this.props.selectedGame.players.length >= 5) {
+      this.setState({ errorMsg: 'Too many people! Please select another game' });
+    } else {
+      this.props.joinPublicGame(this.props.selectedGame.id);
+    }
+  }
+
+  onJoinPrivateGame() {
+    if (this.props.games.some(game => (game.id === this.state.joinKey) && game.isPrivate)) {
+      this.setState({ errorMsg: null });
+      // Should be handled in back end if error
+      this.props.joinPrivateGame(this.state.joinKey);
+      this.startTimer();
+    } else {
+      this.setState({ errorMsg: 'Please enter a valid join key!' });
+    }
   }
 
   startTimer() {
@@ -70,31 +91,6 @@ class LobbyDetailsView extends Component {
     }
   }
 
-  joinPublicGame() {
-    if (this.props.selectedGame && // if selectedGame exists
-        this.props.selectedGame.players.length < 5 && // if the length is less than 5
-        this.props.selectedGame.players.indexOf(this.state.username) === -1) { // it doesn't already exist
-      let newPlayers = Object.assign({}, this.props.selectedGame).players;
-      newPlayers.push(this.state.username);
-      this.setState({ errorMsg: null });
-      this.props.joinPublicGame(newPlayers);
-      this.startTimer();
-    } else {
-      this.setState({ errorMsg: 'Please select a game to join!' });
-    }
-  }
-
-  joinPrivateGame() {
-    if (this.state.joinKey.length === 7) {
-      this.setState({ error: null });
-      // Should be handled in back end if error
-      this.props.joinPrivateGame(this.joinKey);
-      this.startTimer();
-    } else {
-      this.setState({ errorMsg: 'Please enter a valid join key!' });
-    }
-  }
-
   checkNumPlayers() {
     const reqNum = 5;
     if (this.state.players.length < reqNum) {
@@ -106,13 +102,6 @@ class LobbyDetailsView extends Component {
   addPlayer() {
     this.setState({
       players: ['a', 'b', 'c', 'd', 'e', 'f'],
-    });
-  }
-
-  generateKey() {
-    const key = Math.random().toString(36).substring(2, 9);
-    this.setState({
-      hostKey: key,
     });
   }
 
@@ -130,7 +119,7 @@ class LobbyDetailsView extends Component {
     return (
       <div id="lobby-game-view">
         <div id="public">
-          <button id="public-game-button" onClick={this.joinPublicGame}>
+          <button id="public-game-button" onClick={this.onJoinPublicGame}>
             Join Public
           </button>
         </div>
@@ -147,7 +136,7 @@ class LobbyDetailsView extends Component {
             <button id="host-private-button" onClick={this.props.hostPrivateGame}>
             Host Private
             </button>
-            <button id="join-private-button" onClick={this.joinPrivateGame}>
+            <button id="join-private-button" onClick={this.onJoinPrivateGame}>
             Join Private
             </button>
           </div>
