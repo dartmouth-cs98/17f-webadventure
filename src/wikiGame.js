@@ -122,7 +122,7 @@ class WikiGame {
         break;
     }
     if (!this.isNoKeysPressed() && this.speed < 5) {
-      this.speed = this.speed + 1;
+      this.speed = this.speed + 2;
     }
   }
 
