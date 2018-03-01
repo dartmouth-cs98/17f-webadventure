@@ -155,7 +155,6 @@ class Player {
     return this.link ? $(this.link).attr('href') : null;
   }
 
-
   static isScrolledIntoView(elem) {
     const $elem = $(elem);
     const $window = $(window);
