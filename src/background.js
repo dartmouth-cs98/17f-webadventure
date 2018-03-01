@@ -45,7 +45,7 @@ const injectGame = (sender) => {
     }, () => {
       chrome.tabs.sendMessage(curTabId, {
         message: 'new game',
-        payload: { username: curPlayerInfo.username, game, counter },
+        payload: { username: curPlayerInfo.username, game, counter, audioOn },
       });
     });
   } else {

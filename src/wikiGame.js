@@ -11,12 +11,13 @@ class WikiGame {
     onNewUrl,
     curPlayer = new Player('curPlayer', { left: 100, top: 100 }, true),
     counter = 0,
-    // audioOn = true,
+    audioOn,
   ) {
     this.onNewUrl = onNewUrl;
     this.counter = counter;
     this.curPlayer = curPlayer;
     this.players = [];
+    this.audioOn = audioOn;
     this.keysPressed = {
       x: {
         left: false,
@@ -113,9 +114,7 @@ class WikiGame {
   }
 
   setupTopbar() {
-
     $('#sound').click(() => {
-
       this.toggleAudio(); // Toggle sound effects
       // Toggle background music
       chrome.runtime.sendMessage({ message: 'sound' }, (response) => {
