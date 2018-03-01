@@ -8,8 +8,8 @@ let counter;
 let interval;
 let curTabId;
 let audioOn = true;
-let bgAudio = document.createElement("AUDIO");    // Persistent across redirects
-let linkAudio = document.createElement("AUDIO");  // Whoosh sound on link clicked
+const bgAudio = document.createElement('AUDIO'); // Persistent across redirects
+const linkAudio = document.createElement('AUDIO'); // Whoosh sound on link clicked
 
 const renderLobby = (tabId, username) => {
   chrome.tabs.executeScript(tabId, {
@@ -46,26 +46,26 @@ const injectGame = (sender) => {
       chrome.tabs.sendMessage(curTabId, {
         message: 'new game',
         payload: {
-          username: curPlayerInfo.username, avatar: curPlayerInfo.avatar, game, counter, audioOn
+          username: curPlayerInfo.username, avatar: curPlayerInfo.avatar, game, counter, audioOn,
         },
       });
     });
   } else {
     chrome.tabs.update(curTabId, { url: curPlayerInfo.curUrl });
-    linkAudio.play();    
+    linkAudio.play();
   }
 };
 
 chrome.browserAction.onClicked.addListener((tab) => {
   // Background audio setup
-  bgAudio.setAttribute("id", "bgAudio");
-  bgAudio.setAttribute("src","http://k003.kiwi6.com/hotlink/3ewofkoxts/wii.mp3");
-  bgAudio.setAttribute("loop", "true");
+  bgAudio.setAttribute('id', 'bgAudio');
+  bgAudio.setAttribute('src', 'http://k003.kiwi6.com/hotlink/3ewofkoxts/wii.mp3');
+  bgAudio.setAttribute('loop', 'true');
   bgAudio.play();
 
   // Link whoosh sound setup
-  linkAudio.setAttribute("id", "linkAudio");
-  linkAudio.setAttribute("src","https://k003.kiwi6.com/hotlink/6etyb9h8wr/swoosh.mp3");
+  linkAudio.setAttribute('id', 'linkAudio');
+  linkAudio.setAttribute('src', 'https://k003.kiwi6.com/hotlink/6etyb9h8wr/swoosh.mp3');
 
   if (!gameSocket) {
     renderLobby(tab.id);
@@ -81,7 +81,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
       bgAudio.muted = false;
     }
     audioOn = !audioOn;
-    sendResponse({audio: audioOn});
+    sendResponse({ audio: audioOn });
     return;
   }
 
@@ -89,7 +89,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.message === 'start game') {
     const { username, avatar } = request.payload.user;
     ({ game } = request.payload);
-    console.log(request);
+    // console.log(request);
     gameSocket = new GameSocket(onGame, game.id, username);
     curTabId = sender.tab.id;
     counter = 0;

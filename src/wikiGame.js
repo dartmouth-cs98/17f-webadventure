@@ -38,7 +38,6 @@ class WikiGame {
     // this.createSounds = this.createSounds.bind(this);
     // this.soundEffects = this.createSounds();
     // this.toggleAudio = this.toggleAudio.bind(this);
-    console.log("audioOn in wikiGame is "+this.audioOn);
 
     const leaderboard = {
       curPlayer: {
@@ -56,11 +55,10 @@ class WikiGame {
   }
 
 
-  renderGame(leaderboard, counter, audioOn) {
-    console.log("audioOn in renderGame in wikiGame is "+audioOn);
+  renderGame(leaderboard, counter) {
     $('body').append('<div id=wa-main />');
     // audioOn={audioOn}
-    ReactDOM.render(<App leaderboard={leaderboard} counter={counter}/>, document.getElementById('wa-main'));
+    ReactDOM.render(<App leaderboard={leaderboard} counter={counter} />, document.getElementById('wa-main'));
     this.setupToc();
     this.setupTopbar();
     const curPosition = this.curPlayer.getPosition();
@@ -92,10 +90,10 @@ class WikiGame {
   // }
 
   toggleAudio() {
-    console.log("toggleAudio");
+    // console.log("toggleAudio");
 
     var audio = document.querySelectorAll('audio');
-    console.log(audio);
+    // console.log(audio);
     // for each audio, set mute
   }
 
@@ -104,14 +102,13 @@ class WikiGame {
       this.toggleAudio(); // Toggle sound effects
       // Toggle background music
       chrome.runtime.sendMessage({ message: 'sound' }, (response) => {
-        console.log(response.audio);
+        // console.log(response.audio);
         if (response.audio){
-          console.log("in setupTopbar, audio is on");
-          document.getElementById("sound").className = 'sound-on';
-        }
-        else{
-          console.log("in setupTopbar, audio is off");
-          document.getElementById("sound").className = 'sound-off';
+          // console.log("in setupTopbar, audio is on");
+          document.getElementById('sound').className = 'sound-on';
+        } else {
+          // console.log("in setupTopbar, audio is off");
+          document.getElementById('sound').className = 'sound-off';
         }
       });
     });

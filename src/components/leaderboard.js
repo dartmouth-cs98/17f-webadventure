@@ -8,9 +8,6 @@ class Leaderboard extends Component {
       timer: props.counter,
       audioOn: props.audioOn,
     };
-    console.log(props);
-    console.log("audioOn in props is "+props.audioOn);
-    console.log("audioOn in leaderboard is "+this.state.audioOn);
     this.onMessageRequest = this.onMessageRequest.bind(this);
     this.incTimer = this.incTimer.bind(this);
     setInterval(this.incTimer, 1000);
@@ -54,15 +51,6 @@ class Leaderboard extends Component {
     return top5;
   }
 
-  renderAudio(props) {
-    console.log("got to renderAudio");
-    const audioOn = this.props.audioOn;
-    if (audioOn) {
-      return <div id="sound" className="sound-on"></div>;
-    }
-    return <div id="sound" className="sound-off"></div>;
-  }
-
   render() {
     const goalPage = this.props.goalPage.split('/').pop();
     if (this.props.curPlayer) {
@@ -71,9 +59,9 @@ class Leaderboard extends Component {
           <img id="wiki-logo" src="https://i.imgur.com/hQbOKPS.png" alt="wiki logo" />
           <div id="topbar">
             {this.props.audioOn ? (
-              <div id="sound" className="sound-on"></div>
+              <div id="sound" className="sound-on" />
             ) : (
-              <div id="sound" className="sound-off"></div>
+              <div id="sound" className="sound-off" />
             )}
           </div>
           <div id="leaderboard">
