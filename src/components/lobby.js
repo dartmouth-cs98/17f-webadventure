@@ -66,12 +66,11 @@ class Lobby extends Component {
   }
 
   onGameStarted(game) { this.props.onStart(this.state.user, game); }
-  
+
   onUsers(users) {
-    console.log(users);
     this.setState({ allUsers: users });
   }
-    
+
   onStartGame() {
     this.lobbySocket.startGame(this.state.joinedGame.id)
       .then(() => {})
@@ -119,8 +118,8 @@ class Lobby extends Component {
   }
 
   backToGameSelect() {
-    if (this.state.selectedGame) {
-      this.lobbySocket.leaveNewGame(this.state.selectedGame.id).then(() => {
+    if (this.state.joinedGame) {
+      this.lobbySocket.leaveNewGame(this.state.joinedGame.id).then(() => {
         this.setState({ selectedGame: null, joinedGame: null });
       });
     }
@@ -130,7 +129,6 @@ class Lobby extends Component {
     if (this.state.joinedGame) {
       return (
         <SelectedGameView
-          avatar={this.state.playerAvatar}
           joinedGame={this.state.joinedGame}
           backToGameSelect={this.backToGameSelect}
         />
@@ -138,6 +136,7 @@ class Lobby extends Component {
     } else {
       return (
         <LobbyDetailsView
+          games={this.state.games}
           joinPrivateGame={this.joinPrivateGame}
           joinPublicGame={this.joinPublicGame}
           hostPrivateGame={this.hostPrivateGame}
