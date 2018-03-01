@@ -1,7 +1,7 @@
 import io from 'socket.io-client';
 
-const socketserver = 'https://webadventure-api.herokuapp.com/lobby';
-// const socketserver = 'http://localhost:9090/lobby';
+// const socketserver = 'https://webadventure-api.herokuapp.com/lobby';
+const socketserver = 'http://localhost:9090/lobby';
 
 export default class LobbySocket {
   constructor(onGames, onUsers, onGameStarted, username) {
@@ -47,7 +47,6 @@ export default class LobbySocket {
     const req = {
       username: this.username, isPrivate,
     };
-    console.log(req);
     return new Promise((resolve, reject) => {
       this.socket.emit('createGame', req, (data) => {
         if (data) { resolve(data); } else {
