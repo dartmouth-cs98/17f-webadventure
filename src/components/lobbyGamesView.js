@@ -32,8 +32,10 @@ const LobbyGamesView = (props) => {
   };
 
   const renderGames = () => {
-    console.log(props.games);
-    return props.games
+    const publicGames = props.games.filter((game) => {
+      return !game.isPrivate;
+    });
+    return publicGames
       .sort((a, b) => b.players.length - a.players.length)
       .map((game, index) => {
         const start = splitWord(game.startPage);

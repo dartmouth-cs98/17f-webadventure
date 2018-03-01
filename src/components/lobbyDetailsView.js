@@ -17,7 +17,6 @@ class LobbyDetailsView extends Component {
     };
     this.timer = 0;
     this.onChange = this.onChange.bind(this);
-    this.generateKey = this.generateKey.bind(this);
     this.startTimer = this.startTimer.bind(this);
     this.countDown = this.countDown.bind(this);
     this.checkNumPlayers = this.checkNumPlayers.bind(this);
@@ -51,10 +50,10 @@ class LobbyDetailsView extends Component {
   }
 
   onJoinPrivateGame() {
-    if (this.state.joinKey.length === 7) {
-      this.setState({ error: null });
+    if (this.props.games.some(game => (game.id === this.state.joinKey) && game.isPrivate)) {
+      this.setState({ errorMsg: null });
       // Should be handled in back end if error
-      this.props.joinPrivateGame(this.joinKey);
+      this.props.joinPrivateGame(this.state.joinKey);
       this.startTimer();
     } else {
       this.setState({ errorMsg: 'Please enter a valid join key!' });
@@ -103,13 +102,6 @@ class LobbyDetailsView extends Component {
   addPlayer() {
     this.setState({
       players: ['a', 'b', 'c', 'd', 'e', 'f'],
-    });
-  }
-
-  generateKey() {
-    const key = Math.random().toString(36).substring(2, 9);
-    this.setState({
-      hostKey: key,
     });
   }
 
