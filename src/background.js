@@ -7,6 +7,9 @@ let curPlayerInfo; // {username, avatar, numClicks, curUrl, finishTime?}
 let counter;
 let interval;
 let curTabId;
+let audioOn = true;
+const bgAudio = document.createElement('AUDIO'); // Persistent across redirects
+const linkAudio = document.createElement('AUDIO'); // Whoosh sound on link clicked
 
 const renderLobby = (tabId, username) => {
   chrome.tabs.executeScript(tabId, {
@@ -14,6 +17,7 @@ const renderLobby = (tabId, username) => {
   }, () => {
     const req = {
       message: 'render lobby',
+      // audioOn: audioOn,
       payload: { username },
     };
     chrome.tabs.sendMessage(tabId, req);
@@ -42,22 +46,47 @@ const injectGame = (sender) => {
       chrome.tabs.sendMessage(curTabId, {
         message: 'new game',
         payload: {
-          username: curPlayerInfo.username, avatar: curPlayerInfo.avatar, game, counter,
+          username: curPlayerInfo.username, avatar: curPlayerInfo.avatar, game, counter, audioOn,
         },
       });
     });
   } else {
     chrome.tabs.update(curTabId, { url: curPlayerInfo.curUrl });
+    linkAudio.play();
   }
 };
 
 chrome.browserAction.onClicked.addListener((tab) => {
+  // Background audio setup
+  bgAudio.setAttribute('id', 'bgAudio');
+  bgAudio.setAttribute('src', 'http://k003.kiwi6.com/hotlink/3ewofkoxts/wii.mp3');
+  bgAudio.setAttribute('loop', 'true');
+  bgAudio.play();
+
+  // Link whoosh sound setup
+  linkAudio.setAttribute('id', 'linkAudio');
+  linkAudio.setAttribute('src', 'https://k003.kiwi6.com/hotlink/6etyb9h8wr/swoosh.mp3');
+
   if (!gameSocket) {
     renderLobby(tab.id);
   }
 });
 
-chrome.runtime.onMessage.addListener((request, sender) => {
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+  // Process sound toggle request
+  if (request.message === 'sound') {
+    if (audioOn) {
+      bgAudio.muted = true;
+      linkAudio.muted = true;
+    } else {
+      bgAudio.muted = false;
+      linkAudio.muted = false;
+    }
+    audioOn = !audioOn;
+    sendResponse({ audioOn });
+    return;
+  }
+
   // check tab and request info and final page reached
   if (request.message === 'start game') {
     const { username, avatar } = request.payload.user;
@@ -133,7 +162,7 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo) => {
         chrome.tabs.sendMessage(tabId, {
           message: 'new game',
           payload: {
-            username: curPlayerInfo.username, avatar: curPlayerInfo.avatar, game, counter,
+            username: curPlayerInfo.username, avatar: curPlayerInfo.avatar, game, counter, audioOn,
           },
         });
       });
