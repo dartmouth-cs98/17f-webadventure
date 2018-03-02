@@ -11,7 +11,7 @@ const SelectedGameView = (props) => {
   const renderPlayers = () => {
     return props.joinedGame.players
       .map((player) => {
-        return (<div>{player.username}</div>);
+        return (<div key={player.id}>{player.username}</div>);
       });
   };
 
