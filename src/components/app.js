@@ -12,6 +12,7 @@ const App = (props) => {
         time={props.leaderboard.time}
         players={props.leaderboard.players}
         counter={props.counter}
+        audioOn={props.leaderboard.audioOn}
       />
     </div>);
 };
