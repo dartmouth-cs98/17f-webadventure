@@ -6,7 +6,7 @@ class Leaderboard extends Component {
     this.state = {
       players: props.players,
       timer: props.counter,
-      audioOn: props.audioOn,
+      // audioOn: props.audioOn,
     };
     this.onMessageRequest = this.onMessageRequest.bind(this);
     this.incTimer = this.incTimer.bind(this);

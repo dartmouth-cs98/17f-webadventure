@@ -41,9 +41,7 @@ class WikiGame {
     this.onKeyUp = this.onKeyUp.bind(this);
     this.isNoKeysPressed = this.isNoKeysPressed.bind(this);
 
-    this.createSounds = this.createSounds.bind(this);
     this.powerupSound = this.createSounds();
-    this.toggleAudio = this.toggleAudio.bind(this);
 
     this.updateOnPowerup = this.updateOnPowerup.bind(this);
     this.flipControls = this.flipControls.bind(this);
@@ -83,7 +81,6 @@ class WikiGame {
     };
   }
 
-
   increaseCounter() {
     this.counter = this.counter + 1;
   }
@@ -99,14 +96,16 @@ class WikiGame {
   // Toggle sound icon and mute property of all audio
   toggleAudio() {
     const sound = $('#sound');
-    var allAudio = document.getElementsByTagName('audio');
+    const allAudio = document.getElementsByTagName('audio');
+    for (let i = 0; i < allAudio.length; i += 1) {
+      allAudio[i].muted = !this.audioOn;
+    }
 
     sound.click(() => {
       chrome.runtime.sendMessage({ message: 'sound' }, (response) => {
-        (response.audioOn) ? sound.attr("class", "sound-on") : sound.attr("class", "sound-off");
-        for(let i = 0; i < allAudio.length; i++)
-        {
-            allAudio[i].muted = !response.audioOn;
+        response.audioOn ? sound.attr('class', 'sound-on') : sound.attr('class', 'sound-off');
+        for (let i = 0; i < allAudio.length; i += 1) {
+          allAudio[i].muted = !response.audioOn;
         }
       });
     });
@@ -151,7 +150,7 @@ class WikiGame {
 
   openLink() {
     const link = this.curPlayer.getLink();
-    console.log("On link "+link);
+    // console.log('On link ' + link);
     if (link !== null) {
       const redirectLink = `https://en.wikipedia.org${link}`;
       this.onNewUrl(redirectLink);
