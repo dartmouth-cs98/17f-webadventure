@@ -2,6 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
 import Player from './player';
+import Powerups from './powerups';
+
 import App from './components/app';
 
 class WikiGame {
@@ -10,10 +12,13 @@ class WikiGame {
     curPlayer = new Player('curPlayer'),
     counter = 0,
     game,
+    audioOn,
   ) {
     this.onNewUrl = onNewUrl;
     this.counter = counter;
     this.curPlayer = curPlayer;
+
+    this.audioOn = audioOn;
     this.speed = 1;
     this.keysPressed = {
       x: {
@@ -26,11 +31,23 @@ class WikiGame {
       },
     };
 
+    this.powerups = new Powerups();
+
+    this.flipMultiplier = 1; // scales step size and direction; 1 for normal movement
+
     this.setupToc = this.setupToc.bind(this);
     this.updateGame = this.updateGame.bind(this);
     this.onKeyDown = this.onKeyDown.bind(this);
     this.onKeyUp = this.onKeyUp.bind(this);
     this.isNoKeysPressed = this.isNoKeysPressed.bind(this);
+
+    this.powerupSound = this.createSounds();
+
+    this.updateOnPowerup = this.updateOnPowerup.bind(this);
+    this.flipControls = this.flipControls.bind(this);
+    this.speedUp = this.speedUp.bind(this);
+    this.slowDown = this.slowDown.bind(this);
+    this.resetMultiplier = this.resetMultiplier.bind(this);
 
     const leaderboard = {
       curPlayer: {
@@ -39,8 +56,9 @@ class WikiGame {
       },
       players: game.players,
       goalPage: game.goalPage,
+      audioOn: this.audioOn,
     };
-    this.renderGame(leaderboard, counter);
+    this.renderGame(leaderboard, counter, this.audioOn);
     window.addEventListener('keydown', this.onKeyDown);
     window.addEventListener('keyup', this.onKeyUp);
     this.updateInterval = window.setInterval(this.updateGame, 10);
@@ -49,19 +67,48 @@ class WikiGame {
 
   renderGame(leaderboard, counter) {
     $('body').append('<div id=wa-main />');
+    // audioOn={audioOn}
     ReactDOM.render(<App leaderboard={leaderboard} counter={counter} />, document.getElementById('wa-main'));
     this.setupToc();
+    this.toggleAudio();
     const curPosition = this.curPlayer.getPosition();
     this.curPlayer.insertPlayer(curPosition.x, curPosition.y);
+    this.powerups.insertPowerups();
+
     this.borders = {
       width: $(document).width() - this.curPlayer.getWidth(),
       height: $(document).height(),
     };
   }
 
-
   increaseCounter() {
     this.counter = this.counter + 1;
+  }
+
+  createSounds() {
+    const powerAudio = document.createElement('AUDIO');
+    powerAudio.setAttribute('id', 'powerAudio');
+    powerAudio.setAttribute('src', 'http://k003.kiwi6.com/hotlink/5cunslfq0k/Good-idea-bell.mp3');
+    document.body.appendChild(powerAudio);
+    return powerAudio;
+  }
+
+  // Toggle sound icon and mute property of all audio
+  toggleAudio() {
+    const sound = $('#sound');
+    const allAudio = document.getElementsByTagName('audio');
+    for (let i = 0; i < allAudio.length; i += 1) {
+      allAudio[i].muted = !this.audioOn;
+    }
+
+    sound.click(() => {
+      chrome.runtime.sendMessage({ message: 'sound' }, (response) => {
+        response.audioOn ? sound.attr('class', 'sound-on') : sound.attr('class', 'sound-off');
+        for (let i = 0; i < allAudio.length; i += 1) {
+          allAudio[i].muted = !response.audioOn;
+        }
+      });
+    });
   }
 
   setupToc() {
@@ -74,36 +121,100 @@ class WikiGame {
         const { left, top } = $(document.getElementById(id.substring(1))).offset();
         // Issue with jquery on id's with special characters; i.e. (, ), -
         this.curPlayer.movePlayer(left, top);
+        this.updateOnPowerup();
       });
     });
   }
 
   updateGame() {
     const newLoc = this.curPlayer.getPosition();
+    const stepSize = this.speed * this.flipMultiplier;
+
     if (this.keysPressed.x.left && !this.keysPressed.x.right && newLoc.x - 5 > 0) {
-      newLoc.x -= this.speed;
+      newLoc.x -= stepSize;
       this.curPlayer.updateDirRight(false);
     } else if (!this.keysPressed.x.left &&
       this.keysPressed.x.right && newLoc.x + 5 < this.borders.width) {
-      newLoc.x += this.speed;
+      newLoc.x += stepSize;
       this.curPlayer.updateDirRight(true);
     }
     if (this.keysPressed.y.up && !this.keysPressed.y.down && newLoc.y - 5 > 0) {
-      newLoc.y -= this.speed;
+      newLoc.y -= stepSize;
     } else if (!this.keysPressed.y.up &&
       this.keysPressed.y.down && newLoc.y + 5 < this.borders.height) {
-      newLoc.y += this.speed;
+      newLoc.y += stepSize;
     }
     this.curPlayer.movePlayer(newLoc.x, newLoc.y);
+    this.updateOnPowerup();
   }
 
   openLink() {
-    console.log(this.curPlayer.getLink());
     const link = this.curPlayer.getLink();
+    // console.log('On link ' + link);
     if (link !== null) {
       const redirectLink = `https://en.wikipedia.org${link}`;
       this.onNewUrl(redirectLink);
     }
+  }
+
+  updateOnPowerup() {
+    const currLoc = this.curPlayer.getPosition();
+    const left = currLoc.x;
+    const right = currLoc.x + this.curPlayer.size.width;
+    const top = currLoc.y;
+    const bottom = currLoc.y + this.curPlayer.size.height;
+
+    const overlap = this.powerups.powerups.filter((pow) => {
+      const xOverlap = (left > pow.position.left && left < pow.position.left + pow.size.width) ||
+        (right > pow.position.left && right < pow.position.left + pow.size.width) ||
+        (left < pow.position.left && right > pow.position.left + pow.size.width);
+      const yOverlap = (top > pow.position.top && top < pow.position.top + pow.size.height) ||
+        (bottom > pow.position.top && bottom < pow.position.top + pow.size.height) ||
+        (top < pow.position.top && bottom > pow.top + pow.size.height);
+      return xOverlap && yOverlap;
+    });
+    const hitPowerup = overlap.length !== 0 ? overlap[0] : null;
+    if (hitPowerup) {
+      // Play powerup audio
+      this.powerupSound.play();
+
+      if (hitPowerup.type === 0) {
+        this.flipControls();
+      } else if (hitPowerup.type === 1) {
+        this.speedUp();
+      } else if (hitPowerup.type === 2) {
+        this.slowDown();
+      }
+
+      // Remove from powerups array
+      this.powerups.powerups = this.powerups.powerups.filter((powerup) => {
+        return powerup !== hitPowerup;
+      });
+
+      // Hide icon from user
+      // const powerupSelect = '.powerup[index=' + hitPowerup.index + ']';
+      const powerupSelect = `.powerup[index=${hitPowerup.index}]`;
+      $(powerupSelect).css({ visibility: 'hidden' });
+    }
+  }
+
+  flipControls() {
+    this.flipMultiplier = -1;
+    setTimeout(this.resetMultiplier, 5000);
+  }
+
+  speedUp() {
+    this.flipMultiplier = 2;
+    setTimeout(this.resetMultiplier, 5000);
+  }
+
+  slowDown() {
+    this.flipMultiplier = 0.3;
+    setTimeout(this.resetMultiplier, 5000);
+  }
+
+  resetMultiplier() {
+    this.flipMultiplier = 1;
   }
 
   onKeyDown(evt) {
@@ -115,8 +226,7 @@ class WikiGame {
       case 76: // click link with L
         this.openLink();
         break;
-      case 80: // Pause game with 'P'
-        // console.log('pause game, pause pop up?');
+      case 80: // P
         break;
       default:
         break;
@@ -133,7 +243,6 @@ class WikiGame {
       case 87: this.keysPressed.y.up = false; break;
       case 83: this.keysPressed.y.down = false; break;
       case 80: // Pause game with 'P'
-        // console.log('pause game, pause pop up?');
         break;
       default:
         break;

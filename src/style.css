@@ -142,6 +142,10 @@ svg:hover {
   position: fixed
 }
 
+#mw-head {
+  z-index: 0;
+}
+
 #wa-main {
   background: #00f
 }
@@ -149,6 +153,33 @@ svg:hover {
 #wa-container {
   width: 11em;
   height: 100%
+}
+
+#topbar {
+  position: fixed;
+  top: 0;
+  height: 40px;
+  width: 100%;
+  border-bottom: 1px solid #aedaf9;
+  background: white;
+  z-index: -1;
+}
+
+#sound {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  padding: 10px;
+  right: 0;
+  display: block;
+}
+
+.sound-on {
+  content:url("https://i.imgur.com/IBdWqJb.png");
+}
+
+.sound-off {
+  content:url("https://i.imgur.com/CwDJxek.png");
 }
 
 #wiki-logo {
@@ -349,6 +380,11 @@ svg:hover {
 .player-img {
   height: 40px;
   width: 40px
+}
+
+.powerup {
+    height: 50px;
+    width: 50px;
 }
 
 .game-selected {
