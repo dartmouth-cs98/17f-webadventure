@@ -41,9 +41,9 @@ class WikiGame {
     this.onKeyUp = this.onKeyUp.bind(this);
     this.isNoKeysPressed = this.isNoKeysPressed.bind(this);
 
-    // this.createSounds = this.createSounds.bind(this);
-    // this.soundEffects = this.createSounds();
-    // this.toggleAudio = this.toggleAudio.bind(this);
+    this.createSounds = this.createSounds.bind(this);
+    this.powerupSound = this.createSounds();
+    this.toggleAudio = this.toggleAudio.bind(this);
 
     this.updateOnPowerup = this.updateOnPowerup.bind(this);
     this.flipControls = this.flipControls.bind(this);
@@ -72,7 +72,7 @@ class WikiGame {
     // audioOn={audioOn}
     ReactDOM.render(<App leaderboard={leaderboard} counter={counter} />, document.getElementById('wa-main'));
     this.setupToc();
-    this.setupTopbar();
+    this.toggleAudio();
     const curPosition = this.curPlayer.getPosition();
     this.curPlayer.insertPlayer(curPosition.x, curPosition.y);
     this.powerups.insertPowerups();
@@ -88,41 +88,25 @@ class WikiGame {
     this.counter = this.counter + 1;
   }
 
-  // createSounds() {
-  //   console.log("create sounds");
-  //   let soundArray = [];
-
-  //   // const linkAudio = document.createElement("AUDIO");
-  //   // linkAudio.setAttribute("id", "linkAudio");
-  //   // // linkAudio.setAttribute("src","https://k003.kiwi6.com/hotlink/6etyb9h8wr/swoosh.mp3");
-  //   // linkAudio.setAttribute("src", "https://k003.kiwi6.com/hotlink/3ewofkoxts/wii.mp3");
-  //   // document.body.appendChild(linkAudio);
-  //   // soundArray.push(linkAudio);
-
-  //   console.log(soundArray);
-  //   return soundArray;
-  // }
-
-  toggleAudio() {
-    // console.log("toggleAudio");
-
-    var audio = document.querySelectorAll('audio');
-    // console.log(audio);
-    // for each audio, set mute
+  createSounds() {
+    const powerAudio = document.createElement('AUDIO');
+    powerAudio.setAttribute('id', 'powerAudio');
+    powerAudio.setAttribute('src', 'http://k003.kiwi6.com/hotlink/5cunslfq0k/Good-idea-bell.mp3');
+    document.body.appendChild(powerAudio);
+    return powerAudio;
   }
 
-  setupTopbar() {
-    $('#sound').click(() => {
-      this.toggleAudio(); // Toggle sound effects
-      // Toggle background music
+  // Toggle sound icon and mute property of all audio
+  toggleAudio() {
+    const sound = $('#sound');
+    var allAudio = document.getElementsByTagName('audio');
+
+    sound.click(() => {
       chrome.runtime.sendMessage({ message: 'sound' }, (response) => {
-        // console.log(response.audio);
-        if (response.audio){
-          // console.log("in setupTopbar, audio is on");
-          document.getElementById('sound').className = 'sound-on';
-        } else {
-          // console.log("in setupTopbar, audio is off");
-          document.getElementById('sound').className = 'sound-off';
+        (response.audioOn) ? sound.attr("class", "sound-on") : sound.attr("class", "sound-off");
+        for(let i = 0; i < allAudio.length; i++)
+        {
+            allAudio[i].muted = !response.audioOn;
         }
       });
     });
@@ -167,6 +151,7 @@ class WikiGame {
 
   openLink() {
     const link = this.curPlayer.getLink();
+    console.log("On link "+link);
     if (link !== null) {
       const redirectLink = `https://en.wikipedia.org${link}`;
       this.onNewUrl(redirectLink);
@@ -191,6 +176,9 @@ class WikiGame {
     });
     const hitPowerup = overlap.length !== 0 ? overlap[0] : null;
     if (hitPowerup) {
+      // Play powerup audio
+      this.powerupSound.play();
+
       if (hitPowerup.type === 0) {
         this.flipControls();
       } else if (hitPowerup.type === 1) {
@@ -198,6 +186,7 @@ class WikiGame {
       } else if (hitPowerup.type === 2) {
         this.slowDown();
       }
+
       // Remove from powerups array
       this.powerups.powerups = this.powerups.powerups.filter((powerup) => {
         return powerup !== hitPowerup;

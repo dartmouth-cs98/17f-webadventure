@@ -77,11 +77,13 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.message === 'sound') {
     if (audioOn) {
       bgAudio.muted = true;
+      linkAudio.muted = true;
     } else {
       bgAudio.muted = false;
+      linkAudio.muted = false;
     }
     audioOn = !audioOn;
-    sendResponse({ audio: audioOn });
+    sendResponse({ audioOn: audioOn });
     return;
   }
 
