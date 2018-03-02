@@ -1,9 +1,9 @@
-/* eslint react/no-array-index-key: 0, "react/jsx-no-bind": 0 */
+/* eslint "react/jsx-no-bind": 0 */
 
 import React from 'react';
 
 const LobbyGamesView = (props) => {
-  const handlOverflow = (start, end) => {
+  const handleOverflow = (start, end) => {
     const parsedStart = decodeURIComponent(start).replace(/_/g, ' ');
     const parsedEnd = decodeURIComponent(end).replace(/_/g, ' ');
     const compare = parsedStart + parsedEnd;
@@ -26,40 +26,32 @@ const LobbyGamesView = (props) => {
     );
   };
 
-  const splitWord = (str) => {
-    const parts = str.split('/');
-    return parts.pop();
-  };
-
   const renderGames = () => {
-    const publicGames = props.games.filter((game) => {
-      return !game.isPrivate;
-    });
-    return publicGames
+    return props.games.filter((game) => { return !game.isPrivate; })
       .sort((a, b) => b.players.length - a.players.length)
-      .map((game, index) => {
-        const start = splitWord(game.startPage);
-        const end = splitWord(game.goalPage);
+      .map((game) => {
+        const start = game.startPage.split('/').pop();
+        const end = game.goalPage.split('/').pop();
         if (props.selectedGame && game.id === props.selectedGame.id) {
           return (
-            <div className="game-selected game-item">
+            <div className="game-selected game-item" key={game.id}>
               <div className="game-title-row">
                 <div
                   className="lobby-game-item"
-                  key={index}
                 >{game.host}
                 </div>
                 <div className="num-players">
                   ({game.players.length}/5)
                 </div>
               </div>
-              {handlOverflow(start, end)}
+              {handleOverflow(start, end)}
             </div>
           );
         } else {
           return (
             <div
               className="game-item"
+              key={game.id}
               onClick={() => props.selectGame(game)}
               role="button"
               tabIndex={0}
@@ -67,7 +59,6 @@ const LobbyGamesView = (props) => {
               <div className="game-title-row">
                 <div
                   className="lobby-game-item"
-                  key={index}
                 >
                   {game.host}
                 </div>
@@ -75,7 +66,7 @@ const LobbyGamesView = (props) => {
                   ({game.players.length}/5)
                 </div>
               </div>
-              {handlOverflow(start, end)}
+              {handleOverflow(start, end)}
             </div>
           );
         }

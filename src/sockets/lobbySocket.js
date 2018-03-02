@@ -47,7 +47,6 @@ export default class LobbySocket {
     const req = {
       username: this.username, isPrivate,
     };
-    console.log(req);
     return new Promise((resolve, reject) => {
       this.socket.emit('createGame', req, (data) => {
         if (data) { resolve(data); } else {
