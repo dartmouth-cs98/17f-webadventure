@@ -53,7 +53,7 @@ class Lobby extends Component {
   }
 
   onGames(games) {
-    console.log(games);
+    // console.log(games);
     const newState = { games };
     games.forEach((game) => {
       if (this.state.selectedGame && this.state.selectedGame.id === game.id) {
@@ -66,13 +66,17 @@ class Lobby extends Component {
     this.setState(newState);
   }
 
-  onGameStarted(game) { this.props.onStart(this.state.user, game); }
+  onGameStarted(game) {
+    // console.log("onGameStarted");
+    this.props.onStart(this.state.user, game);
+  }
 
   onUsers(users) {
     this.setState({ allUsers: users });
   }
 
   onStartGame() {
+    // console.log("onStartGame");
     if (!this.state.joinedGame.active) {
       this.lobbySocket.startGame(this.state.joinedGame.id)
         .then(() => {})
