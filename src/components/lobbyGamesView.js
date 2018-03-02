@@ -1,4 +1,4 @@
-/* eslint react/no-array-index-key: 0, "react/jsx-no-bind": 0 */
+/* eslint "react/jsx-no-bind": 0 */
 
 import React from 'react';
 
@@ -29,16 +29,15 @@ const LobbyGamesView = (props) => {
   const renderGames = () => {
     return props.games.filter((game) => { return !game.isPrivate; })
       .sort((a, b) => b.players.length - a.players.length)
-      .map((game, index) => {
+      .map((game) => {
         const start = game.startPage.split('/').pop();
         const end = game.goalPage.split('/').pop();
         if (props.selectedGame && game.id === props.selectedGame.id) {
           return (
-            <div className="game-selected game-item">
+            <div className="game-selected game-item" key={game.id}>
               <div className="game-title-row">
                 <div
                   className="lobby-game-item"
-                  key={index}
                 >{game.host}
                 </div>
                 <div className="num-players">
@@ -52,6 +51,7 @@ const LobbyGamesView = (props) => {
           return (
             <div
               className="game-item"
+              key={game.id}
               onClick={() => props.selectGame(game)}
               role="button"
               tabIndex={0}
@@ -59,7 +59,6 @@ const LobbyGamesView = (props) => {
               <div className="game-title-row">
                 <div
                   className="lobby-game-item"
-                  key={index}
                 >
                   {game.host}
                 </div>
