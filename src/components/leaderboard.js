@@ -52,7 +52,7 @@ class Leaderboard extends Component {
   }
 
   render() {
-    const goalPage = this.props.goalPage.split('/').pop();
+    const goalPage = decodeURIComponent(this.props.goalPage.split('/').pop()).replace(/_/g, ' ');
     if (this.props.curPlayer) {
       return (
         <div id="wa-container">

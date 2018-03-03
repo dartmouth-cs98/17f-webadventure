@@ -89,7 +89,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 
   // check tab and request info and final page reached
   if (request.message === 'start game') {
-    console.log("got start game message");
+    console.log('got start game message');
     const { username, avatar } = request.payload.user;
     ({ game } = request.payload);
     console.log('request');
