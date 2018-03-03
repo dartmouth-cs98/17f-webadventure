@@ -8,6 +8,7 @@ let counter;
 let interval;
 let curTabId;
 let audioOn = true;
+const audioDiv = document.createElement('div');
 const bgAudio = document.createElement('AUDIO'); // Persistent across redirects
 const linkAudio = document.createElement('AUDIO'); // Whoosh sound on link clicked
 
@@ -17,7 +18,6 @@ const renderLobby = (tabId, username) => {
   }, () => {
     const req = {
       message: 'render lobby',
-      // audioOn: audioOn,
       payload: { username },
     };
     chrome.tabs.sendMessage(tabId, req);
@@ -30,7 +30,6 @@ const onGame = (newGame) => {
 };
 
 const endGame = () => {
-  console.log("end game");
   curPlayerInfo = null;
   curTabId = -1;
   clearInterval(interval);
@@ -39,9 +38,8 @@ const endGame = () => {
   gameSocket = null;
 
   // Stop music
-  // bgAudio.pause();
-  // bgAudio.parentNode.removeChild(bgAudio);
-  document.removeChild(bgAudio);
+  bgAudio.pause();
+  audioDiv.removeChild(bgAudio);
 };
 
 const injectGame = (sender) => {
@@ -63,11 +61,15 @@ const injectGame = (sender) => {
 };
 
 chrome.browserAction.onClicked.addListener((tab) => {
-  console.log("browser clicked");
   // Background audio setup
   bgAudio.setAttribute('id', 'bgAudio');
   bgAudio.setAttribute('src', 'http://k003.kiwi6.com/hotlink/3ewofkoxts/wii.mp3');
   bgAudio.setAttribute('loop', 'true');
+
+  // var currentDiv = document.getElementById("wa-lobby");
+  audioDiv.appendChild(bgAudio);
+  // bgAudio = document.write('<audio id="bgAudio" src="http://k003.kiwi6.com/hotlink/3ewofkoxts/wii.mp3" loop=true />');
+
   bgAudio.play();
 
   // Link whoosh sound setup
@@ -80,9 +82,6 @@ chrome.browserAction.onClicked.addListener((tab) => {
 });
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-
-  console.log("got message");
-  console.log(request);
   // Process sound toggle request
   if (request.message === 'sound') {
     if (audioOn) {
@@ -101,7 +100,6 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.message === 'start game') {
     const { username, avatar } = request.payload.user;
     ({ game } = request.payload);
-    // console.log(request);
     gameSocket = new GameSocket(onGame, game.id, username);
     curTabId = sender.tab.id;
     counter = 0;
@@ -115,22 +113,15 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     };
     injectGame(sender);
   } else if (request.message === 'close lobby') {
-      console.log("got message close lobby");
-      // Stop music
-      // bgAudio.pause();
-      var bg = document.getElementById('bgAudio');
-      console.log(bg.parentNode);
-      bg.parentNode.removeChild(bg);
-    }
-
-  else if (sender.tab.id === curTabId) {
-    console.log("on message sendertabid = curtabid");
+    // stop music
+    bgAudio.pause();
+    audioDiv.removeChild(bgAudio);
+  } else if (sender.tab.id === curTabId) {
     if (request.message === 'new url') {
       curPlayerInfo.numClicks += 1;
       curPlayerInfo.curUrl = request.payload.newUrl;
       injectGame(sender);
     } else if (request.message === 'quit game') {
-      console.log("got message quit game");
       endGame();
     } else if (request.message === 'end to lobby') {
       const tabId = curTabId;

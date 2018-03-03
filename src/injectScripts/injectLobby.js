@@ -18,7 +18,6 @@ const onStart = (user, game) => {
 };
 
 const exitGame = () => {
-  console.log("in exitGame of injectLobby");
   document.getElementById('wa-lobby').remove();
   chrome.runtime.sendMessage({ message: 'close lobby' });
 };
