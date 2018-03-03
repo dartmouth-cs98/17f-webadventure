@@ -9,6 +9,7 @@ import LobbyDetailsView from './lobbyDetailsView';
 import LobbyGamesView from './lobbyGamesView';
 import SelectedGameView from './selectedGameView';
 import DisplayUser from './displayUser';
+import $ from 'jquery';
 import '../style.css';
 
 class Lobby extends Component {
@@ -43,6 +44,9 @@ class Lobby extends Component {
       this.signUpLobby(username);
     }
     this.timer = 0;
+
+    // Set up audio and toggle listeners
+    this.toggleAudio();
   }
 
   componentDidMount() { window.addEventListener('beforeunload', this.exitGame); }
@@ -50,6 +54,28 @@ class Lobby extends Component {
   componentWillUnmount() {
     this.exitGame();
     window.removeEventListener('beforeunload', this.exitGame);
+  }
+
+  // Toggle sound icon and mute property of all audio
+  toggleAudio() {
+    console.log("toggleAudio");
+    const sound = $('#sound');
+    console.log(sound);
+    console.log("finished logging sound");
+    // const allAudio = document.getElementsByTagName('audio');
+    // for (let i = 0; i < allAudio.length; i += 1) {
+    //   allAudio[i].muted = !this.audioOn;
+    // }
+
+    sound.click(() => {
+      console.log("clicked sound");
+      chrome.runtime.sendMessage({ message: 'sound' }, (response) => {
+        response.audioOn ? sound.attr('class', 'sound-on') : sound.attr('class', 'sound-off');
+        // for (let i = 0; i < allAudio.length; i += 1) {
+        //   allAudio[i].muted = !response.audioOn;
+        //}
+      });
+    });
   }
 
   onGames(games) {
@@ -147,6 +173,7 @@ class Lobby extends Component {
   }
 
   render() {
+
     // Render lobby with all lobby components
     if (this.state.user) {
       return (

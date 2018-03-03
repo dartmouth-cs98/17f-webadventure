@@ -75,6 +75,8 @@ chrome.browserAction.onClicked.addListener((tab) => {
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   // Process sound toggle request
   if (request.message === 'sound') {
+    console.log("sound message received");
+    console.log(audioOn);
     if (audioOn) {
       bgAudio.muted = true;
       linkAudio.muted = true;
