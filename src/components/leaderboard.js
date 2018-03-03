@@ -52,7 +52,6 @@ class Leaderboard extends Component {
   }
 
   render() {
-    console.log(this.props);
     const goalPage = this.props.goalPage.split('/').pop();
     if (this.props.curPlayer) {
       return (

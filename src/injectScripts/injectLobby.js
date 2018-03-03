@@ -6,6 +6,7 @@ import Lobby from '../components/lobby';
 
 $('body').append('<div id=wa-lobby />');
 const onStart = (user, game) => {
+  console.log('on start!');
   const request = {
     message: 'start game',
     payload: {
@@ -22,10 +23,10 @@ const exitGame = () => {
 chrome.runtime.onMessage.addListener((req) => {
   if (req.message === 'render lobby') {
     if (req.payload && req.payload.username) {
-      console.log("1");
+      console.log('1');
       ReactDOM.render(<Lobby onStart={onStart} username={req.payload.username} exitGame={exitGame} />, document.getElementById('wa-lobby'));
     } else {
-      console.log("2");
+      console.log('2');
       ReactDOM.render(<Lobby onStart={onStart} exitGame={exitGame} />, document.getElementById('wa-lobby'));
     }
   }

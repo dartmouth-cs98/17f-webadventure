@@ -26,8 +26,18 @@ const LobbyGamesView = (props) => {
     );
   };
 
+  const gameDone = (players) => {
+    let done = false;
+    players.forEach((player) => {
+      if (player.finishTime > -1) {
+        done = true;
+      }
+    });
+    return done;
+  };
+
   const renderGames = () => {
-    return props.games.filter((game) => { return !game.isPrivate; })
+    return props.games.filter((game) => { return !game.isPrivate && !gameDone(game.players); })
       .sort((a, b) => b.players.length - a.players.length)
       .map((game) => {
         const start = game.startPage.split('/').pop();
