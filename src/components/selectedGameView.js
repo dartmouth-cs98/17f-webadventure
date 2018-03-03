@@ -20,6 +20,8 @@ class SelectedGameView extends Component {
     if (nextProps.joinedGame.players.length === 3) {
       const timer = setInterval(this.countDown, 1000);
       this.setState({ timer, seconds: 5 });
+    } else {
+      clearInterval(this.state.timer);
     }
   }
 
