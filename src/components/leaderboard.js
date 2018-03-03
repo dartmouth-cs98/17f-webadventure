@@ -58,6 +58,7 @@ class Leaderboard extends Component {
   }
 
   render() {
+    console.log(this.state.players);
     const goalPage = decodeURIComponent(this.props.goalPage.split('/').pop()).replace(/_/g, ' ');
     if (this.props.curPlayer) {
       return (
