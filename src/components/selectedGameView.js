@@ -7,9 +7,9 @@ class SelectedGameView extends Component {
     super(props);
 
     this.state = {
-      timer: 0,
       seconds: '',
     };
+    this.timer;
     this.countDown = this.countDown.bind(this);
     this.renderStartPage = this.renderStartPage.bind(this);
     this.renderStartGameButton = this.renderStartGameButton.bind(this);
@@ -19,15 +19,15 @@ class SelectedGameView extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.joinedGame.players.length === 3) {
-      const timer = setInterval(this.countDown, 1000);
-      this.setState({ timer: timer, seconds: 5 });
+      this.timer = setInterval(this.countDown, 1000);
+      this.setState({ seconds: 5 });
     } else {
-      clearInterval(this.state.timer);
+      clearInterval(this.timer);
     }
   }
 
   componentWillUnmount() {
-    clearInterval(this.state.timer);
+    clearInterval(this.timer);
   }
 
   countDown() {
@@ -35,7 +35,7 @@ class SelectedGameView extends Component {
       this.setState({ seconds: this.state.seconds - 1 });
     } else {
       this.props.onStartGame();
-      clearInterval(this.state.timer);
+      clearInterval(this.timer);
     }
   }
 
