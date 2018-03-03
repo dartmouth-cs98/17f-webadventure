@@ -9,6 +9,7 @@ class SelectedGameView extends Component {
     this.state = {
       seconds: '',
     };
+    this.timer = null;
     this.countDown = this.countDown.bind(this);
     this.renderStartPage = this.renderStartPage.bind(this);
     this.renderStartGameButton = this.renderStartGameButton.bind(this);
@@ -17,14 +18,16 @@ class SelectedGameView extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.joinedGame.players.length === 5) {
-      const timer = setInterval(this.countDown, 1000);
-      this.setState({ timer, seconds: 5 });
+    if (nextProps.joinedGame.players.length === 3) {
+      this.timer = setInterval(this.countDown, 1000);
+      this.setState({ seconds: 5 });
+    } else {
+      clearInterval(this.timer);
     }
   }
 
   componentWillUnmount() {
-    clearInterval(this.state.timer);
+    clearInterval(this.timer);
   }
 
   countDown() {
@@ -32,7 +35,7 @@ class SelectedGameView extends Component {
       this.setState({ seconds: this.state.seconds - 1 });
     } else {
       this.props.onStartGame();
-      clearInterval(this.state.timer);
+      clearInterval(this.timer);
     }
   }
 
@@ -73,7 +76,7 @@ class SelectedGameView extends Component {
 
   renderTimer() {
     if (
-      this.props.joinedGame.players.length === 2 &&
+      this.props.joinedGame.players.length === 3 &&
       !this.props.joinedGame.isPrivate
     ) {
       return (
