@@ -8,6 +8,7 @@ class SelectedGameView extends Component {
 
     this.state = {
       seconds: '',
+      joinedGame: this.props.joinedGame,
     };
     // this.timer = 0;
     // this.startTimer = this.startTimer.bind(this);
@@ -19,6 +20,10 @@ class SelectedGameView extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    if (nextProps.joinedGame.players.length !== this.state.joinedGame.players.length) {
+      this.setState({ joinedGame: nextProps.joinedGame });
+    }
+
     if (nextProps.joinedGame.players.length === 5) {
       const timer = setInterval(this.countDown, 1000);
       this.setState({ timer, seconds: 5 });
@@ -39,9 +44,9 @@ class SelectedGameView extends Component {
   }
 
   renderHostKey() {
-    if (this.props.joinedGame.isPrivate) {
+    if (this.state.joinedGame.isPrivate) {
       return (
-        <div>{this.props.joinedGame.id}</div>
+        <div>{this.state.joinedGame.id}</div>
       );
     } else {
       return (<div />);
@@ -49,12 +54,11 @@ class SelectedGameView extends Component {
   }
 
   renderStartPage() {
-    const pageName = decodeURIComponent(this.props.joinedGame.startPage.split('/').pop()).replace(/_/g, ' ');
-    return pageName;
+    return decodeURIComponent(this.state.joinedGame.startPage.split('/').pop()).replace(/_/g, ' ');
   }
 
   renderStartGameButton() {
-    if (this.props.joinedGame.isPrivate) {
+    if (this.state.joinedGame.isPrivate) {
       return (
         <div>
           <button onClick={this.props.onStartGame}>
@@ -68,7 +72,7 @@ class SelectedGameView extends Component {
   }
 
   renderPlayers() {
-    return this.props.joinedGame.players
+    return this.state.joinedGame.players
       .map((player) => {
         return (<div key={player.username}>{player.username}</div>);
       });
@@ -76,8 +80,8 @@ class SelectedGameView extends Component {
 
   renderTimer() {
     if (
-      this.props.joinedGame.players.length === 2 &&
-      !this.props.joinedGame.isPrivate
+      this.state.joinedGame.players.length === 2 &&
+      !this.state.joinedGame.isPrivate
     ) {
       return (
         <div>Starting in {this.state.seconds}</div>
@@ -91,7 +95,7 @@ class SelectedGameView extends Component {
     return (
       <div id="selectedGameView">
         {this.renderHostKey()}
-        <div>{this.props.joinedGame.players.length}/5 players joined</div>
+        <div>{this.state.joinedGame.players.length}/5 players joined</div>
         {this.renderTimer()}
         <div>Start: {this.renderStartPage()}</div>
         <div>Players in game:</div>

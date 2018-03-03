@@ -1,3 +1,5 @@
+/* eslint class-methods-use-this:0 */
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
