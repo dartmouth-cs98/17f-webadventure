@@ -7,6 +7,7 @@ class SelectedGameView extends Component {
     super(props);
 
     this.state = {
+      timer: 0,
       seconds: '',
     };
     this.countDown = this.countDown.bind(this);
@@ -19,7 +20,7 @@ class SelectedGameView extends Component {
   componentWillReceiveProps(nextProps) {
     if (nextProps.joinedGame.players.length === 3) {
       const timer = setInterval(this.countDown, 1000);
-      this.setState({ timer, seconds: 5 });
+      this.setState({ timer: timer, seconds: 5 });
     } else {
       clearInterval(this.state.timer);
     }
