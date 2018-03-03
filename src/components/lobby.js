@@ -65,9 +65,7 @@ class Lobby extends Component {
     this.setState(newState);
   }
 
-  onGameStarted(game) {
-    this.props.onStart(this.state.user, game);
-  }
+  onGameStarted(game) { this.props.onStart(this.state.user, game); }
 
   onUsers(users) {
     this.setState({ allUsers: users });
