@@ -16,9 +16,12 @@ const onStart = (user, game) => {
   document.getElementById('wa-lobby').remove();
   chrome.runtime.sendMessage(request);
 };
+
 const exitGame = () => {
   document.getElementById('wa-lobby').remove();
+  chrome.runtime.sendMessage({ message: 'close lobby' });
 };
+
 chrome.runtime.onMessage.addListener((req) => {
   if (req.message === 'render lobby') {
     if (req.payload && req.payload.username) {

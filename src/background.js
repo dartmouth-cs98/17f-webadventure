@@ -8,6 +8,7 @@ let counter;
 let interval;
 let curTabId;
 let audioOn = true;
+const audioDiv = document.createElement('div');
 const bgAudio = document.createElement('AUDIO'); // Persistent across redirects
 const linkAudio = document.createElement('AUDIO'); // Whoosh sound on link clicked
 
@@ -17,7 +18,6 @@ const renderLobby = (tabId, username) => {
   }, () => {
     const req = {
       message: 'render lobby',
-      // audioOn: audioOn,
       payload: { username },
     };
     chrome.tabs.sendMessage(tabId, req);
@@ -36,6 +36,10 @@ const endGame = () => {
   counter = 0;
   gameSocket.disconnect();
   gameSocket = null;
+
+  // Stop music
+  bgAudio.pause();
+  audioDiv.removeChild(bgAudio);
 };
 
 const injectGame = (sender) => {
@@ -61,6 +65,11 @@ chrome.browserAction.onClicked.addListener((tab) => {
   bgAudio.setAttribute('id', 'bgAudio');
   bgAudio.setAttribute('src', 'http://k003.kiwi6.com/hotlink/3ewofkoxts/wii.mp3');
   bgAudio.setAttribute('loop', 'true');
+
+  // var currentDiv = document.getElementById("wa-lobby");
+  audioDiv.appendChild(bgAudio);
+  // bgAudio = document.write('<audio id="bgAudio" src="http://k003.kiwi6.com/hotlink/3ewofkoxts/wii.mp3" loop=true />');
+
   bgAudio.play();
 
   // Link whoosh sound setup
@@ -103,6 +112,10 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
       curUrl: game.startPage,
     };
     injectGame(sender);
+  } else if (request.message === 'close lobby') {
+    // stop music
+    bgAudio.pause();
+    audioDiv.removeChild(bgAudio);
   } else if (sender.tab.id === curTabId) {
     if (request.message === 'new url') {
       curPlayerInfo.numClicks += 1;
