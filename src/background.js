@@ -91,7 +91,6 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.message === 'start game') {
     const { username, avatar } = request.payload.user;
     ({ game } = request.payload);
-    // console.log(request);
     gameSocket = new GameSocket(onGame, game.id, username);
     curTabId = sender.tab.id;
     counter = 0;
