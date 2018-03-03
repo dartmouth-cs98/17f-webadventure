@@ -30,12 +30,18 @@ const onGame = (newGame) => {
 };
 
 const endGame = () => {
+  console.log("end game");
   curPlayerInfo = null;
   curTabId = -1;
   clearInterval(interval);
   counter = 0;
   gameSocket.disconnect();
   gameSocket = null;
+
+  // Stop music
+  // bgAudio.pause();
+  // bgAudio.parentNode.removeChild(bgAudio);
+  document.removeChild(bgAudio);
 };
 
 const injectGame = (sender) => {
@@ -57,6 +63,7 @@ const injectGame = (sender) => {
 };
 
 chrome.browserAction.onClicked.addListener((tab) => {
+  console.log("browser clicked");
   // Background audio setup
   bgAudio.setAttribute('id', 'bgAudio');
   bgAudio.setAttribute('src', 'http://k003.kiwi6.com/hotlink/3ewofkoxts/wii.mp3');
@@ -73,6 +80,9 @@ chrome.browserAction.onClicked.addListener((tab) => {
 });
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+
+  console.log("got message");
+  console.log(request);
   // Process sound toggle request
   if (request.message === 'sound') {
     if (audioOn) {
@@ -104,12 +114,23 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
       curUrl: game.startPage,
     };
     injectGame(sender);
-  } else if (sender.tab.id === curTabId) {
+  } else if (request.message === 'close lobby') {
+      console.log("got message close lobby");
+      // Stop music
+      // bgAudio.pause();
+      var bg = document.getElementById('bgAudio');
+      console.log(bg.parentNode);
+      bg.parentNode.removeChild(bg);
+    }
+
+  else if (sender.tab.id === curTabId) {
+    console.log("on message sendertabid = curtabid");
     if (request.message === 'new url') {
       curPlayerInfo.numClicks += 1;
       curPlayerInfo.curUrl = request.payload.newUrl;
       injectGame(sender);
     } else if (request.message === 'quit game') {
+      console.log("got message quit game");
       endGame();
     } else if (request.message === 'end to lobby') {
       const tabId = curTabId;
