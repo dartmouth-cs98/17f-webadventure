@@ -1,39 +1,103 @@
 /* eslint no-mixed-spaces-and-tabs:0, no-tabs:0 */
 
-import React from 'react';
+import React, { Component } from 'react';
 
-const SelectedGameView = (props) => {
-  const renderStartPage = () => {
-    const pageName = decodeURIComponent(props.joinedGame.startPage.split('/').pop()).replace(/_/g, ' ');
-    return pageName;
-  };
+class SelectedGameView extends Component {
+  constructor(props) {
+    super(props);
 
-  const renderPlayers = () => {
-    return props.joinedGame.players
+    this.state = {
+      seconds: '',
+    };
+    this.countDown = this.countDown.bind(this);
+    this.renderStartPage = this.renderStartPage.bind(this);
+    this.renderStartGameButton = this.renderStartGameButton.bind(this);
+    this.renderPlayers = this.renderPlayers.bind(this);
+    this.renderTimer = this.renderTimer.bind(this);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.joinedGame.players.length === 5) {
+      const timer = setInterval(this.countDown, 1000);
+      this.setState({ timer, seconds: 5 });
+    }
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.state.timer);
+  }
+
+  countDown() {
+    if (this.state.seconds > 0) {
+      this.setState({ seconds: this.state.seconds - 1 });
+    } else {
+      this.props.onStartGame();
+      clearInterval(this.state.timer);
+    }
+  }
+
+  renderHostKey() {
+    if (this.props.joinedGame.isPrivate) {
+      return (
+        <div>{this.props.joinedGame.id}</div>
+      );
+    } else {
+      return (<div />);
+    }
+  }
+
+  renderStartPage() {
+    return decodeURIComponent(this.props.joinedGame.startPage.split('/').pop()).replace(/_/g, ' ');
+  }
+
+  renderStartGameButton() {
+    if (this.props.joinedGame.isPrivate) {
+      return (
+        <div>
+          <button onClick={this.props.onStartGame}>
+            Start Game
+          </button>
+        </div>
+      );
+    } else {
+      return (<div />);
+    }
+  }
+
+  renderPlayers() {
+    return this.props.joinedGame.players
       .map((player) => {
         return (<div key={player.username}>{player.username}</div>);
       });
-  };
+  }
 
-  const renderPrivateGameKey = () => {
-    if (props.joinedGame.isPrivate) {
+  renderTimer() {
+    if (
+      this.props.joinedGame.players.length === 2 &&
+      !this.props.joinedGame.isPrivate
+    ) {
       return (
-        <div>{props.joinedGame.id}</div>
+        <div>Starting in {this.state.seconds}</div>
       );
+    } else {
+      return (<div />);
     }
-    return (<div />);
-  };
+  }
 
-  return (
-    <div id="selectedGameView">
-      <div>{renderPrivateGameKey()}</div>
-      <div>{props.joinedGame.players.length}/5 players joined</div>
-      <div>Start: {renderStartPage()}</div>
-      <div>Players in game:</div>
-      {renderPlayers()}
-      <button onClick={props.backToGameSelect}>Go back</button>
-    </div>
-  );
-};
+  render() {
+    return (
+      <div id="selectedGameView">
+        {this.renderHostKey()}
+        <div>{this.props.joinedGame.players.length}/5 players joined</div>
+        {this.renderTimer()}
+        <div>Start: {this.renderStartPage()}</div>
+        <div>Players in game:</div>
+        {this.renderPlayers()}
+        {this.renderStartGameButton()}
+        <button onClick={this.props.backToGameSelect}>Go back</button>
+      </div>
+    );
+  }
+}
 
 export default SelectedGameView;
