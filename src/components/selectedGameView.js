@@ -94,7 +94,7 @@ class SelectedGameView extends Component {
 
   render() {
     return (
-      <div id="selectedGameView">
+      <div id="selectedGameView" key={this.props.joinedGame.id}>
         {this.renderHostKey()}
         <div>{this.props.joinedGame.players.length}/5 players joined</div>
         {this.renderTimer()}
