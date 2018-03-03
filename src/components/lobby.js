@@ -2,6 +2,7 @@
 prefer-const:0, class-methods-use-this:0, max-len:0 */
 
 import React, { Component } from 'react';
+import $ from 'jquery';
 import LobbySocket from '../sockets/lobbySocket';
 import LobbyTop from './lobbyTop';
 import SignUp from './signup';
@@ -9,7 +10,6 @@ import LobbyDetailsView from './lobbyDetailsView';
 import LobbyGamesView from './lobbyGamesView';
 import SelectedGameView from './selectedGameView';
 import DisplayUser from './displayUser';
-import $ from 'jquery';
 import '../style.css';
 
 class Lobby extends Component {
@@ -56,25 +56,6 @@ class Lobby extends Component {
     window.removeEventListener('beforeunload', this.exitGame);
   }
 
-  // Toggle sound icon and mute property of all audio
-  toggleAudio() {
-    console.log("toggleAudio");
-    const sound = $('#sound');
-    // // const sound = document.getElementById('sound');
-    // console.log(sound);
-    // console.log("finished logging sound");
-    // const allAudio = document.getElementsByTagName('audio');
-
-    sound.click(() => {
-      console.log("clicked sound");
-      console.log(sound);
-      console.log("finished logging sound");
-      chrome.runtime.sendMessage({ message: 'sound' }, (response) => {
-        response.audioOn ? sound.attr('class', 'sound-on') : sound.attr('class', 'sound-off');
-      });
-    });
-  }
-
   onGames(games) {
     const newState = { games };
     games.forEach((game) => {
@@ -98,6 +79,17 @@ class Lobby extends Component {
     this.lobbySocket.startGame(this.state.joinedGame.id)
       .then(() => {})
       .catch(err => console.log(err));
+  }
+
+  // Toggle sound icon and mute property of all audio
+  toggleAudio() {
+    const sound = $('#sound');
+
+    sound.click(() => {
+      chrome.runtime.sendMessage({ message: 'sound' }, (response) => {
+        response.audioOn ? sound.attr('class', 'sound-on') : sound.attr('class', 'sound-off');
+      });
+    });
   }
 
   exitGame() {
