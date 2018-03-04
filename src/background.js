@@ -67,16 +67,13 @@ chrome.browserAction.onClicked.addListener((tab) => {
     bgAudio.setAttribute('id', 'bgAudio');
     bgAudio.setAttribute('src', 'http://k003.kiwi6.com/hotlink/3ewofkoxts/wii.mp3');
     bgAudio.setAttribute('loop', 'true');
-
-    // var currentDiv = document.getElementById("wa-lobby");
     audioDiv.appendChild(bgAudio);
-    // bgAudio = document.write('<audio id="bgAudio" src="http://k003.kiwi6.com/hotlink/3ewofkoxts/wii.mp3" loop=true />');
-
     bgAudio.play();
 
     // Link whoosh sound setup
     linkAudio.setAttribute('id', 'linkAudio');
     linkAudio.setAttribute('src', 'https://k003.kiwi6.com/hotlink/6etyb9h8wr/swoosh.mp3');
+    audioDiv.appendChild(linkAudio);
   }
 });
 
@@ -111,6 +108,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     // stop music
     bgAudio.pause();
     audioDiv.removeChild(bgAudio);
+    audioDiv.removeChild(linkAudio);
   } else if (sender.tab.id === curTabId) {
     if (request.message === 'new url') {
       curPlayerInfo.numClicks += 1;
