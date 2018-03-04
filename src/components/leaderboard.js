@@ -39,7 +39,7 @@ class Leaderboard extends Component {
       score = 30;
     }
     if (player.finishTime > -1) {
-      score = (4 - sortedScores.indexOf(player)) * 20;
+      score += (4 - sortedScores.indexOf(player)) * 20;
     }
     return score;
   }
