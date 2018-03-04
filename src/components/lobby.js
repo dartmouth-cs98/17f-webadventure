@@ -150,6 +150,7 @@ class Lobby extends Component {
     if (this.state.joinedGame) {
       return (
         <SelectedGameView
+          user={this.state.user}
           onStartGame={this.onStartGame}
           joinedGame={this.state.joinedGame}
           backToGameSelect={this.backToGameSelect}
