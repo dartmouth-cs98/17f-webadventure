@@ -51,8 +51,8 @@ class Lobby extends Component {
     window.addEventListener('beforeunload', this.exitGame);
   }
 
+  // BUG: It connects to lobby multiple times if you keep starting and quiting
   componentWillUnmount() {
-    this.exitGame();
     window.removeEventListener('beforeunload', this.exitGame);
   }
 
@@ -95,6 +95,7 @@ class Lobby extends Component {
   }
 
   exitGame() {
+    console.log('exit game');
     if (this.state.selectedGame) {
       this.lobbySocket.leaveNewGame(this.state.selectedGame.id);
     }
@@ -137,6 +138,9 @@ class Lobby extends Component {
   backToGameSelect() {
     if (this.state.joinedGame) {
       this.lobbySocket.leaveNewGame(this.state.joinedGame.id).then(() => {
+        if (this.state.joinedGame.players.length === 1) {
+          this.lobbySocket.deleteGame(this.state.joinedGame.id);
+        }
         this.setState({ selectedGame: null, joinedGame: null });
       });
     }
@@ -146,6 +150,7 @@ class Lobby extends Component {
     if (this.state.joinedGame) {
       return (
         <SelectedGameView
+          user={this.state.user}
           onStartGame={this.onStartGame}
           joinedGame={this.state.joinedGame}
           backToGameSelect={this.backToGameSelect}
