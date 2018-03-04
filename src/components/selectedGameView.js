@@ -1,6 +1,7 @@
 /* eslint no-mixed-spaces-and-tabs:0, no-tabs:0 */
 
 import React, { Component } from 'react';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 class SelectedGameView extends Component {
   constructor(props) {
@@ -8,8 +9,10 @@ class SelectedGameView extends Component {
 
     this.state = {
       seconds: '',
+      copyMsg: 'COPY KEY',
     };
     this.timer = null;
+    this.onCopy = this.onCopy.bind(this);
     this.countDown = this.countDown.bind(this);
     this.renderStartPage = this.renderStartPage.bind(this);
     this.renderStartGameButton = this.renderStartGameButton.bind(this);
@@ -30,6 +33,10 @@ class SelectedGameView extends Component {
     clearInterval(this.timer);
   }
 
+  onCopy() {
+    this.setState({ copyMsg: 'Copied!' });
+  }
+
   countDown() {
     if (this.state.seconds > 0) {
       this.setState({ seconds: this.state.seconds - 1 });
@@ -42,7 +49,14 @@ class SelectedGameView extends Component {
   renderHostKey() {
     if (this.props.joinedGame.isPrivate) {
       return (
-        <div>{this.props.joinedGame.id}</div>
+        <div>
+          {this.props.joinedGame.id}
+          <CopyToClipboard text={this.props.joinedGame.id}>
+            <button onClick={this.onCopy}>
+              {this.state.copyMsg}
+            </button>
+          </CopyToClipboard>
+        </div>
       );
     } else {
       return (<div />);
