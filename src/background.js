@@ -8,6 +8,7 @@ let counter;
 let interval;
 let curTabId;
 let audioOn = true;
+const audioDiv = document.createElement('div');
 const bgAudio = document.createElement('AUDIO'); // Persistent across redirects
 const linkAudio = document.createElement('AUDIO'); // Whoosh sound on link clicked
 
@@ -36,6 +37,10 @@ const endGame = () => {
   counter = 0;
   gameSocket.disconnect();
   gameSocket = null;
+
+  // Stop music
+  bgAudio.pause();
+  audioDiv.removeChild(bgAudio);
 };
 
 const injectGame = (sender) => {
@@ -61,11 +66,14 @@ chrome.browserAction.onClicked.addListener((tab) => {
   bgAudio.setAttribute('id', 'bgAudio');
   bgAudio.setAttribute('src', 'http://k003.kiwi6.com/hotlink/3ewofkoxts/wii.mp3');
   bgAudio.setAttribute('loop', 'true');
+  audioDiv.appendChild(bgAudio);
+
   bgAudio.play();
 
   // Link whoosh sound setup
   linkAudio.setAttribute('id', 'linkAudio');
   linkAudio.setAttribute('src', 'https://k003.kiwi6.com/hotlink/6etyb9h8wr/swoosh.mp3');
+  audioDiv.appendChild(linkAudio);
 
   if (!gameSocket) {
     renderLobby(tab.id);
@@ -103,6 +111,11 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
       curUrl: game.startPage,
     };
     injectGame(sender);
+  } else if (request.message === 'close lobby') {
+    // stop music
+    bgAudio.pause();
+    audioDiv.removeChild(bgAudio);
+    audioDiv.removeChild(linkAudio);
   } else if (sender.tab.id === curTabId) {
     if (request.message === 'new url') {
       curPlayerInfo.numClicks += 1;

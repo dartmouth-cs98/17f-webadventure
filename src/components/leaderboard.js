@@ -31,7 +31,10 @@ class Leaderboard extends Component {
       .map((player, index) => {
         if (player.username === this.props.curPlayer.name) {
           return (
-            <div className="leaderboard-item leaderboard-curPlayer">
+            <div
+              className="leaderboard-item leaderboard-curPlayer"
+              key={player.username}
+            >
               <div className="leaderboard-item-left">
                 <div className="leaderboard-rank">{index + 1}</div>
                 <div>{player.username}</div>
@@ -40,7 +43,10 @@ class Leaderboard extends Component {
             </div>);
         }
         return (
-          <div className="leaderboard-item">
+          <div
+            className="leaderboard-item"
+            key={player.username}
+          >
             <div className="leaderboard-item-left">
               <div className="leaderboard-rank">{index + 1}</div>
               <div>{player.username}</div>
@@ -52,7 +58,7 @@ class Leaderboard extends Component {
   }
 
   render() {
-    const goalPage = this.props.goalPage.split('/').pop();
+    const goalPage = decodeURIComponent(this.props.goalPage.split('/').pop()).replace(/_/g, ' ');
     if (this.props.curPlayer) {
       return (
         <div id="wa-container">

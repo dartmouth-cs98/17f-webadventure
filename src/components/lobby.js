@@ -76,9 +76,11 @@ class Lobby extends Component {
   }
 
   onStartGame() {
-    this.lobbySocket.startGame(this.state.joinedGame.id)
-      .then(() => {})
-      .catch(err => console.log(err));
+    if (!this.state.joinedGame.active) {
+      this.lobbySocket.startGame(this.state.joinedGame.id)
+        .then(() => {})
+        .catch(err => console.log(err));
+    }
   }
 
   // Toggle sound icon and mute property of all audio
@@ -144,6 +146,7 @@ class Lobby extends Component {
     if (this.state.joinedGame) {
       return (
         <SelectedGameView
+          onStartGame={this.onStartGame}
           joinedGame={this.state.joinedGame}
           backToGameSelect={this.backToGameSelect}
         />
