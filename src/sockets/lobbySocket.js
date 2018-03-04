@@ -67,6 +67,10 @@ export default class LobbySocket {
     });
   }
 
+  deleteGame(gameId) {
+    this.socket.emit('deleteGame', gameId);
+  }
+
   leaveNewGame(gameId) {
     const req = { gameId, username: this.username };
     return new Promise((resolve, reject) => {
