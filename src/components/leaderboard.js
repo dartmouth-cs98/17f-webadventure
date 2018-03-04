@@ -44,6 +44,7 @@ class Leaderboard extends Component {
   }
 
   renderRankings() {
+    console.log("rendering rankings...");
     const finishTimes = this.state.players
       .sort((a, b) => a.finishTime - b.finishTime);
     const top5 = this.state.players
@@ -59,7 +60,7 @@ class Leaderboard extends Component {
                 <div className="leaderboard-rank">{index + 1}</div>
                 <div>{player.username}</div>
               </div>
-              <div className="leaderboard-item-right">{() => this.calculateScore(players, finishTimes)}</div>
+              <div className="leaderboard-item-right">{this.calculateScore(player, finishTimes)}</div>
             </div>);
         }
         return (
@@ -71,7 +72,7 @@ class Leaderboard extends Component {
               <div className="leaderboard-rank">{index + 1}</div>
               <div>{player.username}</div>
             </div>
-            <div className="leaderboard-item-right">{() => this.calculateScore(players, finishTimes)}</div>
+            <div className="leaderboard-item-right">{this.calculateScore(player, finishTimes)}</div>
           </div>);
       });
     return top5;
