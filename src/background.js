@@ -63,7 +63,7 @@ const injectGame = (sender) => {
 chrome.browserAction.onClicked.addListener((tab) => {
   // Background audio setup
   bgAudio.setAttribute('id', 'bgAudio');
-  bgAudio.setAttribute('src', 'http://k003.kiwi6.com/hotlink/3ewofkoxts/wii.mp3');
+  bgAudio.setAttribute('src', 'http://k003.kiwi6.com/hotlink/z3fy3bb3yr/nyan1.mp3');
   bgAudio.setAttribute('loop', 'true');
 
   // var currentDiv = document.getElementById("wa-lobby");
