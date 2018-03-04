@@ -47,8 +47,8 @@ class Lobby extends Component {
 
   componentDidMount() { window.addEventListener('beforeunload', this.exitGame); }
 
+  // BUG: It connects to lobby multiple times if you keep starting and quiting
   componentWillUnmount() {
-    this.exitGame();
     window.removeEventListener('beforeunload', this.exitGame);
   }
 
@@ -80,6 +80,7 @@ class Lobby extends Component {
   }
 
   exitGame() {
+    console.log('exit game');
     if (this.state.selectedGame) {
       this.lobbySocket.leaveNewGame(this.state.selectedGame.id);
     }
