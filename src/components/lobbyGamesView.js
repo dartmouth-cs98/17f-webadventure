@@ -40,6 +40,8 @@ const LobbyGamesView = (props) => {
     return props.games.filter((game) => { return !game.isPrivate && !gameDone(game.players); })
       .sort((a, b) => b.players.length - a.players.length)
       .map((game, index) => {
+        console.log('renderGames');
+        console.log(game);
         const start = game.startPage.split('/').pop();
         const end = game.goalPage.split('/').pop();
         const colorIndex = `color-${index}`;

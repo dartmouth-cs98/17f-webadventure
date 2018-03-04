@@ -50,6 +50,9 @@ class SelectedGameView extends Component {
   }
 
   renderStartPage() {
+    console.log('render start page');
+    console.log(this.props.joinedGame);
+    console.log(this.props.joinedGame.startPage);
     return decodeURIComponent(this.props.joinedGame.startPage.split('/').pop()).replace(/_/g, ' ');
   }
 
@@ -95,10 +98,10 @@ class SelectedGameView extends Component {
       return (
         <div>
           <div id="game-id-row">
-            <div className="selected-game-header">KEY</div>
+            {/* <div className="selected-game-header">KEY</div> */}
             {/* <div id="game-id">{this.props.joinedGame.id}</div> */}
             <CopyToClipboard text={this.props.joinedGame.id}>
-              <button onClick={this.onCopy}>
+              <button className="colorful-button" onClick={this.onCopy}>
                 {this.state.copyMsg}
               </button>
             </CopyToClipboard>
@@ -113,12 +116,12 @@ class SelectedGameView extends Component {
   render() {
     return (
       <div id="selectedGameView">
-        <div>{this.props.joinedGame.players.length}/5 players joined</div>
-        {this.renderHostKey()}
         {this.renderTimer()}
         <div className="selected-game-header">START</div>
         <div id="selected-game-start-page">{this.renderStartPage()}</div>
+        {this.renderHostKey()}
         <div className="selected-game-header">JOINED GAME</div>
+        <div>{this.props.joinedGame.players.length}/5 players joined</div>
         <div id="selected-game-render-players">
           {this.renderPlayers()}
         </div>
