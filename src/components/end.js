@@ -57,7 +57,7 @@ class End extends Component {
               <div>{player.username}</div>
             </div>
             <div className="leaderboard-item-right">
-              {player.finishTime === -1 ? 'PENDING' : `{this.calculateScore(player, finishTimes)}`}
+              {player.finishTime === -1 ? 'PENDING' : `${this.calculateScore(player, finishTimes)}`}
             </div>
           </div>
         );
