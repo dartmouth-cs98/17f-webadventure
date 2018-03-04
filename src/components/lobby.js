@@ -123,6 +123,9 @@ class Lobby extends Component {
   backToGameSelect() {
     if (this.state.joinedGame) {
       this.lobbySocket.leaveNewGame(this.state.joinedGame.id).then(() => {
+        if (this.state.joinedGame.players.length === 1) {
+          this.lobbySocket.deleteGame(this.state.joinedGame.id);
+        }
         this.setState({ selectedGame: null, joinedGame: null });
       });
     }
@@ -132,6 +135,7 @@ class Lobby extends Component {
     if (this.state.joinedGame) {
       return (
         <SelectedGameView
+          user={this.state.user}
           onStartGame={this.onStartGame}
           joinedGame={this.state.joinedGame}
           backToGameSelect={this.backToGameSelect}

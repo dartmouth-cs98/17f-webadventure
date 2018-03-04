@@ -54,7 +54,12 @@ class SelectedGameView extends Component {
   }
 
   renderStartGameButton() {
-    if (this.props.joinedGame.isPrivate) {
+    console.log(this.props.user);
+    console.log(this.props.joinedGame)
+    if (
+      this.props.joinedGame.isPrivate &&
+      this.props.user.username === this.props.joinedGame.host
+    ) {
       return (
         <div>
           <button onClick={this.props.onStartGame}>
