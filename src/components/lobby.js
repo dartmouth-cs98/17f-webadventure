@@ -69,7 +69,13 @@ class Lobby extends Component {
     this.setState(newState);
   }
 
-  onGameStarted(game) { this.props.onStart(this.state.user, game); }
+  onGameStarted(game) {
+    console.log('onGameStarted in game, received:');
+    console.log(game);
+    console.log('onGameStarted in game, received players:');
+    console.log(game.players);
+    this.props.onStart(this.state.user, game);
+  }
 
   onUsers(users) {
     this.setState({ allUsers: users });
@@ -77,6 +83,8 @@ class Lobby extends Component {
 
   onStartGame() {
     if (!this.state.joinedGame.active) {
+      console.log('joinedGameid in lobby');
+      console.log(this.state.joinedGame.id);
       this.lobbySocket.startGame(this.state.joinedGame.id)
         .then(() => {})
         .catch(err => console.log(err));

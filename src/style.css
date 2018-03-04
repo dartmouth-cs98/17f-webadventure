@@ -799,6 +799,12 @@ div.panel-alert:empty {
   text-align: center;
 }
 
+#game-id-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
 #game-id {
   text-align: center;
   font-size:10px;

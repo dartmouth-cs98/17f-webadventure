@@ -47,6 +47,8 @@ const injectGame = (sender) => {
     chrome.tabs.executeScript(curTabId, {
       file: 'dist/inject.bundle.js',
     }, () => {
+      console.log('injectGame');
+      console.log(game);
       chrome.tabs.sendMessage(curTabId, {
         message: 'new game',
         payload: {
@@ -90,8 +92,12 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     audioOn = !audioOn;
     sendResponse({ audioOn });
   } else if (request.message === 'start game') {
+    console.log('GOT HERE!');
     const { username, avatar } = request.payload.user;
     ({ game } = request.payload);
+    console.log('background.js');
+    console.log(game);
+    console.log(game.players);
     gameSocket = new GameSocket(onGame, game.id, username);
     curTabId = sender.tab.id;
     counter = 0;
@@ -126,6 +132,9 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 });
 
 chrome.tabs.onUpdated.addListener((tabId, changeInfo) => {
+  console.log('bottom of background');
+  console.log('game here is');
+  console.log(game);
   if (changeInfo.status === 'loading' && tabId === curTabId && changeInfo.url) {
     if (!changeInfo.url.includes(curPlayerInfo.curUrl)) {
       endGame();
@@ -163,6 +172,8 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo) => {
       chrome.tabs.executeScript(tabId, {
         file: 'dist/inject.bundle.js',
       }, () => {
+        console.log('bottom of inject.js');
+        console.log(game);
         chrome.tabs.sendMessage(tabId, {
           message: 'new game',
           payload: {

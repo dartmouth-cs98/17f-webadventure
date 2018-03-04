@@ -9,7 +9,7 @@ class SelectedGameView extends Component {
 
     this.state = {
       seconds: '',
-      copyMsg: 'COPY KEY',
+      copyMsg: 'Get Key',
     };
     this.timer = null;
     this.onCopy = this.onCopy.bind(this);
@@ -22,7 +22,7 @@ class SelectedGameView extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (
-      nextProps.joinedGame.players.length === 3 &&
+      nextProps.joinedGame.players.length === 2 &&
       !nextProps.joinedGame.isPrivate
     ) {
       this.timer = setInterval(this.countDown, 1000);
@@ -79,7 +79,7 @@ class SelectedGameView extends Component {
 
   renderTimer() {
     if (
-      this.props.joinedGame.players.length === 3 &&
+      this.props.joinedGame.players.length === 2 &&
       !this.props.joinedGame.isPrivate
     ) {
       return (
@@ -94,9 +94,9 @@ class SelectedGameView extends Component {
     if (this.props.joinedGame.isPrivate) {
       return (
         <div>
-          <div selected-game-header>KEY</div>
           <div id="game-id-row">
-            <div id="game-id">{this.props.joinedGame.id}</div>
+            <div className="selected-game-header">KEY</div>
+            {/* <div id="game-id">{this.props.joinedGame.id}</div> */}
             <CopyToClipboard text={this.props.joinedGame.id}>
               <button onClick={this.onCopy}>
                 {this.state.copyMsg}

@@ -71,6 +71,7 @@ class WikiGame {
   renderGame(leaderboard, counter) {
     $('body').append('<div id=wa-main />');
     // audioOn={audioOn}
+    console.log(leaderboard.players);
     ReactDOM.render(<App leaderboard={leaderboard} counter={counter} />, document.getElementById('wa-main'));
     this.setupToc();
     this.toggleAudio();
