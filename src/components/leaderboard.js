@@ -32,10 +32,11 @@ class Leaderboard extends Component {
   }
 
   calculateScore(player, sortedScores) {
+    let score = 0;
     if (player.numClicks <= 30) {
-      let score = player.numClicks;
+      score = player.numClicks;
     } else {
-      let score = 30;
+      score = 30;
     }
     if (player.finishTime > -1) {
       score = (4 - sortedScores.indexOf(player)) * 20;
