@@ -61,21 +61,19 @@ const injectGame = (sender) => {
 };
 
 chrome.browserAction.onClicked.addListener((tab) => {
-  // Background audio setup
-  bgAudio.setAttribute('id', 'bgAudio');
-  bgAudio.setAttribute('src', 'http://k003.kiwi6.com/hotlink/3ewofkoxts/wii.mp3');
-  bgAudio.setAttribute('loop', 'true');
-  audioDiv.appendChild(bgAudio);
-
-  bgAudio.play();
-
-  // Link whoosh sound setup
-  linkAudio.setAttribute('id', 'linkAudio');
-  linkAudio.setAttribute('src', 'https://k003.kiwi6.com/hotlink/6etyb9h8wr/swoosh.mp3');
-  audioDiv.appendChild(linkAudio);
-
-  if (!gameSocket) {
+  if (!gameSocket && tab.url.includes('en.wikipedia.org')) {
     renderLobby(tab.id);
+    // Background audio setup
+    bgAudio.setAttribute('id', 'bgAudio');
+    bgAudio.setAttribute('src', 'http://k003.kiwi6.com/hotlink/3ewofkoxts/wii.mp3');
+    bgAudio.setAttribute('loop', 'true');
+    audioDiv.appendChild(bgAudio);
+    bgAudio.play();
+
+    // Link whoosh sound setup
+    linkAudio.setAttribute('id', 'linkAudio');
+    linkAudio.setAttribute('src', 'https://k003.kiwi6.com/hotlink/6etyb9h8wr/swoosh.mp3');
+    audioDiv.appendChild(linkAudio);
   }
 });
 
@@ -91,11 +89,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     }
     audioOn = !audioOn;
     sendResponse({ audioOn });
-    return;
-  }
-
-  // check tab and request info and final page reached
-  if (request.message === 'start game') {
+  } else if (request.message === 'start game') {
     const { username, avatar } = request.payload.user;
     ({ game } = request.payload);
     gameSocket = new GameSocket(onGame, game.id, username);

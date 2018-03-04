@@ -34,6 +34,12 @@ class Player {
     const height = $(link).height();
     const vertSection = Math.floor((top + height) / 100);
     const linksList = this.links[vertSection] ? this.links[vertSection] : [];
+    const url = $(link).attr('href');
+    if (!url.includes('/wiki/')) {
+      const text = $(link).text();
+      $(link).replaceWith(text);
+      return;
+    }
     if (checkLine) {
       const lineHeightWord = $(link).css('line-height');
       const lineHeight = parseInt(lineHeightWord.substring(0, lineHeightWord.length - 2), 10);
@@ -74,14 +80,14 @@ class Player {
     this.movePlayer(x, y);
   }
 
-  movePlayer(left, top) {
+  movePlayer(left, top, speed = 1) {
     if (left < 0 || top < 0) { return; }
     this.position = { left, top };
     $(`#${this.id}`).css(this.position);
 
     if (this.isCurPlayer) {
       if (!Player.isScrolledIntoView(`#${this.id}`)) {
-        Player.scrollIntoCenterView(`#${this.id}`);
+        Player.scrollIntoCenterView(`#${this.id}`, speed);
       }
       this.updateOnLink();
     }
@@ -167,11 +173,12 @@ class Player {
 
     return ((elemBottom <= docViewBottom) && (elemTop >= docViewTop));
   }
-  static scrollIntoCenterView(elem) {
+
+  static scrollIntoCenterView(elem, speed) {
     const top = $(elem).offset().top - ($(window).height() / 2);
     $('html, body').animate({
       scrollTop: top,
-    }, 100);
+    }, 100 / speed);
   }
 }
 
