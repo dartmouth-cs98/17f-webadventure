@@ -18,7 +18,6 @@ const renderLobby = (tabId, username) => {
   }, () => {
     const req = {
       message: 'render lobby',
-      // audioOn: audioOn,
       payload: { username },
     };
     chrome.tabs.sendMessage(tabId, req);
