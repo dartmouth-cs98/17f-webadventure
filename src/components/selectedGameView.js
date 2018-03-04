@@ -42,7 +42,10 @@ class SelectedGameView extends Component {
   renderHostKey() {
     if (this.props.joinedGame.isPrivate) {
       return (
-        <div>{this.props.joinedGame.id}</div>
+        <div>
+          <div className="selected-game-header">JOINED GAME</div>
+          <div id="game-id">{this.props.joinedGame.id}</div>
+        </div>
       );
     } else {
       return (<div />);
@@ -93,14 +96,19 @@ class SelectedGameView extends Component {
   render() {
     return (
       <div id="selectedGameView">
-        {this.renderHostKey()}
         <div>{this.props.joinedGame.players.length}/5 players joined</div>
+        {this.renderHostKey()}
         {this.renderTimer()}
-        <div>Start: {this.renderStartPage()}</div>
-        <div>Players in game:</div>
-        {this.renderPlayers()}
-        {this.renderStartGameButton()}
-        <button onClick={this.props.backToGameSelect}>Go back</button>
+        <div className="selected-game-header">START</div>
+        <div id="selected-game-start-page">{this.renderStartPage()}</div>
+        <div className="selected-game-header">JOINED GAME</div>
+        <div id="selected-game-render-players">
+          {this.renderPlayers()}
+        </div>
+        <div id="selected-game-buttons">
+          <button onClick={this.props.backToGameSelect}>Go Back</button>
+          {this.renderStartGameButton()}
+        </div>
       </div>
     );
   }

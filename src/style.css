@@ -314,7 +314,7 @@ svg:hover {
 
 #lobby-columns {
   width: 13em;
-  height: 18em;
+  height: 19.5em;
   justify-content: space-between
 }
 
@@ -763,4 +763,43 @@ div.panel-alert:empty {
 #info-box img {
   width: inherit;
   padding: 5px 0px 5px 0px;
+}
+
+#selectedGameView {
+  margin-top: 40px;
+}
+
+#selected-game-render-players {
+  display:flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+#selected-game-render-players div {
+  margin-right: 5px;
+}
+
+
+#selected-game-buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.selected-game-header {
+  font-family: arial black;
+  font-weight: bolder;
+  margin-top: 3px;
+  text-align: center;
+  font-size: 17px;
+}
+
+#selected-game-start-page {
+  font-size:13px;
+  text-align: center;
+}
+
+#game-id {
+  text-align: center;
+  font-size: 10px;
 }
