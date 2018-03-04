@@ -46,24 +46,6 @@ class SelectedGameView extends Component {
     }
   }
 
-  renderHostKey() {
-    if (this.props.joinedGame.isPrivate) {
-      return (
-        <div>
-          <div selected-game-header>KEY</div>
-          <div id="game-id">{this.props.joinedGame.id}</div>
-          <CopyToClipboard text={this.props.joinedGame.id}>
-            <button onClick={this.onCopy}>
-              {this.state.copyMsg}
-            </button>
-          </CopyToClipboard>
-        </div>
-      );
-    } else {
-      return (<div />);
-    }
-  }
-
   renderStartPage() {
     return decodeURIComponent(this.props.joinedGame.startPage.split('/').pop()).replace(/_/g, ' ');
   }
@@ -99,6 +81,26 @@ class SelectedGameView extends Component {
     ) {
       return (
         <div>Starting in {this.state.seconds}</div>
+      );
+    } else {
+      return (<div />);
+    }
+  }
+
+  renderHostKey() {
+    if (this.props.joinedGame.isPrivate) {
+      return (
+        <div>
+          <div selected-game-header>KEY</div>
+          <div id="game-id-row">
+            <div id="game-id">{this.props.joinedGame.id}</div>
+            <CopyToClipboard text={this.props.joinedGame.id}>
+              <button onClick={this.onCopy}>
+                {this.state.copyMsg}
+              </button>
+            </CopyToClipboard>
+          </div>
+        </div>
       );
     } else {
       return (<div />);

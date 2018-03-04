@@ -1,3 +1,5 @@
+/* eslint max-len:0, class-methods-use-this: 0 */
+
 import React, { Component } from 'react';
 
 class Leaderboard extends Component {
@@ -26,8 +28,8 @@ class Leaderboard extends Component {
   }
 
   scoringSort(player1, player2, sortedScores) {
-    let score1 = this.calculateScore(player1, sortedScores);
-    let score2 = this.calculateScore(player2, sortedScores);
+    const score1 = this.calculateScore(player1, sortedScores);
+    const score2 = this.calculateScore(player2, sortedScores);
     return score2 - score1;
   }
 
@@ -45,7 +47,7 @@ class Leaderboard extends Component {
   }
 
   renderRankings() {
-    console.log("rendering rankings...");
+    console.log('rendering rankings...');
     const finishTimes = this.state.players
       .sort((a, b) => a.finishTime - b.finishTime);
     const top5 = this.state.players
