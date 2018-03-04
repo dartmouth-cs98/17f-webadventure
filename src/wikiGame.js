@@ -64,6 +64,7 @@ class WikiGame {
     window.addEventListener('keydown', this.onKeyDown);
     window.addEventListener('keyup', this.onKeyUp);
     this.updateInterval = window.setInterval(this.updateGame, 10);
+    $(window).resize(this.curPlayer.getLinks);
   }
 
 
