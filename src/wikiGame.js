@@ -64,6 +64,7 @@ class WikiGame {
     window.addEventListener('keydown', this.onKeyDown);
     window.addEventListener('keyup', this.onKeyUp);
     this.updateInterval = window.setInterval(this.updateGame, 10);
+    $(window).resize(this.curPlayer.getLinks);
   }
 
 
@@ -122,7 +123,7 @@ class WikiGame {
         const id = $(link).attr('href');
         const { left, top } = $(document.getElementById(id.substring(1))).offset();
         // Issue with jquery on id's with special characters; i.e. (, ), -
-        this.curPlayer.movePlayer(left, top);
+        this.curPlayer.movePlayer(left, top, this.speed);
         this.updateOnPowerup();
       });
     });
