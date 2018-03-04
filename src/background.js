@@ -67,14 +67,13 @@ chrome.browserAction.onClicked.addListener((tab) => {
     bgAudio.setAttribute('id', 'bgAudio');
     bgAudio.setAttribute('src', 'http://k003.kiwi6.com/hotlink/z3fy3bb3yr/nyan1.mp3');
     bgAudio.setAttribute('loop', 'true');
-
     audioDiv.appendChild(bgAudio);
-
     bgAudio.play();
 
     // Link whoosh sound setup
     linkAudio.setAttribute('id', 'linkAudio');
     linkAudio.setAttribute('src', 'https://k003.kiwi6.com/hotlink/6etyb9h8wr/swoosh.mp3');
+    audioDiv.appendChild(linkAudio);
   }
 });
 
@@ -109,6 +108,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     // stop music
     bgAudio.pause();
     audioDiv.removeChild(bgAudio);
+    audioDiv.removeChild(linkAudio);
   } else if (sender.tab.id === curTabId) {
     if (request.message === 'new url') {
       curPlayerInfo.numClicks += 1;
