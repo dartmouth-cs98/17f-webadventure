@@ -43,7 +43,7 @@ class SelectedGameView extends Component {
   }
 
   onCopy() {
-    this.setState({ copyMsg: "Copied!" });
+    this.setState({ copyMsg: 'Copied!' });
   }
 
   renderHostKey() {

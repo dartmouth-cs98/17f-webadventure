@@ -169,6 +169,15 @@ svg:hover {
   position: absolute;
   width: 20px;
   height: 20px;
+  padding-top: 10px;
+  right: 50px;
+  display: block;
+}
+
+#sound-lobby {
+  position: absolute;
+  width: 20px;
+  height: 20px;
   padding: 2px;
   right: 40px;
   display: block;
@@ -180,6 +189,15 @@ svg:hover {
 
 .sound-off {
   content:url("https://i.imgur.com/CwDJxek.png");
+}
+
+#exit-button {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  padding-top: 5px;
+  right: 5;
+  display: block;
 }
 
 #wiki-logo {
@@ -652,6 +670,13 @@ div.panel-alert:empty {
   font-family: 'Orbitron',sans-serif;
   text-align: center;
   margin-bottom:3px;
+}
+
+#top {
+  line-height: 40px;
+  position: absolute;
+  left: 11em;
+  display: block;
 }
 
 #lobby-top {

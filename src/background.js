@@ -43,13 +43,7 @@ const endGame = () => {
 };
 
 const injectGame = (sender) => {
-  console.log("got to injectGame");
-  console.log(game);
-  console.log(curPlayerInfo);
-  console.log(sender.url);
-  console.log(curPlayerInfo.curUrl);
   if (sender.url === curPlayerInfo.curUrl) {
-    console.log("in if statement");
     chrome.tabs.executeScript(curTabId, {
       file: 'dist/inject.bundle.js',
     }, () => {
@@ -102,15 +96,14 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     curTabId = sender.tab.id;
     counter = 0;
     interval = setInterval(() => { counter += 1; }, 1000);
-    const fullUrl = 'https://en.' + game.startPage;
+    // const fullUrl = 'https://en.' + game.startPage;
     curPlayerInfo = {
       username,
       avatar,
       finishTime: -1,
       numClicks: 0,
-      curUrl: fullUrl,
+      curUrl: `https://en.${game.startPage}`,
     };
-    console.log("startPage is " + fullUrl);
     injectGame(sender);
   } else if (request.message === 'close lobby') {
     // stop music

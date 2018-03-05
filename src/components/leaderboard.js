@@ -73,8 +73,9 @@ class Leaderboard extends Component {
             ) : (
               <div id="sound" className="sound-off" />
             )}
-            <svg viewbox="0 0 40 40" height="40" stroke-width="2">
-              <path stroke="black" d="M 10,10 L 30,30 M 30,10 L 10,30" />
+            <svg id="exit-button" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+              <path d="M0 0h24v24H0z" fill="none"/>
             </svg>
           </div>
           <div id="leaderboard">
