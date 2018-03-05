@@ -129,7 +129,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 chrome.tabs.onUpdated.addListener((tabId, changeInfo) => {
   if (changeInfo.status === 'loading' && tabId === curTabId && changeInfo.url) {
     if (!changeInfo.url.includes(curPlayerInfo.curUrl)) {
-      endGame();
+      // endGame();
       return;
     }
   }

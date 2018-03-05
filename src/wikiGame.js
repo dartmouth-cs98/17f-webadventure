@@ -180,7 +180,9 @@ class WikiGame {
         this.speedUp();
       } else if (hitPowerup.type === 2) {
         this.slowDown();
-      }
+      } else if (hitPowerup.type === 3) {
+        this.teleport();
+      } 
 
       // Remove from powerups array
       this.powerups.powerups = this.powerups.powerups.filter((powerup) => {
@@ -207,6 +209,11 @@ class WikiGame {
   slowDown() {
     this.flipMultiplier = 0.3;
     setTimeout(this.resetMultiplier, 5000);
+  }
+
+  teleport() {
+    console.log("teleport!!!");
+    this.onNewUrl("https://en.wikipedia.org/wiki/Photo_comics");
   }
 
   resetMultiplier() {
