@@ -89,7 +89,7 @@ class Lobby extends Component {
 
   // Toggle sound icon and mute property of all audio
   toggleAudio() {
-    const sound = $('#sound');
+    const sound = $('#sound-lobby');
 
     sound.click(() => {
       chrome.runtime.sendMessage({ message: 'sound' }, (response) => {

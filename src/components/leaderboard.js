@@ -54,6 +54,7 @@ class Leaderboard extends Component {
     if (this.props.audioOn) { return <div id="sound" className="sound-on" />; }
     return <div id="sound" className="sound-off" />;
   }
+
   renderRankings() {
     const finishTimes = this.state.players
       .sort((a, b) => a.finishTime - b.finishTime);
@@ -98,8 +99,15 @@ class Leaderboard extends Component {
         <div id="wa-container">
           <img id="wiki-logo" src="https://i.imgur.com/hQbOKPS.png" alt="wiki logo" />
           <div id="topbar">
-            <button onClick={this.props.exitGame}>Exit Game</button>
+            <div id="top">
+              GOAL: {goalPage}
+            </div>
             {this.renderAudioOn()}
+            <svg id="exit-button" onClick={this.props.exitGame} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 
+              12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
+              <path d="M0 0h24v24H0z" fill="none" />
+            </svg>
           </div>
           <div id="leaderboard">
             <div className="userStats">WEBADVENTURE</div>
@@ -108,9 +116,6 @@ class Leaderboard extends Component {
                 <img id="wahoo" src={this.props.curPlayer.avatarRight} alt="userIcon" />
               </div>
               <div className="curPlayerName">{this.props.curPlayer.name}</div>
-            </div>
-            <div id="top">
-              GOAL: {goalPage}
             </div>
             <div id="timer">
               {this.state.timer}s elapsed

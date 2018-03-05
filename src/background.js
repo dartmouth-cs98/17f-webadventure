@@ -96,12 +96,13 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     curTabId = sender.tab.id;
     counter = 0;
     interval = setInterval(() => { counter += 1; }, 1000);
+    // const fullUrl = 'https://en.' + game.startPage;
     curPlayerInfo = {
       username,
       avatar,
       finishTime: -1,
       numClicks: 0,
-      curUrl: game.startPage,
+      curUrl: `https://en.${game.startPage}`,
     };
     injectGame(sender);
   } else if (request.message === 'close lobby') {
