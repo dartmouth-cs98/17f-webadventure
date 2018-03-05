@@ -1,3 +1,5 @@
+/* eslint max-len:0, class-methods-use-this: 0 */
+
 import React, { Component } from 'react';
 import '../style.css';
 
@@ -26,8 +28,8 @@ class End extends Component {
   }
 
   scoringSort(player1, player2, sortedScores) {
-    let score1 = this.calculateScore(player1, sortedScores);
-    let score2 = this.calculateScore(player2, sortedScores);
+    const score1 = this.calculateScore(player1, sortedScores);
+    const score2 = this.calculateScore(player2, sortedScores);
     return score2 - score1;
   }
 

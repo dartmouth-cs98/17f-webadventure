@@ -39,9 +39,10 @@ const LobbyGamesView = (props) => {
   const renderGames = () => {
     return props.games.filter((game) => { return !game.isPrivate && !gameDone(game.players); })
       .sort((a, b) => b.players.length - a.players.length)
-      .map((game) => {
+      .map((game, index) => {
         const start = game.startPage.split('/').pop();
         const end = game.goalPage.split('/').pop();
+        const colorIndex = `color-${index}`;
         if (props.selectedGame && game.id === props.selectedGame.id) {
           return (
             <div className="game-selected game-item" key={game.id}>
@@ -69,6 +70,7 @@ const LobbyGamesView = (props) => {
               <div className="game-title-row">
                 <div
                   className="lobby-game-item"
+                  id={colorIndex}
                 >
                   {game.host}
                 </div>
@@ -85,7 +87,7 @@ const LobbyGamesView = (props) => {
 
   return (
     <div id="GamesView">
-      <div id="public-games-header">PUBLIC GAMES</div>
+      {/* <div id="public-games-header">PUBLIC GAMES</div> */}
       <div id="games-list">
         {renderGames()}
       </div>

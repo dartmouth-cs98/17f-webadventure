@@ -21,6 +21,12 @@
   }
 }
 
+@keyframes shine {
+    to {
+      background-position: 200% center;
+    }
+  }
+
 @keyframes rainbow-border {
   0% {
       border: 3px solid red
@@ -63,6 +69,42 @@
   }
 }
 
+@keyframes color-change-0 {
+  0% { color: red; }
+  50% { color: orangered; }
+  100% { color: gold; }
+}
+
+@keyframes color-change-1 {
+  0% { color: orange; }
+  50% { color: gold; }
+  100% { color: green; }
+}
+
+@keyframes color-change-2 {
+  0% { color: gold; }
+  50% { color: green; }
+  100% { color: blue; }
+}
+
+@keyframes color-change-3 {
+  0% { color: green; }
+  50% { color: blue; }
+  100% { color: purple; }
+}
+
+@keyframes color-change-4 {
+  0% { color: blue; }
+  50% { color: purple; }
+  100% { color: indigo; }
+}
+
+@keyframes color-change-5 {
+  0% { color: purple; }
+  50% { color: indigo; }
+  100% { color: red; }
+}
+
 label input[type=radio] {
   display: none
 }
@@ -95,7 +137,7 @@ button {
   color: #fff
 }
 
-#signup-button {
+.colorful-button {
   font-family: 'Orbitron',sans-serif;
   border: 1px solid gray;
   background: linear-gradient(124deg,#ff2400,#e81d1d,#e8b71d,#e3e81d,#1de840,#1ddde8,#2b1de8,#dd00f3,#dd00f3);
@@ -186,6 +228,34 @@ svg:hover {
   display: block;
 }
 
+#sound:hover, #sound-lobby:hover {
+  cursor: pointer;
+}
+
+#color-0, #color-6 {
+  animation: color-change-0 10s infinite alternate;
+}
+
+#color-1, #color-7 {
+  animation: color-change-1 10s infinite alternate;
+}
+
+#color-2, #color-8 {
+  animation: color-change-2 10s infinite alternate;
+}
+
+#color-3, #color-9 {
+  animation: color-change-3 10s infinite alternate;
+}
+
+#color-4 {
+  animation: color-change-4 10s infinite alternate;
+}
+
+#color-5 {
+  animation: color-change-5 10s infinite alternate;
+}
+
 .sound-on {
   content:url("https://i.imgur.com/IBdWqJb.png");
 }
@@ -262,15 +332,16 @@ svg:hover {
   align-items: center
 }
 
-#avatars,#lobby-columns {
+#avatars {
   display: flex;
   flex-direction: column
 }
 
 #lobby-columns {
   width: 13em;
-  height: 18em;
-  justify-content: space-between
+  height: 19.5em;
+  justify-content: space-between;
+  margin-left:15px;
 }
 
 #avatars {
@@ -365,7 +436,7 @@ svg:hover {
 
 .errorMsg {
   color: red;
-  font-size: 13px
+  font-size: 10px
 }
 
 .leaderboard-rank {
@@ -443,7 +514,7 @@ svg:hover {
 
 #public-games-header {
   font-family: impact;
-  font-size: 27px
+  font-size: 27px;
 }
 
 .game-item {
@@ -492,7 +563,7 @@ svg:hover {
 
 .lobby-game-item {
   font-size: 20px;
-  margin: 1px
+  margin: 1px;
 }
 
 .num-players {
@@ -725,4 +796,59 @@ div.panel-alert:empty {
 #info-box img {
   width: inherit;
   padding: 5px 0px 5px 0px;
+}
+
+#selectedGameView {
+  margin-top: 40px;
+}
+
+#selected-game-render-players {
+  display:flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+#selected-game-render-players div {
+  margin-right: 5px;
+}
+
+
+#selected-game-buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.selected-game-header {
+  font-family: arial black;
+  font-weight: bolder;
+  margin-top: 3px;
+  text-align: center;
+  font-size: 17px;
+}
+
+#selected-game-start-page {
+  font-size:13px;
+  text-align: center;
+}
+
+#game-id-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+#game-id {
+  display:none;
+}
+
+.colorful-button:hover + #game-id {
+  display:block;
+  position:absolute;
+  top:58%;
+  font-size:14px;
+  background: black;
+  padding: 5px;
+  border-radius: 5px;
+  color: white;
 }
