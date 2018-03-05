@@ -122,8 +122,6 @@ class Lobby extends Component {
 
   joinPublicGame(gameId) {
     this.lobbySocket.joinNewGame(gameId).then((game) => {
-      console.log('joinPublicGame');
-      console.log(game);
       this.setState({ joinedGame: game });
     });
   }
