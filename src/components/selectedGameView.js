@@ -100,6 +100,7 @@ class SelectedGameView extends Component {
                 {this.state.copyMsg}
               </button>
             </CopyToClipboard>
+            <div id="game-id">{this.props.joinedGame.id}</div>
           </div>
         </div>
       );

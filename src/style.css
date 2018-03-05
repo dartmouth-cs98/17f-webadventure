@@ -806,7 +806,17 @@ div.panel-alert:empty {
   justify-content: center;
 }
 
-#game-id-input {
-  text-align: center;
-  font-size:10px;
+#game-id {
+  display:none;
+}
+
+.colorful-button:hover + #game-id {
+  display:block;
+  position:absolute;
+  top:58%;
+  font-size:14px;
+  background: black;
+  padding: 5px;
+  border-radius: 5px;
+  color: white;
 }
