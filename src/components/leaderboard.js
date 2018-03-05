@@ -25,9 +25,31 @@ class Leaderboard extends Component {
     this.setState({ timer: this.state.timer + 1 });
   }
 
+  scoringSort(player1, player2, sortedScores) {
+    let score1 = this.calculateScore(player1, sortedScores);
+    let score2 = this.calculateScore(player2, sortedScores);
+    return score2 - score1;
+  }
+
+  calculateScore(player, sortedScores) {
+    let score = 0;
+    if (player.numClicks <= 30) {
+      score = player.numClicks;
+    } else {
+      score = 30;
+    }
+    if (player.finishTime > -1) {
+      score += (4 - sortedScores.indexOf(player)) * 20;
+    }
+    return score;
+  }
+
   renderRankings() {
+    console.log("rendering rankings...");
+    const finishTimes = this.state.players
+      .sort((a, b) => a.finishTime - b.finishTime);
     const top5 = this.state.players
-      .sort((a, b) => a.numClicks - b.numClicks)
+      .sort((a, b) => this.scoringSort(a, b, finishTimes))
       .map((player, index) => {
         if (player.username === this.props.curPlayer.name) {
           return (
@@ -39,7 +61,7 @@ class Leaderboard extends Component {
                 <div className="leaderboard-rank">{index + 1}</div>
                 <div>{player.username}</div>
               </div>
-              <div className="leaderboard-item-right">{player.numClicks}</div>
+              <div className="leaderboard-item-right">{this.calculateScore(player, finishTimes)}</div>
             </div>);
         }
         return (
@@ -51,7 +73,7 @@ class Leaderboard extends Component {
               <div className="leaderboard-rank">{index + 1}</div>
               <div>{player.username}</div>
             </div>
-            <div className="leaderboard-item-right">{player.numClicks}</div>
+            <div className="leaderboard-item-right">{this.calculateScore(player, finishTimes)}</div>
           </div>);
       });
     return top5;

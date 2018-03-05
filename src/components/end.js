@@ -25,9 +25,30 @@ class End extends Component {
     this.props.onNewGame(this.props.curPlayerInfo.username);
   }
 
+  scoringSort(player1, player2, sortedScores) {
+    let score1 = this.calculateScore(player1, sortedScores);
+    let score2 = this.calculateScore(player2, sortedScores);
+    return score2 - score1;
+  }
+
+  calculateScore(player, sortedScores) {
+    let score = 0;
+    if (player.numClicks <= 30) {
+      score = player.numClicks;
+    } else {
+      score = 30;
+    }
+    if (player.finishTime > -1) {
+      score += (4 - sortedScores.indexOf(player)) * 20;
+    }
+    return score;
+  }
+
   renderPlayers() {
+    const finishTimes = this.state.leaderboard
+      .sort((a, b) => a.finishTime - b.finishTime);
     return this.state.leaderboard
-      .sort((a, b) => a.numClicks - b.numClicks)
+      .sort((a, b) => this.scoringSort(a, b, finishTimes))
       .map((player, index) => {
         return (
           <div className="leaderboard-item">
@@ -36,7 +57,7 @@ class End extends Component {
               <div>{player.username}</div>
             </div>
             <div className="leaderboard-item-right">
-              {player.finishTime === -1 ? 'PENDING' : `${player.finishTime}s`}
+              {player.finishTime === -1 ? 'PENDING' : `${this.calculateScore(player, finishTimes)}`}
             </div>
           </div>
         );
