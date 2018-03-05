@@ -1,23 +1,16 @@
-/* eslint class-methods-use-this:0 */
-
-import React from 'react';
-import ReactDOM from 'react-dom';
 import $ from 'jquery';
 import Player from './player';
 import Powerups from './powerups';
 
-import App from './components/app';
 
 class WikiGame {
   constructor(
     onNewUrl,
     curPlayer = new Player('curPlayer'),
-    counter = 0,
     game,
     audioOn,
   ) {
     this.onNewUrl = onNewUrl;
-    this.counter = counter;
     this.curPlayer = curPlayer;
 
     this.audioOn = audioOn;
@@ -43,7 +36,7 @@ class WikiGame {
     this.onKeyUp = this.onKeyUp.bind(this);
     this.isNoKeysPressed = this.isNoKeysPressed.bind(this);
 
-    this.powerupSound = this.createSounds();
+    this.powerupSound = WikiGame.createSounds();
 
     this.updateOnPowerup = this.updateOnPowerup.bind(this);
     this.flipControls = this.flipControls.bind(this);
@@ -51,26 +44,32 @@ class WikiGame {
     this.slowDown = this.slowDown.bind(this);
     this.resetMultiplier = this.resetMultiplier.bind(this);
 
-    const leaderboard = {
-      curPlayer: {
-        name: curPlayer.username,
-        avatarRight: this.curPlayer.getAvatarRight(),
-      },
-      players: game.players,
-      goalPage: game.goalPage,
-      audioOn: this.audioOn,
-    };
-    this.renderGame(leaderboard, counter, this.audioOn);
+    this.renderGame();
     window.addEventListener('keydown', this.onKeyDown);
     window.addEventListener('keyup', this.onKeyUp);
     this.updateInterval = window.setInterval(this.updateGame, 10);
     $(window).resize(this.curPlayer.getLinks);
   }
 
+  endGame() {
+    $('#powerAudio').remove();
+    $(window).off('resize');
+    $(window).off('keydown');
+    $(window).off('keyup');
+    $('#wa-toc').attr('id', 'toc');
+    $('mw-parser-output').children().each((elem) => {
+      console.log(elem);
+      if ($(elem).text === '') {
+        $(elem).insertBefore($('#toc'));
+      }
+    });
+    this.curPlayer.removePlayer();
+    window.clearInterval(this.updateInterval);
+    this.updateInterval = null;
+    $('#powerups').remove();
+  }
 
-  renderGame(leaderboard, counter) {
-    $('body').append('<div id=wa-main />');
-    ReactDOM.render(<App leaderboard={leaderboard} counter={counter} />, document.getElementById('wa-main'));
+  renderGame() {
     this.setupToc();
     this.toggleAudio();
     const curPosition = this.curPlayer.getPosition();
@@ -83,22 +82,18 @@ class WikiGame {
     };
   }
 
-  increaseCounter() {
-    this.counter = this.counter + 1;
-  }
-
-  createSounds() {
-    const powerAudio = document.createElement('AUDIO');
-    powerAudio.setAttribute('id', 'powerAudio');
-    powerAudio.setAttribute('src', 'http://k003.kiwi6.com/hotlink/5cunslfq0k/Good-idea-bell.mp3');
-    document.body.appendChild(powerAudio);
+  static createSounds() {
+    const powerAudio = $('AUDIO');
+    powerAudio.attr('id', 'powerAudio');
+    powerAudio.attr('src', 'http://k003.kiwi6.com/hotlink/5cunslfq0k/Good-idea-bell.mp3');
+    $('body').append(powerAudio);
     return powerAudio;
   }
 
   // Toggle sound icon and mute property of all audio
   toggleAudio() {
     const sound = $('#sound');
-    const allAudio = document.getElementsByTagName('audio');
+    const allAudio = $('audio');
     for (let i = 0; i < allAudio.length; i += 1) {
       allAudio[i].muted = !this.audioOn;
     }

@@ -49,6 +49,30 @@ class SelectedGameView extends Component {
     }
   }
 
+<<<<<<< HEAD
+=======
+  onCopy() {
+    this.setState({ copyMsg: 'Copied!' });
+  }
+
+  renderHostKey() {
+    if (this.props.joinedGame.isPrivate) {
+      return (
+        <div>
+          {this.props.joinedGame.id}
+          <CopyToClipboard text={this.props.joinedGame.id}>
+            <button onClick={this.onCopy}>
+              {this.state.copyMsg}
+            </button>
+          </CopyToClipboard>
+        </div>
+      );
+    } else {
+      return (<div />);
+    }
+  }
+
+>>>>>>> 874f14196e6da4e8b3fa752fa077fa5ae4f49e3b
   renderStartPage() {
     return decodeURIComponent(this.props.joinedGame.startPage.split('/').pop()).replace(/_/g, ' ');
   }
