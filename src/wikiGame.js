@@ -51,6 +51,23 @@ class WikiGame {
     $(window).resize(this.curPlayer.getLinks);
   }
 
+  endGame() {
+    $('#powerAudio').remove();
+    $(window).off('resize');
+    $(window).off('keydown');
+    $(window).off('keyup');
+    $('#wa-toc').attr('id', 'toc');
+    $('mw-parser-output').children().each((elem) => {
+      console.log(elem);
+      if ($(elem).text === '') {
+        $(elem).insertBefore($('#toc'));
+      }
+    });
+    this.curPlayer.removePlayer();
+    window.clearInterval(this.updateInterval);
+    this.updateInterval = null;
+    $('#powerups').remove();
+  }
 
   renderGame() {
     this.setupToc();
