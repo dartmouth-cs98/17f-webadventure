@@ -70,8 +70,6 @@ class WikiGame {
 
   renderGame(leaderboard, counter) {
     $('body').append('<div id=wa-main />');
-    // audioOn={audioOn}
-    console.log(leaderboard.players);
     ReactDOM.render(<App leaderboard={leaderboard} counter={counter} />, document.getElementById('wa-main'));
     this.setupToc();
     this.toggleAudio();
@@ -154,7 +152,6 @@ class WikiGame {
 
   openLink() {
     const link = this.curPlayer.getLink();
-    // console.log('On link ' + link);
     if (link !== null) {
       const redirectLink = `https://en.wikipedia.org${link}`;
       this.onNewUrl(redirectLink);

@@ -9,7 +9,7 @@ class SelectedGameView extends Component {
 
     this.state = {
       seconds: '',
-      copyMsg: 'Get Key',
+      copyMsg: 'Copy Key',
     };
     this.timer = null;
     this.onCopy = this.onCopy.bind(this);
@@ -50,9 +50,6 @@ class SelectedGameView extends Component {
   }
 
   renderStartPage() {
-    console.log('render start page');
-    console.log(this.props.joinedGame);
-    console.log(this.props.joinedGame.startPage);
     return decodeURIComponent(this.props.joinedGame.startPage.split('/').pop()).replace(/_/g, ' ');
   }
 
@@ -98,8 +95,6 @@ class SelectedGameView extends Component {
       return (
         <div>
           <div id="game-id-row">
-            {/* <div className="selected-game-header">KEY</div> */}
-            {/* <div id="game-id">{this.props.joinedGame.id}</div> */}
             <CopyToClipboard text={this.props.joinedGame.id}>
               <button className="colorful-button" onClick={this.onCopy}>
                 {this.state.copyMsg}
@@ -114,6 +109,8 @@ class SelectedGameView extends Component {
   }
 
   render() {
+    console.log('joinedGame');
+    console.log(this.props.joinedGame);
     return (
       <div id="selectedGameView">
         {this.renderTimer()}

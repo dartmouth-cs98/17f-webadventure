@@ -216,19 +216,19 @@ svg:hover {
   display: block;
 }
 
-#color-0 {
+#color-0, #color-6 {
   animation: color-change-0 10s infinite alternate;
 }
 
-#color-1 {
+#color-1, #color-7 {
   animation: color-change-1 10s infinite alternate;
 }
 
-#color-2 {
+#color-2, #color-8 {
   animation: color-change-2 10s infinite alternate;
 }
 
-#color-3 {
+#color-3, #color-9 {
   animation: color-change-3 10s infinite alternate;
 }
 
@@ -307,7 +307,7 @@ svg:hover {
   align-items: center
 }
 
-#avatars,#lobby-columns {
+#avatars {
   display: flex;
   flex-direction: column
 }
@@ -315,7 +315,8 @@ svg:hover {
 #lobby-columns {
   width: 13em;
   height: 19.5em;
-  justify-content: space-between
+  justify-content: space-between;
+  margin-left:15px;
 }
 
 #avatars {
@@ -410,7 +411,7 @@ svg:hover {
 
 .errorMsg {
   color: red;
-  font-size: 13px
+  font-size: 10px
 }
 
 .leaderboard-rank {
@@ -805,7 +806,7 @@ div.panel-alert:empty {
   justify-content: center;
 }
 
-#game-id {
+#game-id-input {
   text-align: center;
   font-size:10px;
 }

@@ -11,7 +11,7 @@ class LobbyDetailsView extends Component {
       hostKey: '',
       players: [],
       username: this.props.username,
-      errorMsg: null,
+      errorMsg: '',
     };
     this.onChange = this.onChange.bind(this);
     this.onJoinPublicGame = this.onJoinPublicGame.bind(this);
@@ -58,7 +58,7 @@ class LobbyDetailsView extends Component {
         <div className="errorMsg">{this.state.errorMsg}</div>
       );
     } else {
-      return (<div />);
+      return (<div className="errorMsg">&nbsp;</div>);
     }
   }
 
