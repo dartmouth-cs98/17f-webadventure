@@ -14,6 +14,8 @@ const onNewUrl = (newUrl) => {
 
 chrome.runtime.onMessage.addListener((request) => {
   if (request.message === 'new game') {
+    console.log("new game in inject.js");
+    console.log(game);
     const {
       counter, username, avatar, game, audioOn,
     } = request.payload;

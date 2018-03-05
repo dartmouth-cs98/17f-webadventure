@@ -64,11 +64,18 @@ class Leaderboard extends Component {
         <div id="wa-container">
           <img id="wiki-logo" src="https://i.imgur.com/hQbOKPS.png" alt="wiki logo" />
           <div id="topbar">
+            <div id="top">
+              GOAL: {goalPage}
+            </div>
+            <div> </div>
             {this.props.audioOn ? (
               <div id="sound" className="sound-on" />
             ) : (
               <div id="sound" className="sound-off" />
             )}
+            <svg viewbox="0 0 40 40" height="40" stroke-width="2">
+              <path stroke="black" d="M 10,10 L 30,30 M 30,10 L 10,30" />
+            </svg>
           </div>
           <div id="leaderboard">
             <div className="userStats">WEBADVENTURE</div>
@@ -77,9 +84,6 @@ class Leaderboard extends Component {
                 <img id="wahoo" src={this.props.curPlayer.avatarRight} alt="userIcon" />
               </div>
               <div className="curPlayerName">{this.props.curPlayer.name}</div>
-            </div>
-            <div id="top">
-              GOAL: {goalPage}
             </div>
             <div id="timer">
               {this.state.timer}s elapsed
