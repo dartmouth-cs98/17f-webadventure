@@ -2,22 +2,22 @@
 
 @keyframes rainbow {
   0% {
-      color: red
+      color: red;
   }
   20% {
-      color: orange
+      color: orange;
   }
   40% {
-      color: gold
+      color: gold;
   }
   60% {
-      color: green
+      color: green;
   }
   80% {
-      color: #00f
+      color: #00f;
   }
   to {
-      color: purple
+      color: purple;
   }
 }
 
@@ -29,44 +29,40 @@
 
 @keyframes rainbow-border {
   0% {
-      border: 3px solid red
+      border: 3px solid red;
   }
   20% {
-      border: 3px solid orange
+      border: 3px solid orange;
   }
   40% {
-      border: 3px solid gold
+      border: 3px solid gold;
   }
   60% {
-      border: 3px solid green
+      border: 3px solid green;
   }
   80% {
-      border: 3px solid #00f
+      border: 3px solid #00f;
   }
   to {
-      border: 3px solid purple
+      border: 3px solid purple;
   }
 }
 
 @keyframes gray-border {
   0% {
-      border: 5px solid #fff
+      border: 5px solid #fff;
   }
   50% {
-      border: 5px solid gray
+      border: 5px solid gray;
   }
   to {
-      border: 5px solid #000
+      border: 5px solid #000;
   }
 }
 
 @keyframes rainbow-gradient {
-  0%,to {
-      background-position: 0 82%
-  }
-  50% {
-      background-position: 100% 19%
-  }
+  0%,to { background-position: 0 82%; }
+  50% { background-position: 100% 19%; }
 }
 
 @keyframes color-change-0 {
@@ -106,12 +102,12 @@
 }
 
 label input[type=radio] {
-  display: none
+  display: none;
 }
 
 button,input {
   font-family: Verdana,Helvetica,Arial,sans-serif;
-  border-radius: 3px
+  border-radius: 3px;
 }
 
 input {
@@ -119,11 +115,11 @@ input {
   background: #f8fbfd;
   box-shadow: inset 0 1px 2px #ccc,1px 1px 0 rgba(255,255,255,.6);
   border: 1px solid #aaa;
-  padding: 2px 3px
+  padding: 2px 3px;
 }
 
 input+img {
-  border: 3px solid transparent
+  border: 3px solid transparent;
 }
 
 button {
@@ -134,7 +130,7 @@ button {
   text-decoration: none;
   background: #fc8d83;
   padding: 3px 12px;
-  color: #fff
+  color: #fff;
 }
 
 .colorful-button {
@@ -149,11 +145,11 @@ button {
   animation-timing-function: ease-out;
   animation-delay: 0;
   animation-iteration-count: infinite;
-  animation-play-state: running
+  animation-play-state: running;
 }
 
 button:hover {
-  background-color: #e4685d
+  background-color: #e4685d;
 }
 
 :checked+img {
@@ -166,7 +162,7 @@ button:hover {
   animation-direction: alternate;
   animation-iteration-count: infinite;
   animation-fill-mode: none;
-  animation-play-state: running
+  animation-play-state: running;
 }
 
 svg {
@@ -175,13 +171,13 @@ svg {
 
 svg:hover {
   cursor: pointer;
-  fill: #6495ed
+  fill: #6495ed;
 }
 
 #wa-container,#wa-main {
   top: 0;
   left: 0;
-  position: fixed
+  position: fixed;
 }
 
 #mw-head {
@@ -194,7 +190,7 @@ svg:hover {
 
 #wa-container {
   width: 11em;
-  height: 100%
+  height: 100%;
 }
 
 #topbar {
@@ -250,7 +246,7 @@ svg:hover {
 }
 
 #wiki-logo {
-  width: inherit
+  width: inherit;
 }
 
 #lobby-title {
@@ -265,7 +261,7 @@ svg:hover {
   animation-direction: alternate;
   animation-iteration-count: infinite;
   animation-fill-mode: none;
-  animation-play-state: running
+  animation-play-state: running;
 }
 
 #overlay {
@@ -275,13 +271,13 @@ svg:hover {
   bottom: 0;
   left: 0;
   right: 0;
-  opacity: .6
+  opacity: .6;
 }
 
 #webad-logo {
   display: block;
   margin: auto;
-  width: 200px
+  width: 200px;
 }
 
 #lobby {
@@ -300,17 +296,17 @@ svg:hover {
   animation-direction: alternate;
   animation-iteration-count: infinite;
   animation-fill-mode: none;
-  animation-play-state: running
+  animation-play-state: running;
 }
 
 #lobby-contents {
   flex-direction: row;
-  align-items: center
+  align-items: center;
 }
 
 #avatars {
   display: flex;
-  flex-direction: column
+  flex-direction: column;
 }
 
 #lobby-columns {
@@ -322,7 +318,7 @@ svg:hover {
 
 #avatars {
   justify-content: center;
-  align-items: center
+  align-items: center;
 }
 
 .exit-lobby-button {
@@ -344,19 +340,19 @@ svg:hover {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  width: 10em
+  width: 10em;
 }
 
 .avatar-option {
   width: 50px;
   height: 50px;
   padding: 2px;
-  margin: 5px
+  margin: 5px;
 }
 
 .avatar-option:hover {
   border: 3px solid #6495ed;
-  border-radius: 5px
+  border-radius: 5px;
 }
 
 #leaderboard {
@@ -364,7 +360,7 @@ svg:hover {
   width: inherit;
   height: 100%;
   position: absolute;
-  background-color: #f6f6f6
+  background-color: #f6f6f6;
 }
 
 .leaderboard-item-left {
@@ -378,7 +374,7 @@ svg:hover {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center
+  align-items: center;
 }
 
 .leaderboard-item {
@@ -393,7 +389,7 @@ svg:hover {
 
 .leaderboard-item-right {
   margin-left: 5px;
-  margin-right: 10px
+  margin-right: 10px;
 }
 
 .leaderboard-curPlayer {
@@ -407,18 +403,18 @@ svg:hover {
   animation-timing-function: ease-out;
   animation-delay: 0;
   animation-iteration-count: infinite;
-  animation-play-state: running
+  animation-play-state: running;
 }
 
 .errorMsg {
   color: red;
-  font-size: 10px
+  font-size: 10px;
 }
 
 .leaderboard-rank {
   margin-left: 5px;
   margin-right: 5px;
-  min-width: 15px
+  min-width: 15px;
 }
 
 #wa-toc {
@@ -426,13 +422,13 @@ svg:hover {
   font-size: 16px;
   position: fixed;
   top: 55vh;
-  left: 0
+  left: 0;
 }
 
 #wa-toc>ul {
   height: calc(50vh - 30.3px);
   overflow-y: scroll;
-  font-size: 11px
+  font-size: 11px;
 }
 
 .playerName {
@@ -442,12 +438,12 @@ svg:hover {
   top: -24px;
   padding: 0 12px;
   border-radius: 10px;
-  text-align: center
+  text-align: center;
 }
 
 .player-img {
   height: 40px;
-  width: 40px
+  width: 40px;
 }
 
 .powerup {
@@ -465,13 +461,13 @@ svg:hover {
   animation-timing-function: ease-out;
   animation-delay: 0;
   animation-iteration-count: infinite;
-  animation-play-state: running
+  animation-play-state: running;
 }
 
 #lobby-contents {
   display: flex;
   justify-content: center;
-  font-family: 'Orbitron',sans-serif
+  font-family: 'Orbitron',sans-serif;
 }
 
 #GamesView {
@@ -485,7 +481,7 @@ svg:hover {
   border-right: 1px solid gray;
   border-top: 0;
   border-bottom: 0;
-  border-left: 0
+  border-left: 0;
 }
 
 #public-games-header {
@@ -497,13 +493,13 @@ svg:hover {
   display: flex;
   flex-direction: column;
   padding: 3px;
-  margin: 5px
+  margin: 5px;
 }
 
 .game-item:hover:not(.game-selected) {
   color: #fff;
   background: #6495ed;
-  border-radius: 5px
+  border-radius: 5px;
 }
 
 #goal-page {
@@ -516,11 +512,11 @@ svg:hover {
 #or {
   font-size: 11px;
   margin-top: 7px;
-  margin-bottom: 7px
+  margin-bottom: 7px;
 }
 
 #games-list {
-  overflow: scroll
+  overflow: scroll;
 }
 
 .game-title-row {
@@ -529,12 +525,12 @@ svg:hover {
   justify-content: space-between;
   padding: 2px;
   width: 11em;
-  align-items: baseline
+  align-items: baseline;
 }
 
 .starting-page {
   font-size: 11px;
-  padding-left: 1em
+  padding-left: 1em;
 }
 
 .lobby-game-item {
@@ -543,14 +539,14 @@ svg:hover {
 }
 
 .num-players {
-  font-size: 12px
+  font-size: 12px;
 }
 
 #SignUp {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center
+  align-items: center;
 }
 
 .userStats {
@@ -564,78 +560,78 @@ svg:hover {
   animation-direction: alternate;
   animation-iteration-count: infinite;
   animation-fill-mode: none;
-  animation-play-state: running
+  animation-play-state: running;
 }
 
 #curUserRow {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 5px
+  margin-bottom: 5px;
 }
 
 #wahoo,.curPlayerName {
   font-family: 'Orbitron',sans-serif;
   font-size: 15px;
-  margin-left: 20px
+  margin-left: 20px;
 }
 
 #wahoo {
   height: 30px;
-  width: 30px
+  width: 30px;
 }
 
 #join-private {
   display: flex;
   flex-direction: column;
-  align-items: center
+  align-items: center;
 }
 
 #submit-fields {
-  margin: 5px
+  margin: 5px;
 }
 
 #display-user, #end > div  {
   display: flex;
   flex-direction: column;
-  align-items: center
+  align-items: center;
 }
 
 #join-private>input {
-  width: 90%
+  width: 90%;
 }
 
 div.panel-alert:empty {
-  display: none
+  display: none;
 }
 
 #private-buttons {
   display: flex;
   flex-direction: row;
-  justify-content: space-around
+  justify-content: space-around;
 }
 
 #host-private-button {
   background-color: #9cc2e9;
-  border: 1px solid #84bbf3
+  border: 1px solid #84bbf3;
 }
 
 #host-private-button:hover {
-  background-color: #80b5ea
+  background-color: #80b5ea;
 }
 
 #join-private-button {
   background-color: #ffc477;
-  border: 1px solid #eeb44f
+  border: 1px solid #eeb44f;
 }
 
 #join-private-button:hover {
-  background-color: #fb9e25
+  background-color: #fb9e25;
 }
 
 .pencil {
   height: 20px;
-  margin-left: 3px
+  margin-left: 3px;
 }
 
 #public-game-button {
@@ -650,23 +646,23 @@ div.panel-alert:empty {
   animation-timing-function: ease-out;
   animation-delay: 0;
   animation-iteration-count: infinite;
-  animation-play-state: running
+  animation-play-state: running;
 }
 
 #username-row {
   display: flex;
   justify-content: space-around;
   align-items: center;
-  width: 7em
+  width: 7em;
 }
 
 #username-edit {
   width: 7em;
-  margin-right: 10px
+  margin-right: 10px;
 }
 
 #icon-button:focus {
-  outline: 0
+  outline: 0;
 }
 
 #end {
@@ -686,7 +682,7 @@ div.panel-alert:empty {
 #user-rankings {
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;;
+  justify-content: flex-start;
 }
 
 #winner {
@@ -705,7 +701,7 @@ div.panel-alert:empty {
   animation-timing-function: ease-out;
   animation-delay: 0;
   animation-iteration-count: infinite;
-  animation-play-state: running
+  animation-play-state: running;
 }
 
 #end-flex > .userStats {
@@ -750,7 +746,7 @@ div.panel-alert:empty {
   animation-direction: alternate;
   animation-iteration-count: infinite;
   animation-fill-mode: none;
-  animation-play-state: running
+  animation-play-state: running;
 }
 
 #info:hover + #info-box{
@@ -808,16 +804,16 @@ div.panel-alert:empty {
 }
 
 #game-id {
-  display:none;
+  display: none;
 }
 
 .colorful-button:hover + #game-id {
-  display:block;
-  position:absolute;
-  top:58%;
-  font-size:14px;
+  display: block;
+  position: absolute;
+  top: 58%;
+  font-size: 14px;
   background: black;
   padding: 5px;
   border-radius: 5px;
-  color: white;
+  color: white;x
 }
