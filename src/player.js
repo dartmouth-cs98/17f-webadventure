@@ -80,6 +80,10 @@ class Player {
     this.movePlayer(x, y);
   }
 
+  removePlayer() {
+    $(`#${this.id}`).remove();
+  }
+
   movePlayer(left, top, speed = 1) {
     if (left < 0 || top < 0) { return; }
     this.position = { left, top };
