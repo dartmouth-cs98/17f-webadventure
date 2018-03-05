@@ -46,7 +46,7 @@ class SelectedGameView extends Component {
   }
 
   onCopy() {
-    this.setState({ copyMsg: "Copied!" });
+    this.setState({ copyMsg: 'Copied!' });
   }
 
   renderHostKey() {
@@ -96,7 +96,7 @@ class SelectedGameView extends Component {
 
   renderTimer() {
     if (
-      this.props.joinedGame.players.length === 3 &&
+      this.props.joinedGame.players.length === 2 &&
       !this.props.joinedGame.isPrivate
     ) {
       return (
