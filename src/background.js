@@ -101,7 +101,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
       avatar,
       finishTime: -1,
       numClicks: 0,
-      curUrl: 'https://en.wikipedia.org/wiki/Bluebird_Nordic', // game.startPage,
+      curUrl: game.startPage,
     };
     injectGame(sender);
   } else if (request.message === 'close lobby') {
