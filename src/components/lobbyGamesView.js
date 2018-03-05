@@ -40,8 +40,6 @@ const LobbyGamesView = (props) => {
     return props.games.filter((game) => { return !game.isPrivate && !gameDone(game.players); })
       .sort((a, b) => b.players.length - a.players.length)
       .map((game) => {
-        // console.log(game);
-        // console.log(game.startPage);
         const start = game.startPage.split('/').pop();
         const end = game.goalPage.split('/').pop();
         if (props.selectedGame && game.id === props.selectedGame.id) {
