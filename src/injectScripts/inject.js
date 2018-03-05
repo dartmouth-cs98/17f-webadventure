@@ -1,3 +1,8 @@
+import React from 'react';
+import ReactDOM from 'react-dom';
+import $ from 'jquery';
+
+import App from '../components/app';
 import WikiGame from '../wikiGame';
 import Player from '../player';
 
@@ -18,7 +23,18 @@ chrome.runtime.onMessage.addListener((request) => {
       counter, username, avatar, game, audioOn,
     } = request.payload;
     const curPlayer = new Player(username, avatar);
-    const wikiGame = new WikiGame(onNewUrl, curPlayer, counter, game, audioOn);
+    const leaderboard = {
+      curPlayer: {
+        name: curPlayer.username,
+        avatarRight: curPlayer.getAvatarRight(),
+      },
+      players: game.players,
+      goalPage: game.goalPage,
+      audioOn,
+    };
+    $('body').append('<div id=wa-main />');
+    ReactDOM.render(<App leaderboard={leaderboard} counter={counter} />, document.getElementById('wa-main'));
+    const wikiGame = new WikiGame(onNewUrl, curPlayer, game, audioOn);
     console.log(wikiGame);
   }
 });

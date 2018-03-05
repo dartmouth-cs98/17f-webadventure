@@ -6,7 +6,6 @@ class Leaderboard extends Component {
     this.state = {
       players: props.players,
       timer: props.counter,
-      // audioOn: props.audioOn,
     };
     this.onMessageRequest = this.onMessageRequest.bind(this);
     this.incTimer = this.incTimer.bind(this);
@@ -23,6 +22,11 @@ class Leaderboard extends Component {
 
   incTimer() {
     this.setState({ timer: this.state.timer + 1 });
+  }
+
+  renderAudioOn() {
+    if (this.props.audioOn) { return <div id="sound" className="sound-on" />; }
+    return <div id="sound" className="sound-off" />;
   }
 
   renderRankings() {
@@ -64,11 +68,7 @@ class Leaderboard extends Component {
         <div id="wa-container">
           <img id="wiki-logo" src="https://i.imgur.com/hQbOKPS.png" alt="wiki logo" />
           <div id="topbar">
-            {this.props.audioOn ? (
-              <div id="sound" className="sound-on" />
-            ) : (
-              <div id="sound" className="sound-off" />
-            )}
+            {this.renderAudioOn()}
           </div>
           <div id="leaderboard">
             <div className="userStats">WEBADVENTURE</div>
