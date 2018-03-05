@@ -2,6 +2,7 @@
 prefer-const:0, class-methods-use-this:0, max-len:0 */
 
 import React, { Component } from 'react';
+import $ from 'jquery';
 import LobbySocket from '../sockets/lobbySocket';
 import LobbyTop from './lobbyTop';
 import SignUp from './signup';
@@ -45,7 +46,10 @@ class Lobby extends Component {
     this.timer = 0;
   }
 
-  componentDidMount() { window.addEventListener('beforeunload', this.exitGame); }
+  componentDidMount() {
+    this.toggleAudio();
+    window.addEventListener('beforeunload', this.exitGame);
+  }
 
   // BUG: It connects to lobby multiple times if you keep starting and quiting
   componentWillUnmount() {
@@ -77,6 +81,17 @@ class Lobby extends Component {
         .then(() => {})
         .catch(err => console.log(err));
     }
+  }
+
+  // Toggle sound icon and mute property of all audio
+  toggleAudio() {
+    const sound = $('#sound');
+
+    sound.click(() => {
+      chrome.runtime.sendMessage({ message: 'sound' }, (response) => {
+        response.audioOn ? sound.attr('class', 'sound-on') : sound.attr('class', 'sound-off');
+      });
+    });
   }
 
   exitGame() {
@@ -123,6 +138,9 @@ class Lobby extends Component {
   backToGameSelect() {
     if (this.state.joinedGame) {
       this.lobbySocket.leaveNewGame(this.state.joinedGame.id).then(() => {
+        if (this.state.joinedGame.players.length === 1) {
+          this.lobbySocket.deleteGame(this.state.joinedGame.id);
+        }
         this.setState({ selectedGame: null, joinedGame: null });
       });
     }
@@ -132,6 +150,7 @@ class Lobby extends Component {
     if (this.state.joinedGame) {
       return (
         <SelectedGameView
+          user={this.state.user}
           onStartGame={this.onStartGame}
           joinedGame={this.state.joinedGame}
           backToGameSelect={this.backToGameSelect}
