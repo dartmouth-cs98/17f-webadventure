@@ -7,6 +7,7 @@ const App = (props) => {
   return (
     <div>
       <Leaderboard
+        exitGame={props.exitGame}
         goalPage={props.leaderboard.goalPage}
         curPlayer={props.leaderboard.curPlayer}
         time={props.leaderboard.time}

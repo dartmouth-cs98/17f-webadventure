@@ -43,10 +43,13 @@ const endGame = () => {
 };
 
 const injectGame = (sender) => {
+  console.log('just got to injectGame');
   if (sender.url === curPlayerInfo.curUrl) {
     chrome.tabs.executeScript(curTabId, {
       file: 'dist/inject.bundle.js',
     }, () => {
+      console.log('injectGame');
+      console.log(game);
       chrome.tabs.sendMessage(curTabId, {
         message: 'new game',
         payload: {
@@ -55,6 +58,8 @@ const injectGame = (sender) => {
       });
     });
   } else {
+    console.log('goes to here instead');
+    console.log(game);
     chrome.tabs.update(curTabId, { url: curPlayerInfo.curUrl });
     linkAudio.play();
   }
@@ -90,18 +95,23 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     audioOn = !audioOn;
     sendResponse({ audioOn });
   } else if (request.message === 'start game') {
+    console.log('start game listener');
+    console.log(request.payload);
+
     const { username, avatar } = request.payload.user;
     ({ game } = request.payload);
+    console.log(game);
     gameSocket = new GameSocket(onGame, game.id, username);
     curTabId = sender.tab.id;
     counter = 0;
     interval = setInterval(() => { counter += 1; }, 1000);
+    // const fullUrl = 'https://en.' + game.startPage;
     curPlayerInfo = {
       username,
       avatar,
       finishTime: -1,
       numClicks: 0,
-      curUrl: game.startPage,
+      curUrl: `https://en.${game.startPage}`,
     };
     injectGame(sender);
   } else if (request.message === 'close lobby') {
@@ -126,13 +136,20 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 });
 
 chrome.tabs.onUpdated.addListener((tabId, changeInfo) => {
+  console.log('just got to the changeInfo listener');
+  console.log(game);
   if (changeInfo.status === 'loading' && tabId === curTabId && changeInfo.url) {
     if (!changeInfo.url.includes(curPlayerInfo.curUrl)) {
-      endGame();
+      // endGame();
+      console.log('loading in the listener');
+      console.log(changeInfo.url);
+      console.log(curPlayerInfo.curUrl);
       return;
     }
   }
   if (changeInfo.status === 'complete' && tabId === curTabId) {
+    console.log('changeInfo status completed');
+    console.log(game);
     if (curPlayerInfo.curUrl === game.goalPage) {
       curPlayerInfo.finishTime = counter;
       gameSocket.updatePlayer(
@@ -160,13 +177,17 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo) => {
       curPlayerInfo.curUrl,
     );
     if (!curPlayerInfo.curUrl.includes('#')) {
+      console.log('UPDATE PLAYER LISTENER');
+      console.log(game);
       chrome.tabs.executeScript(tabId, {
         file: 'dist/inject.bundle.js',
       }, () => {
+        console.log('PREPARING TO SEND');
+        console.log(game);
         chrome.tabs.sendMessage(tabId, {
           message: 'new game',
           payload: {
-            username: curPlayerInfo.username, avatar: curPlayerInfo.avatar, game, counter, audioOn,
+            counter, username: curPlayerInfo.username, avatar: curPlayerInfo.avatar, game, audioOn,
           },
         });
       });

@@ -137,7 +137,7 @@ button {
   color: #fff
 }
 
-#signup-button {
+.colorful-button {
   font-family: 'Orbitron',sans-serif;
   border: 1px solid gray;
   background: linear-gradient(124deg,#ff2400,#e81d1d,#e8b71d,#e3e81d,#1de840,#1ddde8,#2b1de8,#dd00f3,#dd00f3);
@@ -198,6 +198,9 @@ svg:hover {
 }
 
 #topbar {
+  display: flex;
+  flex-flow: row;
+  flex-direction: row-reverse;
   position: fixed;
   top: 0;
   height: 40px;
@@ -211,24 +214,37 @@ svg:hover {
   position: absolute;
   width: 20px;
   height: 20px;
-  padding: 10px;
-  right: 0;
+  padding-top: 10px;
+  right: 50px;
   display: block;
 }
 
-#color-0 {
+#sound-lobby {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  padding: 2px;
+  right: 40px;
+  display: block;
+}
+
+#sound:hover, #sound-lobby:hover {
+  cursor: pointer;
+}
+
+#color-0, #color-6 {
   animation: color-change-0 10s infinite alternate;
 }
 
-#color-1 {
+#color-1, #color-7 {
   animation: color-change-1 10s infinite alternate;
 }
 
-#color-2 {
+#color-2, #color-8 {
   animation: color-change-2 10s infinite alternate;
 }
 
-#color-3 {
+#color-3, #color-9 {
   animation: color-change-3 10s infinite alternate;
 }
 
@@ -246,6 +262,15 @@ svg:hover {
 
 .sound-off {
   content:url("https://i.imgur.com/CwDJxek.png");
+}
+
+#exit-button {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  padding-top: 5px;
+  right: 5px;
+  display: block;
 }
 
 #wiki-logo {
@@ -290,7 +315,7 @@ svg:hover {
   top: 5vw;
   left: 22vw;
   background: #f5fffa;
-  padding: 5px 20px 20px;
+  padding: 5px 10px 20px;
   border-radius: 10px;
   animation-name: gray-border;
   animation-duration: 12s;
@@ -307,15 +332,16 @@ svg:hover {
   align-items: center
 }
 
-#avatars,#lobby-columns {
+#avatars {
   display: flex;
   flex-direction: column
 }
 
 #lobby-columns {
   width: 13em;
-  height: 18em;
-  justify-content: space-between
+  height: 19.5em;
+  justify-content: space-between;
+  margin-left:15px;
 }
 
 #avatars {
@@ -410,7 +436,7 @@ svg:hover {
 
 .errorMsg {
   color: red;
-  font-size: 13px
+  font-size: 10px
 }
 
 .leaderboard-rank {
@@ -720,6 +746,13 @@ div.panel-alert:empty {
   margin-bottom:3px;
 }
 
+#top {
+  line-height: 40px;
+  position: absolute;
+  left: 11em;
+  display: block;
+}
+
 #lobby-top {
   display: flex;
   flex-direction: row;
@@ -763,4 +796,59 @@ div.panel-alert:empty {
 #info-box img {
   width: inherit;
   padding: 5px 0px 5px 0px;
+}
+
+#selectedGameView {
+  margin-top: 40px;
+}
+
+#selected-game-render-players {
+  display:flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+#selected-game-render-players div {
+  margin-right: 5px;
+}
+
+
+#selected-game-buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.selected-game-header {
+  font-family: arial black;
+  font-weight: bolder;
+  margin-top: 3px;
+  text-align: center;
+  font-size: 17px;
+}
+
+#selected-game-start-page {
+  font-size:13px;
+  text-align: center;
+}
+
+#game-id-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+#game-id {
+  display:none;
+}
+
+.colorful-button:hover + #game-id {
+  display:block;
+  position:absolute;
+  top:58%;
+  font-size:14px;
+  background: black;
+  padding: 5px;
+  border-radius: 5px;
+  color: white;
 }
