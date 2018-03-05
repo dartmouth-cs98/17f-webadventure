@@ -1,3 +1,5 @@
+/* eslint max-len:0, class-methods-use-this: 0 */
+
 import React, { Component } from 'react';
 
 class Leaderboard extends Component {
@@ -42,6 +44,12 @@ class Leaderboard extends Component {
     this.setState({ timer: this.state.timer + 1 });
   }
 
+  scoringSort(player1, player2, sortedScores) {
+    const score1 = this.calculateScore(player1, sortedScores);
+    const score2 = this.calculateScore(player2, sortedScores);
+    return score2 - score1;
+  }
+
   renderAudioOn() {
     if (this.props.audioOn) { return <div id="sound" className="sound-on" />; }
     return <div id="sound" className="sound-off" />;
@@ -84,6 +92,7 @@ class Leaderboard extends Component {
   }
 
   render() {
+    console.log(this.state.players);
     const goalPage = decodeURIComponent(this.props.goalPage.split('/').pop()).replace(/_/g, ' ');
     if (this.props.curPlayer) {
       return (

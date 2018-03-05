@@ -57,6 +57,8 @@ class Lobby extends Component {
   }
 
   onGames(games) {
+    console.log('onGames');
+    console.log(games);
     const newState = { games };
     games.forEach((game) => {
       if (this.state.selectedGame && this.state.selectedGame.id === game.id) {
@@ -69,7 +71,9 @@ class Lobby extends Component {
     this.setState(newState);
   }
 
-  onGameStarted(game) { this.props.onStart(this.state.user, game); }
+  onGameStarted(game) {
+    this.props.onStart(this.state.user, game);
+  }
 
   onUsers(users) {
     this.setState({ allUsers: users });
@@ -95,7 +99,6 @@ class Lobby extends Component {
   }
 
   exitGame() {
-    console.log('exit game');
     if (this.state.selectedGame) {
       this.lobbySocket.leaveNewGame(this.state.selectedGame.id);
     }
@@ -119,6 +122,8 @@ class Lobby extends Component {
 
   joinPublicGame(gameId) {
     this.lobbySocket.joinNewGame(gameId).then((game) => {
+      console.log('joinPublicGame');
+      console.log(game);
       this.setState({ joinedGame: game });
     });
   }
@@ -138,7 +143,7 @@ class Lobby extends Component {
   backToGameSelect() {
     if (this.state.joinedGame) {
       this.lobbySocket.leaveNewGame(this.state.joinedGame.id).then(() => {
-        if (this.state.joinedGame.players.length === 1) {
+        if (this.state.joinedGame.players.length === 1 && this.state.joinedGame.isPrivate) {
           this.lobbySocket.deleteGame(this.state.joinedGame.id);
         }
         this.setState({ selectedGame: null, joinedGame: null });

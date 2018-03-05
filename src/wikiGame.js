@@ -69,7 +69,9 @@ class WikiGame {
     $('#powerups').remove();
   }
 
-  renderGame() {
+  renderGame(leaderboard, counter) {
+    $('body').append('<div id=wa-main />');
+    ReactDOM.render(<App leaderboard={leaderboard} counter={counter} />, document.getElementById('wa-main'));
     this.setupToc();
     this.toggleAudio();
     const curPosition = this.curPlayer.getPosition();

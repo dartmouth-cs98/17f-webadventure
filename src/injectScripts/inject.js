@@ -34,6 +34,7 @@ chrome.runtime.onMessage.addListener((request) => {
       counter, username, avatar, game, audioOn,
     } = request.payload;
     const curPlayer = new Player(username, avatar);
+    const wikiGame = new WikiGame(onNewUrl, curPlayer, counter, game, audioOn);
     const leaderboard = {
       curPlayer: {
         name: curPlayer.username,
@@ -45,6 +46,5 @@ chrome.runtime.onMessage.addListener((request) => {
     };
     $('body').append('<div id=wa-main />');
     ReactDOM.render(<App exitGame={exitGame} leaderboard={leaderboard} counter={counter} />, document.getElementById('wa-main'));
-    wikiGame = new WikiGame(onNewUrl, curPlayer, game, audioOn);
   }
 });

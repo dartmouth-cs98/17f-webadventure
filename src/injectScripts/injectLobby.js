@@ -6,6 +6,9 @@ import Lobby from '../components/lobby';
 
 $('body').append('<div id=wa-lobby />');
 const onStart = (user, game) => {
+  console.log('onStart in injectLobby');
+  console.log(game);
+  console.log(game.players);
   const request = {
     message: 'start game',
     payload: {
