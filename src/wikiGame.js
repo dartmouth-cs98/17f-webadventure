@@ -83,10 +83,10 @@ class WikiGame {
   }
 
   static createSounds() {
-    const powerAudio = $('AUDIO');
-    powerAudio.attr('id', 'powerAudio');
-    powerAudio.attr('src', 'http://k003.kiwi6.com/hotlink/5cunslfq0k/Good-idea-bell.mp3');
-    $('body').append(powerAudio);
+    const powerAudio = document.createElement('AUDIO');
+    powerAudio.setAttribute('id', 'powerAudio');
+    powerAudio.setAttribute('src', 'https://k003.kiwi6.com/hotlink/5cunslfq0k/Good-idea-bell.mp3');
+    document.body.appendChild(powerAudio);
     return powerAudio;
   }
 
