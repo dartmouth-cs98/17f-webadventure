@@ -228,6 +228,10 @@ svg:hover {
   display: block;
 }
 
+#sound:hover, #sound-lobby:hover {
+  cursor: pointer;
+}
+
 #color-0, #color-6 {
   animation: color-change-0 10s infinite alternate;
 }
