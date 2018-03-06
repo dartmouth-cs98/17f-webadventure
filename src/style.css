@@ -178,6 +178,17 @@ svg:hover {
   fill: #6495ed
 }
 
+#finish-svg:hover {
+  cursor:default;
+  fill: black;
+}
+
+#finish-svg-div {
+  display:flex;
+  flex-direction: row;
+  align-items:
+}
+
 #wa-container,#wa-main {
   top: 0;
   left: 0;
