@@ -175,7 +175,7 @@ class Lobby extends Component {
     if (this.state.user) {
       return (
         <div id="lobby-container">
-          <div id="overlay" />
+          <div className="overlay" />
           <div id="lobby">
             <LobbyTop exitGame={this.exitGame} />
             <div id="lobby-title">WEBADVENTURE</div>
@@ -200,7 +200,7 @@ class Lobby extends Component {
     }
     return (
       <div id="lobby-container">
-        <div id="overlay" />
+        <div className="overlay" />
         <div id="lobby">
           <LobbyTop exitGame={this.exitGame} />
           <img src="https://i.imgur.com/VUVNhtC.png" alt="webadventure!" id="webad-logo" />
