@@ -13,7 +13,7 @@
     "css": ["src/style.css"]
     }],
   "browser_action": {
-    "default_icon": "assets/webIcon128.png"
+    "default_icon": "assets/webIcon128_rainbow.png"
   },
   "permissions": [
     "activeTab",
@@ -23,8 +23,8 @@
     "tabs"
   ],
   "icons": {
-    "16": "assets/webIcon16.png",
-    "48": "assets/webIcon48.png",
-    "128": "assets/webIcon128.png"
+    "16": "assets/webIcon16_color.png",
+    "48": "assets/webIcon48_color2.png",
+    "128": "assets/webIcon128_color.png"
   }
 }
