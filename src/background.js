@@ -43,7 +43,11 @@ const endGame = () => {
 };
 
 const injectGame = (sender) => {
+  console.log("injectGame");
+  console.log(sender.url);
+  console.log(curPlayerInfo.curUrl);
   if (sender.url === curPlayerInfo.curUrl) {
+    console.log("in if: sender.url == curPlayerInfo.curUrl");
     chrome.tabs.executeScript(curTabId, {
       file: 'dist/inject.bundle.js',
     }, () => {
@@ -55,6 +59,7 @@ const injectGame = (sender) => {
       });
     });
   } else {
+    console.log("in else");
     chrome.tabs.update(curTabId, { url: curPlayerInfo.curUrl });
     linkAudio.play();
   }

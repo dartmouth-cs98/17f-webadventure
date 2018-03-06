@@ -27,6 +27,7 @@ class WikiGame {
     };
 
     this.powerups = new Powerups();
+    this.path = game.path;
 
     this.flipMultiplier = 1; // scales step size and direction; 1 for normal movement
 
@@ -213,7 +214,10 @@ class WikiGame {
 
   teleport() {
     console.log("teleport!!!");
-    this.onNewUrl("https://en.wikipedia.org/wiki/Photo_comics");
+    console.log(this.path);
+    let url = this.path[this.path.length-1];
+    let link = `https://en.${url}`;
+    this.onNewUrl(link);
   }
 
   resetMultiplier() {
