@@ -234,31 +234,35 @@ svg:hover {
 #topbar {
   display: flex;
   flex-flow: row;
-  flex-direction: row-reverse;
+  justify-content: space-between;
   position: fixed;
   top: 0;
+  right: 0;
   height: 40px;
-  width: 100%;
+  width: calc(100vw - 11em);
   border-bottom: 1px solid #aedaf9;
   background: white;
   z-index: -1;
 }
 
+.row {
+  display: flex;
+  flex-flow: row;
+}
+
 #sound {
-  position: absolute;
   width: 20px;
   height: 20px;
-  padding-top: 10px;
-  right: 50px;
+  padding: 5px 10px;
   display: block;
+  padding: 10px;
 }
 
 #sound-lobby {
-  position: absolute;
   width: 26px;
   height: 26px;
-  padding: 5px;
-  right: 40px;
+  padding-top: 5px;
+  padding-right: 10px;
   display: block;
 }
 
@@ -299,11 +303,10 @@ svg:hover {
 }
 
 #exit-button {
-  position: absolute;
   width: 30px;
   height: 30px;
-  padding-top: 5px;
-  right: 5px;
+  padding: 5px;
+  margin-right: 10px;
   display: block;
 }
 
@@ -342,14 +345,22 @@ svg:hover {
   width: 200px;
 }
 
+#lobby-container {
+  position: fixed;
+  height: 100vh;
+  width: 100vw;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 #lobby {
   display: block;
-  position: fixed;
   width: 35em;
-  top: 1vw;
-  left: 22vw;
   background: #f5fffa;
   padding: 5px 10px 20px;
+  margin-bottom: 100px;
   border-radius: 10px;
   animation-name: gray-border;
   animation-duration: 12s;
@@ -775,7 +786,6 @@ div.panel-alert:empty {
   width: 100%;
   box-sizing: border-box;
   text-align: center;
-
   animation-name: rainbow-gradient;
   animation-duration: 18s;
   animation-timing-function: ease-out;
@@ -800,8 +810,6 @@ div.panel-alert:empty {
 
 #top {
   line-height: 40px;
-  position: absolute;
-  left: 11em;
   display: block;
 }
 
@@ -814,18 +822,15 @@ div.panel-alert:empty {
 
 #info-box {
   visibility: hidden;
-
   position: fixed;
   font-family: 'Orbitron',sans-serif;
   left: 53vw;
-  top: 15vh;
   background: #f5fffa;
   width: 30vw;
   padding: 10px;
   border: 5px solid black;
   border-radius: 5px;
   text-align: center;
-
   animation-name: gray-border;
   animation-duration: 12s;
   animation-timing-function: ease-out;
