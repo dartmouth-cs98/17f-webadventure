@@ -82,6 +82,18 @@ class SelectedGameView extends Component {
     }
   }
 
+  renderStartDemo() {
+    if (this.props.joinedGame) {
+      return (
+        <div>
+          <button onClick={this.props.onStartGame}>
+                  Start Demo
+          </button>
+        </div>);
+    }
+    return <div />;
+  }
+
   renderPlayers() {
     return this.props.joinedGame.players
       .map((player, index) => {
@@ -142,6 +154,7 @@ class SelectedGameView extends Component {
         <div id="selected-game-buttons">
           <button onClick={this.props.backToGameSelect}>Go Back</button>
           {this.renderStartGameButton()}
+          {this.renderStartDemo()}
         </div>
       </div>
     );

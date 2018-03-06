@@ -667,7 +667,11 @@ div.panel-alert:empty {
   height: 20px;
   margin-left: 3px
 }
-
+#public {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+}
 #public-game-button {
   padding: 10px 20px;
   font-family: 'Orbitron',sans-serif;

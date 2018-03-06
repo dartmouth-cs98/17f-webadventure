@@ -52,6 +52,24 @@ class LobbyDetailsView extends Component {
     }
   }
 
+  renderJoinGame() {
+    if (this.props.selectedGame) {
+      return (
+        <div id="public">
+          <button id="public-game-button" onClick={this.onJoinPublicGame}>
+            Join Public
+          </button>
+          <div id="or">&mdash;or&mdash;</div>
+        </div>
+      );
+    }
+    return (
+      <div id="public">
+        <div>(Select a game)</div>
+        <div id="or">&mdash;or&mdash;</div>
+      </div>);
+  }
+
   renderError() {
     if (this.state.errorMsg) {
       return (
@@ -65,12 +83,7 @@ class LobbyDetailsView extends Component {
   render() {
     return (
       <div id="lobby-game-view">
-        <div id="public">
-          <button id="public-game-button" onClick={this.onJoinPublicGame}>
-            Join Public
-          </button>
-        </div>
-        <div id="or">&mdash;or&mdash;</div>
+        {this.renderJoinGame()}
         <div id="private">
           <div id="join-private">
             <input
