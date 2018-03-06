@@ -11,10 +11,21 @@ let audioOn = true;
 const audioDiv = document.createElement('div');
 const bgAudio = document.createElement('AUDIO'); // Persistent across redirects
 const linkAudio = document.createElement('AUDIO'); // Whoosh sound on link clicked
-
 let url;
 
 const renderLobby = (tabId, username) => {
+  // Background audio setup
+  bgAudio.setAttribute('id', 'bgAudio');
+  bgAudio.setAttribute('src', 'http://k003.kiwi6.com/hotlink/z3fy3bb3yr/nyan1.mp3');
+  bgAudio.setAttribute('loop', 'true');
+  audioDiv.appendChild(bgAudio);
+  bgAudio.play();
+
+  // Link whoosh sound setup
+  linkAudio.setAttribute('id', 'linkAudio');
+  linkAudio.setAttribute('src', 'https://k003.kiwi6.com/hotlink/6etyb9h8wr/swoosh.mp3');
+  audioDiv.appendChild(linkAudio);
+
   chrome.tabs.executeScript(tabId, {
     file: 'dist/injectLobby.bundle.js',
   }, () => {
@@ -32,6 +43,7 @@ const onGame = (newGame) => {
 };
 
 const endGame = () => {
+  console.log('end game called');
   curPlayerInfo = null;
   curTabId = -1;
   clearInterval(interval);
@@ -65,17 +77,6 @@ const injectGame = (sender) => {
 chrome.browserAction.onClicked.addListener((tab) => {
   if (!gameSocket && tab.url.includes('en.wikipedia.org')) {
     renderLobby(tab.id);
-    // Background audio setup
-    bgAudio.setAttribute('id', 'bgAudio');
-    bgAudio.setAttribute('src', 'http://k003.kiwi6.com/hotlink/z3fy3bb3yr/nyan1.mp3');
-    bgAudio.setAttribute('loop', 'true');
-    audioDiv.appendChild(bgAudio);
-    bgAudio.play();
-
-    // Link whoosh sound setup
-    linkAudio.setAttribute('id', 'linkAudio');
-    linkAudio.setAttribute('src', 'https://k003.kiwi6.com/hotlink/6etyb9h8wr/swoosh.mp3');
-    audioDiv.appendChild(linkAudio);
   }
 });
 
@@ -175,7 +176,11 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo) => {
           chrome.tabs.sendMessage(tabId, {
             message: 'new game',
             payload: {
-              counter, username: curPlayerInfo.username, avatar: curPlayerInfo.avatar, game, audioOn,
+              counter,
+              username: curPlayerInfo.username,
+              avatar: curPlayerInfo.avatar,
+              game,
+              audioOn,
             },
           });
         });

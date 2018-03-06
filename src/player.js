@@ -63,7 +63,8 @@ class Player {
 
   getLinks() {
     this.links = [];
-    $('a').each((i, link) => {
+    const links = $('a');
+    links.each((i, link) => {
       if (!$(link).attr('href') || $(link).attr('href').includes('#')) {
         return;
       }
