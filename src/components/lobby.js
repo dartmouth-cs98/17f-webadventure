@@ -174,24 +174,26 @@ class Lobby extends Component {
     // Render lobby with all lobby components
     if (this.state.user) {
       return (
-        <div id="lobby-container">
+        <div>
           <div className="overlay" />
-          <div id="lobby">
-            <LobbyTop exitGame={this.exitGame} />
-            <div id="lobby-title">WEBADVENTURE</div>
-            <div id="lobby-contents">
-              <LobbyGamesView
-                games={this.state.games}
-                selectedGame={this.state.selectedGame}
-                selectGame={this.selectGame}
-              />
-              <div id="lobby-columns">
-                <DisplayUser
-                  user={this.state.user}
-                  username={this.state.user.username}
-                  updateUser={this.updateUser}
+          <div id="lobby-container">
+            <div id="lobby">
+              <LobbyTop exitGame={this.exitGame} />
+              <div id="lobby-title">WEBADVENTURE</div>
+              <div id="lobby-contents">
+                <LobbyGamesView
+                  games={this.state.games}
+                  selectedGame={this.state.selectedGame}
+                  selectGame={this.selectGame}
                 />
-                {this.renderGameSelectComponent()}
+                <div id="lobby-columns">
+                  <DisplayUser
+                    user={this.state.user}
+                    username={this.state.user.username}
+                    updateUser={this.updateUser}
+                  />
+                  {this.renderGameSelectComponent()}
+                </div>
               </div>
             </div>
           </div>
@@ -199,17 +201,19 @@ class Lobby extends Component {
       );
     }
     return (
-      <div id="lobby-container">
+      <div>
         <div className="overlay" />
-        <div id="lobby">
-          <LobbyTop exitGame={this.exitGame} />
-          <img src="https://i.imgur.com/VUVNhtC.png" alt="webadventure!" id="webad-logo" />
-          <div id="lobby-title">WEBADVENTURE</div>
-          <SignUp
-            allUsers={this.state.allUsers}
-            signUpLobby={this.signUpLobby}
-            signedUp={this.signedUp}
-          />
+        <div id="lobby-container">
+          <div id="lobby">
+            <LobbyTop exitGame={this.exitGame} />
+            <img src="https://i.imgur.com/VUVNhtC.png" alt="webadventure!" id="webad-logo" />
+            <div id="lobby-title">WEBADVENTURE</div>
+            <SignUp
+              allUsers={this.state.allUsers}
+              signUpLobby={this.signUpLobby}
+              signedUp={this.signedUp}
+            />
+          </div>
         </div>
       </div>
     );
