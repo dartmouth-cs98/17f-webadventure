@@ -48,10 +48,9 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     wikiGame = new WikiGame(onNewUrl, curPlayer, game, audioOn);
   } else if (request.message === 'redirect') {
     // Check that loaded page will trigger a redirect from Wikipedia
-    if ($(".mw-redirectedfrom")[0]) {
+    if ($('.mw-redirectedfrom')[0]) {
       sendResponse({ message: 'redirect' });
-    }
-    else {
+    } else {
       sendResponse({ message: '' });
     }
   }

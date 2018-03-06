@@ -1,4 +1,3 @@
-import $ from 'jquery';
 import GameSocket from './sockets/gameSocket';
 
 
@@ -129,21 +128,20 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 });
 
 chrome.tabs.onUpdated.addListener((tabId, changeInfo) => {
-  if(changeInfo.url) {
+  if (changeInfo.url) {
     url = changeInfo.url; // Store url so we can access it on status complete
   }
 
   if (changeInfo.status === 'complete' && tabId === curTabId) {
-
     // Check if loaded content dom has redirect tag
-    chrome.tabs.sendMessage(tabId, {message: 'redirect'}, (response) => {
+    chrome.tabs.sendMessage(tabId, { message: 'redirect' }, (response) => {
       // Response not if inject was just called (must be redirect)
       if (response) {
         return;
       } else if (!url.includes(curPlayerInfo.curUrl)) {
         endGame();
       }
-  
+
       if (curPlayerInfo.curUrl === `https://en.${game.goalPage}`) {
         curPlayerInfo.finishTime = counter;
         gameSocket.updatePlayer(
