@@ -46,11 +46,7 @@ const endGame = () => {
 };
 
 const injectGame = (sender) => {
-  // console.log("injectGame");
-  // console.log(sender.url);
-  // console.log(curPlayerInfo.curUrl);
   if (sender.url === curPlayerInfo.curUrl) {
-    // console.log("in if: sender.url == curPlayerInfo.curUrl");
     chrome.tabs.executeScript(curTabId, {
       file: 'dist/inject.bundle.js',
     }, () => {
@@ -62,7 +58,6 @@ const injectGame = (sender) => {
       });
     });
   } else {
-    // console.log("in else");
     chrome.tabs.update(curTabId, { url: curPlayerInfo.curUrl });
     linkAudio.play();
   }
@@ -135,39 +130,21 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 
 chrome.tabs.onUpdated.addListener((tabId, changeInfo) => {
   if(changeInfo.url) {
-    console.log("has url in changeinfo");
-    url = changeInfo.url;
-    console.log(changeInfo.url);
+    url = changeInfo.url; // Store url so we can access it on status complete
   }
-  if (changeInfo.status === 'loading' && tabId === curTabId && changeInfo.url) {
-    if (!changeInfo.url.includes(curPlayerInfo.curUrl)) {
-      // endGame();
-      return;
-    }
-  }
+
   if (changeInfo.status === 'complete' && tabId === curTabId) {
-    console.log("complete");
-    console.log(url);
-    console.log(curPlayerInfo.curUrl);
 
     // Check if loaded content dom has redirect tag
     chrome.tabs.sendMessage(tabId, {message: 'redirect'}, (response) => {
-      console.log("response!");
-      console.log(response);
+      // Response not if inject was just called (must be redirect)
       if (response) {
-        console.log("response not null! inject was just called!");
         return;
+      } else if (!url.includes(curPlayerInfo.curUrl)) {
+        endGame();
       }
-      else {
-        console.log("response is null! inject wasn't called!");
-      }
-    
-      console.log("got here");
-      // console.log("complete onupdated");
-      // console.log(curPlayerInfo.curUrl);
-      // console.log(game.goalPage);
+  
       if (curPlayerInfo.curUrl === `https://en.${game.goalPage}`) {
-        // console.log("goal page found");
         curPlayerInfo.finishTime = counter;
         gameSocket.updatePlayer(
           curPlayerInfo.finishTime,
@@ -194,7 +171,6 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo) => {
         curPlayerInfo.curUrl,
       );
       if (!curPlayerInfo.curUrl.includes('#')) {
-        console.log("got hereeeee");
         chrome.tabs.executeScript(tabId, {
           file: 'dist/inject.bundle.js',
         }, () => {
