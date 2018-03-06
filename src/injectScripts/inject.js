@@ -9,6 +9,11 @@ import Player from '../player';
 
 let wikiGame;
 
+$('body').append(loading);
+// window.setTimeout(() => {
+//   console.log('some random time');
+//   if (!wikiGame) { $('body').append(loading); }
+// }, 10);
 const onNewUrl = (newUrl) => {
   const req = {
     message: 'new url',
@@ -28,7 +33,6 @@ const exitGame = () => {
   wikiGame = null;
   chrome.runtime.sendMessage(req);
 };
-$('body').append(loading);
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.message === 'new game') {
