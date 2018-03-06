@@ -19,6 +19,9 @@ const LobbyTop = (props) => {
           <div>Race other WebAdventurers to the goal page and learn more about the world!</div>
           <img id="nav-keys" className="info-img" alt="nav-keys" src="https://i.imgur.com/qPjFtPZ.png" />
           <div>Move across the page with WASD and jump links with the L key</div>
+          <div>You get 80 points for finishing first, 60 points for finishing second, etc.</div>
+          <div>You can also earn an extra point for every page you visit (up to 30 extra points!)</div>
+          <div>So even if you don't finish first, don't get discouraged! You could still win!</div>
         </div>
       </div>
     </div>
