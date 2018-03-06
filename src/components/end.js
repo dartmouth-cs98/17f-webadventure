@@ -75,13 +75,13 @@ class End extends Component {
     let sortedScores = this.state.leaderboard
       .sort((a, b) => this.scoringSort(a, b, finishTimes));
     if (finishTimes.some(player => player.finishTime < 0)) {
-      return(
+      return (
         <div id="winner">
           {`${sortedScores[0].username} is winning!`}
         </div>
       );
     } else {
-      return(
+      return (
         <div id="winner">
           {`${sortedScores[0].username} has won!`}
         </div>
