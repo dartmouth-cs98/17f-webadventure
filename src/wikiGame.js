@@ -58,12 +58,7 @@ class WikiGame {
     $(window).off('keydown');
     $(window).off('keyup');
     $('#wa-toc').attr('id', 'toc');
-    $('mw-parser-output').children().each((elem) => {
-      console.log(elem);
-      if ($(elem).text === '') {
-        $(elem).insertBefore($('#toc'));
-      }
-    });
+    $('#toc').insertBefore($($('.mw-parser-output').children('h2')[0]));
     this.curPlayer.removePlayer();
     window.clearInterval(this.updateInterval);
     this.updateInterval = null;
