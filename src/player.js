@@ -21,6 +21,7 @@ class Player {
     this.addToLinksList = this.addToLinksList.bind(this);
     this.movePlayer = this.movePlayer.bind(this);
     this.updateDirRight = this.updateDirRight.bind(this);
+    this.updateRevPowerup = this.updateRevPowerup.bind(this);
     this.getWidth = this.getWidth.bind(this);
     this.getPosition = this.getPosition.bind(this);
     this.getAvatarRight = this.getAvatarRight.bind(this);
@@ -147,6 +148,17 @@ class Player {
     } else if (!isRight && this.facingRight) {
       $($(`#${this.id}`).children('img')[0]).attr('src', this.avatar[0]);
       this.facingRight = false;
+    }
+  }
+
+
+  updateRevPowerup(isReversed = false) {
+    if (isReversed) {
+      if ($(`#${this.id}`).children('.reversed').length === 0) {
+        $(`#${this.id}`).append('<div class="reversed">REVERSED</div>');
+      }
+    } else {
+      $($(`#${this.id}`).children('.reversed')[0]).remove();
     }
   }
 
