@@ -454,6 +454,8 @@ svg:hover {
   display:flex;
   flex-direction: row;
   align-items: center;
+  margin-left: 5px;
+  margin-right: 10px;
 }
 
 .leaderboard-item-right div {

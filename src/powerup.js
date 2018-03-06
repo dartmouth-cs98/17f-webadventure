@@ -12,7 +12,7 @@ class Powerup {
   constructor(type, position = { left: 0, top: 0 }) {
     this.type = type; // corresponds to index of types array above
     this.position = position;
-    this.size = { height: 100, width: 100 };
+    this.size = { height: 50, width: 50 };
     this.icon = ICON;
     this.index = 0;
 

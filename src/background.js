@@ -43,7 +43,6 @@ const onGame = (newGame) => {
 };
 
 const endGame = () => {
-  console.log('end game called');
   curPlayerInfo = null;
   curTabId = -1;
   clearInterval(interval);
@@ -106,6 +105,12 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
       numClicks: 0,
       curUrl: `https://en.${game.startPage}`,
     };
+    const bgAudios = ['http://k003.kiwi6.com/hotlink/li3x2lki41/mk.mp3',
+      'http://k003.kiwi6.com/hotlink/fke6plhsn8/sailormoon.mp3',
+    ];
+    const randInd = Math.floor(Math.random(bgAudios.length));
+    bgAudio.setAttribute('src', bgAudios[randInd]);
+    bgAudio.play();
     injectGame(sender);
   } else if (request.message === 'close lobby') {
     // stop music
