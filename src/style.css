@@ -178,6 +178,17 @@ svg:hover {
   fill: #6495ed
 }
 
+#finish-svg:hover {
+  cursor:default;
+  fill: black;
+}
+
+#finish-svg-div {
+  display:flex;
+  flex-direction: row;
+  align-items:
+}
+
 #wa-container,#wa-main {
   top: 0;
   left: 0;
@@ -221,9 +232,9 @@ svg:hover {
 
 #sound-lobby {
   position: absolute;
-  width: 20px;
-  height: 20px;
-  padding: 2px;
+  width: 26px;
+  height: 26px;
+  padding: 5px;
   right: 40px;
   display: block;
 }
@@ -312,7 +323,7 @@ svg:hover {
   display: block;
   position: fixed;
   width: 35em;
-  top: 5vw;
+  top: 1vw;
   left: 22vw;
   background: #f5fffa;
   padding: 5px 10px 20px;
@@ -354,7 +365,7 @@ svg:hover {
   font-weight: 900;
   background: none;
   border: none;
-  font-size: 20px;
+  font-size: 30px;
   position: fixed;
   margin: 0;
   padding: 0;
@@ -781,10 +792,10 @@ div.panel-alert:empty {
 
   position: fixed;
   font-family: 'Orbitron',sans-serif;
-  left: 63vw;
-  top: 20vh;
+  left: 53vw;
+  top: 15vh;
   background: #f5fffa;
-  width: 20vw;
+  width: 30vw;
   padding: 10px;
   border: 5px solid black;
   border-radius: 5px;
@@ -810,7 +821,7 @@ div.panel-alert:empty {
 }
 
 #info-box img {
-  width: inherit;
+  width: 20vw;
   padding: 5px 0px 5px 0px;
 }
 

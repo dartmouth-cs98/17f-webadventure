@@ -65,7 +65,7 @@ class LobbyDetailsView extends Component {
     }
     return (
       <div id="public">
-        <div>(Select a game)</div>
+        <div>SELECT A GAME</div>
         <div id="or">&mdash;or&mdash;</div>
       </div>);
   }
