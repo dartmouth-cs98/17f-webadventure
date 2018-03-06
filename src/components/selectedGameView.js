@@ -72,7 +72,10 @@ class SelectedGameView extends Component {
     ) {
       return (
         <div>
-          <button onClick={this.props.onStartGame}>
+          <button
+            className="selected-game-button green-button"
+            onClick={this.props.onStartGame}
+          >
             Start Game
           </button>
         </div>
@@ -80,6 +83,20 @@ class SelectedGameView extends Component {
     } else {
       return (<div />);
     }
+  }
+
+  renderStartDemo() {
+    if (this.props.joinedGame) {
+      return (
+        <div>
+          <button
+            className="selected-game-button yellow-button"
+            onClick={this.props.onStartGame}
+          >Demo
+          </button>
+        </div>);
+    }
+    return <div />;
   }
 
   renderPlayers() {
@@ -140,7 +157,12 @@ class SelectedGameView extends Component {
           {this.renderPlayers()}
         </div>
         <div id="selected-game-buttons">
-          <button onClick={this.props.backToGameSelect}>Go Back</button>
+          <button
+            className="selected-game-button"
+            onClick={this.props.backToGameSelect}
+          >Go Back
+          </button>
+          {this.renderStartDemo()}
           {this.renderStartGameButton()}
         </div>
       </div>
