@@ -156,6 +156,29 @@ button:hover {
   background-color: #e4685d
 }
 
+.selected-game-button {
+  padding-left: 3px;
+  padding-right: 3px;
+}
+
+.yellow-button {
+  background-color:#ffc477;
+  border:1px solid #eeb44f;
+}
+
+.yellow-button:hover {
+  background-color:#fb9e25;
+}
+
+.green-button {
+  background-color:#74ad5a;
+  border:1px solid #3b6e22;
+}
+
+.green-button:hover {
+  background-color:#68a54b;
+}
+
 :checked+img {
   opacity: 1;
   border-radius: 5px;
