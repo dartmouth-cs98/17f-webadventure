@@ -194,9 +194,6 @@ class Lobby extends Component {
                 {this.renderGameSelectComponent()}
               </div>
             </div>
-            <button onClick={this.onStartGame} >
-                Start Game
-            </button>
           </div>
         </div>
       );
