@@ -232,27 +232,27 @@ svg:hover {
   cursor: pointer;
 }
 
-#color-0, #color-6 {
+#color-0, #color-6, #color-12 {
   animation: color-change-0 10s infinite alternate;
 }
 
-#color-1, #color-7 {
+#color-1, #color-7, #color-13 {
   animation: color-change-1 10s infinite alternate;
 }
 
-#color-2, #color-8 {
+#color-2, #color-8, #color-14 {
   animation: color-change-2 10s infinite alternate;
 }
 
-#color-3, #color-9 {
+#color-3, #color-9, #color-15 {
   animation: color-change-3 10s infinite alternate;
 }
 
-#color-4 {
+#color-4, #color-10, #color-16 {
   animation: color-change-4 10s infinite alternate;
 }
 
-#color-5 {
+#color-5, #color-11, #color-17 {
   animation: color-change-5 10s infinite alternate;
 }
 
@@ -339,7 +339,7 @@ svg:hover {
 
 #lobby-columns {
   width: 13em;
-  height: 19.5em;
+  height: 20.5em;
   justify-content: space-between;
   margin-left:15px;
 }
@@ -359,6 +359,7 @@ svg:hover {
   margin: 0;
   padding: 0;
 }
+
 .exit-lobby-button:hover {
   color: gray;
   background: none;
@@ -372,8 +373,8 @@ svg:hover {
 }
 
 .avatar-option {
-  width: 50px;
-  height: 50px;
+  width: 55px;
+  height: 55px;
   padding: 2px;
   margin: 5px
 }
@@ -416,8 +417,13 @@ svg:hover {
 }
 
 .leaderboard-item-right {
+  display:flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.leaderboard-item-right div {
   margin-left: 5px;
-  margin-right: 10px
 }
 
 .leaderboard-curPlayer {
@@ -470,8 +476,8 @@ svg:hover {
 }
 
 .player-img {
-  height: 40px;
-  width: 40px
+  height: 45px;
+  width: 45px
 }
 
 .powerup {
@@ -502,7 +508,7 @@ svg:hover {
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 19em;
+  height: 21em;
   width: 10em;
   padding: 10px 35px;
   margin: 10px;
@@ -696,15 +702,15 @@ div.panel-alert:empty {
 #end {
   display: block;
   position: fixed;
-  width: 20em;
+  width: 35vw;
   font-family: 'Orbitron',sans-serif;
-  top: 10vw;
-  left: 38vw;
+  top: 4vw;
+  left: 33vw;
   background-color: rgba(246,246,246,.95);
   padding: 10px 0;
   border: 1px solid #000;
   border-radius: 10px;
-  padding: 20px;
+  padding: 20px 0;
 }
 
 #user-rankings {
@@ -714,15 +720,15 @@ div.panel-alert:empty {
 }
 
 #winner {
-  display: block;
-  position: relative;
   color: white;
-  padding: 15px 55px;
-  width: inherit;
+  padding: 40px 55px;
   font-size: 35px;
   margin: 5px 0;
   background: linear-gradient(124deg,#ff2400,#e81d1d,#e8b71d,#e3e81d,#1de840,#1ddde8,#2b1de8,#dd00f3,#dd00f3);
   background-size: 1800% 1800%;
+  width: 100%;
+  box-sizing: border-box;
+  text-align: center;
 
   animation-name: rainbow-gradient;
   animation-duration: 18s;
@@ -737,7 +743,7 @@ div.panel-alert:empty {
 }
 
 #end-flex > button {
-  margin-top: 20px;
+  margin-top: 10px;
 }
 
 #top, #timer {
@@ -845,10 +851,43 @@ div.panel-alert:empty {
 .colorful-button:hover + #game-id {
   display:block;
   position:absolute;
-  top:58%;
+  top:59%;
   font-size:14px;
   background: black;
   padding: 5px;
   border-radius: 5px;
   color: white;
+}
+
+#path {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-top:5px;
+}
+
+.displ-with-right-arrow {
+  display:flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.end-div-button {
+  margin-left:10px;
+}
+
+.end-item {
+  font-size: 17px;
+  /* padding-top: 5px; */
+}
+
+.end-item-right {
+  display:flex;
+  flex-direction: row;
+  align-items: center;
+  margin-left: 100px;
+}
+
+.end-item-right div {
+  margin-left: 20px;
 }
