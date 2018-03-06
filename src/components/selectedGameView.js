@@ -22,7 +22,7 @@ class SelectedGameView extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (
-      nextProps.joinedGame.players.length === 1 &&
+      nextProps.joinedGame.players.length === 2 &&
       !nextProps.joinedGame.isPrivate
     ) {
       this.timer = setInterval(this.countDown, 1000);
@@ -91,7 +91,7 @@ class SelectedGameView extends Component {
 
   renderTimer() {
     if (
-      this.props.joinedGame.players.length === 1 &&
+      this.props.joinedGame.players.length === 2 &&
       !this.props.joinedGame.isPrivate
     ) {
       return (
