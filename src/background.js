@@ -43,7 +43,11 @@ const endGame = () => {
 };
 
 const injectGame = (sender) => {
+  // console.log("injectGame");
+  // console.log(sender.url);
+  // console.log(curPlayerInfo.curUrl);
   if (sender.url === curPlayerInfo.curUrl) {
+    // console.log("in if: sender.url == curPlayerInfo.curUrl");
     chrome.tabs.executeScript(curTabId, {
       file: 'dist/inject.bundle.js',
     }, () => {
@@ -55,6 +59,7 @@ const injectGame = (sender) => {
       });
     });
   } else {
+    // console.log("in else");
     chrome.tabs.update(curTabId, { url: curPlayerInfo.curUrl });
     linkAudio.play();
   }
@@ -96,7 +101,6 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     curTabId = sender.tab.id;
     counter = 0;
     interval = setInterval(() => { counter += 1; }, 1000);
-    // const fullUrl = 'https://en.' + game.startPage;
     curPlayerInfo = {
       username,
       avatar,
@@ -134,7 +138,11 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo) => {
     }
   }
   if (changeInfo.status === 'complete' && tabId === curTabId) {
-    if (curPlayerInfo.curUrl === game.goalPage) {
+    // console.log("complete onupdated");
+    // console.log(curPlayerInfo.curUrl);
+    // console.log(game.goalPage);
+    if (curPlayerInfo.curUrl === `https://en.${game.goalPage}`) {
+      // console.log("goal page found");
       curPlayerInfo.finishTime = counter;
       gameSocket.updatePlayer(
         curPlayerInfo.finishTime,
