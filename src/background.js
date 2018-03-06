@@ -138,11 +138,7 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo) => {
     }
   }
   if (changeInfo.status === 'complete' && tabId === curTabId) {
-    // console.log("complete onupdated");
-    // console.log(curPlayerInfo.curUrl);
-    // console.log(game.goalPage);
     if (curPlayerInfo.curUrl === `https://en.${game.goalPage}`) {
-      // console.log("goal page found");
       curPlayerInfo.finishTime = counter;
       gameSocket.updatePlayer(
         curPlayerInfo.finishTime,
