@@ -10,9 +10,9 @@ export default class GameSocket {
     this.onGame = onGame;
     this.socket = io(`${socketserver}?gameId=${gameId}`);
 
-    this.socket.on('connect', () => { console.log('socket.io connected'); });
-    this.socket.on('disconnect', () => { console.log('socket.io disconnected'); });
-    this.socket.on('reconnect', () => { console.log('socket.io reconnected'); });
+    this.socket.on('connect', () => { console.log('game socket.io connected'); });
+    this.socket.on('disconnect', () => { console.log('game socket.io disconnected'); });
+    this.socket.on('reconnect', () => { console.log('game socket.io reconnected'); });
     this.socket.on('error', (error) => { console.log(error); });
 
     this.socket.on('game', onGame);
