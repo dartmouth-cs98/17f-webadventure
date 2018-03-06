@@ -36,16 +36,16 @@ class Powerups {
     const $window = $(window);
     const offsetX = 176; // 11em
     const avatarWidth = 50;
+    const spawnFactor = 150;
+    const minPowerups = 2;
     const body = document.body;
     const html = document.documentElement;
     const height = Math.max(
-        body.scrollHeight, body.offsetHeight,
-        html.clientHeight, html.scrollHeight, html.offsetHeight,
+      body.scrollHeight, body.offsetHeight,
+      html.clientHeight, html.scrollHeight, html.offsetHeight,
     );
-
-    const numPowerups = Math.floor(Math.random() * height)/150 + 2;
+    const numPowerups = (Math.floor(Math.random() * height) / spawnFactor) + minPowerups;
     for (let i = 0; i < numPowerups; i += 1) {
-
       // Scatter powerups semi-randomly
       // const offsetX = $("#wa-container").width();
       const x = Math.floor(Math.random() * ($window.width() - offsetX - avatarWidth)) + offsetX;
@@ -54,7 +54,7 @@ class Powerups {
       // const type = Math.floor(Math.random() * this.types.length);
       const type = Powerups.getPowerupType();
 
-      const powerup = new Powerup(type, { left: x, top: y }); // flipControls, speedUp, slowDown, teleport
+      const powerup = new Powerup(type, { left: x, top: y }); // flip, speedUp, slowDown, teleport
 
       this.powerups.push(powerup);
     }
