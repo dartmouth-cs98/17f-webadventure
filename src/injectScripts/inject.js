@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
 
+import loading from '../components/loading.html';
 import App from '../components/app';
 import WikiGame from '../wikiGame';
 import Player from '../player';
@@ -27,14 +28,13 @@ const exitGame = () => {
   wikiGame = null;
   chrome.runtime.sendMessage(req);
 };
+$('body').append(loading);
 
-chrome.runtime.onMessage.addListener((request) => {
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.message === 'new game') {
     const {
       counter, username, avatar, game, audioOn,
     } = request.payload;
-    // console.log("new game in inject.js");
-    // console.log(game);
     const curPlayer = new Player(username, avatar);
     const leaderboard = {
       curPlayer: {
@@ -46,7 +46,19 @@ chrome.runtime.onMessage.addListener((request) => {
       audioOn,
     };
     $('body').append('<div id=wa-main />');
-    ReactDOM.render(<App exitGame={exitGame} leaderboard={leaderboard} counter={counter} />, document.getElementById('wa-main'));
+    ReactDOM.render(
+      <App exitGame={exitGame} leaderboard={leaderboard} counter={counter} />,
+      document.getElementById('wa-main'), () => {
+        $('#wa-loading').remove();
+      },
+    );
     wikiGame = new WikiGame(onNewUrl, curPlayer, game, audioOn);
+  } else if (request.message === 'redirect') {
+    // Check that loaded page will trigger a redirect from Wikipedia
+    if ($('.mw-redirectedfrom')[0]) {
+      sendResponse({ message: 'redirect' });
+    } else {
+      sendResponse({ message: '' });
+    }
   }
 });

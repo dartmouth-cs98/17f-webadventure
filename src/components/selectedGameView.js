@@ -84,8 +84,14 @@ class SelectedGameView extends Component {
 
   renderPlayers() {
     return this.props.joinedGame.players
-      .map((player) => {
-        return (<div key={player.username}>{player.username}</div>);
+      .map((player, index) => {
+        const colorIndex = `color-${index}`;
+        return (
+          <div
+            key={player.username}
+            id={colorIndex}
+          >{player.username}
+          </div>);
       });
   }
 

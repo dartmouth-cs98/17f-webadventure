@@ -24,6 +24,11 @@ module.exports = {
         loader: 'babel-loader',
       },
       {
+        test: /\.html$/,
+        exclude: /node_modules/,
+        loader: 'html-loader',
+      },
+      {
         test: /\.jpg$/,
         loader: 'url-loader?mimetype=image/jpg',
       },

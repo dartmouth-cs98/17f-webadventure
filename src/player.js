@@ -62,13 +62,9 @@ class Player {
   }
 
   getLinks() {
-    $('body').append('<div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>');
     this.links = [];
     const links = $('a');
     links.each((i, link) => {
-      if (i === links.length - 1) {
-        $('.lds-roller').remove();
-      }
       if (!$(link).attr('href') || $(link).attr('href').includes('#')) {
         return;
       }
