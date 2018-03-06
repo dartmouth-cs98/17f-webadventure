@@ -9,9 +9,9 @@ export default class LobbySocket {
     const socketURL = username ? `${socketserver}?username=${username}` : `${socketserver}`;
     this.socket = io(socketURL);
 
-    this.socket.on('connect', () => { console.log('socket.io connected'); });
-    this.socket.on('disconnect', () => { console.log('socket.io disconnected'); });
-    this.socket.on('reconnect', () => { console.log('socket.io reconnected'); });
+    this.socket.on('connect', () => { console.log('lobby socket.io connected'); });
+    this.socket.on('disconnect', () => { console.log('lobby socket.io disconnected'); });
+    this.socket.on('reconnect', () => { console.log('lobby socket.io reconnected'); });
     this.socket.on('error', (error) => { console.log(error); });
 
     this.socket.on('games', onGames);

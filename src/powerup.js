@@ -1,9 +1,12 @@
 import $ from 'jquery';
 
-const ICON = ['https://i.imgur.com/pp96Q4O.gif', 'https://media.giphy.com/media/11d7p2CrzQzfOw/giphy.gif',
-  'https://78.media.tumblr.com/4abad145cfeca409f3f76cac7e9393de/tumblr_mq50y4zfz71szhoyto1_400.gif'];
+const ICON = ['https://i.imgur.com/pp96Q4O.gif', // flip
+  'https://media.giphy.com/media/11d7p2CrzQzfOw/giphy.gif', // speedup
+  'https://78.media.tumblr.com/4abad145cfeca409f3f76cac7e9393de/tumblr_mq50y4zfz71szhoyto1_400.gif', // slowdown
+  'https://media.giphy.com/media/jnd3s4NiaJaUg/giphy.gif', // teleport
+];
 
-const types = ['flipControls', 'speedUp', 'slowDown'];
+const types = ['flipControls', 'speedUp', 'slowDown', 'teleport'];
 
 class Powerup {
   constructor(type, position = { left: 0, top: 0 }) {

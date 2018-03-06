@@ -7,7 +7,7 @@ const ICON = 'https://media.giphy.com/media/26tPgy93ssTeTTSqA/giphy.gif';
 
 class Powerups {
   constructor() {
-    this.types = ['flipControls', 'speedup', 'slowdown'];
+    this.types = ['flipControls', 'speedup', 'slowdown', 'teleport'];
     this.icon = ICON;
 
     this.powerups = [];
