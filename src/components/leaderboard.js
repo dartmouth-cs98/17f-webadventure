@@ -65,7 +65,9 @@ class Leaderboard extends Component {
                 <div className="leaderboard-rank">{index + 1}</div>
                 <div>{player.username}</div>
               </div>
-              <div className="leaderboard-item-right" />
+              <div className="leaderboard-item-right">
+                {Leaderboard.calculateScore(player, finishTimes)}
+              </div>
             </div>);
         }
         return (

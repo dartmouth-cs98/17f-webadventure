@@ -50,7 +50,19 @@ class SelectedGameView extends Component {
   }
 
   renderStartPage() {
-    return decodeURIComponent(this.props.joinedGame.startPage.split('/').pop()).replace(/_/g, ' ');
+    const page = decodeURIComponent(this.props.joinedGame.startPage.split('/').pop()).replace(/_/g, ' ');
+    if (page.length > 21) {
+      return (
+        <marquee
+          behavior="scroll"
+          direction="left"
+          scrollamount="3"
+        >
+          {page}
+        </marquee>
+      );
+    }
+    return <div id="selected-game-start-page">{page}</div>;
   }
 
   renderStartGameButton() {
@@ -114,7 +126,7 @@ class SelectedGameView extends Component {
       <div id="selectedGameView">
         {this.renderTimer()}
         <div className="selected-game-header">START</div>
-        <div id="selected-game-start-page">{this.renderStartPage()}</div>
+        {this.renderStartPage()}
         {this.renderHostKey()}
         <div className="selected-game-header">JOINED GAME</div>
         <div>{this.props.joinedGame.players.length}/5 players joined</div>
