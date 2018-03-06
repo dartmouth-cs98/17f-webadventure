@@ -183,7 +183,7 @@ class WikiGame {
         this.slowDown();
       } else if (hitPowerup.type === 3) {
         this.teleport();
-      } 
+      }
 
       // Remove from powerups array
       this.powerups.powerups = this.powerups.powerups.filter((powerup) => {
@@ -213,10 +213,11 @@ class WikiGame {
   }
 
   teleport() {
-    console.log("teleport!!!");
+    console.log('teleport!!!');
+    let index =Math.floor(Math.random()*(this.path.length-2))+1;
     console.log(this.path);
-    let url = this.path[this.path.length-1];
-    let link = `https://en.${url}`;
+    console.log(index);
+    let link = `https://en.${this.path[index]}`;
     this.onNewUrl(link);
   }
 
