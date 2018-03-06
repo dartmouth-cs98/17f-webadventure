@@ -57,8 +57,6 @@ class Lobby extends Component {
   }
 
   onGames(games) {
-    console.log('onGames');
-    console.log(games);
     const newState = { games };
     games.forEach((game) => {
       if (this.state.selectedGame && this.state.selectedGame.id === game.id) {
@@ -72,9 +70,6 @@ class Lobby extends Component {
   }
 
   onGameStarted(game) {
-    console.log('onGameStarte');
-    console.log(game);
-    console.log(game.players);
     this.props.onStart(this.state.user, game);
   }
 

@@ -65,7 +65,9 @@ class Leaderboard extends Component {
                 <div className="leaderboard-rank">{index + 1}</div>
                 <div>{player.username}</div>
               </div>
-              <div className="leaderboard-item-right" />
+              <div className="leaderboard-item-right">
+                {Leaderboard.calculateScore(player, finishTimes)}
+              </div>
             </div>);
         }
         return (
@@ -86,8 +88,6 @@ class Leaderboard extends Component {
   }
 
   render() {
-    console.log('renderInLeaderboard');
-    console.log(this.state.players);
     const goalPage = decodeURIComponent(this.props.goalPage.split('/').pop()).replace(/_/g, ' ');
     if (this.props.curPlayer) {
       return (

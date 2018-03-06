@@ -34,9 +34,6 @@ chrome.runtime.onMessage.addListener((request) => {
       counter, username, avatar, game, audioOn,
     } = request.payload;
     const curPlayer = new Player(username, avatar);
-    console.log('inject.js listener');
-    console.log(game);
-    console.log(game.players);
     const leaderboard = {
       curPlayer: {
         name: curPlayer.username,
