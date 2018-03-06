@@ -514,6 +514,12 @@ svg:hover {
   width: 45px
 }
 
+.reversed {
+  font-family: 'Orbitron',sans-serif;
+  color: green;
+  font-size: 10px;
+}
+
 .powerup {
     height: 50px;
     width: 50px;

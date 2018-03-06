@@ -194,6 +194,7 @@ class WikiGame {
 
   flipControls() {
     this.flipMultiplier = -1;
+    this.curPlayer.updateRevPowerup(true);
     setTimeout(this.resetMultiplier, 5000);
   }
 
@@ -219,6 +220,7 @@ class WikiGame {
 
   resetMultiplier() {
     this.flipMultiplier = 1;
+    this.curPlayer.updateRevPowerup(false);
   }
 
   onKeyDown(evt) {
