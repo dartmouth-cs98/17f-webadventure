@@ -1,3 +1,4 @@
+import $ from 'jquery';
 import GameSocket from './sockets/gameSocket';
 
 
@@ -11,6 +12,8 @@ let audioOn = true;
 const audioDiv = document.createElement('div');
 const bgAudio = document.createElement('AUDIO'); // Persistent across redirects
 const linkAudio = document.createElement('AUDIO'); // Whoosh sound on link clicked
+
+let url;
 
 const renderLobby = (tabId, username) => {
   chrome.tabs.executeScript(tabId, {
@@ -131,6 +134,11 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 });
 
 chrome.tabs.onUpdated.addListener((tabId, changeInfo) => {
+  if(changeInfo.url) {
+    console.log("has url in changeinfo");
+    url = changeInfo.url;
+    console.log(changeInfo.url);
+  }
   if (changeInfo.status === 'loading' && tabId === curTabId && changeInfo.url) {
     if (!changeInfo.url.includes(curPlayerInfo.curUrl)) {
       // endGame();
@@ -138,47 +146,66 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo) => {
     }
   }
   if (changeInfo.status === 'complete' && tabId === curTabId) {
-    // console.log("complete onupdated");
-    // console.log(curPlayerInfo.curUrl);
-    // console.log(game.goalPage);
-    if (curPlayerInfo.curUrl === `https://en.${game.goalPage}`) {
-      // console.log("goal page found");
-      curPlayerInfo.finishTime = counter;
+    console.log("complete");
+    console.log(url);
+    console.log(curPlayerInfo.curUrl);
+
+    // Check if loaded content dom has redirect tag
+    chrome.tabs.sendMessage(tabId, {message: 'redirect'}, (response) => {
+      console.log("response!");
+      console.log(response);
+      if (response) {
+        console.log("response not null! inject was just called!");
+        return;
+      }
+      else {
+        console.log("response is null! inject wasn't called!");
+      }
+    
+      console.log("got here");
+      // console.log("complete onupdated");
+      // console.log(curPlayerInfo.curUrl);
+      // console.log(game.goalPage);
+      if (curPlayerInfo.curUrl === `https://en.${game.goalPage}`) {
+        // console.log("goal page found");
+        curPlayerInfo.finishTime = counter;
+        gameSocket.updatePlayer(
+          curPlayerInfo.finishTime,
+          curPlayerInfo.numClicks,
+          curPlayerInfo.curUrl,
+        );
+        chrome.tabs.executeScript({
+          file: 'dist/injectEnd.bundle.js',
+        }, () => {
+          const req = {
+            message: 'end game info',
+            payload: {
+              curPlayerInfo,
+              game,
+            },
+          };
+          chrome.tabs.sendMessage(tabId, req);
+        });
+        return;
+      }
       gameSocket.updatePlayer(
         curPlayerInfo.finishTime,
         curPlayerInfo.numClicks,
         curPlayerInfo.curUrl,
       );
-      chrome.tabs.executeScript({
-        file: 'dist/injectEnd.bundle.js',
-      }, () => {
-        const req = {
-          message: 'end game info',
-          payload: {
-            curPlayerInfo,
-            game,
-          },
-        };
-        chrome.tabs.sendMessage(tabId, req);
-      });
-      return;
-    }
-    gameSocket.updatePlayer(
-      curPlayerInfo.finishTime,
-      curPlayerInfo.numClicks,
-      curPlayerInfo.curUrl,
-    );
-    if (!curPlayerInfo.curUrl.includes('#')) {
-      chrome.tabs.executeScript(tabId, {
-        file: 'dist/inject.bundle.js',
-      }, () => {
-        chrome.tabs.sendMessage(tabId, {
-          message: 'new game',
-          payload: {
-            counter, username: curPlayerInfo.username, avatar: curPlayerInfo.avatar, game, audioOn,
-          },
+      if (!curPlayerInfo.curUrl.includes('#')) {
+        console.log("got hereeeee");
+        chrome.tabs.executeScript(tabId, {
+          file: 'dist/inject.bundle.js',
+        }, () => {
+          chrome.tabs.sendMessage(tabId, {
+            message: 'new game',
+            payload: {
+              counter, username: curPlayerInfo.username, avatar: curPlayerInfo.avatar, game, audioOn,
+            },
+          });
         });
-      });
-    }
+      }
+    });
   }
 });
