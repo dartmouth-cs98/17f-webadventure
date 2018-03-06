@@ -61,16 +61,7 @@ class End extends Component {
         </div>
       );
     }
-    let score = 0;
-    if (player.numClicks <= 30) {
-      score = player.numClicks;
-    } else {
-      score = 30;
-    }
-    if (player.finishTime > -1) {
-      score += (4 - sortedTimes.indexOf(player)) * 20;
-    }
-    return <div>{score}pts</div>;
+    return <div>{this.calculateScore(player, sortedTimes)}pts</div>;
   }
 
   renderPlayers(finishTimes) {
