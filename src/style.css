@@ -787,7 +787,7 @@ div.panel-alert:empty {
   position: fixed;
   font-family: 'Orbitron',sans-serif;
   left: 53vw;
-  top: 20vh;
+  top: 15vh;
   background: #f5fffa;
   width: 30vw;
   padding: 10px;

@@ -37,20 +37,20 @@ class End extends Component {
     return score2 - score1;
   }
 
-  calculateScore(player, sortedTimes) {
-    let score = 0;
-    if (player.numClicks <= 30) {
-      score = player.numClicks;
-    } else {
-      score = 30;
-    }
-    if (player.finishTime > -1) {
-      score += (4 - sortedTimes.indexOf(player)) * 20;
-    }
-    return score;
-  }
+  // calculateScore(player, sortedTimes) {
+  //   let score = 0;
+  //   if (player.numClicks <= 30) {
+  //     score = player.numClicks;
+  //   } else {
+  //     score = 30;
+  //   }
+  //   if (player.finishTime > -1) {
+  //     score += (4 - sortedTimes.indexOf(player)) * 20;
+  //   }
+  //   return score;
+  // }
 
-  renderFinishTime(player) {
+  renderFinishScore(player, sortedTimes) {
     if (player.finishTime === -1) {
       return (
         <div id="finish-svg-div">
@@ -61,7 +61,16 @@ class End extends Component {
         </div>
       );
     }
-    return <div>{player.finishTime}s</div>;
+    let score = 0;
+    if (player.numClicks <= 30) {
+      score = player.numClicks;
+    } else {
+      score = 30;
+    }
+    if (player.finishTime > -1) {
+      score += (4 - sortedTimes.indexOf(player)) * 20;
+    }
+    return <div>{score}pts</div>;
   }
 
   renderPlayers(finishTimes) {
@@ -78,8 +87,10 @@ class End extends Component {
               <div>{player.username}</div>
             </div>
             <div className="end-item-right">
-              {this.renderFinishTime(player)}
-              <div>{player.finishTime === -1 ? 'P' : `${this.calculateScore(player, finishTimes)} pt`}</div>
+              <div>{player.finishTime === -1 ? '' : `${player.finishTime}s`}</div>
+              {/* {this.renderFinishTime(player)} */}
+              {/* <div>{player.finishTime !== -1 ? 'P' : `${this.calculateScore(player, finishTimes)} pt`}</div> */}
+              {this.renderFinishScore(player, finishTimes)}
             </div>
           </div>
         );
