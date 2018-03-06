@@ -221,9 +221,9 @@ svg:hover {
 
 #sound-lobby {
   position: absolute;
-  width: 20px;
-  height: 20px;
-  padding: 2px;
+  width: 26px;
+  height: 26px;
+  padding: 5px;
   right: 40px;
   display: block;
 }
@@ -312,7 +312,7 @@ svg:hover {
   display: block;
   position: fixed;
   width: 35em;
-  top: 5vw;
+  top: 1vw;
   left: 22vw;
   background: #f5fffa;
   padding: 5px 10px 20px;
@@ -354,7 +354,7 @@ svg:hover {
   font-weight: 900;
   background: none;
   border: none;
-  font-size: 20px;
+  font-size: 30px;
   position: fixed;
   margin: 0;
   padding: 0;
