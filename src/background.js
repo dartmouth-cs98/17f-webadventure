@@ -15,8 +15,15 @@ let url;
 
 const renderLobby = (tabId, username) => {
   // Background audio setup
+
+  const bgAudios = ['http://k003.kiwi6.com/hotlink/z3fy3bb3yr/nyan1.mp3',
+    'http://k003.kiwi6.com/hotlink/q1vt0njlii/mk-lobby.mp3',
+    'http://k003.kiwi6.com/hotlink/fke6plhsn8/sailormoon.mp3',
+    'http://k003.kiwi6.com/hotlink/3ewofkoxts/wii.mp3',
+  ];
+  const randInd = Math.floor(Math.random() * bgAudios.length);
   bgAudio.setAttribute('id', 'bgAudio');
-  bgAudio.setAttribute('src', 'http://k003.kiwi6.com/hotlink/z3fy3bb3yr/nyan1.mp3');
+  bgAudio.setAttribute('src', bgAudios[randInd]);
   bgAudio.setAttribute('loop', 'true');
   audioDiv.appendChild(bgAudio);
   bgAudio.play();
@@ -43,7 +50,6 @@ const onGame = (newGame) => {
 };
 
 const endGame = () => {
-  console.log('end game called');
   curPlayerInfo = null;
   curTabId = -1;
   clearInterval(interval);
@@ -106,6 +112,12 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
       numClicks: 0,
       curUrl: `https://en.${game.startPage}`,
     };
+    const bgAudios = ['http://k003.kiwi6.com/hotlink/li3x2lki41/mk.mp3',
+      'http://k003.kiwi6.com/hotlink/3ttyw8k1nh/green-trains.mp3',
+    ];
+    const randInd = Math.floor(Math.random() * bgAudios.length);
+    bgAudio.setAttribute('src', bgAudios[randInd]);
+    bgAudio.play();
     injectGame(sender);
   } else if (request.message === 'close lobby') {
     // stop music
