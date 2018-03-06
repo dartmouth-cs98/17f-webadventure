@@ -238,7 +238,8 @@ svg:hover {
 #sound-lobby {
   width: 26px;
   height: 26px;
-  padding: 5px 10px;
+  padding-top: 5px;
+  padding-right: 10px;
   display: block;
 }
 
@@ -336,6 +337,7 @@ svg:hover {
   width: 35em;
   background: #f5fffa;
   padding: 5px 10px 20px;
+  margin-bottom: 100px;
   border-radius: 10px;
   animation-name: gray-border;
   animation-duration: 12s;
