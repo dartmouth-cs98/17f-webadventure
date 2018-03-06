@@ -28,13 +28,11 @@ const exitGame = () => {
   chrome.runtime.sendMessage(req);
 };
 
-chrome.runtime.onMessage.addListener((request) => {
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.message === 'new game') {
     const {
       counter, username, avatar, game, audioOn,
     } = request.payload;
-    // console.log("new game in inject.js");
-    // console.log(game);
     const curPlayer = new Player(username, avatar);
     const leaderboard = {
       curPlayer: {
@@ -48,5 +46,12 @@ chrome.runtime.onMessage.addListener((request) => {
     $('body').append('<div id=wa-main />');
     ReactDOM.render(<App exitGame={exitGame} leaderboard={leaderboard} counter={counter} />, document.getElementById('wa-main'));
     wikiGame = new WikiGame(onNewUrl, curPlayer, game, audioOn);
+  } else if (request.message === 'redirect') {
+    // Check that loaded page will trigger a redirect from Wikipedia
+    if ($('.mw-redirectedfrom')[0]) {
+      sendResponse({ message: 'redirect' });
+    } else {
+      sendResponse({ message: '' });
+    }
   }
 });
