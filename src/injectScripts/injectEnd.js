@@ -26,6 +26,7 @@ const onNewGame = (username) => {
 chrome.runtime.onMessage.addListener((req) => {
   if (req.message === 'end game info') {
     ({ curPlayerInfo } = req.payload);
+    const game = req.payload.game;
     const leaderboard = req.payload.game.players;
     ReactDOM.render(
       <End
@@ -33,6 +34,7 @@ chrome.runtime.onMessage.addListener((req) => {
         exitGame={exitGame}
         curPlayerInfo={curPlayerInfo}
         leaderboard={leaderboard}
+        game={game}
       />,
       document.getElementById('wa-main-end'),
     );
