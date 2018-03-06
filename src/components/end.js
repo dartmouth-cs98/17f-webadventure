@@ -7,19 +7,23 @@ class End extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      game: props.game,
       leaderboard: props.leaderboard,
     };
 
     this.onRequest = this.onRequest.bind(this);
     this.onNewGame = this.onNewGame.bind(this);
+    this.renderPath = this.renderPath.bind(this);
     this.renderLeader = this.renderLeader.bind(this);
     chrome.runtime.onMessage.addListener(this.onRequest);
   }
 
   onRequest(req) {
     if (req.message === 'game info') {
+      const game = req.payload.game;
       const leaderboard = req.payload.game.players; // leaderboard
       this.setState({ leaderboard });
+      this.setState({ game });
     }
   }
 
@@ -41,7 +45,7 @@ class End extends Component {
       score = 30;
     }
     if (player.finishTime > -1) {
-      score += (4 - sortedSTimes.indexOf(player)) * 20;
+      score += (4 - sortedTimes.indexOf(player)) * 20;
     }
     return score;
   }
@@ -51,7 +55,10 @@ class End extends Component {
       .sort((a, b) => this.scoringSort(a, b, finishTimes))
       .map((player, index) => {
         return (
-          <div className="leaderboard-item">
+          <div
+            className="leaderboard-item"
+            key={player.username}
+          >
             <div className="leaderboard-item-left">
               <div className="leaderboard-rank">{index + 1}</div>
               <div>{player.username}</div>
@@ -67,15 +74,28 @@ class End extends Component {
   renderLeader(finishTimes) {
     let sortedScores = this.state.leaderboard
       .sort((a, b) => this.scoringSort(a, b, finishTimes));
-    if (finishTimes.some(val => val < 0)) {
-      <div id="winner">
-        {`${sortedScores[0].username} is winning!`}
-      </div>
+    if (finishTimes.some(player => player.finishTime < 0)) {
+      return(
+        <div id="winner">
+          {`${sortedScores[0].username} is winning!`}
+        </div>
+      );
     } else {
-      <div id="winner">
-        {`${sortedScores[0].username} has won!`}
-      </div>
+      return(
+        <div id="winner">
+          {`${sortedScores[0].username} has won!`}
+        </div>
+      );
     }
+  }
+
+  renderPath() {
+    console.log(this.state.game.path);
+    return (
+      <div id="path">
+        {this.state.game.path}
+      </div>
+    );
   }
 
   render() {
@@ -91,6 +111,7 @@ class End extends Component {
           <div id="user-rankings">
             {this.renderPlayers(finishTimes)}
           </div>
+          {this.renderPath()}
           <button onClick={this.onNewGame}>To Lobby</button>
         </div>
       </div>
