@@ -213,11 +213,12 @@ class WikiGame {
   }
 
   teleport() {
-    console.log('teleport!!!');
-    let index =Math.floor(Math.random()*(this.path.length-2))+1;
-    console.log(this.path);
-    console.log(index);
-    let link = `https://en.${this.path[index]}`;
+    // console.log('teleport!!!');
+    // let index = Math.floor(Math.random()*(this.path.length - 2)) + 1;
+    // console.log(this.path);
+    // console.log(index);
+    // let link = `https://en.${this.path[index]}`;
+    const link = `https://en.${this.path[this.path.length - 1]}`;
     this.onNewUrl(link);
   }
 
@@ -235,6 +236,7 @@ class WikiGame {
         this.openLink();
         break;
       case 80: // P
+
         break;
       default:
         break;

@@ -33,8 +33,8 @@ chrome.runtime.onMessage.addListener((request) => {
     const {
       counter, username, avatar, game, audioOn,
     } = request.payload;
-    console.log("new game in inject.js");
-    console.log(game);
+    // console.log("new game in inject.js");
+    // console.log(game);
     const curPlayer = new Player(username, avatar);
     const leaderboard = {
       curPlayer: {
