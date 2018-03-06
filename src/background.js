@@ -12,6 +12,8 @@ const audioDiv = document.createElement('div');
 const bgAudio = document.createElement('AUDIO'); // Persistent across redirects
 const linkAudio = document.createElement('AUDIO'); // Whoosh sound on link clicked
 
+let url;
+
 const renderLobby = (tabId, username) => {
   chrome.tabs.executeScript(tabId, {
     file: 'dist/injectLobby.bundle.js',
@@ -43,11 +45,7 @@ const endGame = () => {
 };
 
 const injectGame = (sender) => {
-  // console.log("injectGame");
-  // console.log(sender.url);
-  // console.log(curPlayerInfo.curUrl);
   if (sender.url === curPlayerInfo.curUrl) {
-    // console.log("in if: sender.url == curPlayerInfo.curUrl");
     chrome.tabs.executeScript(curTabId, {
       file: 'dist/inject.bundle.js',
     }, () => {
@@ -59,7 +57,6 @@ const injectGame = (sender) => {
       });
     });
   } else {
-    // console.log("in else");
     chrome.tabs.update(curTabId, { url: curPlayerInfo.curUrl });
     linkAudio.play();
   }
@@ -131,54 +128,58 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 });
 
 chrome.tabs.onUpdated.addListener((tabId, changeInfo) => {
-  if (changeInfo.status === 'loading' && tabId === curTabId && changeInfo.url) {
-    if (!changeInfo.url.includes(curPlayerInfo.curUrl)) {
-      // endGame();
-      return;
-    }
+  if (changeInfo.url) {
+    url = changeInfo.url; // Store url so we can access it on status complete
   }
+
   if (changeInfo.status === 'complete' && tabId === curTabId) {
-    // console.log("complete onupdated");
-    // console.log(curPlayerInfo.curUrl);
-    // console.log(game.goalPage);
-    if (curPlayerInfo.curUrl === `https://en.${game.goalPage}`) {
-      // console.log("goal page found");
-      curPlayerInfo.finishTime = counter;
+    // Check if loaded content dom has redirect tag
+    chrome.tabs.sendMessage(tabId, { message: 'redirect' }, (response) => {
+      // Response not if inject was just called (must be redirect)
+      if (response) {
+        return;
+      } else if (!url.includes(curPlayerInfo.curUrl)) {
+        endGame();
+      }
+
+      if (curPlayerInfo.curUrl === `https://en.${game.goalPage}`) {
+        curPlayerInfo.finishTime = counter;
+        gameSocket.updatePlayer(
+          curPlayerInfo.finishTime,
+          curPlayerInfo.numClicks,
+          curPlayerInfo.curUrl,
+        );
+        chrome.tabs.executeScript({
+          file: 'dist/injectEnd.bundle.js',
+        }, () => {
+          const req = {
+            message: 'end game info',
+            payload: {
+              curPlayerInfo,
+              game,
+            },
+          };
+          chrome.tabs.sendMessage(tabId, req);
+        });
+        return;
+      }
       gameSocket.updatePlayer(
         curPlayerInfo.finishTime,
         curPlayerInfo.numClicks,
         curPlayerInfo.curUrl,
       );
-      chrome.tabs.executeScript({
-        file: 'dist/injectEnd.bundle.js',
-      }, () => {
-        const req = {
-          message: 'end game info',
-          payload: {
-            curPlayerInfo,
-            game,
-          },
-        };
-        chrome.tabs.sendMessage(tabId, req);
-      });
-      return;
-    }
-    gameSocket.updatePlayer(
-      curPlayerInfo.finishTime,
-      curPlayerInfo.numClicks,
-      curPlayerInfo.curUrl,
-    );
-    if (!curPlayerInfo.curUrl.includes('#')) {
-      chrome.tabs.executeScript(tabId, {
-        file: 'dist/inject.bundle.js',
-      }, () => {
-        chrome.tabs.sendMessage(tabId, {
-          message: 'new game',
-          payload: {
-            counter, username: curPlayerInfo.username, avatar: curPlayerInfo.avatar, game, audioOn,
-          },
+      if (!curPlayerInfo.curUrl.includes('#')) {
+        chrome.tabs.executeScript(tabId, {
+          file: 'dist/inject.bundle.js',
+        }, () => {
+          chrome.tabs.sendMessage(tabId, {
+            message: 'new game',
+            payload: {
+              counter, username: curPlayerInfo.username, avatar: curPlayerInfo.avatar, game, audioOn,
+            },
+          });
         });
-      });
-    }
+      }
+    });
   }
 });

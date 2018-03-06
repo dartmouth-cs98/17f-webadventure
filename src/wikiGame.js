@@ -58,12 +58,7 @@ class WikiGame {
     $(window).off('keydown');
     $(window).off('keyup');
     $('#wa-toc').attr('id', 'toc');
-    $('mw-parser-output').children().each((elem) => {
-      console.log(elem);
-      if ($(elem).text === '') {
-        $(elem).insertBefore($('#toc'));
-      }
-    });
+    $('#toc').insertBefore($($('.mw-parser-output').children('h2')[0]));
     this.curPlayer.removePlayer();
     window.clearInterval(this.updateInterval);
     this.updateInterval = null;
@@ -215,7 +210,7 @@ class WikiGame {
   teleport() {
     // console.log('teleport!!!');
     // let index = Math.floor(Math.random()*(this.path.length - 2)) + 1;
-    // console.log(this.path);
+    console.log(this.path);
     // console.log(index);
     // let link = `https://en.${this.path[index]}`;
     const link = `https://en.${this.path[this.path.length - 1]}`;
