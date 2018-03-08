@@ -32,6 +32,7 @@ const renderLobby = (tabId, username) => {
   linkAudio.setAttribute('id', 'linkAudio');
   linkAudio.setAttribute('src', 'https://k003.kiwi6.com/hotlink/6etyb9h8wr/swoosh.mp3');
   audioDiv.appendChild(linkAudio);
+  chrome.browserAction.setIcon({ path: '../assets/webIcon128_color2.png' });
 
   chrome.tabs.executeScript(tabId, {
     file: 'dist/injectLobby.bundle.js',
@@ -60,6 +61,7 @@ const endGame = () => {
   // Stop music
   bgAudio.pause();
   audioDiv.removeChild(bgAudio);
+  chrome.browserAction.setIcon({ path: '../assets/webIcon128.png' });
 };
 
 const injectGame = (sender) => {
@@ -124,6 +126,8 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     bgAudio.pause();
     audioDiv.removeChild(bgAudio);
     audioDiv.removeChild(linkAudio);
+
+    chrome.browserAction.setIcon({ path: '../assets/webIcon128.png' });
   } else if (sender.tab.id === curTabId) {
     if (request.message === 'new url') {
       curPlayerInfo.numClicks += 1;
