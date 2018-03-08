@@ -39,7 +39,7 @@ const renderLobby = (tabId, username) => {
   }, () => {
     const req = {
       message: 'render lobby',
-      payload: { username },
+      payload: { username, audioOn },
     };
     chrome.tabs.sendMessage(tabId, req);
   });
@@ -130,6 +130,11 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     chrome.browserAction.setIcon({ path: '../assets/webIcon128.png' });
   } else if (sender.tab.id === curTabId) {
     if (request.message === 'new url') {
+      if (request.payload.newUrl === curPlayerInfo.curUrl) {
+        curPlayerInfo.numClicks += 1;
+        chrome.tabs.executeScript(curTabId, { code: 'window.location.reload()' });
+        return;
+      }
       curPlayerInfo.numClicks += 1;
       curPlayerInfo.curUrl = request.payload.newUrl;
       injectGame(sender);
@@ -155,7 +160,7 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo) => {
       // Response not if inject was just called (must be redirect)
       if (response) {
         return;
-      } else if (!url.includes(curPlayerInfo.curUrl)) {
+      } else if (url && !url.includes(curPlayerInfo.curUrl)) {
         endGame();
       }
 
