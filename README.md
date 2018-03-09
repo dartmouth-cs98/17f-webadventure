@@ -13,16 +13,16 @@ Our Chrome Extension currently injects Javascript into a Wikipedia page and uses
 
 On the backend we are using MongoDB and Mongoose to access the data. Visit the [backend repo](https://github.com/dartmouth-cs98/webadventure-backend). The frontend and backend communicate via web sockets (using Socket.io).
 
-The frontend codebase can be broken up into React Components, Injected Scripts, the Background Script and Socket code. From there the code is related to either the Lobby, Gameplay or End.
+The frontend codebase can be broken up into React Components, injected scripts, the background script and socket code. From there the code is related to either the Lobby, Gameplay or End.
 
 ### Lobby
 The lobby is injected when the extension icon is clicked and no lobby is currently injected (event listener in `background.js`). The injected script is `injectLobby.js`. The main react component/container injected is `lobby.js` and other components are imported from there. The lobby connects to the backend through a separate endpoint handled in `lobbySocket.js`.
 
 ### Gameplay
-To store game between urls, the background store a game object. It also interacts with the backend using `gameSocket.js`. Of the injected code, `wikiGame` handles the player interaction with the webpage (overlap with links, movement, etc.) while the React component, `leaderboard.js` renders and updates the leaderboard.
+To store game between url's, the background stores a game object. It also interacts with the backend using `gameSocket.js`. Of the injected code, `wikiGame` handles the player interaction with the webpage (overlap with links, movement, etc.) while the React component, `leaderboard.js` renders and updates the leaderboard.
 
 ### End
-Once the goal page is reached (detected in the background script), an end React popup is inject into the page (`end.js`), but the connection to the backend is not cut off until the popup is exited.
+Once the goal page is reached (detected in the background script), an end React popup is injected into the page (`end.js`), but the connection to the backend is not cut off until the popup is exited.
 
 ## Setup
 
@@ -63,7 +63,7 @@ Have fun!
 
 When uploading to the Chrome Extensions store, delete the node_modules folder and .DS_Store.
 
-Currently the extension is unlisted, but available on the Chrome Extension Store. Please contact one of the developers to access.
+Currently the extension is not publicly listed, but is available on the [Chrome Web Store](https://chrome.google.com/webstore/detail/webadventure/knbadaakpfiahdpanlijfbbemnammhka).
 
 ## Gameplay
 
@@ -99,7 +99,7 @@ Once the goal page is reached, a pop up displays indicating that the player has 
 
 ### November 14 Demo Feedback
 
-Please see Google Doc to directly view responses submitted from November 14 Demo:
+Please refer to this Google Doc to directly view responses submitted from November 14 Demo:
 https://docs.google.com/spreadsheets/d/1WIavWqiqqkvedVlsRr5hxJsht_0UQjWsiwfunbVE8TY/edit?usp=sharing
 
 ### What worked and didn't work
@@ -133,7 +133,7 @@ During term 2 the team re-evaluted WebAdventure and ended up pivoting to a new c
 
 In the overhaul, we ended up having to rewrite most of the code of the game. Since screen resolutions differed so dramatically from user to user, we eliminated the locations since there wasn't a consistent way of maintaining locations across screens without bizarre hopping. This smoothed out the user's experience quite a bit. The new version of the game focused on hopping between different urls, which involved constant communication between the background script and injected script.
 
-This term we also integrated React into the project. This made for substantially easier development when it game to the lobby, end page and leaderboard portions of the project. We integrated music, animations and power ups into the game, which substantially improved the gaming experience.
+This term we also integrated React into the project. This made for substantially easier development when it came to the lobby, end page and leaderboard portions of the project. We integrated music, animations and power ups into the game, which substantially improved the gaming experience.
 
 The largest challenge of the project was dealing with simultaneously timing and starting the game for all players. The backend ended up crashing a few times before we were able to get it functional for multiplayer.
 
