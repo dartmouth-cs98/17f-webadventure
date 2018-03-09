@@ -205,7 +205,7 @@ class Lobby extends Component {
         <div className="overlay" />
         <div id="lobby-container">
           <div id="lobby">
-            <LobbyTop exitGame={this.exitGame} />
+            <LobbyTop audioOn={this.props.audioOn} exitGame={this.exitGame} />
             <img src="https://i.imgur.com/VUVNhtC.png" alt="webadventure!" id="webad-logo" />
             <div id="lobby-title">WEBADVENTURE</div>
             <SignUp

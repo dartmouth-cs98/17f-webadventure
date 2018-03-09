@@ -24,9 +24,9 @@ chrome.runtime.onMessage.addListener((req) => {
   if (req.message === 'render lobby' && $('#wa-lobby').length === 0) {
     $('body').append('<div id=wa-lobby />');
     if (req.payload && req.payload.username) {
-      ReactDOM.render(<Lobby onStart={onStart} username={req.payload.username} exitGame={exitGame} />, document.getElementById('wa-lobby'));
+      ReactDOM.render(<Lobby onStart={onStart} audioOn={req.payload.audioOn} username={req.payload.username} exitGame={exitGame} />, document.getElementById('wa-lobby'));
     } else {
-      ReactDOM.render(<Lobby onStart={onStart} exitGame={exitGame} />, document.getElementById('wa-lobby'));
+      ReactDOM.render(<Lobby onStart={onStart} audioOn={req.payload.audioOn} exitGame={exitGame} />, document.getElementById('wa-lobby'));
     }
   }
 });

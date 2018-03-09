@@ -36,6 +36,15 @@ module.exports = {
         test: /\.svg$/,
         loader: 'svg-loader?pngScale=2',
       },
+      {
+        test: /\.(png|jpg|gif)$/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {},
+          },
+        ],
+      },
     ],
   },
 };

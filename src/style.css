@@ -810,7 +810,11 @@ div.panel-alert:empty {
 
 #top {
   line-height: 40px;
-  display: block;
+}
+
+#wa-nextPage {
+  margin: 0 5px;
+  color: green;
 }
 
 #lobby-top {

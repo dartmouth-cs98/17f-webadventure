@@ -123,18 +123,20 @@ class WikiGame {
     const newLoc = this.curPlayer.getPosition();
     const stepSize = this.speed * this.flipMultiplier;
 
-    if (this.keysPressed.x.left && !this.keysPressed.x.right && newLoc.x - 5 > 0) {
+    if (this.keysPressed.x.left && !this.keysPressed.x.right
+      && newLoc.x - (5 * this.flipMultiplier) > 0) {
       newLoc.x -= stepSize;
       this.curPlayer.updateDirRight(false);
     } else if (!this.keysPressed.x.left &&
-      this.keysPressed.x.right && newLoc.x + 5 < this.borders.width) {
+      this.keysPressed.x.right && newLoc.x + (5 * this.flipMultiplier) < this.borders.width) {
       newLoc.x += stepSize;
       this.curPlayer.updateDirRight(true);
     }
-    if (this.keysPressed.y.up && !this.keysPressed.y.down && newLoc.y - 5 > 0) {
+    if (this.keysPressed.y.up && !this.keysPressed.y.down
+      && newLoc.y - (5 * this.flipMultiplier) > 0) {
       newLoc.y -= stepSize;
     } else if (!this.keysPressed.y.up &&
-      this.keysPressed.y.down && newLoc.y + 5 < this.borders.height) {
+      this.keysPressed.y.down && newLoc.y + (5 * this.flipMultiplier) < this.borders.height) {
       newLoc.y += stepSize;
     }
     this.curPlayer.movePlayer(newLoc.x, newLoc.y);
@@ -150,11 +152,11 @@ class WikiGame {
   }
 
   updateOnPowerup() {
-    const currLoc = this.curPlayer.getPosition();
-    const left = currLoc.x;
-    const right = currLoc.x + this.curPlayer.size.width;
-    const top = currLoc.y;
-    const bottom = currLoc.y + this.curPlayer.size.height;
+    const curLoc = this.curPlayer.getPosition();
+    const left = curLoc.x;
+    const right = curLoc.x + this.curPlayer.size.width;
+    const top = curLoc.y;
+    const bottom = curLoc.y + this.curPlayer.size.height;
 
     const overlap = this.powerups.powerups.filter((pow) => {
       const xOverlap = (left > pow.position.left && left < pow.position.left + pow.size.width) ||
@@ -209,12 +211,12 @@ class WikiGame {
   }
 
   teleport() {
-    // console.log('teleport!!!');
-    const index = Math.floor(Math.random() * (this.path.length - 2)) + 1;
-    // console.log(this.path);
-    console.log(index);
-    const link = `https://en.${this.path[index]}`;
+    // Randomize somewhere on the path
+    // const index = Math.floor(Math.random() * (this.path.length - 2)) + 1;
     // const link = `https://en.${this.path[this.path.length - 1]}`;
+
+    // Teleport to one before the goal
+    const link = `https://en.${this.path[this.path.length - 2]}`;
     this.onNewUrl(link);
   }
 
