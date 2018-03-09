@@ -36,7 +36,7 @@ class Player {
     const vertSection = Math.floor((top + height) / 100);
     const linksList = this.links[vertSection] ? this.links[vertSection] : [];
     const url = $(link).attr('href');
-    if (!url.includes('/wiki/')) {
+    if (!url.includes('/wiki/') || url.includes('Talk:')) {
       const text = $(link).text();
       $(link).replaceWith(text);
       return;
@@ -134,9 +134,11 @@ class Player {
 
     if (link) {
       $(link).css('color', 'pink');
+      $('#wa-nextPage').text(link);
     }
     if (this.link && this.link !== link) {
       $(this.link).css('color', '#0645ad');
+      $('#wa-nextPage').text('');
     }
     this.link = link;
   }

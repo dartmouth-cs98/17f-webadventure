@@ -163,8 +163,7 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo) => {
       } else if (url && !url.includes(curPlayerInfo.curUrl)) {
         endGame();
       }
-
-      if (curPlayerInfo.curUrl === `https://en.${game.goalPage}`) {
+      if (curPlayerInfo && curPlayerInfo.curUrl === `https://en.${game.goalPage}`) {
         curPlayerInfo.finishTime = counter;
         gameSocket.updatePlayer(
           curPlayerInfo.finishTime,
