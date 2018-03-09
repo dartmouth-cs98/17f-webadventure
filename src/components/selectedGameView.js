@@ -22,11 +22,11 @@ class SelectedGameView extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (
-      nextProps.joinedGame.players.length === 2 &&
+      nextProps.joinedGame.players.length === 5 &&
       !nextProps.joinedGame.isPrivate
     ) {
-      this.timer = setInterval(this.countDown, 1000);
       this.setState({ seconds: 5 });
+      this.timer = setInterval(this.countDown, 1000);
     } else {
       clearInterval(this.timer);
     }
@@ -86,13 +86,13 @@ class SelectedGameView extends Component {
   }
 
   renderStartDemo() {
-    if (this.props.joinedGame) {
+    if (this.props.joinedGame && !this.props.joinedGame.isPrivate) {
       return (
         <div>
           <button
             className="selected-game-button yellow-button"
             onClick={this.props.onStartGame}
-          >Demo
+          >Start Now
           </button>
         </div>);
     }

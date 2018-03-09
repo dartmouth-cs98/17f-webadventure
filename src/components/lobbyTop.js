@@ -3,13 +3,19 @@
 import React from 'react';
 
 const LobbyTop = (props) => {
+  const renderAudio = (audioOn) => {
+    if (audioOn) {
+      return <div id="sound-lobby" className="sound-on" />;
+    }
+    return <div id="sound-lobby" className="sound-off" />;
+  };
   return (
     <div id="lobby-top">
       <span>
         <button className="exit-lobby-button" onClick={props.exitGame}>&times;</button>
       </span>
       <span className="row">
-        <div id="sound-lobby" className="sound-on" />
+        {renderAudio(props.audioOn)}
         <div>
           <svg id="info" fill="#000000" height="37" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg" transform="scale(1.5)">
             <path d="M0 0h24v24H0z" fill="none" />
