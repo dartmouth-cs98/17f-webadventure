@@ -97,6 +97,7 @@ class Leaderboard extends Component {
             <span id="top-left">
               <div>GOAL:&nbsp;</div>
               <div id="color-5">{goalPage}</div>
+              <div id="wa-nextPage" />
             </span>
             <span className="row">
               {this.renderAudioOn()}
