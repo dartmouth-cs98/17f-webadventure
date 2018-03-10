@@ -48,7 +48,7 @@ npm start
 
 ## Deployment
 
-At this stage, we plan to deploy via Chrome extension using Google Developer Tools (chrome://extensions).
+This game is run via Chrome extension using Google Developer Tools (chrome://extensions).
 
 Before reloading as an extension, run the command:
 ```
