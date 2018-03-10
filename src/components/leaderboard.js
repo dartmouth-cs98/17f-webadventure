@@ -94,11 +94,11 @@ class Leaderboard extends Component {
         <div id="wa-container">
           <img id="wiki-logo" src="https://i.imgur.com/hQbOKPS.png" alt="wiki logo" />
           <div id="topbar">
-            <div id="top" className="row">
-              <div> GOAL: {goalPage} |</div>
-              <div>| Link:</div>
+            <span id="top-left">
+              <div>GOAL:&nbsp;</div>
+              <div id="color-5">{goalPage}</div>
               <div id="wa-nextPage" />
-            </div>
+            </span>
             <span className="row">
               {this.renderAudioOn()}
               <svg id="exit-button" onClick={this.props.exitGame} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
