@@ -188,22 +188,20 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo) => {
         curPlayerInfo.numClicks,
         curPlayerInfo.curUrl,
       );
-      if (!curPlayerInfo.curUrl.includes('#')) {
-        chrome.tabs.executeScript(tabId, {
-          file: 'dist/inject.bundle.js',
-        }, () => {
-          chrome.tabs.sendMessage(tabId, {
-            message: 'new game',
-            payload: {
-              counter,
-              username: curPlayerInfo.username,
-              avatar: curPlayerInfo.avatar,
-              game,
-              audioOn,
-            },
-          });
+      chrome.tabs.executeScript(tabId, {
+        file: 'dist/inject.bundle.js',
+      }, () => {
+        chrome.tabs.sendMessage(tabId, {
+          message: 'new game',
+          payload: {
+            counter,
+            username: curPlayerInfo.username,
+            avatar: curPlayerInfo.avatar,
+            game,
+            audioOn,
+          },
         });
-      }
+      });
     });
   }
 });
