@@ -36,7 +36,7 @@ class Player {
     const vertSection = Math.floor((top + height) / 100);
     const linksList = this.links[vertSection] ? this.links[vertSection] : [];
     const url = $(link).attr('href');
-    if (!url.includes('/wiki/') || url.includes('Talk:')) {
+    if (!url.includes('/wiki/') || url.includes(':') || url === '/wiki/Main_Page') {
       const text = $(link).text();
       $(link).replaceWith(text);
       return;

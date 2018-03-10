@@ -923,7 +923,9 @@ div.panel-alert:empty {
   display: flex;
   flex-flow: row wrap;
   align-items: center;
-  margin-top: 5px;
+  margin-top:5px;
+  flex-wrap: wrap;
+  padding: 0 20px;
   margin-left: 3px;
 }
 
