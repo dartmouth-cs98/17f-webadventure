@@ -116,6 +116,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     };
     const bgAudios = ['http://k003.kiwi6.com/hotlink/li3x2lki41/mk.mp3',
       'http://k003.kiwi6.com/hotlink/3ttyw8k1nh/green-trains.mp3',
+      'http://k003.kiwi6.com/hotlink/thhyenzf8z/sm2.mp3',
     ];
     const randInd = Math.floor(Math.random() * bgAudios.length);
     bgAudio.setAttribute('src', bgAudios[randInd]);
