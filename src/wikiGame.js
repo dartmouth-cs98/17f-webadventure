@@ -29,6 +29,7 @@ class WikiGame {
     this.powerups = new Powerups();
     this.path = game.path;
 
+    this.isFlipped = false;
     this.flipMultiplier = 1; // scales step size and direction; 1 for normal movement
 
     this.setupToc = this.setupToc.bind(this);
@@ -123,20 +124,24 @@ class WikiGame {
     const newLoc = this.curPlayer.getPosition();
     const stepSize = this.speed * this.flipMultiplier;
 
-    if (this.keysPressed.x.left && !this.keysPressed.x.right
-      && newLoc.x - (5 * this.flipMultiplier) > 0) {
+    if (((this.keysPressed.x.left && !this.keysPressed.x.right && !this.isFlipped)
+    || (!this.keysPressed.x.left && this.keysPressed.x.right && this.isFlipped))
+      && newLoc.x - stepSize > 0) {
       newLoc.x -= stepSize;
       this.curPlayer.updateDirRight(false);
-    } else if (!this.keysPressed.x.left &&
-      this.keysPressed.x.right && newLoc.x + (5 * this.flipMultiplier) < this.borders.width) {
+    } else if (((!this.keysPressed.x.left && this.keysPressed.x.right && !this.isFlipped)
+    || (this.keysPressed.x.left && !this.keysPressed.x.right && this.isFlipped))
+    && newLoc.x + stepSize < this.borders.width) {
       newLoc.x += stepSize;
       this.curPlayer.updateDirRight(true);
     }
-    if (this.keysPressed.y.up && !this.keysPressed.y.down
-      && newLoc.y - (5 * this.flipMultiplier) > 0) {
+    if (((this.keysPressed.y.up && !this.keysPressed.y.down && !this.isFlipped) ||
+    (!this.keysPressed.y.up && this.keysPressed.y.down && this.isFlipped))
+      && newLoc.y - stepSize > 0) {
       newLoc.y -= stepSize;
-    } else if (!this.keysPressed.y.up &&
-      this.keysPressed.y.down && newLoc.y + (5 * this.flipMultiplier) < this.borders.height) {
+    } else if (((!this.keysPressed.y.up && this.keysPressed.y.down && !this.isFlipped) ||
+    (this.keysPressed.y.up && !this.keysPressed.y.down && this.isFlipped))
+    && newLoc.y + stepSize < this.borders.height) {
       newLoc.y += stepSize;
     }
     this.curPlayer.movePlayer(newLoc.x, newLoc.y);
@@ -195,7 +200,7 @@ class WikiGame {
   }
 
   flipControls() {
-    this.flipMultiplier = -1;
+    this.isFlipped = true;
     this.curPlayer.updateRevPowerup(true);
     setTimeout(this.resetMultiplier, 5000);
   }
@@ -221,7 +226,7 @@ class WikiGame {
   }
 
   resetMultiplier() {
-    this.flipMultiplier = 1;
+    this.isFlipped = false;
     this.curPlayer.updateRevPowerup(false);
   }
 
