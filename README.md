@@ -95,6 +95,9 @@ The Table of Contents provides a secondary means of navigating the page. Click o
 
 Once the goal page is reached, a pop up displays indicating that the player has reached the end and displays the scores of the other players in the game. The player can then choose to exit the game or return to the lobby and start a new game!
 
+For more info:
+https://github.com/dartmouth-cs98/17f-webadventure/wiki/
+
 ## Summary of Term 1
 
 ### November 14 Demo Feedback
