@@ -45,7 +45,7 @@ class End extends Component {
       score = 30;
     }
     if (player.finishTime > -1) {
-      score += (4 - sortedTimes.indexOf(player)) * 3;
+      score += (4 - sortedTimes.indexOf(player)) * 20;
     }
     return score;
   }
