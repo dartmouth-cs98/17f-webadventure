@@ -75,7 +75,7 @@ The user is then brought to the lobby screen. Here the user is able to select an
 
 ![Lobby](readme-gifs/lobby.gif)
 
-Once a game reaches capacity (which we have set to 5 players), then the game will count down from 5 and start.
+Once a game reaches capacity (which we have set to 5 players), then the game will count down from 5 and start. Alternatively a player can force start by pressing the Start Now button.
 
 The music in the game can be disabled by clicking on the sound icon. This will disable the music throughout the game and can be reenabled at anytime. The same icon exists in game play as well.
 

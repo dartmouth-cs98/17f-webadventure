@@ -162,11 +162,12 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo) => {
     // Check if loaded content dom has redirect tag
     chrome.tabs.sendMessage(tabId, { message: 'redirect' }, (response) => {
       // Response not if inject was just called (must be redirect)
+      console.log('message callback');
       if (response) {
+        console.log(response);
         return;
-      } else if (url && !url.includes(curPlayerInfo.curUrl)) {
-        endGame();
       }
+      console.log('here');
       if (curPlayerInfo && curPlayerInfo.curUrl === `https://en.${game.goalPage}`) {
         curPlayerInfo.finishTime = counter;
         gameSocket.updatePlayer(
