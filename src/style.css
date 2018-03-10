@@ -247,7 +247,7 @@ svg:hover {
 
 .row {
   display: flex;
-  flex-flow: row;
+  flex-direction: row;
 }
 
 #sound {
@@ -759,7 +759,7 @@ div.panel-alert:empty {
 #end {
   display: block;
   position: fixed;
-  width: 35vw;
+  width: 37vw;
   font-family: 'Orbitron',sans-serif;
   top: 4vw;
   left: 33vw;
@@ -802,13 +802,19 @@ div.panel-alert:empty {
   margin-top: 10px;
 }
 
-#top, #timer {
+#timer {
   font-family: 'Orbitron',sans-serif;
   text-align: center;
   margin-bottom:3px;
 }
 
-#top {
+#top-left {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  font-family: 'Orbitron',sans-serif;
+  margin-bottom:3px;
   line-height: 40px;
 }
 
@@ -915,9 +921,10 @@ div.panel-alert:empty {
 }
 #path {
   display: flex;
-  flex-direction: row;
+  flex-flow: row wrap;
   align-items: center;
-  margin-top:5px;
+  margin-top: 5px;
+  margin-left: 3px;
 }
 
 .displ-with-right-arrow {
