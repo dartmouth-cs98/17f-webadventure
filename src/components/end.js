@@ -45,7 +45,7 @@ class End extends Component {
       score = 30;
     }
     if (player.finishTime > -1) {
-      score += (4 - sortedTimes.indexOf(player)) * 20;
+      score += (4 - sortedTimes.indexOf(player)) * 3;
     }
     return score;
   }
@@ -89,7 +89,7 @@ class End extends Component {
   }
 
   renderLeader(finishTimes) {
-    const sortedScores = this.state.leaderboard
+    let sortedScores = this.state.leaderboard
       .sort((a, b) => this.scoringSort(a, b, finishTimes));
     if (finishTimes.some(player => player.finishTime < 0)) {
       return (
@@ -129,7 +129,7 @@ class End extends Component {
   }
 
   render() {
-    const finishTimes = this.state.leaderboard
+    let finishTimes = this.state.leaderboard
       .sort((a, b) => a.finishTime - b.finishTime);
     return (
       <div id="end">
