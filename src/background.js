@@ -16,6 +16,8 @@ let url;
 const renderLobby = (tabId, username) => {
   // Background audio setup
 
+  console.log("background renderLobby 1");
+
   const bgAudios = ['http://k003.kiwi6.com/hotlink/z3fy3bb3yr/nyan1.mp3',
     'http://k003.kiwi6.com/hotlink/q1vt0njlii/mk-lobby.mp3',
     'http://k003.kiwi6.com/hotlink/fke6plhsn8/sailormoon.mp3',
@@ -28,15 +30,20 @@ const renderLobby = (tabId, username) => {
   audioDiv.appendChild(bgAudio);
   bgAudio.play();
 
+  console.log("background renderLobby 2 audio");
+
   // Link whoosh sound setup
   linkAudio.setAttribute('id', 'linkAudio');
   linkAudio.setAttribute('src', 'https://k003.kiwi6.com/hotlink/6etyb9h8wr/swoosh.mp3');
   audioDiv.appendChild(linkAudio);
   chrome.browserAction.setIcon({ path: '../assets/webIcon128_color2.png' });
 
+  console.log("background renderLobby 3 setIcon")
+
   chrome.tabs.executeScript(tabId, {
     file: 'dist/injectLobby.bundle.js',
   }, () => {
+    console.log("background renderLobby 4 executeScript");
     const req = {
       message: 'render lobby',
       payload: { username, audioOn },
@@ -47,10 +54,18 @@ const renderLobby = (tabId, username) => {
 
 const onGame = (newGame) => {
   game = newGame;
+
+  console.log("background onGame 1");
+
   chrome.tabs.sendMessage(curTabId, { message: 'game info', payload: { game } });
+
+  console.log("background onGame 2");
 };
 
 const endGame = () => {
+
+  console.log("background endGame");
+
   curPlayerInfo = null;
   curTabId = -1;
   clearInterval(interval);

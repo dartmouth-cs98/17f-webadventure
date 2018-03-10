@@ -144,11 +144,19 @@ class WikiGame {
   }
 
   openLink() {
+
+    console.log("openLink 1");
+
     const link = this.curPlayer.getLink();
+
+    console.log(link);
+
     if (link !== null) {
       const redirectLink = `https://en.wikipedia.org${link}`;
       this.onNewUrl(redirectLink);
     }
+
+    console.log("openLink 2");
   }
 
   updateOnPowerup() {

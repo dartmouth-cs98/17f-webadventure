@@ -11,8 +11,17 @@ const onStart = (user, game) => {
       game,
     },
   };
+
+  console.log("onStart 1");
+
   document.getElementById('wa-lobby').remove();
+
+  console.log("onStart 2");
+
   chrome.runtime.sendMessage(request);
+
+  console.log("onStart 3");
+
 };
 
 const exitGame = () => {
