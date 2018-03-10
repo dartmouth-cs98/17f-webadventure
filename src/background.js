@@ -164,8 +164,6 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo) => {
       // Response not if inject was just called (must be redirect)
       if (response) {
         return;
-      } else if (url && !url.includes(curPlayerInfo.curUrl)) {
-        endGame();
       }
       if (curPlayerInfo && curPlayerInfo.curUrl === `https://en.${game.goalPage}`) {
         curPlayerInfo.finishTime = counter;
