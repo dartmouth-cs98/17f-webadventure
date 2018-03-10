@@ -3,7 +3,7 @@
 
   "name": "WebAdventure",
   "description": "This extension allows the user to play a game of WebAdventure, a version of the Wiki Game!",
-  "version": "1.5",
+  "version": "1.6",
   "background": {
     "scripts": [ "dist/background.bundle.js"],
     "persistent": false
