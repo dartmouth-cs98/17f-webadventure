@@ -85,6 +85,10 @@ const injectGame = (sender) => {
 chrome.browserAction.onClicked.addListener((tab) => {
   if (!gameSocket && tab.url.includes('en.wikipedia.org')) {
     renderLobby(tab.id);
+  } else {
+    chrome.tabs.create({ url: 'https://en.wikipedia.org/wiki/Main_Page' }, (newTab) => {
+      renderLobby(newTab.id);
+    });
   }
 });
 
@@ -160,8 +164,6 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo) => {
       // Response not if inject was just called (must be redirect)
       if (response) {
         return;
-      } else if (url && !url.includes(curPlayerInfo.curUrl)) {
-        endGame();
       }
       if (curPlayerInfo && curPlayerInfo.curUrl === `https://en.${game.goalPage}`) {
         curPlayerInfo.finishTime = counter;
