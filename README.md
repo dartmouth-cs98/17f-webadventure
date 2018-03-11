@@ -2,7 +2,9 @@
 
 WebAdventure is a Chrome Extension that provides a unique and fun way of interacting with Wikipedia via a game format. Players compete against each other in a version of the ["Wiki Game."](https://en.wikipedia.org/wiki/Wikipedia:Wiki_Game) For each player, the objective of the game is to reach the "goal" page before any other player does. Live updates of other players and power-ups and power-downs throughout the Wikipedia pages make for a competitive and exciting experience!
 
-## Other Repos
+## Other Repos and Pages
+Landing Page: http://cs98.me/17f-webadventure/
+
 Backend Repo: https://github.com/dartmouth-cs98/webadventure-backend
 
 WikiGraph Repo: https://github.com/dartmouth-cs98/17f-webadventure-wikigraphDB
