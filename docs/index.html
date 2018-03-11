@@ -1,28 +1,35 @@
-<h1 style="color: #5e9ca0; text-align: center;"><span style="color: #008000;"><a style="color: #008000;" href="https://chrome.google.com/webstore/detail/webadventure/knbadaakpfiahdpanlijfbbemnammhka">WebAdventure</a></span></h1>
-<h2 style="color: #2e6c80;"><span style="color: #339966;">What is WebAdventure?</span></h2>
-<p>WebAdventure is a Chrome Extension that provides a unique and fun way of interacting with Wikipedia via a game format. Players compete against each other in a version of the <a href="https://en.wikipedia.org/wiki/Wikipedia:Wiki_Game">"Wiki Game"</a>. For each player, the objective of the game is to reach the "goal" page before any other player does. Live updates of other players and power-ups and power-downs throughout the Wikipedia pages make for a competitive and exciting experience!</p>
-<h2 style="color: #2e6c80;"><span style="color: #339966;">Where can I download it?</span></h2>
-<p>You can download WebAdventure in the <a href="https://chrome.google.com/webstore/detail/webadventure/knbadaakpfiahdpanlijfbbemnammhka">Google Web Store</a>!</p>
-<p>You can also checkout the project on <a href="https://github.com/dartmouth-cs98/17f-webadventure">Github</a>!</p>
-<h2 style="color: #2e6c80;"><span style="color: #339966;">Gameplay</span></h2>
-<h3><span style="color: #99cc00;">Lobby</span></h3>
-<p>Upon opening the game extension, the user is taken to a sign in page where they can sign in as a player.</p>
-<p>The user is then brought to the lobby screen. Here the user is able to select an avatar, choose from one of the public games (generated via the backend) and join a game, or host/join a private game. Select a public game by clicking on a public game. Then click "Join Game".</p>
-<p><img src="lobby.gif" /></p>
-<p>Once a game reaches capacity (which we have set to 5 players), then the game will count down from 5 and start. Alternatively a player can force start by pressing the "Start Now" button.</p>
-<p>The music in the game can be disabled by clicking on the sound icon. This will disable the music throughout the game and can be reenabled at anytime. The same icon exists in game play as well.</p>
-<h3><span style="color: #99cc00;">Game</span></h3>
-<p>To move the avatar, make sure the Wikipedia page in focus (click on it if it's not) and move using the keys 'W', 'A', 'S', 'D'. To go to another page, press "l" when a link is highlighted. Along the way there are various power-ups and power-downs. Knock into them and see what they do.</p>
-<p><img src="gameplay.gif" /></p>
-<p>The goal of the game is to reach the Goal Page (given at the top of the page). When the player is over a link, the link turns pink and the actual url is displayed on the top.</p>
-<p><img src="toc.gif" /></p>
-<p>The "Table of Contents" provides a secondary means of navigating the page. Click on part of the table of contents and the player will jump to that part of the page.</p>
-<p><img src="end.gif" /></p>
-<p>Once the goal page is reached, a pop up displays indicating that the player has reached the end and displays the scores of the other players in the game. The player can then choose to exit the game or return to the lobby and start a new game!</p>
-<h2 style="color: #2e6c80;"><span style="color: #339966;">Contributors:</span></h2>
-<p>Imanol "Idea Guy" Avenda&ntilde;o</p>
-<p>Stephanie "Eye For Style" Guo</p>
-<p>David "Dreamer/Doh" Oh</p>
-<p>Alma "Savage" Wang</p>
-<p>Barry "PM" Yang</p>
-<p>Also, a huge thanks to Tim Tregubov for being a constant source of help, encouragement, and suggestions on this project!</p>
+<!DOCTYPE html>
+<html>
+  <head>
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" type="image/png" href="favicon.png"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title> WEBADVENTURE </title>
+
+  </head>
+  <body>
+
+    <audio controls autoplay loop>
+      <source src="http://k003.kiwi6.com/hotlink/8xhi69838v/Nyan_Cat_16_Bit_10_Minutes.mp3" type="audio/ogg">
+      Your browser does not support audio.
+    </audio>
+
+
+    <div class="cover">
+
+      <div class="images">
+        <img className="avatar-option" alt="" src='https://i.imgur.com/YNcTBuU.gif' />
+        <img className="avatar-option" alt="" src='https://i.imgur.com/Fu68Kg1.gif' />
+        <img className="avatar-option" alt="" src='https://i.imgur.com/lBC1MrV.gif' />
+        <img className="avatar-option" alt="" src='https://i.imgur.com/UEI2KTq.gif' />
+      </div>
+      <h1> WEBADVENTURE </h1>
+      <a href="https://chrome.google.com/webstore/detail/webadventure/knbadaakpfiahdpanlijfbbemnammhka" class="button">GET IT HERE</a>
+
+    <!-- end of flex -->
+    </div>
+
+  </body>
+</html>

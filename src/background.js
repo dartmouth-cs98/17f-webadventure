@@ -1,5 +1,6 @@
-import GameSocket from './sockets/gameSocket';
+/* eslint no-unused-vars:0 */
 
+import GameSocket from './sockets/gameSocket';
 
 let gameSocket;
 let game; // {startPage, goalPage}

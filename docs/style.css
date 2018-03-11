@@ -1,0 +1,103 @@
+@import url(https://fonts.googleapis.com/css?family=Orbitron:900);
+
+@keyframes rainbow {
+  0% {
+      color: red
+  }
+  20% {
+      color: orange
+  }
+  40% {
+      color: gold
+  }
+  60% {
+      color: green
+  }
+  80% {
+      color: #00f
+  }
+  to {
+      color: purple
+  }
+}
+
+@keyframes rainbow-gradient {
+  0%,to {
+      background-position: 0 82%
+  }
+  50% {
+      background-position: 100% 19%
+  }
+}
+
+body {
+  background: #f5fffa;
+}
+
+.cover {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-size: cover;
+  font-family: 'Orbitron',sans-serif;
+}
+
+.images {
+  display: flex;
+  flex-direction: row;
+  margin-top: 100px;
+}
+
+img {
+  width:200px;
+  height:200px;
+}
+
+h1 {
+  font-family: impact;
+  font-size: 150px;
+
+  margin:0;
+
+  animation-name: rainbow;
+  animation-duration: 3s;
+  animation-timing-function: ease-out;
+  animation-delay: 0;
+  animation-direction: alternate;
+  animation-iteration-count: infinite;
+  animation-fill-mode: none;
+  animation-play-state: running
+}
+
+a.button {
+  -webkit-appearance: button;
+  -moz-appearance: button;
+  appearance: button;
+
+  margin-top: 30px;
+
+  text-decoration: none;
+  color: black;
+  font-size: 30px;
+  background: transparent;
+
+  padding: 17px 30px 13px;
+  border: 5px solid black;
+  border-radius: 5px;
+
+}
+
+a.button:hover {
+  color: white;
+  border-color: gray;
+
+  background: linear-gradient(124deg,#ff2400,#e81d1d,#e8b71d,#e3e81d,#1de840,#1ddde8,#2b1de8,#dd00f3,#dd00f3);
+  background-size: 1800% 1800%;
+  animation-name: rainbow-gradient;
+  animation-duration: 4s;
+  animation-timing-function: ease-out;
+  animation-delay: 0;
+  animation-iteration-count: infinite;
+  animation-play-state: running;
+}
