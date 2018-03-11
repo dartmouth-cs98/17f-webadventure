@@ -12,7 +12,6 @@ let audioOn = true;
 const audioDiv = document.createElement('div');
 const bgAudio = document.createElement('AUDIO'); // Persistent across redirects
 const linkAudio = document.createElement('AUDIO'); // Whoosh sound on link clicked
-let url;
 
 const renderLobby = (tabId, username) => {
   // Background audio setup
@@ -47,8 +46,10 @@ const renderLobby = (tabId, username) => {
 };
 
 const onGame = (newGame) => {
-  game = newGame;
-  chrome.tabs.sendMessage(curTabId, { message: 'game info', payload: { game } });
+  if (newGame) {
+    game = newGame;
+    chrome.tabs.sendMessage(curTabId, { message: 'game info', payload: { game } });
+  }
 };
 
 const endGame = () => {
@@ -155,11 +156,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 });
 
 chrome.tabs.onUpdated.addListener((tabId, changeInfo) => {
-  if (changeInfo.url) {
-    url = changeInfo.url; // Store url so we can access it on status complete
-  }
-
-  if (changeInfo.status === 'complete' && tabId === curTabId) {
+  if (changeInfo && changeInfo.status === 'complete' && tabId === curTabId) {
     // Check if loaded content dom has redirect tag
     chrome.tabs.sendMessage(tabId, { message: 'redirect' }, (response) => {
       // Response not if inject was just called (must be redirect)
@@ -192,22 +189,20 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo) => {
         curPlayerInfo.numClicks,
         curPlayerInfo.curUrl,
       );
-      if (!curPlayerInfo.curUrl.includes('#')) {
-        chrome.tabs.executeScript(tabId, {
-          file: 'dist/inject.bundle.js',
-        }, () => {
-          chrome.tabs.sendMessage(tabId, {
-            message: 'new game',
-            payload: {
-              counter,
-              username: curPlayerInfo.username,
-              avatar: curPlayerInfo.avatar,
-              game,
-              audioOn,
-            },
-          });
+      chrome.tabs.executeScript(tabId, {
+        file: 'dist/inject.bundle.js',
+      }, () => {
+        chrome.tabs.sendMessage(tabId, {
+          message: 'new game',
+          payload: {
+            counter,
+            username: curPlayerInfo.username,
+            avatar: curPlayerInfo.avatar,
+            game,
+            audioOn,
+          },
         });
-      }
+      });
     });
   }
 });
