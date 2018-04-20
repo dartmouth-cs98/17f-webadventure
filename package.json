@@ -40,7 +40,8 @@
   "scripts": {
     "start": "webpack webpack.config.js --watch",
     "test": "./node_modules/.bin/eslint src; npm run build",
-    "build": "webpack webpack.config.js"
+    "build": "webpack webpack.config.js",
+    "clean": "rm -rf node_modules dist"
   },
   "repository": {
     "type": "git",
