@@ -26,19 +26,6 @@ class Lobby extends Component {
       joinedGame: null,
     };
 
-    this.onGames = this.onGames.bind(this);
-    this.onGameStarted = this.onGameStarted.bind(this);
-    this.onUsers = this.onUsers.bind(this);
-    this.onStartGame = this.onStartGame.bind(this);
-    this.exitGame = this.exitGame.bind(this);
-    this.updateUser = this.updateUser.bind(this);
-    this.signUpLobby = this.signUpLobby.bind(this);
-    this.selectGame = this.selectGame.bind(this);
-    this.joinPublicGame = this.joinPublicGame.bind(this);
-    this.joinPrivateGame = this.joinPrivateGame.bind(this);
-    this.hostPrivateGame = this.hostPrivateGame.bind(this);
-    this.backToGameSelect = this.backToGameSelect.bind(this);
-
     this.lobbySocket = new LobbySocket(this.onGames, this.onUsers, this.onGameStarted, username);
     if (username) {
       this.signUpLobby(username);
@@ -56,7 +43,7 @@ class Lobby extends Component {
     window.removeEventListener('beforeunload', this.exitGame);
   }
 
-  onGames(games) {
+  onGames = (games) => {
     const newState = { games };
     games.forEach((game) => {
       if (this.state.selectedGame && this.state.selectedGame.id === game.id) {
@@ -69,15 +56,15 @@ class Lobby extends Component {
     this.setState(newState);
   }
 
-  onGameStarted(game) {
+  onGameStarted = (game) => {
     this.props.onStart(this.state.user, game);
   }
 
-  onUsers(users) {
+  onUsers = (users) => {
     this.setState({ allUsers: users });
   }
 
-  onStartGame() {
+  onStartGame = () => {
     if (!this.state.joinedGame.active) {
       this.lobbySocket.startGame(this.state.joinedGame.id)
         .then(() => {})
@@ -86,7 +73,7 @@ class Lobby extends Component {
   }
 
   // Toggle sound icon and mute property of all audio
-  toggleAudio() {
+  toggleAudio = () => {
     const sound = $('#sound-lobby');
 
     sound.click(() => {
@@ -96,7 +83,7 @@ class Lobby extends Component {
     });
   }
 
-  exitGame() {
+  exitGame = () => {
     if (this.state.selectedGame) {
       this.lobbySocket.leaveNewGame(this.state.selectedGame.id);
     }
@@ -104,39 +91,43 @@ class Lobby extends Component {
     this.props.exitGame();
   }
 
-  updateUser(fields) {
+  updateUser = (fields) => {
     this.lobbySocket.updateUser(this.state.user.username, fields).then((user) => {
       this.setState({ user });
     });
   }
 
-  signUpLobby(username) {
+  signUpLobby = (username) => {
     this.lobbySocket.getOrCreateUser(username).then((user) => {
       this.setState({ user });
     });
   }
 
-  selectGame(game) { if (!this.state.joinedGame) { this.setState({ selectedGame: game }); } }
+  selectGame = (game) => {
+    if (!this.state.joinedGame) {
+      this.setState({ selectedGame: game });
+    }
+  }
 
-  joinPublicGame(gameId) {
+  joinPublicGame = (gameId) => {
     this.lobbySocket.joinNewGame(gameId).then((game) => {
       this.setState({ joinedGame: game });
     });
   }
 
-  joinPrivateGame(gameId) {
+  joinPrivateGame = (gameId) => {
     this.lobbySocket.joinNewGame(gameId).then((game) => {
       this.setState({ joinedGame: game, selectedGame: null });
     });
   }
 
-  hostPrivateGame() {
+  hostPrivateGame = () => {
     this.lobbySocket.createGame(true).then((newGame) => {
       this.setState({ joinedGame: newGame, selectedGame: null });
     });
   }
 
-  backToGameSelect() {
+  backToGameSelect = () => {
     if (this.state.joinedGame) {
       this.lobbySocket.leaveNewGame(this.state.joinedGame.id).then(() => {
         if (this.state.joinedGame.players.length === 1 && this.state.joinedGame.isPrivate) {
@@ -147,7 +138,7 @@ class Lobby extends Component {
     }
   }
 
-  joinQuickstartGame() {
+  joinQuickstartGame = () => {
     this.hostPrivateGame(); // first feature only
     // get gameId
     this.joinPrivateGame(0); // TODO: adjust so that this takes id from recently generated new private game
@@ -156,7 +147,7 @@ class Lobby extends Component {
     // we can call the join privateGame method
   }
 
-  renderGameSelectComponent() {
+  renderGameSelectComponent = () => {
     if (this.state.joinedGame) {
       return (
         <SelectedGameView

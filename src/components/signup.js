@@ -12,19 +12,15 @@ class SignUp extends Component {
       errorMsg: false,
       choice: 'default', // default gives player 2 options: quickstart and sign up
     };
-
-    this.handleUsername = this.handleUsername.bind(this);
-    this.signInSubmit = this.signInSubmit.bind(this);
-    this.onChoiceClick = this.onChoiceClick.bind(this);
   }
 
-  onChoiceClick(e) {
+  onChoiceClick = (e) => {
     console.log(e.target.getAttribute('data-type'));
     this.setState({ choice: 'quickstart' }); // TODO: add ability to accept parameters
     this.props.signUpLobby(generateId()); // TODO: ability to skip through and select
   }
 
-  signInSubmit(event) {
+  signInSubmit = (event) => {
     event.preventDefault(); // prevents default behavior of the event
     if (this.props.allUsers.some(e => e.username === this.state.username)) {
       this.setState({ errorMsg: 'Sorry! That username is currently signed in!' });
@@ -37,11 +33,11 @@ class SignUp extends Component {
     }
   }
 
-  handleUsername(event) {
+  handleUsername = (event) => {
     this.setState({ username: event.target.value });
   }
 
-  renderErrorMessage() {
+  renderErrorMessage = () => {
     if (this.state.errorMsg) {
       return (
         <div className="errorMsg">{this.state.errorMsg}</div>

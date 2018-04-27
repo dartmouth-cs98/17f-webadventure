@@ -5,7 +5,6 @@ import React, { Component } from 'react';
 class LobbyDetailsView extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
       joinKey: '',
       hostKey: '',
@@ -13,26 +12,22 @@ class LobbyDetailsView extends Component {
       username: this.props.username,
       errorMsg: '',
     };
-    this.onChange = this.onChange.bind(this);
-    this.onJoinPublicGame = this.onJoinPublicGame.bind(this);
-    this.onJoinPrivateGame = this.onJoinPrivateGame.bind(this);
-    this.renderError = this.renderError.bind(this);
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps = (nextProps) => {
     if (this.state.username !== nextProps.username) {
       this.setState({ username: nextProps.username });
     }
   }
 
-  onChange(event) {
+  onChange = (event) => {
     this.setState({
       joinKey: event.target.value,
     });
   }
 
 
-  onJoinPublicGame() {
+  onJoinPublicGame = () => {
     if (this.props.selectedGame === null) {
       this.setState({ errorMsg: 'Please select a game to join!' });
     } else if (this.props.selectedGame.players.length >= 5) {
@@ -42,7 +37,7 @@ class LobbyDetailsView extends Component {
     }
   }
 
-  onJoinPrivateGame() {
+  onJoinPrivateGame = () => {
     if (this.props.games.some(game => (game.id === this.state.joinKey) && game.isPrivate)) {
       this.setState({ errorMsg: null });
       // Should be handled in back end if error
@@ -52,7 +47,7 @@ class LobbyDetailsView extends Component {
     }
   }
 
-  renderJoinGame() {
+  renderJoinGame = () => {
     if (this.props.selectedGame) {
       return (
         <div id="public">
@@ -70,7 +65,7 @@ class LobbyDetailsView extends Component {
       </div>);
   }
 
-  renderError() {
+  renderError = () => {
     if (this.state.errorMsg) {
       return (
         <div className="errorMsg">{this.state.errorMsg}</div>
@@ -80,7 +75,7 @@ class LobbyDetailsView extends Component {
     }
   }
 
-  render() {
+  render = () => {
     return (
       <div id="lobby-game-view">
         {this.renderJoinGame()}

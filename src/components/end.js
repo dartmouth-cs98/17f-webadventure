@@ -10,34 +10,29 @@ class End extends Component {
       game: props.game,
       leaderboard: props.leaderboard,
     };
-
-    this.onRequest = this.onRequest.bind(this);
-    this.onNewGame = this.onNewGame.bind(this);
-    this.renderPath = this.renderPath.bind(this);
-    this.renderLeader = this.renderLeader.bind(this);
     chrome.runtime.onMessage.addListener(this.onRequest);
   }
 
-  onRequest(req) {
+  onRequest = (req) => {
     if (req.message === 'game info') {
-      const game = req.payload.game;
+      const { game } = req.payload; // const game = req.payload.game;
       const leaderboard = req.payload.game.players; // leaderboard
       this.setState({ leaderboard });
       this.setState({ game });
     }
   }
 
-  onNewGame() {
+  onNewGame = () => {
     this.props.onNewGame(this.props.curPlayerInfo.username);
   }
 
-  scoringSort(player1, player2, sortedTimes) {
+  scoringSort = (player1, player2, sortedTimes) => {
     const score1 = this.calculateScore(player1, sortedTimes);
     const score2 = this.calculateScore(player2, sortedTimes);
     return score2 - score1;
   }
 
-  calculateScore(player, sortedTimes) {
+  calculateScore = (player, sortedTimes) => {
     let score = 0;
     if (player.numClicks <= 30) {
       score = player.numClicks;
@@ -50,7 +45,7 @@ class End extends Component {
     return score;
   }
 
-  renderFinishScore(player, sortedTimes) {
+  renderFinishScore = (player, sortedTimes) => {
     if (player.finishTime === -1) {
       return (
         <div id="finish-svg-div">
@@ -64,7 +59,7 @@ class End extends Component {
     return <div>{this.calculateScore(player, sortedTimes)}pts</div>;
   }
 
-  renderPlayers(finishTimes) {
+  renderPlayers = (finishTimes) => {
     return this.state.leaderboard
       .sort((a, b) => this.scoringSort(a, b, finishTimes))
       .map((player, index) => {
@@ -88,7 +83,7 @@ class End extends Component {
       });
   }
 
-  renderLeader(finishTimes) {
+  renderLeader = (finishTimes) => {
     const sortedScores = this.state.leaderboard
       .sort((a, b) => this.scoringSort(a, b, finishTimes));
     if (finishTimes.some(player => player.finishTime < 0)) {
@@ -106,7 +101,7 @@ class End extends Component {
     }
   }
 
-  renderPath() {
+  renderPath = () => {
     return (
       this.state.game.path
         .map((link, index) => {
@@ -128,7 +123,7 @@ class End extends Component {
     );
   }
 
-  render() {
+  render = () => {
     const finishTimes = this.state.leaderboard
       .sort((a, b) => a.finishTime - b.finishTime);
     return (
