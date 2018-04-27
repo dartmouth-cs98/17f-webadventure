@@ -1,7 +1,12 @@
 import $ from 'jquery';
 import Player from './player';
 import Powerups from './powerups';
+import QA from './question';
 
+// jquert plugin selects random paragraph
+$.fn.random = function () { // eslint-disable-line
+  return this.eq(Math.floor(Math.random() * this.length));
+};
 
 class WikiGame {
   constructor(
@@ -25,6 +30,9 @@ class WikiGame {
         down: false,
       },
     };
+
+    // DEVELOPMENT = QA-mode
+    this.question = new QA();
 
     this.powerups = new Powerups();
     this.path = game.path;
@@ -236,11 +244,24 @@ class WikiGame {
       case 68: this.keysPressed.x.right = true; break;
       case 87: this.keysPressed.y.up = true; break;
       case 83: this.keysPressed.y.down = true; break;
+      case 55: {
+        // hit '7' and activate question.js
+
+        // const s = $('p').random().text();
+        // QA.new(s);
+        window.alert(this.question.question); // eslint-disable-line no-alert
+        // console.log(); // eslint-disable-line
+        // this.QA.refresh();
+        // this.QA.popup();
+        break;
+      }
+      case 13: // click link with enter
+        this.openLink();
+        break;
       case 76: // click link with L
         this.openLink();
         break;
       case 80: // P
-
         break;
       default:
         break;

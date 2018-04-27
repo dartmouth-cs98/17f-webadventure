@@ -147,6 +147,15 @@ class Lobby extends Component {
     }
   }
 
+  joinQuickstartGame() {
+    this.hostPrivateGame(); // first feature only
+    // get gameId
+    this.joinPrivateGame(0); // TODO: adjust so that this takes id from recently generated new private game
+    this.onStartGame();
+    // host private ->
+    // we can call the join privateGame method
+  }
+
   renderGameSelectComponent() {
     if (this.state.joinedGame) {
       return (
