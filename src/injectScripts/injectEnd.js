@@ -13,6 +13,7 @@ const exitGame = () => {
   };
   chrome.runtime.sendMessage(req);
 };
+
 const onNewGame = (username) => {
   document.getElementById('wa-main-end').remove();
   const req = {
@@ -23,10 +24,11 @@ const onNewGame = (username) => {
   };
   chrome.runtime.sendMessage(req);
 };
+
 chrome.runtime.onMessage.addListener((req) => {
   if (req.message === 'end game info') {
     ({ curPlayerInfo } = req.payload);
-    const game = req.payload.game;
+    const { game } = req.payload;
     const leaderboard = req.payload.game.players;
     ReactDOM.render(
       <End
@@ -40,4 +42,5 @@ chrome.runtime.onMessage.addListener((req) => {
     );
   }
 });
+
 $('body').append('<div id=wa-main-end />');

@@ -77,8 +77,8 @@ class Lobby extends Component {
     const sound = $('#sound-lobby');
 
     sound.click(() => {
-      chrome.runtime.sendMessage({ message: 'sound' }, (response) => {
-        response.audioOn ? sound.attr('class', 'sound-on') : sound.attr('class', 'sound-off');
+      chrome.runtime.sendMessage({ message: 'sound' }, (response) => { // eslint-disable-line
+        response.audioOn ? sound.attr('class', 'sound-on') : sound.attr('class', 'sound-off'); // eslint-disable-line
       });
     });
   }
@@ -170,7 +170,7 @@ class Lobby extends Component {
     }
   }
 
-  render() {
+  render = () => {
     // Render lobby with all lobby components
     if (this.state.user) {
       return (

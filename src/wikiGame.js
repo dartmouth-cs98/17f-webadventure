@@ -40,20 +40,6 @@ class WikiGame {
     this.isFlipped = false;
     this.flipMultiplier = 1; // scales step size and direction; 1 for normal movement
 
-    this.setupToc = this.setupToc.bind(this);
-    this.updateGame = this.updateGame.bind(this);
-    this.onKeyDown = this.onKeyDown.bind(this);
-    this.onKeyUp = this.onKeyUp.bind(this);
-    this.isNoKeysPressed = this.isNoKeysPressed.bind(this);
-
-    this.powerupSound = WikiGame.createSounds();
-
-    this.updateOnPowerup = this.updateOnPowerup.bind(this);
-    this.flipControls = this.flipControls.bind(this);
-    this.speedUp = this.speedUp.bind(this);
-    this.slowDown = this.slowDown.bind(this);
-    this.resetMultiplier = this.resetMultiplier.bind(this);
-
     this.renderGame();
     window.addEventListener('keydown', this.onKeyDown);
     window.addEventListener('keyup', this.onKeyUp);
@@ -61,7 +47,7 @@ class WikiGame {
     $(window).resize(this.curPlayer.getLinks);
   }
 
-  endGame() {
+  endGame = () => {
     $('#powerAudio').remove();
     $(window).off('resize');
     $(window).off('keydown');
@@ -74,7 +60,7 @@ class WikiGame {
     $('#powerups').remove();
   }
 
-  renderGame() {
+  renderGame = () => {
     this.setupToc();
     this.toggleAudio();
     const curPosition = this.curPlayer.getPosition();
@@ -87,7 +73,7 @@ class WikiGame {
     };
   }
 
-  static createSounds() {
+  static createSounds = () => {
     const powerAudio = document.createElement('AUDIO');
     powerAudio.setAttribute('id', 'powerAudio');
     powerAudio.setAttribute('src', 'https://k003.kiwi6.com/hotlink/5cunslfq0k/Good-idea-bell.mp3');
@@ -96,7 +82,7 @@ class WikiGame {
   }
 
   // Toggle sound icon and mute property of all audio
-  toggleAudio() {
+  toggleAudio = () => {
     const sound = $('#sound');
     const allAudio = $('audio');
     for (let i = 0; i < allAudio.length; i += 1) {
@@ -105,7 +91,7 @@ class WikiGame {
 
     sound.click(() => {
       chrome.runtime.sendMessage({ message: 'sound' }, (response) => {
-        response.audioOn ? sound.attr('class', 'sound-on') : sound.attr('class', 'sound-off');
+        response.audioOn ? sound.attr('class', 'sound-on') : sound.attr('class', 'sound-off'); // eslint-disable-line
         for (let i = 0; i < allAudio.length; i += 1) {
           allAudio[i].muted = !response.audioOn;
         }
@@ -113,7 +99,7 @@ class WikiGame {
     });
   }
 
-  setupToc() {
+  setupToc = () => {
     const toc = $('#toc').detach();
     $(toc).attr('id', 'wa-toc');
     $('body').append(toc);
@@ -128,7 +114,7 @@ class WikiGame {
     });
   }
 
-  updateGame() {
+  updateGame = () => {
     const newLoc = this.curPlayer.getPosition();
     const stepSize = this.speed * this.flipMultiplier;
 
@@ -156,7 +142,7 @@ class WikiGame {
     this.updateOnPowerup();
   }
 
-  openLink() {
+  openLink = () => {
     const link = this.curPlayer.getLink();
     if (link !== null) {
       const redirectLink = `https://en.wikipedia.org${link}`;
@@ -164,7 +150,7 @@ class WikiGame {
     }
   }
 
-  updateOnPowerup() {
+  updateOnPowerup = () => {
     const curLoc = this.curPlayer.getPosition();
     const left = curLoc.x;
     const right = curLoc.x + this.curPlayer.size.width;
@@ -207,23 +193,23 @@ class WikiGame {
     }
   }
 
-  flipControls() {
+  flipControls = () => {
     this.isFlipped = true;
     this.curPlayer.updateRevPowerup(true);
     setTimeout(this.resetMultiplier, 5000);
   }
 
-  speedUp() {
+  speedUp = () => {
     this.flipMultiplier = 2;
     setTimeout(this.resetMultiplier, 5000);
   }
 
-  slowDown() {
+  slowDown = () => {
     this.flipMultiplier = 0.3;
     setTimeout(this.resetMultiplier, 5000);
   }
 
-  teleport() {
+  teleport = () => {
     // Randomize somewhere on the path
     // const index = Math.floor(Math.random() * (this.path.length - 2)) + 1;
     // const link = `https://en.${this.path[this.path.length - 1]}`;
@@ -233,12 +219,12 @@ class WikiGame {
     this.onNewUrl(link);
   }
 
-  resetMultiplier() {
+  resetMultiplier = () => {
     this.isFlipped = false;
     this.curPlayer.updateRevPowerup(false);
   }
 
-  onKeyDown(evt) {
+  onKeyDown = (evt) => {
     switch (evt.keyCode) {
       case 65: this.keysPressed.x.left = true; break;
       case 68: this.keysPressed.x.right = true; break;
@@ -271,7 +257,7 @@ class WikiGame {
     }
   }
 
-  onKeyUp(evt) {
+  onKeyUp = (evt) => {
     switch (evt.keyCode) {
       case 65: this.keysPressed.x.left = false; break;
       case 68: this.keysPressed.x.right = false; break;
@@ -287,7 +273,7 @@ class WikiGame {
     }
   }
 
-  isNoKeysPressed() {
+  isNoKeysPressed = () => {
     return !this.keysPressed.x.left && !this.keysPressed.x.right
     && !this.keysPressed.y.up && !this.keysPressed.y.down;
   }
