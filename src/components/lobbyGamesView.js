@@ -1,4 +1,4 @@
-/* eslint "react/jsx-no-bind": 0 */
+/* eslint "react/jsx-no-bind": 0 jsx-a11y/no-distracting-elements:0 */
 
 import React from 'react';
 

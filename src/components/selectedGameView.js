@@ -1,4 +1,4 @@
-/* eslint no-mixed-spaces-and-tabs:0, no-tabs:0 */
+/* eslint no-mixed-spaces-and-tabs:0, no-tabs:0 jsx-a11y/no-distracting-elements:0 */
 
 import React, { Component } from 'react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
@@ -12,15 +12,9 @@ class SelectedGameView extends Component {
       copyMsg: 'Copy Key',
     };
     this.timer = null;
-    this.onCopy = this.onCopy.bind(this);
-    this.countDown = this.countDown.bind(this);
-    this.renderStartPage = this.renderStartPage.bind(this);
-    this.renderStartGameButton = this.renderStartGameButton.bind(this);
-    this.renderPlayers = this.renderPlayers.bind(this);
-    this.renderTimer = this.renderTimer.bind(this);
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps = (nextProps) => {
     if (
       nextProps.joinedGame.players.length === 5 &&
       !nextProps.joinedGame.isPrivate
@@ -32,15 +26,15 @@ class SelectedGameView extends Component {
     }
   }
 
-  componentWillUnmount() {
+  componentWillUnmount = () => {
     clearInterval(this.timer);
   }
 
-  onCopy() {
+  onCopy = () => {
     this.setState({ copyMsg: 'Copied!' });
   }
 
-  countDown() {
+  countDown = () => {
     if (this.state.seconds > 0) {
       this.setState({ seconds: this.state.seconds - 1 });
     } else {
@@ -49,7 +43,7 @@ class SelectedGameView extends Component {
     }
   }
 
-  renderStartPage() {
+  renderStartPage = () => {
     const page = decodeURIComponent(this.props.joinedGame.startPage.split('/').pop()).replace(/_/g, ' ');
     if (page.length > 21) {
       return (
@@ -65,7 +59,7 @@ class SelectedGameView extends Component {
     return <div id="selected-game-start-page">{page}</div>;
   }
 
-  renderStartGameButton() {
+  renderStartGameButton = () => {
     if (
       this.props.joinedGame.isPrivate &&
       this.props.user.username === this.props.joinedGame.host
@@ -85,7 +79,7 @@ class SelectedGameView extends Component {
     }
   }
 
-  renderStartDemo() {
+  renderStartDemo = () => {
     if (this.props.joinedGame && !this.props.joinedGame.isPrivate) {
       return (
         <div>
@@ -99,7 +93,7 @@ class SelectedGameView extends Component {
     return <div />;
   }
 
-  renderPlayers() {
+  renderPlayers = () => {
     return this.props.joinedGame.players
       .map((player, index) => {
         const colorIndex = `color-${index}`;
@@ -112,7 +106,7 @@ class SelectedGameView extends Component {
       });
   }
 
-  renderTimer() {
+  renderTimer = () => {
     if (
       this.props.joinedGame.players.length === 2 &&
       !this.props.joinedGame.isPrivate
@@ -125,7 +119,7 @@ class SelectedGameView extends Component {
     }
   }
 
-  renderHostKey() {
+  renderHostKey = () => {
     if (this.props.joinedGame.isPrivate) {
       return (
         <div>

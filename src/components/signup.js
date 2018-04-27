@@ -1,5 +1,6 @@
 /* eslint linebreak-style: ["error", "windows"], react/no-unused-state: 0 */
 import React, { Component } from 'react';
+import { Quickstart, generateId } from './quickstart';
 
 class SignUp extends Component {
   constructor(props) {
@@ -9,18 +10,18 @@ class SignUp extends Component {
       username: '', // default username
       avatar: 0, // default nyan cat avatar id
       errorMsg: false,
+      choice: 'default', // default gives player 2 options: quickstart and sign up
     };
-
-    this.handleUsername = this.handleUsername.bind(this);
-    this.signInSubmit = this.signInSubmit.bind(this);
   }
 
-  handleUsername(event) {
-    this.setState({ username: event.target.value });
+  onChoiceClick = (e) => {
+    console.log(e.target.getAttribute('data-type'));
+    this.setState({ choice: 'quickstart' }); // TODO: add ability to accept parameters
+    this.props.signUpLobby(generateId()); // TODO: ability to skip through and select
   }
 
-  signInSubmit(event) {
-    event.preventDefault();
+  signInSubmit = (event) => {
+    event.preventDefault(); // prevents default behavior of the event
     if (this.props.allUsers.some(e => e.username === this.state.username)) {
       this.setState({ errorMsg: 'Sorry! That username is currently signed in!' });
     } else if (this.state.username === '' || this.state.username.length > 12) {
@@ -32,7 +33,11 @@ class SignUp extends Component {
     }
   }
 
-  renderErrorMessage() {
+  handleUsername = (event) => {
+    this.setState({ username: event.target.value });
+  }
+
+  renderErrorMessage = () => {
     if (this.state.errorMsg) {
       return (
         <div className="errorMsg">{this.state.errorMsg}</div>
@@ -42,10 +47,28 @@ class SignUp extends Component {
     }
   }
 
-  render() {
-    return (
-      <div id="SignUp">
-        <div id="submit-fields">
+  renderOptions() {
+    switch (this.state.choice) {
+      case 'default':
+        return (
+          <div id="submit-fields">
+            <button
+              className="colorful-button"
+              data-type="quickstart-button"
+              onClick={this.onChoiceClick}
+            >Quickstart!
+            </button>
+            <span>or</span>
+            <button
+              className="colorful-button"
+              data-type="signup-button"
+              onClick={this.onChoiceClick}
+            >Sign Up
+            </button>
+          </div>
+        );
+      case 'signup':
+        return (
           <form onSubmit={this.signInSubmit}>
             <input
               type="text"
@@ -55,6 +78,35 @@ class SignUp extends Component {
             />
             <button className="colorful-button" type="submit">Sign Up</button>
           </form>
+        );
+      case 'quickstart':
+        return (
+          <Quickstart />
+        );
+      default:
+        return (
+          <div id="submit-fields">
+            <form onSubmit={this.signInSubmit}>
+              <input
+                type="text"
+                placeholder="Enter your username"
+                onChange={this.handleUsername}
+                value={this.state.username}
+              />
+              <button className="colorful-button" type="submit">Sign Up</button>
+              <span>or</span>
+              <Quickstart />
+            </form>
+          </div>
+        );
+    }
+  }
+
+  render() {
+    return (
+      <div id="SignUp">
+        <div id="submit-fields">
+          {this.renderOptions()}
         </div>
         {this.renderErrorMessage()}
       </div>

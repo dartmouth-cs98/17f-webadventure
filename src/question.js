@@ -1,33 +1,16 @@
-import nlp from 'compromise';
+import $ from 'jquery';
+// import nlp from 'compromise';
 
-/* chooses the candidate sentences from which questions are generated */
-function chooseCandidates(pageTree, trail) {
-  const dict = {};
-  for (let i = 0; i < trail.length; i += 1) {
-    const sectionId = trail[i][0];
-    const sentenceId = trail[i][1];
-    const key = [sectionId, sentenceId];
-    if (key in dict.keys) {
-      dict[key] += 1;
-    } else {
-      dict[key] = 1;
-    }
-  }
+// jquert plugin selects random paragraph
+$.fn.random = function () { // eslint-disable-line
+  return this.eq(Math.floor(Math.random() * this.length));
+};
 
-  const candidateSentences = [];
-  for (let j = 0; j < dict.keys.length; j += 1) {
-    const key = dict.keys[j];
-    const sectionId = key[0];
-    const sentenceId = key[1];
-    if (pageTree[sectionId][sentenceId].length === dict[key]) {
-      candidateSentences.append(key);
-    }
-  }
-
-  return candidateSentences;
+/*
+const selectNoun = (words) => {
 }
 
-/* selects a noun from the words list to design question around */
+// selects a noun from the words list to design question around
 function selectNoun(words) {
   let composite = '';
   for (let i = 0; i < words.length; i += 1) {
@@ -38,9 +21,9 @@ function selectNoun(words) {
   const options = parsed.nouns().out('array');
   const iChoose = options[Math.floor(Math.random() * options.length)];
   if (options.length > 1) {
-    for (let j = 0; j < words.length; j += 1) {
-      if (words[j] === iChoose) {
-        return j;
+    for (let i = 0, j = words.length; i < j; i++) {
+      if (words[i] === iChoose) {
+        return i;
       }
     }
   }
@@ -49,12 +32,12 @@ function selectNoun(words) {
   return Math.floor(Math.random() * words.length);
 }
 
-/* assess the number of points that a player can score from a sentence */
+// assess the number of points that a player can score from a sentence
 function points(words) {
   return words.length;
 }
 
-/* generates a question, an answer, and a score from the candidates */
+// generates a question, an answer, and a score from the candidates
 function generateQAS(pageTree, candidates) {
   const words = [];
   for (let i = 0; i < candidates.length; i += 1) {
@@ -83,38 +66,15 @@ function generateQAS(pageTree, candidates) {
   const score = points(words);
   return [question, answer, score];
 }
+*/
 
-class Question {
-  constructor(pageTree, playerId) {
-    this.pageTree = pageTree;
-    this.playerId = playerId;
-    this.location = pageTree.getPlayer(playerId).getLoc();
-    this.trail = pageTree.getPlayer(playerId).getTrail();
-
-    // determine which sentences are elgible for questioning
-    this.candidates = chooseCandidates(pageTree, this.trail);
-    if (this.candidates.length < 1) {
-      return false;
-    }
-
-    this.qas = generateQAS(pageTree, this.candidates);
-  }
-
-  qas() {
-    return this.qas;
-  }
-
-  question() {
-    return this.qas[0];
-  }
-
-  answer() {
-    return this.qas[1];
-  }
-
-  score() {
-    return this.qas[2];
+class QA {
+  constructor() {
+    this.question = $('p').random().text();
+    this.new = (q) => {
+      this.question = q;
+    };
   }
 }
 
-export default Question;
+export default QA;

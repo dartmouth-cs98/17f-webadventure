@@ -4,9 +4,6 @@
   "description": "Web Adventure Chrome Extension Game",
   "main": "background.js",
   "dependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-preset-env": "^1.6.1",
-    "babel-preset-react": "^6.24.1",
     "compromise": "^11.1.0",
     "html-loader": "^0.5.5",
     "jquery": "^3.2.1",
@@ -19,7 +16,12 @@
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
-    "babel-loader": "^7.1.2",
+    "babel-eslint": "^8.2.3",
+    "babel-loader": "^7.1.4",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-react": "^6.24.1",
     "css-loader": "^0.28.7",
     "eslint": "^4.9.0",
     "eslint-config-airbnb": "^16.1.0",
@@ -41,7 +43,7 @@
     "start": "webpack webpack.config.js --watch",
     "test": "./node_modules/.bin/eslint src; npm run build",
     "build": "webpack webpack.config.js",
-    "clean": "rm -rf node_modules dist"
+    "clean": "rm -rf node_modules dist .DS_Store"
   },
   "repository": {
     "type": "git",

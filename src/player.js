@@ -15,21 +15,9 @@ class Player {
     this.isCurPlayer = isCurPlayer;
     this.avatar = avatar;
     this.link = null;
-
-    this.insertPlayer = this.insertPlayer.bind(this);
-    this.getLinks = this.getLinks.bind(this);
-    this.addToLinksList = this.addToLinksList.bind(this);
-    this.movePlayer = this.movePlayer.bind(this);
-    this.updateDirRight = this.updateDirRight.bind(this);
-    this.updateRevPowerup = this.updateRevPowerup.bind(this);
-    this.getWidth = this.getWidth.bind(this);
-    this.getPosition = this.getPosition.bind(this);
-    this.getAvatarRight = this.getAvatarRight.bind(this);
-    this.getLink = this.getLink.bind(this);
-    this.updateOnLink = this.updateOnLink.bind(this);
   }
 
-  addToLinksList(link, checkLine = true) {
+  addToLinksList = (link, checkLine = true) => {
     const { top, left } = $(link).offset();
     const width = $(link).width();
     const height = $(link).height();
@@ -62,7 +50,7 @@ class Player {
     this.links[vertSection] = linksList;
   }
 
-  getLinks() {
+  getLinks = () => {
     this.links = [];
     const links = $('a');
     links.each((i, link) => {
@@ -73,7 +61,7 @@ class Player {
     });
   }
 
-  insertPlayer(x, y) {
+  insertPlayer = (x, y) => {
     this.getLinks();
     $('body').append(`<div id="${this.id}" class="playerDiv" style="position: absolute">
               <span class="playerName">${this.id}</span>
@@ -82,11 +70,11 @@ class Player {
     this.movePlayer(x, y);
   }
 
-  removePlayer() {
+  removePlayer = () => {
     $(`#${this.id}`).remove();
   }
 
-  movePlayer(left, top, speed = 1) {
+  movePlayer = (left, top, speed = 1) => {
     if (left < 0 || top < 0) { return; }
     this.position = { left, top };
     $(`#${this.id}`).css(this.position);
@@ -99,7 +87,7 @@ class Player {
     }
   }
 
-  updateOnLink() {
+  updateOnLink = () => {
     const leftEnd = this.position.left;
     const rightEnd = this.position.left + this.size.width;
     const topEnd = this.position.top;
@@ -120,7 +108,7 @@ class Player {
     });
     let link;
     if (overlap.length === 1) {
-      link = overlap[0].link;
+      link = overlap[0].link; // eslint-disable-line
     } else if (overlap.length > 1) {
       const center = { y: (topEnd + bottomEnd) / 2, x: (leftEnd + rightEnd) / 2 };
       const centerOverlap = overlap.filter((linkItem) => {
@@ -143,7 +131,7 @@ class Player {
     this.link = link;
   }
 
-  updateDirRight(isRight) {
+  updateDirRight = (isRight) => {
     if (isRight && !this.facingRight) {
       $($(`#${this.id}`).children('img')[0]).attr('src', this.avatar[1]);
       this.facingRight = true;
@@ -154,7 +142,7 @@ class Player {
   }
 
 
-  updateRevPowerup(isReversed = false) {
+  updateRevPowerup = (isReversed = false) => {
     if (isReversed) {
       if ($(`#${this.id}`).children('.reversed').length === 0) {
         $(`#${this.id}`).append('<div class="reversed">REVERSED</div>');
@@ -164,23 +152,23 @@ class Player {
     }
   }
 
-  getWidth() {
+  getWidth = () => {
     return $(`#${this.id}`).width();
   }
 
-  getPosition() {
+  getPosition = () => {
     return { x: this.position.left, y: this.position.top };
   }
 
-  getAvatarRight() {
+  getAvatarRight = () => {
     return this.avatar[1];
   }
 
-  getLink() {
+  getLink = () => {
     return this.link ? $(this.link).attr('href') : null;
   }
 
-  static isScrolledIntoView(elem) {
+  static isScrolledIntoView = (elem) => {
     const $elem = $(elem);
     const $window = $(window);
 
@@ -193,7 +181,7 @@ class Player {
     return ((elemBottom <= docViewBottom) && (elemTop >= docViewTop));
   }
 
-  static scrollIntoCenterView(elem, speed) {
+  static scrollIntoCenterView = (elem, speed) => {
     const top = $(elem).offset().top - ($(window).height() / 2);
     $('html, body').animate({
       scrollTop: top,

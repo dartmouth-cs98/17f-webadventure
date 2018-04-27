@@ -9,16 +9,11 @@ class Powerups {
   constructor() {
     this.types = ['flipControls', 'speedup', 'slowdown', 'teleport'];
     this.icon = ICON;
-
     this.powerups = [];
-
-    this.createPowerups = this.createPowerups.bind(this);
-    this.insertPowerups = this.insertPowerups.bind(this);
-
-    this.createPowerups();
+    this.createPowerups(); // notice the interesting thing re: powerups
   }
 
-  static getPowerupType() {
+  static getPowerupType = () => {
     const rand = Math.random();
     if (rand < 0.3) {
       return 0;
@@ -31,14 +26,14 @@ class Powerups {
     }
   }
 
-  createPowerups() {
+  createPowerups = () => {
     // const numPowerups = Math.floor(Math.random() * 5) + 4;
     const $window = $(window);
     const offsetX = 176; // 11em
     const avatarWidth = 50;
     const spawnFactor = 150;
     const minPowerups = 2;
-    const body = document.body;
+    const { body } = document;
     const html = document.documentElement;
     const height = Math.max(
       body.scrollHeight, body.offsetHeight,
@@ -60,7 +55,7 @@ class Powerups {
     }
   }
 
-  insertPowerups() {
+  insertPowerups = () => {
     $('body').append('<div id="powerups" style="position: absolute; top: 0px; left: 0px;"></div>');
     this.powerups.forEach((powerup, i) => {
       powerup.insertPowerup(i);

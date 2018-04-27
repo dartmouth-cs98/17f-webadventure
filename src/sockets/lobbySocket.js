@@ -19,7 +19,7 @@ export default class LobbySocket {
     this.socket.on('game started', onGameStarted);
   }
 
-  getOrCreateUser(username) {
+  getOrCreateUser = (username) => {
     this.username = username;
     return new Promise((resolve, reject) => {
       this.socket.emit('getOrCreateUser', { username }, (user) => {
@@ -30,7 +30,7 @@ export default class LobbySocket {
     });
   }
 
-  updateUser(username, fields) {
+  updateUser = (username, fields) => {
     const req = {
       username, fields,
     };
@@ -43,7 +43,7 @@ export default class LobbySocket {
     });
   }
 
-  createGame(isPrivate) {
+  createGame = (isPrivate) => {
     const req = {
       username: this.username, isPrivate,
     };
@@ -56,7 +56,7 @@ export default class LobbySocket {
     });
   }
 
-  joinNewGame(gameId) {
+  joinNewGame = (gameId) => {
     const req = { gameId, username: this.username };
     return new Promise((resolve, reject) => {
       this.socket.emit('joinNewGame', req, (data) => {
@@ -67,11 +67,11 @@ export default class LobbySocket {
     });
   }
 
-  deleteGame(gameId) {
+  deleteGame = (gameId) => {
     this.socket.emit('deleteGame', gameId);
   }
 
-  leaveNewGame(gameId) {
+  leaveNewGame = (gameId) => {
     const req = { gameId, username: this.username };
     return new Promise((resolve, reject) => {
       this.socket.emit('leaveNewGame', req, (data) => {
@@ -81,11 +81,11 @@ export default class LobbySocket {
       });
     });
   }
-  disconnect() {
+  disconnect = () => {
     this.socket.close();
   }
 
-  startGame(gameId) {
+  startGame = (gameId) => {
     return new Promise((resolve, reject) => {
       this.socket.emit('startGame', gameId, (data) => {
         if (data) {

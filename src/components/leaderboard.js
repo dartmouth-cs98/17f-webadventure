@@ -3,7 +3,7 @@
 import React, { Component } from 'react';
 
 class Leaderboard extends Component {
-  static calculateScore(player, sortedScores) {
+  static calculateScore = (player, sortedScores) => {
     let score = 0;
     if (player.numClicks <= 30) {
       score = player.numClicks;
@@ -16,7 +16,7 @@ class Leaderboard extends Component {
     return score;
   }
 
-  static scoringSort(player1, player2, sortedScores) {
+  static scoringSort = (player1, player2, sortedScores) => {
     const score1 = Leaderboard.calculateScore(player1, sortedScores);
     const score2 = Leaderboard.calculateScore(player2, sortedScores);
     return score2 - score1;
@@ -27,29 +27,26 @@ class Leaderboard extends Component {
       players: props.players,
       timer: props.counter,
     };
-    this.onMessageRequest = this.onMessageRequest.bind(this);
-    this.incTimer = this.incTimer.bind(this);
     setInterval(this.incTimer, 1000);
-
     chrome.runtime.onMessage.addListener(this.onMessageRequest);
   }
 
-  onMessageRequest(req) {
+  onMessageRequest = (req) => {
     if (req.message === 'game info') {
       this.setState({ players: req.payload.game.players });
     }
   }
 
-  incTimer() {
+  incTimer = () => {
     this.setState({ timer: this.state.timer + 1 });
   }
 
-  renderAudioOn() {
+  renderAudioOn = () => {
     if (this.props.audioOn) { return <div id="sound" className="sound-on" />; }
     return <div id="sound" className="sound-off" />;
   }
 
-  renderRankings() {
+  renderRankings = () => {
     const finishTimes = this.state.players
       .sort((a, b) => a.finishTime - b.finishTime);
     const top5 = this.state.players
@@ -87,7 +84,7 @@ class Leaderboard extends Component {
     return top5;
   }
 
-  render() {
+  render = () => {
     const goalPage = decodeURIComponent(this.props.goalPage.split('/').pop()).replace(/_/g, ' ');
     if (this.props.curPlayer) {
       return (
