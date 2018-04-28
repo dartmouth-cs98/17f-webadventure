@@ -10,6 +10,7 @@ import LobbyDetailsView from './lobbyDetailsView';
 import LobbyGamesView from './lobbyGamesView';
 import SelectedGameView from './selectedGameView';
 import DisplayUser from './displayUser';
+import { generateId } from './quickstart';
 import '../style.css';
 
 class Lobby extends Component {
@@ -33,13 +34,13 @@ class Lobby extends Component {
     this.timer = 0;
   }
 
-  componentDidMount() {
+  componentDidMount = () => {
     this.toggleAudio();
     window.addEventListener('beforeunload', this.exitGame);
   }
 
   // BUG: It connects to lobby multiple times if you keep starting and quiting
-  componentWillUnmount() {
+  componentWillUnmount = () => {
     window.removeEventListener('beforeunload', this.exitGame);
   }
 
@@ -97,9 +98,9 @@ class Lobby extends Component {
     });
   }
 
-  signUpLobby = (username) => {
+  signUpLobby = (username, callback) => {
     this.lobbySocket.getOrCreateUser(username).then((user) => {
-      this.setState({ user });
+      this.setState({ user }, callback);
     });
   }
 
@@ -121,9 +122,15 @@ class Lobby extends Component {
     });
   }
 
-  hostPrivateGame = () => {
+  hostPrivateGame = (callback) => {
     this.lobbySocket.createGame(true).then((newGame) => {
-      this.setState({ joinedGame: newGame, selectedGame: null });
+      this.setState({ joinedGame: newGame, selectedGame: null }, callback);
+    });
+  }
+
+  joinQuickstartGame = () => {
+    this.lobbySocket.createGame(true).then((newGame) => {
+      this.setState({ joinedGame: newGame, selectedGame: null }, this.onStartGame);
     });
   }
 
@@ -138,13 +145,8 @@ class Lobby extends Component {
     }
   }
 
-  joinQuickstartGame = () => {
-    this.hostPrivateGame(); // first feature only
-    // get gameId
-    this.joinPrivateGame(0); // TODO: adjust so that this takes id from recently generated new private game
-    this.onStartGame();
-    // host private ->
-    // we can call the join privateGame method
+  quickstart = () => {
+    this.signUpLobby(generateId(), this.joinQuickstartGame); // skips to game
   }
 
   renderGameSelectComponent = () => {
@@ -212,6 +214,7 @@ class Lobby extends Component {
               allUsers={this.state.allUsers}
               signUpLobby={this.signUpLobby}
               signedUp={this.signedUp}
+              quickstart={this.quickstart}
             />
           </div>
         </div>

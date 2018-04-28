@@ -2,22 +2,20 @@
 import React, { Component } from 'react';
 import { Quickstart, generateId } from './quickstart';
 
+// Three choices: must be type=string or choice selection breaks
+const DEFAULT = 'default';
+const QUICKSTART = 'one';
+const SIGNUP = 'two';
+
 class SignUp extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
       username: '', // default username
       avatar: 0, // default nyan cat avatar id
       errorMsg: false,
-      choice: 'default', // default gives player 2 options: quickstart and sign up
+      choice: DEFAULT, // either 'default', 'quickstart, or 'signup'
     };
-  }
-
-  onChoiceClick = (e) => {
-    console.log(e.target.getAttribute('data-type'));
-    this.setState({ choice: 'quickstart' }); // TODO: add ability to accept parameters
-    this.props.signUpLobby(generateId()); // TODO: ability to skip through and select
   }
 
   signInSubmit = (event) => {
@@ -37,6 +35,14 @@ class SignUp extends Component {
     this.setState({ username: event.target.value });
   }
 
+  handleChoice = (event) => {
+    this.setState({ choice: event.target.getAttribute('type') });
+    if (event.target.getAttribute('type') === QUICKSTART) {
+      this.props.signUpLobby(generateId()); // skips to game
+      this.props.quickstart();
+    }
+  }
+
   renderErrorMessage = () => {
     if (this.state.errorMsg) {
       return (
@@ -47,27 +53,29 @@ class SignUp extends Component {
     }
   }
 
-  renderOptions() {
+  renderChoices = () => {
     switch (this.state.choice) {
-      case 'default':
+      case DEFAULT:
         return (
           <div id="submit-fields">
             <button
               className="colorful-button"
-              data-type="quickstart-button"
-              onClick={this.onChoiceClick}
-            >Quickstart!
+              type={QUICKSTART}
+              onClick={this.handleChoice}
+            >
+            Quickstart!
             </button>
             <span>or</span>
             <button
               className="colorful-button"
-              data-type="signup-button"
-              onClick={this.onChoiceClick}
-            >Sign Up
+              type={SIGNUP}
+              onClick={this.handleChoice}
+            >
+            Sign Up
             </button>
           </div>
         );
-      case 'signup':
+      case SIGNUP:
         return (
           <form onSubmit={this.signInSubmit}>
             <input
@@ -79,7 +87,7 @@ class SignUp extends Component {
             <button className="colorful-button" type="submit">Sign Up</button>
           </form>
         );
-      case 'quickstart':
+      case QUICKSTART:
         return (
           <Quickstart />
         );
@@ -102,11 +110,11 @@ class SignUp extends Component {
     }
   }
 
-  render() {
+  render = () => {
     return (
       <div id="SignUp">
         <div id="submit-fields">
-          {this.renderOptions()}
+          {this.renderChoices()}
         </div>
         {this.renderErrorMessage()}
       </div>

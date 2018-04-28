@@ -1,11 +1,13 @@
 const path = require('path');
 
+const b = 'babel-polyfill';
+
 module.exports = {
   entry: {
-    inject: './src/injectScripts/inject.js',
-    injectLobby: './src/injectScripts/injectLobby.js',
-    injectEnd: './src/injectScripts/injectEnd.js',
-    background: './src/background.js',
+    inject: [b, './src/injectScripts/inject.js'],
+    injectLobby: [b, './src/injectScripts/injectLobby.js'],
+    injectEnd: [b, './src/injectScripts/injectEnd.js'],
+    background: [b, './src/background.js'],
   },
   output: {
     filename: '[name].bundle.js',
