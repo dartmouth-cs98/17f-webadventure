@@ -128,12 +128,6 @@ class Lobby extends Component {
     });
   }
 
-  joinQuickstartGame = () => {
-    this.lobbySocket.createGame(true).then((newGame) => {
-      this.setState({ joinedGame: newGame, selectedGame: null }, this.onStartGame);
-    });
-  }
-
   backToGameSelect = () => {
     if (this.state.joinedGame) {
       this.lobbySocket.leaveNewGame(this.state.joinedGame.id).then(() => {
@@ -145,8 +139,14 @@ class Lobby extends Component {
     }
   }
 
-  quickstart = () => {
-    this.signUpLobby(generateId(), this.joinQuickstartGame); // skips to game
+  joinQuickstartGame = () => {
+    this.signUpLobby(generateId(), this.createQuickstartGame); // skips to game
+  }
+
+  createQuickstartGame = () => {
+    this.lobbySocket.createGame(true).then((newGame) => {
+      this.setState({ joinedGame: newGame, selectedGame: null }, this.onStartGame);
+    });
   }
 
   renderGameSelectComponent = () => {
@@ -214,7 +214,7 @@ class Lobby extends Component {
               allUsers={this.state.allUsers}
               signUpLobby={this.signUpLobby}
               signedUp={this.signedUp}
-              quickstart={this.quickstart}
+              quickstart={this.joinQuickstartGame}
             />
           </div>
         </div>
