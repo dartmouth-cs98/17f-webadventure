@@ -31,6 +31,8 @@ class WikiGame {
       },
     };
 
+    this.powerupSound = WikiGame.createSounds();
+
     // DEVELOPMENT = QA-mode
     this.question = new QA();
 
@@ -73,7 +75,7 @@ class WikiGame {
     };
   }
 
-  static createSounds = () => {
+  static createSounds() {
     const powerAudio = document.createElement('AUDIO');
     powerAudio.setAttribute('id', 'powerAudio');
     powerAudio.setAttribute('src', 'https://k003.kiwi6.com/hotlink/5cunslfq0k/Good-idea-bell.mp3');
