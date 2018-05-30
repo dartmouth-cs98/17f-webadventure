@@ -1,4 +1,4 @@
-/* eslint no-unused-vars:0 */
+/* eslint no-unused-vars:0 one-var:0 */
 
 import GameSocket from './sockets/gameSocket';
 

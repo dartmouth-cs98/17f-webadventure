@@ -10,6 +10,7 @@ import LobbyDetailsView from './lobbyDetailsView';
 import LobbyGamesView from './lobbyGamesView';
 import SelectedGameView from './selectedGameView';
 import DisplayUser from './displayUser';
+import { generateId } from './quickstart';
 import '../style.css';
 
 class Lobby extends Component {
@@ -26,19 +27,6 @@ class Lobby extends Component {
       joinedGame: null,
     };
 
-    this.onGames = this.onGames.bind(this);
-    this.onGameStarted = this.onGameStarted.bind(this);
-    this.onUsers = this.onUsers.bind(this);
-    this.onStartGame = this.onStartGame.bind(this);
-    this.exitGame = this.exitGame.bind(this);
-    this.updateUser = this.updateUser.bind(this);
-    this.signUpLobby = this.signUpLobby.bind(this);
-    this.selectGame = this.selectGame.bind(this);
-    this.joinPublicGame = this.joinPublicGame.bind(this);
-    this.joinPrivateGame = this.joinPrivateGame.bind(this);
-    this.hostPrivateGame = this.hostPrivateGame.bind(this);
-    this.backToGameSelect = this.backToGameSelect.bind(this);
-
     this.lobbySocket = new LobbySocket(this.onGames, this.onUsers, this.onGameStarted, username);
     if (username) {
       this.signUpLobby(username);
@@ -46,17 +34,17 @@ class Lobby extends Component {
     this.timer = 0;
   }
 
-  componentDidMount() {
+  componentDidMount = () => {
     this.toggleAudio();
     window.addEventListener('beforeunload', this.exitGame);
   }
 
   // BUG: It connects to lobby multiple times if you keep starting and quiting
-  componentWillUnmount() {
+  componentWillUnmount = () => {
     window.removeEventListener('beforeunload', this.exitGame);
   }
 
-  onGames(games) {
+  onGames = (games) => {
     const newState = { games };
     games.forEach((game) => {
       if (this.state.selectedGame && this.state.selectedGame.id === game.id) {
@@ -69,15 +57,15 @@ class Lobby extends Component {
     this.setState(newState);
   }
 
-  onGameStarted(game) {
+  onGameStarted = (game) => {
     this.props.onStart(this.state.user, game);
   }
 
-  onUsers(users) {
+  onUsers = (users) => {
     this.setState({ allUsers: users });
   }
 
-  onStartGame() {
+  onStartGame = () => {
     if (!this.state.joinedGame.active) {
       this.lobbySocket.startGame(this.state.joinedGame.id)
         .then(() => {})
@@ -86,17 +74,17 @@ class Lobby extends Component {
   }
 
   // Toggle sound icon and mute property of all audio
-  toggleAudio() {
+  toggleAudio = () => {
     const sound = $('#sound-lobby');
 
     sound.click(() => {
-      chrome.runtime.sendMessage({ message: 'sound' }, (response) => {
-        response.audioOn ? sound.attr('class', 'sound-on') : sound.attr('class', 'sound-off');
+      chrome.runtime.sendMessage({ message: 'sound' }, (response) => { // eslint-disable-line
+        response.audioOn ? sound.attr('class', 'sound-on') : sound.attr('class', 'sound-off'); // eslint-disable-line
       });
     });
   }
 
-  exitGame() {
+  exitGame = () => {
     if (this.state.selectedGame) {
       this.lobbySocket.leaveNewGame(this.state.selectedGame.id);
     }
@@ -104,39 +92,43 @@ class Lobby extends Component {
     this.props.exitGame();
   }
 
-  updateUser(fields) {
+  updateUser = (fields) => {
     this.lobbySocket.updateUser(this.state.user.username, fields).then((user) => {
       this.setState({ user });
     });
   }
 
-  signUpLobby(username) {
+  signUpLobby = (username, callback) => {
     this.lobbySocket.getOrCreateUser(username).then((user) => {
-      this.setState({ user });
+      this.setState({ user }, callback);
     });
   }
 
-  selectGame(game) { if (!this.state.joinedGame) { this.setState({ selectedGame: game }); } }
+  selectGame = (game) => {
+    if (!this.state.joinedGame) {
+      this.setState({ selectedGame: game });
+    }
+  }
 
-  joinPublicGame(gameId) {
+  joinPublicGame = (gameId) => {
     this.lobbySocket.joinNewGame(gameId).then((game) => {
       this.setState({ joinedGame: game });
     });
   }
 
-  joinPrivateGame(gameId) {
+  joinPrivateGame = (gameId) => {
     this.lobbySocket.joinNewGame(gameId).then((game) => {
       this.setState({ joinedGame: game, selectedGame: null });
     });
   }
 
-  hostPrivateGame() {
+  hostPrivateGame = (callback) => {
     this.lobbySocket.createGame(true).then((newGame) => {
-      this.setState({ joinedGame: newGame, selectedGame: null });
+      this.setState({ joinedGame: newGame, selectedGame: null }, callback);
     });
   }
 
-  backToGameSelect() {
+  backToGameSelect = () => {
     if (this.state.joinedGame) {
       this.lobbySocket.leaveNewGame(this.state.joinedGame.id).then(() => {
         if (this.state.joinedGame.players.length === 1 && this.state.joinedGame.isPrivate) {
@@ -147,7 +139,17 @@ class Lobby extends Component {
     }
   }
 
-  renderGameSelectComponent() {
+  joinQuickstartGame = () => {
+    this.signUpLobby(generateId(), this.createQuickstartGame); // skips to game
+  }
+
+  createQuickstartGame = () => {
+    this.lobbySocket.createGame(true).then((newGame) => {
+      this.setState({ joinedGame: newGame, selectedGame: null }, this.onStartGame);
+    });
+  }
+
+  renderGameSelectComponent = () => {
     if (this.state.joinedGame) {
       return (
         <SelectedGameView
@@ -170,7 +172,7 @@ class Lobby extends Component {
     }
   }
 
-  render() {
+  render = () => {
     // Render lobby with all lobby components
     if (this.state.user) {
       return (
@@ -212,6 +214,7 @@ class Lobby extends Component {
               allUsers={this.state.allUsers}
               signUpLobby={this.signUpLobby}
               signedUp={this.signedUp}
+              quickstart={this.joinQuickstartGame}
             />
           </div>
         </div>

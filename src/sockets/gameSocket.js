@@ -18,13 +18,13 @@ export default class GameSocket {
     this.socket.on('game', onGame);
   }
 
-  updatePlayer(finishTime, numClicks, curUrl) {
+  updatePlayer = (finishTime, numClicks, curUrl) => {
     const playerInfo = { finishTime, numClicks, curUrl };
     const req = { gameId: this.gameId, username: this.username, playerInfo };
     this.socket.emit('updatePlayer', req);
   }
 
-  disconnect() {
+  disconnect = () => {
     this.socket.disconnect();
   }
 }

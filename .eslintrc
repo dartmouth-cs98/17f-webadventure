@@ -1,33 +1,53 @@
 {
- "extends": "airbnb",
- "plugins": [
-     "react",
- ],
-"globals": {
-  "window": true,
-  "chrome": true,
-  "document": true,
-},
- "rules": {
-     "import/no-unresolved": [0, { "commonjs": true }],
-     "no-underscore-dangle": "off",
-     "jsx-a11y/click-events-have-key-events": "off",
-     "react/jsx-no-bind": [2, {
-         "ignoreRefs": false,
-         "allowArrowFunctions": false,
-         "allowBind": true,
-     }],
-     "react/prop-types": 0,
-     "react/jsx-filename-extension": 0,
-     "camelcase": [2, { "properties": "always" }],
-     "react/prefer-stateless-function": 0,
-     "no-undef": 2,
-     "prefer-arrow-callback": ["error", { "allowNamedFunctions": true }],
-     "prefer-destructuring": 0,
-     "no-else-return": 0,
-     "arrow-body-style": 0,
-     "jsx-a11y/no-distracting-elements": 0,
-     # "linebreak-style": ["error", process.env.NODE_ENV === 'prod' ? "unix" : "windows"],
-     "no-unused-expressions": ["error", {"allowTernary": true}]
-   },
+    "extends": "airbnb",
+    "parser": "babel-eslint",
+    "env": {
+        "browser": true,
+        "es6": true
+    },
+    "globals": {
+      "window": true,
+      "chrome": true,
+      "document": true,
+    },
+    "rules": {
+        "strict": 0,
+        "quotes": [2, "single"],
+        "no-else-return": 0,
+        "new-cap": ["error", {"capIsNewExceptions": ["Router"]}],
+        "no-console": 0,
+        "import/no-unresolved": [2, { "caseSensitive": false } ],
+        "no-unused-vars": ["error", { "vars": "all", "args": "none" }],
+        "no-underscore-dangle": 0,
+        "arrow-body-style": 0,
+        "one-var": ["error", { "uninitialized": "always", "initialized": "never" }],
+        "one-var-declaration-per-line": ["error", "initializations"],
+        "max-len": ["error", 200],
+        "no-extra-parens": 0,
+        "no-restricted-syntax": [
+          0,
+          "DebuggerStatement"
+        ],
+        "no-debugger": "warn",
+
+        "react/jsx-uses-react": 2,
+        "react/jsx-uses-vars": 2,
+        "react/react-in-jsx-scope": 2,
+        "react/prop-types": 0,
+        "react/jsx-first-prop-new-line": 0,
+        "react/jsx-filename-extension": 0,
+
+        "jsx-a11y/click-events-have-key-events": 0,
+        "jsx-a11y/no-noninteractive-element-interactions": 0,
+        "jsx-a11y/no-distratcting-elements": "off",
+    },
+    "plugins": [
+        "react"
+    ],
+    "parserOptions": {
+        "ecmaFeatures": {
+            "jsx": true,
+            "sourceType": "module"
+        }
+    }
 }

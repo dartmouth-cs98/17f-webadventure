@@ -15,11 +15,9 @@ class Powerup {
     this.size = { height: 50, width: 50 };
     this.icon = ICON;
     this.index = 0;
-
-    this.insertPowerup = this.insertPowerup.bind(this);
   }
 
-  insertPowerup(index) {
+  insertPowerup = (index) => {
     this.index = index;
     const element = `<img type=${this.type} index=${index} class=powerup
       style="position: absolute; left:${this.position.left}px; top:${this.position.top}px;
