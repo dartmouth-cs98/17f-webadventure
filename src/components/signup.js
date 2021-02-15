@@ -1,6 +1,6 @@
 /* eslint linebreak-style: ["error", "windows"], react/no-unused-state: 0 */
 import React, { Component } from 'react';
-import { Quickstart, generateId } from './quickstart';
+import { Quickstart } from './quickstart';
 
 // Three choices: must be type=string or choice selection breaks
 const DEFAULT = 'default';
@@ -38,7 +38,6 @@ class SignUp extends Component {
   handleChoice = (event) => {
     this.setState({ choice: event.target.getAttribute('type') });
     if (event.target.getAttribute('type') === QUICKSTART) {
-      this.props.signUpLobby(generateId()); // skips to game
       this.props.quickstart();
     }
   }

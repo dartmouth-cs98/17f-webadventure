@@ -232,7 +232,7 @@ class WikiGame {
       case 68: this.keysPressed.x.right = true; break;
       case 87: this.keysPressed.y.up = true; break;
       case 83: this.keysPressed.y.down = true; break;
-      case 55: {
+      case 55:
         // hit '7' and activate question.js
 
         // const s = $('p').random().text();
@@ -242,7 +242,6 @@ class WikiGame {
         // this.QA.refresh();
         // this.QA.popup();
         break;
-      }
       case 13: // click link with enter
         this.openLink();
         break;

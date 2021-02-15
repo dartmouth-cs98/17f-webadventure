@@ -146,7 +146,7 @@ class Lobby extends Component {
   createQuickstartGame = () => {
     this.lobbySocket.createGame(true).then((newGame) => {
       this.setState({ joinedGame: newGame, selectedGame: null }, this.onStartGame);
-    });
+    }).catch(err => console.log(err));
   }
 
   renderGameSelectComponent = () => {

@@ -5,7 +5,7 @@ const NYAN_CATS = ['https://i.imgur.com/rZSkKF0.gif', 'https://i.imgur.com/YNcTB
 class Player {
   constructor(
     username, avatar = NYAN_CATS,
-    position = { left: 100, top: 100 }, isCurPlayer = true,
+    position = { left: 100, top: 100 }, isCurPlayer = true, // TODO: build feature to ensure random start point on pages
   ) {
     this.username = username;
     this.id = username.replace(' ', '');
@@ -15,6 +15,14 @@ class Player {
     this.isCurPlayer = isCurPlayer;
     this.avatar = avatar;
     this.link = null;
+    this.windowSize = { height: 0, width: 0 };
+  }
+
+  // updates window size.
+  updateWindowSize = () => {
+    const width = window.innerWidth;
+    const height = window.inner;
+    this.windowSize = { height, width };
   }
 
   addToLinksList = (link, checkLine = true) => {

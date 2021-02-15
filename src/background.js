@@ -4,7 +4,7 @@ import GameSocket from './sockets/gameSocket';
 
 let gameSocket;
 let game; // {startPage, goalPage}
-let curPlayerInfo; // {username, avatar, numClicks, curUrl, finishTime?}
+let curPlayerInfo; // {username, avatar, numClicks, curUrl, history, finishTime?}
 let counter;
 let interval;
 let curTabId;
@@ -13,6 +13,7 @@ const audioDiv = document.createElement('div');
 const bgAudio = document.createElement('AUDIO'); // Persistent across redirects
 const linkAudio = document.createElement('AUDIO'); // Whoosh sound on link clicked
 
+// this deals with the lobby
 const renderLobby = (tabId, username) => {
   // Background audio setup
 
@@ -52,6 +53,7 @@ const onGame = (newGame) => {
   }
 };
 
+// what happens when the game ends
 const endGame = () => {
   curPlayerInfo = null;
   curTabId = -1;
@@ -66,6 +68,7 @@ const endGame = () => {
   chrome.browserAction.setIcon({ path: '../assets/webIcon128.png' });
 };
 
+// Injects game into a wikipedia page
 const injectGame = (sender) => {
   if (sender.url === curPlayerInfo.curUrl) {
     chrome.tabs.executeScript(curTabId, {
@@ -84,6 +87,7 @@ const injectGame = (sender) => {
   }
 };
 
+// this listener creates a new game in a new window if the current page isn't wikipedia
 chrome.browserAction.onClicked.addListener((tab) => {
   if (!gameSocket && tab.url.includes('en.wikipedia.org')) {
     renderLobby(tab.id);
@@ -94,6 +98,7 @@ chrome.browserAction.onClicked.addListener((tab) => {
   }
 });
 
+// turns sound on; creates a game for the player
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   // Process sound toggle request
   if (request.message === 'sound') {
@@ -119,6 +124,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
       finishTime: -1,
       numClicks: 0,
       curUrl: `https://en.${game.startPage}`,
+      history: [].push(`https://en.${game.startPage}`),
     };
     const bgAudios = ['http://k003.kiwi6.com/hotlink/li3x2lki41/mk.mp3',
       'http://k003.kiwi6.com/hotlink/3ttyw8k1nh/green-trains.mp3',
@@ -143,6 +149,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
       }
       curPlayerInfo.numClicks += 1;
       curPlayerInfo.curUrl = request.payload.newUrl;
+      curPlayerInfo.history.push(request.payload.newUrl);
       injectGame(sender);
     } else if (request.message === 'quit game') {
       endGame();
@@ -154,6 +161,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     }
   }
 });
+
 
 chrome.tabs.onUpdated.addListener((tabId, changeInfo) => {
   if (changeInfo && changeInfo.status === 'complete' && tabId === curTabId) {
@@ -169,6 +177,7 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo) => {
           curPlayerInfo.finishTime,
           curPlayerInfo.numClicks,
           curPlayerInfo.curUrl,
+          curPlayerInfo.history,
         );
         chrome.tabs.executeScript({
           file: 'dist/injectEnd.bundle.js',
@@ -188,6 +197,7 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo) => {
         curPlayerInfo.finishTime,
         curPlayerInfo.numClicks,
         curPlayerInfo.curUrl,
+        curPlayerInfo.history,
       );
       chrome.tabs.executeScript(tabId, {
         file: 'dist/inject.bundle.js',
